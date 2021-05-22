@@ -41,6 +41,7 @@ Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasınd
 | `UnicodeTranslateError` |  döndürülen hata mesajıdır. |
 | `ValueError` | Bir fonksiyon, doğru type'da ancak uygun olmayan value'de bir arguman aldığında döndürülen hata mesajıdır. |
 | `ZeroDivisionError` | Bir division ya da modulo işleminde, ikinci operand'ın sıfır olmasından dolayı döndürülen hata mesajıdır. |
+**Not:** Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/exceptions.html).
 
 # Hata Yakalama Kodları
 Hata yakalama kodlar, bir kod parçasında oluşabilecek hataları yakalayıp, python'un nasıl davranacağını belirlememizi sağlar.

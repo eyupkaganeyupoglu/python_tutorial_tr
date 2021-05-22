@@ -43,9 +43,17 @@ print(15, "Merhaba", 12,45, a+b)
 ```
 15 Merhaba 12.45 60
 ```
-# `Print()` Parametreleri
+# `print()` Parametreleri
+`print()` fonksiyonu, aşağıdaki syntax'a sahiptir:
+```py
+print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+```
+
+## `*object` Parametresi
+`print()` fonksiyonuna sınırsız sayıda string argüman girmene olanak tanır.
+
 ## `sep` Parametresi
-`print()` fonksiyonundaki `*arg` parametresi olarak eklenen her bir argumanın arasına gelecek olan ifadeyi belirlemekte kullanılıyor. `sep = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `" "` değerini alır.
+`print()` fonksiyonundaki `*object` parametresi olarak eklenen her bir argumanın arasına gelecek olan ifadeyi belirlemekte kullanılıyor. `sep = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `" "` değerini alır.
 ```py
 print(1 , 2 , 3 , 4 , 5 , 6 , sep = "/")
 print(1 , 2 , 3 , 4 , 5 , 6 , sep = "+")
@@ -59,7 +67,7 @@ print("Selam" , "Ben" , "Hiçkimse" , sep = "\t")
 ```
 
 ## `end` Parametresi
-Default olarak `\n`'e ayarlıdır. `print()` fonksiyonunun, `*arg` parametresinin en son argumanından sonra gelecek ifadeyi belirlemekte kullanılır. `end = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `"\n"` değerini alır.
+Default olarak `\n`'e ayarlıdır. `print()` fonksiyonunun, `*object` parametresinin en son argumanından sonra gelecek ifadeyi belirlemekte kullanılır. `end = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `"\n"` değerini alır.
 ```py
 print("Selam", "ben", "Eyüp", end = ".")
 # Output: Selam ben Eyüp.
@@ -98,7 +106,7 @@ print(a) # Output: 20
 ```
 `a`'nın değerini 20'ye eşitledikten sonra `10` değerini kaybediyorsunuz. `sys.stdout = dosya3` şeklinde kullanırken `sys.stdout`'ın değerini de böyle kaybetmemek için herhangi bir variable'a eşitleyin dememin sebebi bu. `sys.stdout, dosya3 = dosya3, sys.stdout` olayının mantığını **temel_kavramlar.md** dosyasındaki [**Variable'lar (Değişkenler)**](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/temel_kavramlar/temel_kavramlar.md#variablelar-değişkenler) başlığı altında anlatıldı.
 
-## Flush Parametresi
+## `flush` Parametresi
 `dosya = open("deneme.txt", "w")` şeklinde bir dosya açtığımızda, o dosyaya print fonksiyonundaki bilgileri kaydettikten sonra kaydettiğimiz bilgilerin dosyada gözükmesi için dosyayı `dosya.close()` şeklinde kapatmamız gerekiyor. Çünkü dosyayı kapatmadığımız sürece işlenen bilgiler buffer (tampon) adı verilen bir bölgede bekletiliyor ve dosyayı kapattığımızda da dosyaya işleniyor/yazılıyor. `flush` paremetresinin default değeri `False`'dır. `False` olduğu için açtığımız dosyayı manuel olarak (`dosya.close()`  ile) kapatmamız gerekir. Bu değeri `true` yaparsak, açtığımız dosyadaki bilgilerin gözükmesi için dosyayı manuel olarak kapatma komutuna ihtiyacımız kalmaz.
 ```py
 dosya2 = open("deneme2.txt", "w")

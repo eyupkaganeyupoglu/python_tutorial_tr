@@ -40,6 +40,34 @@ a = 1
 del a
 ```
 
+## Heap ve Stack Yöntemleri
+Python programları sırasında kullanılan her değer, bellekte yer kaplar. Bu yerin boyutu kimi zaman belli yani değişmezken, kimi zaman ise kullanıcının program esnasında gireceği verilere göre değişebilecek durumdadır. Bu farkları sağlayan **Stack** ve **Heap** adında iki yöntem vardır. **Stack** ve **Heap**'in her ikisi de RAM bölgesinde bulunur. **Stack**, bellekten statik olarak yer tahsisi için kullanılırken, **Heap**, dinamik olarak yer tahsisi içindir. Bu yüzden program esnasında boyutları bildirilmiş, değişmez bir değer kullanacaksak ve bu değer çok büyük bir veri değilse (Stack alanı sınırlı olduğundan çok büyük sayıda ve büyük tiplerde veri atanması belleğin dolmasına sebep olabilir) **stack**, boyutu belli olmayan bir değer kullanıyorsak (ki OOP'de bunlara obje denir) o zaman derleyici otomatik olarak **Heap**’ten yer tahsisi yapar. **Stack**’te yer alan veriler direk bellek içine yerleştirilir, dolayısıyla erişimi çok hızlıdır ve programın derleme aşamasında belleğe yerleşirler. **Heap** ise runtime (çalışma zamanı) anında kullanılırlar ve dağınık bir bellek göz yapısı olduğu için erişimi **stack** kadar kolay olmaz, dolayısıyla yavaş çalışır. Daha fazla bilgi ve örnek için [tıklayınız](http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/). Stack bellekteki veri hemen silinirken Heap bellekteki verinin silinmesi **Garbage Collector**’a (Çöp toplama mekanizmasına) bağlıdır. *Swift*, *Objective-C* gibi **Automatic Reference Counting**’e sahip mimarilerde bu konu derleyici tarafından otomatik olarak yapılır. **Stack** ve **Heap** bilgisi, dünyanın en vasat bellek yönetimine sahip scripting dillerinden birisi olan python için çok gerekli bir şey değil. Python, bellekle uğraşmanızı gerektirecek bir dil değildir. Bellekle uğraşmanızı gerektirecek bir dil olan **C** dil ailesiyle işiniz olursa **Stack** ve **Heap** kavramlarına kafa yorunuz.
+
+**Stack:**
+- Kullanımı kolaydır.
+- Tıpkı Heap gibi bilgisayarda RAM’de tutulur.
+- Oluşturulan değişkinler stack kapsamından çıkınca otomatik olarak yok edilir.
+- Ulaşılması Heap‘e göre oldukça hızlıdır.
+- 20 boyutlu bir diziye 21 eleman atamak gibi, Stack üzerinde kullanım fazla olduğunda alan yeterli olmayabilir.
+- Oluşturulan değişkenler pointer olmadan kullanılabilir.
+- Derleme zamanında oluşturulur.
+- Kullanacağınız yerin boyutunu tam olarak biliyorsanız Stack‘i kullanmak sizin için uygun olacaktır.
+  
+**Heap:**
+- Kullanımı Stack'dan daha zordur.
+- Bilgisayarda RAM’de tutulur.Tıpkı Stack gibi.
+- Bir blok içerisinde oluşturulan heap değişkenler, bloğun dışına çıktığında otomatik olarak yok edilemez, bunun manuel olarak yapılması gerekir.
+- Stack ile karşılaştırıldığında oldukça yavaştır.
+- Doğru kullanılmaması durumunda bellek sorunları yaratır.
+- Değişkenler pointer ile kullanılır.
+- Çalışma zamanında oluşturulur.
+- İhtiyacınız olan boyutu tam olarak bilmiyorsanız Heap kullanımı sizin için biçilmiş kaftandır.
+
+### Garbage Collector
+Bilgisayar programları, runtime sırasında bellek ihtiyacı duyarlar. Bellek sınırsız bir şey olmadığı için artık kullanılmayan bellek alanlarının, işletim sistemine geri iade edilmesi gerekir. Müsait bellek alanı bulma ve kullanılmayan bellek alanlarını işletim sistemine geri iade etme işlemleri, programcılar tarafından elle yapılması gerekiyordu. Örneğin bu işlem, **C** dilinde `malloc()` ve `free()` fonksiyonları ile yapılmaktadır. İşletim sistemine iade edilmiş bir alanın program tarafından tekrar kullanılması güvenlik açıklarını beraberinde getirmekteydi ve elle yapılan bu işlemin takibi, bir yerden sonra zorlaştığı için bu işi otomatik yapan bir sisteme ihtiyaç vardı. **Garbage Collector**, bu işlemi otomatik yapan bir sistemdir. Bu sistem sayesinde bir programcı, program yazarken hafıza alanını **Garbage Collection** mekanizmasından talep edip, iade işlemine karışılmamaktadır çünkü kalan tüm işlemler **Garbage Collection** mekanizması tarafından yapılmaktadır. **Garbage Collector**, kullanılan hafıza alanlarının izini sürerek, ihtiyaç duyulmayan alanları işletim sistemine iade etmektedir ve yeni bir talep geldiği zamanda bellekte yer bulup programa göndermektedir. **Garbage Collection** mekanizmasının işlemci kullanımı ile alakalı iki farklı yönetim yaklaşımı bulunmaktadır. 
+- **stop-the-world** yaklaşımı, herhangi bir t zamanında **Garbage Collection** mekanizması devreye girdiği zaman sırasıyla, ilgili programdaki tüm işlemler durdurulur, hafıza yönetimi yapılır ve durdurulan işlemeler başlatılır. Bu çalışma yöntemi, kritik uygulamalar için bir dezavantaj oluşturmaktadır. Bu nedenle daha sonra **concurrent** algoritmalar geliştirilmiştir. 
+- **Concurrent** yaklaşımı, programın çalışması durdurulmadan, programla eşzamanlı olarak  **Garbage Collection** işlemleri yapılır. Bu sayede **stop-the-world** yaklaşımının oluşturduğu dezavantaj ortadan kalkar.
+
 # İsimlendirme kuralları
 - Variable isimleri rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`
 - Variable isimlerinde boşluk karakteri kullanılamaz. Örnek: `vrb exp`
