@@ -7,7 +7,7 @@ open(r"file", mode='r', buffering=-1, encoding=None, errors=None, newline=None, 
 ```
 Buradaki parametreleri teker teker açıklamak gerekirse:
 - `"file"`, dosya dizinini (path) temsil eder. Path yazarken `\` ayracını kaçış dizisi olarak algılayabilir. Bu yüzden her path yazdığınızda en başa `r` kaçış dizisini koyun. Yani `r"D:\falan_filan..."` şeklinde kullanın.
-- 
+
 - `mode`, default değeri `"r"` olarak ayarlıdır. Dosyayı açarken hangi modda (örneğin okuma ya da yazma) açacağınızı belirlersiniz. `mode` parametresine girilebilecek argümanlar için [tıklayınız](asd). Devam etmeden önce bu argumanları öğrenmenizde fayda var.
 
 - `buffering`, default değeri `-1` olarak ayarlıdır. Buffering policy ayarlamak için kullanılır.
