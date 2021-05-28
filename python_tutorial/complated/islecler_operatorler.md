@@ -168,7 +168,7 @@ Kullanıcı adı alanı boş bırakılamaz!
 Kullanıcı adınız: Eyüp
 Kullanıcı adınızı Eyüp olarak seçtiniz.
 ```
-**Not: ** `None` değeri, boş value anlamına gelir. Yani bir variable'ı `None` değerine eşitlerseniz, python bunu "Bu variable herhangi bir data type'ı içermiyor, boş bir value." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte 16 byte yer açar. `None`, genellikle bir variable'ın data type'ını daha sonra belirlemek istediğinizde kullanılır.
+**Not:** `None` değeri, boş value anlamına gelir. Yani bir variable'ı `None` değerine eşitlerseniz, python bunu "Bu variable herhangi bir data type'ı içermiyor, boş bir value." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte 16 byte yer açar. `None`, genellikle bir variable'ın data type'ını daha sonra belirlemek istediğinizde kullanılır.
 
 # Değer Atama Operatörleri
 
@@ -350,3 +350,21 @@ print("Önceki a: ", id(a)) # Output: Önceki a: 2152492817552
 print("Sonraki b: ", id(b)) # Output: Sonraki b: 2152492908432
 ```
 Yukarıdaki gibi Büyük value'lerle işlem yaparken son durumda `a` ve `b`'nin id'leri farklı olur.
+
+# Operatör Önceliği
+Bir operatörün önceliğini arttırmak için o operatörün bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operatörünün önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz.
+| Operator | Açıklama |
+|----------|----------|
+| `()` | Parentheses |
+| `**` | Exponent |
+| `+x`, `-x`, `~x` | Unary plus, Unary minus, Bitwise NOT |
+| `*`, `/`, `//`, `%` | Multiplication, Division, Floor division, Modulus |
+| `+`, `-` | Addition, Subtraction |
+| `<<`, `>>` | Bitwise shift operators |
+| `&` | Bitwise AND |
+| `^` | Bitwise XOR |
+| `|` | Bitwise OR |
+|  `==`, `!=`, `>`, `>=`, `<`, `<=`, `is`, `is not`, `in`, `not in` | Comparisons, Identity, Membership operators |
+| `not` | Logical NOT |
+| `and` | Logical AND |
+| `or` | Logical OR |

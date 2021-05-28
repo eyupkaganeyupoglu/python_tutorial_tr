@@ -2,7 +2,7 @@
 Elektrik sinyallerinin (0 ve +5 volt) hangi sayıya, hangi sayının da hangi karaktere karşılık geleceğini belirleyebilirsiniz. Bunun tam tersi olan karakterden sayılara, sayılardan da elektrik sinyallerine dönüşümü de belirleyebilirsiniz. Bu dönüştürme işlemlerine **Karakter kodlama (character encoding)** denir. Her encoding sistem aynı olmayacağı için global encoding sistemlerinin kullanımı yaygındır.
 
 ## ASCII
-**American Standard Code for Information Interchange (Türkçesi: Bilgi Alışverişi için Standart Amerikan Kodu) ** kısaca **ASCII** **7 bit**'lik bir sistemdir. Amerika standartlarına göre yapıldığı için Türkçe karakter sıkıntısı yaşatan bir sistemdir. ASCII tablosuna [buradan](http://www.asciitable.com/) ulaşabilirsiniz veya kendiniz oluşturabilirsiniz:
+**American Standard Code for Information Interchange (Türkçesi: Bilgi Alışverişi için Standart Amerikan Kodu)** kısaca **ASCII** **7 bit**'lik bir sistemdir. Amerika standartlarına göre yapıldığı için Türkçe karakter sıkıntısı yaşatan bir sistemdir. ASCII tablosuna [buradan](http://www.asciitable.com/) ulaşabilirsiniz veya kendiniz oluşturabilirsiniz:
 ```py
 for i in  range(128):
 	if i % 4 == 0:

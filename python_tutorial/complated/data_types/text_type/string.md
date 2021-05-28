@@ -146,6 +146,49 @@ a = "Python"
 print(len(a)) # Output: 6
 ```
 
+## `str(object, encoding='utf-8', errors='strict')`
+Karakter dizisilerini (*stringleri*) ifade eder. Birçok data type'ı string olarak ifade etmemizi sağlar. Örnek:
+```py
+int_type = 10
+float_type = 10.15
+complex_type = 15 + 2j
+
+print(str(int_type), str(float_type), str(complex_type), sep="\n")
+``` 
+**Output:**
+```
+10
+10.15
+(15+2j)
+```
+ - `object`,  karakter dizisini ifade eder.
+ - `encoding`, encoding değerini ifade eder. Bilgisayar, karakterleri olduğu gibi anlamaz. Bilgisayar elektrik sinyallerini anlar. *ASCII* ya da *UNICODE* gibi kodlama sistemleri, harf, sayı, sembol gibi karakterlerin bilgisayarın anlayacağı karşılığa çevrilip depolandığı sistemlerdir. Bu çevirim bazen binary, bazen decimal, bazen de hexadecimal olabilir. Örneğin sizin `A` olarak bildiğiniz şeyin ASCII'deki decimal karşılığı `65`'dir. Bilgisayar bu decimal karşılığı değerlendirir. Kodlama sistemleri hakkında daha fazla bilgi için [**tıklayınız**](asd).
+ - `errors`, kod çözme başarısız olduğunda verilen yanıttır. Default değeri `strict`'dir. Bu parametre 6 değer alabilir:
+	 - `strict`, herhangi bir encoding hatasıyla karşılaşınca bir `UnicodeDecodeError` hata mesajı döndüren default değerdir.
+	 - `ignore`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakteri yok sayar. Örnek: `şelam -> elam` 
+	 - `replace`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakterin yerine bir `?` koyar.
+	 - `xmlcharrefreplace`,  herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakterin yerine XML karakter referansını ekler.
+		 - **XML**, interneti kullanarak veri alışverişi yapan sistemler ve platformlar arasındaki veri iletişimini standart hale getirmek için tasarlanan bir işaretleme dilidir.
+	- `backslashreplace`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakterin yerine `\uNNNN` kaçış dizisi ekler.
+	- `namereplace`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakterin yerine `\N{...}` kaçış dizisi ekler.
+
+```py
+print("bu Türkçe bir cümledir.".encode("ascii", errors="strict")) # Output: UnicodeEncodeError
+print("bu Türkçe bir cümledir.".encode("ascii", errors="ignore"))
+print("bu Türkçe bir cümledir.".encode("ascii", errors="replace"))
+print("bu Türkçe bir cümledir.".encode("ascii", errors="xmlcharrefreplace"))
+print("bu Türkçe bir cümledir.".encode("ascii", errors="backslashreplace"))
+print("bu Türkçe bir cümledir.".encode("ascii", errors="namereplace"))
+```
+**Output:**
+```
+b'bu Trke bir cmledir.'
+b'bu T?rk?e bir c?mledir.'
+b'bu T&#252;rk&#231;e bir c&#252;mledir.'
+b'bu T\\xfcrk\\xe7e bir c\\xfcmledir.'
+b'bu T\\N{LATIN SMALL LETTER U WITH DIAERESIS}rk\\N{LATIN SMALL LETTER C WITH CEDILLA}e bir c\\N{LATIN SMALL LETTER U WITH DIAERESIS}mledir.'
+```
+
 ## `reversed()` fonksiyonu
 `reversed()` fonksiyonu, *[sequence protokolünü](https://www.google.com/search?client=opera-gx&q=what%20is%20sequence%20protocol%20in%20python&sourceid=opera&ie=UTF-8&oe=UTF-8)* destekleyen `tuple`, `string`, `list` ve `range` etc. type'ındaki objeleri ters çeviren bir fonksiyondur. **Sequance** dediğimiz şey basitçe, bir sonuca ulaşmak için kurulan algoritma olarak düşünebilirsiniz. Bu süreçte sonuca ulaşmak için başlıngıçta verilen durumu parçalara ayırmalı ve her parçayı ayrı ele almalısınız. Örneğin ekmek ve krem peynir durumlarından krem peynir sürülmüş ekmek sonucuna ulaşmak için ekmek ve krem peyniri teker teker ele almalısınız. Python'da da bu mantık geçerlidir. Herhangi bir `tuple`, `string`, `list` ve `range` etc. objesinden, bu objelerin reversed (ters) halini elde etmek için her parçayı ayrı değerlendirmelisiniz. Örnek:
 ```py

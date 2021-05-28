@@ -125,7 +125,7 @@ sözlük["üç"] = 3
 print(sözlük)
 # Output: {'bir': 1, 'iki': 2, 'üç': 3}
 ```
-**Not: ** Bu yöntemle bir sözlüğe yeni bir öğe eklemek istediğinizde, eğer o öğe zaten sözlükte mevcutsa, o öğenin value'sini değiştirir, yeni bir öğe olarak eklemez. Benzer şekilde, bir sözlük oluştururken aynı key'i iki kere tanımlarsanız, en son tanımladığınız değer dikkate alınır. Yani:
+**Not:** Bu yöntemle bir sözlüğe yeni bir öğe eklemek istediğinizde, eğer o öğe zaten sözlükte mevcutsa, o öğenin value'sini değiştirir, yeni bir öğe olarak eklemez. Benzer şekilde, bir sözlük oluştururken aynı key'i iki kere tanımlarsanız, en son tanımladığınız değer dikkate alınır. Yani:
 ```py
 sözlük = {"bir":"1", "bir":5, "iki":"2", "üç": "3"}
 print(sözlük) # Output: {'bir': 5, 'iki': '2', 'üç': '3'}
@@ -307,5 +307,3 @@ sözlük2 = {'a': 10, 'b': 11, 'c': 12}
 sözlük.update(sözlük2)
 print(sözlük) # Output: {'a': 10, 'b': 11, 'c': 12}
 ```
-
-
