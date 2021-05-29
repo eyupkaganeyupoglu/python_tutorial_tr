@@ -242,13 +242,97 @@ print(sorted("afgdhkıi", key=çevrim.get))
 
 # Output: ['a', 'd', 'f', 'g', 'h', 'ı', 'i', 'k']
 ```
+Nasted (iç içe) listelerde ilk elemana göre sıralar:
+```py
+elemanlar = [('ahmet',       33,    'karataş'),
+             ('mehmet',      45,    'arpaçbahşiş'),
+             ('sevda',       24,    'arsuz'),
+             ('arzu',        40,    'siverek'),
+             ('abdullah',    30,    'payas'),
+             ('ilknur',      40,    'kilis'),
+             ('abdurrezzak', 40,    'bolvadin')]
+
+print(*sorted(elemanlar), sep='\n')
+```
+**Output:**
+```
+('abdullah', 30, 'payas')      
+('abdurrezzak', 40, 'bolvadin')
+('ahmet', 33, 'karataş')       
+('arzu', 40, 'siverek')        
+('ilknur', 40, 'kilis')        
+('mehmet', 45, 'arpaçbahşiş')  
+('sevda', 24, 'arsuz')
+```
+Yaşa göre sıralanması istenilirse:
+```py
+elemanlar = [('ahmet',       33,    'karataş'),
+             ('mehmet',      45,    'arpaçbahşiş'),
+             ('sevda',       24,    'arsuz'),
+             ('arzu',        40,    'siverek'),
+             ('abdullah',    30,    'payas'),
+             ('ilknur',      40,    'kilis'),
+             ('abdurrezzak', 40,    'bolvadin')]
+
+def sırala(liste):
+    return liste[1]
+    
+print(*sorted(elemanlar, key=sırala), sep='\n')
+```
+**Output:**
+```
+('sevda', 24, 'arsuz')
+('abdullah', 30, 'payas')      
+('ahmet', 33, 'karataş')       
+('arzu', 40, 'siverek')        
+('ilknur', 40, 'kilis')        
+('abdurrezzak', 40, 'bolvadin')
+('mehmet', 45, 'arpaçbahşiş')  
+```
+Aynı yaştakileri soy isme göre sıralaması istenirse:
+```py
+elemanlar = [('ahmet',       33,    'karataş'),
+             ('mehmet',      45,    'arpaçbahşiş'),
+             ('sevda',       24,    'arsuz'),
+             ('arzu',        40,    'siverek'),
+             ('abdullah',    30,    'payas'),
+             ('ilknur',      40,    'kilis'),
+             ('abdurrezzak', 40,    'bolvadin')]
+
+def sırala(liste):
+    return (liste[1], liste[2])
+
+print(*sorted(elemanlar, key=sırala), sep='\n')
+```
+**Output:**
+```
+('sevda', 24, 'arsuz')
+('abdullah', 30, 'payas')      
+('ahmet', 33, 'karataş')       
+('abdurrezzak', 40, 'bolvadin')
+('ilknur', 40, 'kilis')        
+('arzu', 40, 'siverek')        
+('mehmet', 45, 'arpaçbahşiş')  
+```
 
 ## `enumerate()` fonksiyonu
-Öğeleri numaralandırmamıza olanak tanır. Örnekler:
+Nesneleri numalandırmanızı sağlar. Örnekler:
 ```py
-print(list(enumerate("örnek")))
+print(enumerate("ornek"))
 
-# Output: [(0, 'ö'), (1, 'r'), (2, 'n'), (3, 'e'), (4, 'k')]
+print(list(enumerate("ornek")))
+
+enumerate_ornek = [i for i in enumerate('ornek')]
+print(enumerate_ornek)
+
+print(*enumerate('ornek'))
+```
+**Output:**
+```
+<enumerate object at 0x0000021883EE8DC0>
+[(0, 'o'), (1, 'r'), (2, 'n'), (3, 'e'), (4, 'k')]
+[(0, 'o'), (1, 'r'), (2, 'n'), (3, 'e'), (4, 'k')]
+(0, 'o') (1, 'r') (2, 'n') (3, 'e') (4, 'k') 
 ```
 `enumerate()` kullanarak da encoding standartı oluşturabilirsiniz. Örnek:
 ```py

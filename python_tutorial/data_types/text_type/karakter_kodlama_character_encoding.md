@@ -90,21 +90,19 @@ karakter dizisi
 'karakter dizisi \n'
 ```
 
-## `ascii("string")` Fonksiyonu
-`repr()` fonskiyonuna benzerdir ama ASCII tablosunda yer almayan karakterlere karşı tutumları yönünden birbirlerinden ayrılır. `ascii()` fonksiyonu, ASCII tablosunda yer almayan karakterlerin **UNICODE kod konumlarını (code points)** döndürür.
+## `ascii(object)` Fonksiyonu
+`object` parametresinde girilen objenin yazdırılabilir karşılığını döndürür. ASCII karakterlerin direkt kendisini döndürürken, ASCII olmayan karakterlerin `\x`, `\u` ya da `\U` karşılıklarını, yani **UNICODE kod konumlarını (code points)** döndürür. Ürettiği değer `repr()` fonksiyonuna benzerdir. Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#ascii).
 ```py
 print(repr("İ")) # Output: 'i'
 print(ascii("İ")) # Output: '\\u0130'
+
+print(ascii('şeker')) # Output: '\\u015feker'
+print(repr('şeker')) # Output: 'şeker'
 ```
 `ascii()` fonksiyonu ile string veri tipinin `encode()` methodu aynı sonuçları verir.
 ```py
-print(ascii("€"))
-print("€".encode("unicode_escape"))
-```
-**Output:**
-```
-'\u20ac'
-b'\\u20ac'
+print(ascii("€")) # Output: '\u20ac'
+print("€".encode("unicode_escape")) # Output: b'\\u20ac'
 ```
 
 ## `ord("string")` Fonksiyonu
@@ -113,8 +111,8 @@ b'\\u20ac'
 print(ord("€")) # Output: 8364
 ```
 
-## `chr(int)` Fonksiyonu
-`int` parametresine girilen integer değerin UNICODE tablosundaki karakter karşılığını verir.
+## `chr(i)` Fonksiyonu
+`i` parametresine girilen integer değerin UNICODE karşılığını döndürür. `ord()` fonksiyonunun tam tersi işleve sahiptir. `i` parametresine girilen argüman 0 ile 1,114,111 arasındaysa bu fonksiyon çalışır. `i` parametresine girilen argüman bu değerleri geçerse `ValueError` verir.
 ```py
 print(chr(8364)) # Output: €
 ```

@@ -1,26 +1,32 @@
 ﻿# Dosya İşlemleri
 
-## `open()` Fonksiyonu
-`open()` fonksiyonu, dosya açmak veya oluşturmak için kullanılır. Eğer `open()` fonksiyonunda belirtilen uzantıda, belirtilen isimde bir dosya yoksa, belirtilen isimde bir dosya oluşturur. Syntax:
+## `open(r"file", mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)` Fonksiyonu
+`open()` fonksiyonu, dosya açmak veya oluşturmak için kullanılır. Eğer `open()` fonksiyonunda belirtilen uzantıda, belirtilen isimde bir dosya yoksa, belirtilen isimde bir dosya oluşturur.
+
+- `"file"`: Dosya dizinini (path) temsil eder. Path yazarken `\` ayracını kaçış dizisi olarak algılayabilir. Bu yüzden her path yazdığınızda en başa `r` kaçış dizisini koyun. Yani `r"D:\falan_filan..."` şeklinde kullanın.
+
+- `mode`: Default değeri `"r"` olarak ayarlıdır. Dosyayı açarken hangi modda (örneğin okuma ya da yazma) açacağınızı belirlersiniz. `mode` parametresine girilebilecek argümanlar için [tıklayınız](asd). Devam etmeden önce bu argumanları öğrenmenizde fayda var.
+
+- `buffering`: Default değeri `-1` olarak ayarlıdır. Buffering policy ayarlamak için kullanılır. Bir dosyayı açıp veri girdiğimizde, bu veriler tamponda (buffer) bekletilir. Buffer'da bekletilen veriler, dosya kapatıldığında dosyaya işlenir. `buffering` parametresinde ile buffer'a alma işleminin nasıl yürüyeceğini belirliyoruz.
+    - `buffering = 0`: Veriler buffer'a alınmadan doğrudan dosyaya işlenir ama bu sadece `'b'` (binary) mode ile açılan dosyalarda mümkündür.
+    - `buffering=1`: Veriler satır satır dosyaya işlenir. Yani `f.write('ikinci satır\n')` komutu çalıştıktan sonra veri dosyaya işlenir ama `f.write('aaa')` komutunda işlenmez çünkü işlenmesi için `'\n'` kaçış dizisi beklenir. `buffering=1` yanlızca metin kiplerinde çalışır (dosyalar, metin ve ikili (binary) dosyalar olarak ikiye ayrılır.).
+    - `buffering=-1`: Default değerdir. Veriler buffer'da bekletilir. `buffering`'i belirtmeden `open()` kullanırsanız, kullandığınız işletim sistemi tampona alma işlemlerininin nasıl yürütüleceğine ve buffer boyutuna kendisi karar verecektir.
+
+**Not:** Kendi sisteminizde default buffer boyutunun ne olduğunu merak ediyorsanız şu komutları kullanabilirsiniz:
 ```py
-open(r"file", mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+import io
+print(io.DEFAULT_BUFFER_SIZE) # Output: 8192
 ```
-Buradaki parametreleri teker teker açıklamak gerekirse:
-- `"file"`, dosya dizinini (path) temsil eder. Path yazarken `\` ayracını kaçış dizisi olarak algılayabilir. Bu yüzden her path yazdığınızda en başa `r` kaçış dizisini koyun. Yani `r"D:\falan_filan..."` şeklinde kullanın.
 
-- `mode`, default değeri `"r"` olarak ayarlıdır. Dosyayı açarken hangi modda (örneğin okuma ya da yazma) açacağınızı belirlersiniz. `mode` parametresine girilebilecek argümanlar için [tıklayınız](asd). Devam etmeden önce bu argumanları öğrenmenizde fayda var.
+- `encoding`: Dosyayı hangi kod çözücüyle açacağını belirlediğiniz parametredir.
 
-- `buffering`, default değeri `-1` olarak ayarlıdır. Buffering policy ayarlamak için kullanılır.
+- `errors`: `encoding` parametresinde belirtilen kod çözücü uygun değilse döndürülecek hatanın belirlendiği parametredir. Bu parametrenin alabileceği argumanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict) ulaşabilirsiniz.
 
-- `encoding`, dosyayı hangi kod çözücüyle açacağını belirlediğiniz parametredir.
+- `newline`: Farklı işletim sistemlerinde satır sonları birbirinden farklı şekilde gösterirlir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. Dosyada yazılı olan her satırın sonundaki kaçış dizilerini etkiler. Default değeri `None` olarak ayarlıdır ve bu arguman kullanılırsa, son satır hariç her satırın sonunda `\n` kaçış dizisi olur. Boş string `""` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\n"` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\r"` argumanı verilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur. `\r\n` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. Bu argumanlardan başka arguman kabul etmez.a
 
-- `errors`, `encoding` parametresinde belirtilen kod çözücü uygun değilse döndürülecek hatanın belirlendiği parametredir. Bu parametrenin alabileceği argumanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict) ulaşabilirsiniz.
+- `closefd`: ?
 
-- `newline`, dosyada yazılı olan her satırın sonundaki kaçış dizilerini etkiler. Default değeri `None` olarak ayarlıdır ve bu arguman kullanılırsa, son satır hariç her satırın sonunda `\n` kaçış dizisi olur. Boş string `""` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\n"` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\r"` argumanı verilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur. `\r\n` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. Bu argumanlardan başka arguman kabul etmez.a
-
-- `closefd`,  ?
-
-- `opener`,  ?
+- `opener`: ?
 
 `open()` ile açtığınız dosyayı programınızda kullanabilmek için bir variable'a `dosya = open(...)` şeklinde atamanız gerekmektedir.
 

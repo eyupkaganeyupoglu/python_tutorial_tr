@@ -104,6 +104,7 @@ Bir complex number'ın **real** kısmını döndürür.
 ```py
 print((12+5j).real) # Output: 12.0
 ```
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#complex).
 
 # Numeric Fonksiyonlar
 
