@@ -92,26 +92,43 @@ Birinci else block'u çalıştı.
 ```
 Görüldüğü gibi, bir `else` deyimi, kendinden önceki ilk `if` deyimini referans alır ve referans aldığı `if` deyimi çalışmazsa çalışır.
 
-### Örnek `if` - `elif` - `else` programı
+# Tek satırda `if` - `else` kullanmak
+Belli bir koşulu tek satırsa basit ve pratik bir şekilde kontrol etmek için `if` - `else` yapısını kullanabilirsiniz. Bu yapı özellikle `lambda` fonksiyonlarında çok kullanışlıdır. `(işlemler) if (koşul) else (işlemler)` syntaxına sahiptir. Parantezler olmadan da kullanılabilir ama kodun anlaşılırlığı açısından parantezlerle beraber kullanılmalıdır. Örnek:
 ```py
-
-note = float(input("Notunuzu giriniz: "))
-if (note >= 90):
-	print("AA")
-elif (note >= 85):
-	print("BA")
-elif (note >= 90):
-	print("BA")
-elif (note >= 80):
-	print("BB")
-elif (note >= 75):
-	print("CB")
-elif (note >= 70):
-	print("CC")
-elif (note >= 65):
-	print("DC")
-elif (note >= 60):
-	print("DD")
-else:
-	print("Dersten Kaldınız")
+(print(1)) if True else (print(2)) # Output: 1
+print(1) if True else print(2) # Output: 1
 ```
+Çalışma mantığını anlamak için basit bir örnek:
+```py
+(print(1)) if True else (print(2)) 
+(print(1)) if False else (print(2)) # Output: 2
+```
+Aşağıdaki örneklerde, `if` ve `else` statementleri soldan sağa olarak birinici, ikinci ve üçüncü olarak numalandırıldığını düşünün:
+```py
+((print(1)) if True else (print(2))) if True else ((print(3)) if True else print(4)) # Output: 1
+```
+Yukarıda,
+- İkinci `if` çalışır,
+- Birinci `if` çalışır,
+- `print(1)` çalışır.
+```py
+((print(1)) if False else (print(2))) if True else ((print(3)) if True else print(4))# Output: 2
+```
+Yukarıda,
+- İkinci `if` çalışır,
+- Birinci `if` çalışmadığı için birinci `else` çalışır,
+- `print(2)` çalışır.
+```py
+((print(1)) if True else (print(2))) if False else ((print(3)) if True else print(4))# Output: 3
+```
+Yukarıda,
+- İkinci `if` çalışmadığı için ikinci `else` çalışır,
+- Birinci `if` çalışır,
+- `print(3)` çalışır.
+```py
+((print(1)) if True else (print(2))) if False else ((print(3)) if False else print(4))# Output: 4
+```
+Yukarıda,
+- İkinci `if` çalışmadığı için ikinci `else` çalışır,
+- Birinci `if` çalışmadığı için üçüncü `else` çalışır,
+- `print(4)` çalışır.

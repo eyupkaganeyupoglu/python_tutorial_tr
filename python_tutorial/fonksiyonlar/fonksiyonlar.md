@@ -190,29 +190,6 @@ print(func()) # Output: UnboundLocalError: local variable 'x' referenced before 
 ```
 Buradaki `x += 2` kodu `x = x + 2` koduyla aynı anlama geldiği için ikinci kod üzerinden anlatacağım. `UnboundLocalError` hatası almamızın sebebi, Python'un `x = x + 2` işlemini okuma şeklidir. Python, `x = x + 2` kısmını okurken ilk olarak `x =` kısmını okuyup, bunu *"Burada bir variable tanımlanıyor"* şeklinde yorumlar. Bu yüzden bir variable tanımlamaya çalışırken `x = x + 2` işlemiyle karşılaşınca, henüz tanımlamadığı variable'a `2` eklemeye çalışıyor ve böyle bir şey mümkün olmayacağı için `UnboundLocalError: local variable 'x' referenced before assignment` hatası alıyorsunuz. Bu durum birçok data type'da geçerlidir çünkü hataya sebep olan şey data type değil `x +=` kısmıdır. Bu durum, local scope'dan global scope'a ya da alt local scope'dan üst local scope'a ulaşmaya çalışırken oluşabilir. Bu durumları çözmek için `global` ve `nonlocal` keyword'lerinden yararlanılabilir.
 
-#### `global` keyword
-`global` keyword'ü, global scope'da bulunan değerlerin local scope'da kullanılmasına imkan sağlayan bir keyword'dür.
-```py
-x = 1
-def  func():
-	global x
-	print(x)
-func() # Output: 1
-```
-
-#### `nonlocal` keyword
-`nonlocal` keyword'ü, üst local scope'da bulunan değerlerin alt local scope'da kullanılmasına imkan sağlayan bir keyword'dür.
-```py
-def  func1():
-	x = 1
-	def  func2():
-		nonlocal x
-		x += 1
-		print(x)
-	func2()
-func1() # Output: 2
-```
-
 **Not:** Python da `bool`, `int`, `float`, `tuple`, `str`, `frozenset` gibi data değiştirilemez (immutable) type'ların değerini değiştirmek için onu yeniden tanımlamak zorundasınız. Bu global scope'da da, local scope'da da böyledir. Local scope'da ek olarak, global scope'da tanımladığınız immutable bir data type'ı local scope'da yeniden tanımlayamazsınız. Örnek:
 
 ```py
@@ -242,4 +219,79 @@ print(f"X'in yeni hali: {x}")
 ```
 X'in eski hali: []
 X'in eski hali: ['öğe']
+```
+
+#### `global` keyword
+`global` keyword'ü, global scope'da bulunan değerlerin local scope'da kullanılmasına imkan sağlayan bir keyword'dür.
+```py
+x = 1
+def  func():
+	global x
+	print(x)
+func() # Output: 1
+```
+
+#### `nonlocal` keyword
+`nonlocal` keyword'ü, üst local scope'da bulunan değerlerin alt local scope'da kullanılmasına imkan sağlayan bir keyword'dür. Bu keyword, nasted fonksiyonlarda kullanılabilir.
+```py
+def  func1():
+	x = 1
+	def  func2():
+		nonlocal x
+		x += 1
+		print(x)
+	func2()
+func1() # Output: 2
+```
+Başka bir örnek:
+```py
+def yazıcı(mesaj):
+    def yaz():
+        nonlocal mesaj
+        mesaj += " Dünya"
+        print(mesaj)
+    return yaz
+```
+Yukarıdaki kodda `nonlocal` keyword'ünü kullanmasaydık `UnboundLocalError: local variable 'mesaj' referenced before assignment` hatası alırdık. Çünkü daha önce de bahsettiğim gibi `+=` operatörü, `mesaj` variable'ını tanımlamadan, `+` operatörü aracılığıyla henüz tanımlamadığı bir variable'a `" Dünya"` stringini eklemeye çalışıyor. `+=` operatörünün sıkıntı çıkarmaması için önce `mesaj` variable'ını tanımlamamız gerekiyor. Bunu da `nonlocal` keyword'ünü kullanarak yapıyoruz.
+
+Önemli bir örnek:
+```py
+def sayıcı():
+    sayı = 0
+    def say():
+        nonlocal sayı
+        sayı += 1
+        return sayı
+    return say
+
+s1 = sayıcı()
+s2 = sayıcı()
+
+print(s1()) # Output: 1
+print(s1()) # Output: 2
+print(s1()) # Output: 3
+
+print(s2()) # Output: 1
+print(s2()) # Output: 2
+print(s2()) # Output: 3
+
+```
+Yukarıdaki fonksiyon şöyle çalışır:
+- Önce `def sayıcı():` okunur ve `<function sayıcı at 0x000001D8E02135E0>` objesi oluşturulur.
+- sonra, `s1 = sayıcı()` okunur ve sırasıyla şöyle çalışır:
+	- Python bu satırdaki `sayıcı()` kodu yüzünden `sayıcı()` fonksiyonunu çalıştırır. Çalıştırılan bu `sayıcı()` fonksiyonu ile ilk başta oluşturulan `sayıcı()` objesi aynıdır. Yani `s1 = sayıcı()` satırı okunduğunda `sayıcı()` objesi tekrar oluşturulmaz.
+	- `sayıcı()` çalışınca `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
+	- Sonra `def say():` satırı okunur 
+```py
+def sayıcı():
+    sayı = 0
+    def say():
+        nonlocal sayı
+        sayı += 1
+        return sayı
+    return say
+
+print(sayıcı()()) # Output: 1
+print(sayıcı()()) # Output: 1
+print(sayıcı()()) # Output: 1
 ```
