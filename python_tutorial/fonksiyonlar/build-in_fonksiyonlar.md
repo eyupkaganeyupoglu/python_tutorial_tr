@@ -7,10 +7,10 @@ Python ve python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Göm�
 # `all(iterable)`
 
 **Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
-- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılır (repeat).
+- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
 - **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
 
-**Iterator** ile **Iterable** İki farklı kavramdır. Defelarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
+**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
 - **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
 
 - **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
@@ -72,10 +72,10 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 
 # `any(iterable)`
 **Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
-- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılır (repeat).
+- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
 -  **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
 
-**Iterator** ile **Iterable** İki farklı kavramdır. Defelarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
+**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
 - **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
 
 - **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
@@ -231,6 +231,32 @@ print(hesap)
 bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#eval).
 
 # `exec(expression, globals=None, locals=None)`
+## Expression (İfadeler)
+
+İngilizcede **expression** denen **ifadeler**, bir değer üretmek için kullanılan kod parçalarıdır. Karakter dizileri, sayılar, operatörler, öteki veri tipleri, liste üreteçleri, sözlük üreteçleri, küme üreteçleri, `fonksiyon()` şeklinde çağırdığırılan fonksiyonlar hep birer **expression**'dır Örneğin:
+```py
+5
+23 + 4
+[i for i in range(10)]
+len([1,2,3])
+```
+
+## Statement (Deyimler)
+
+İngilizcede **statement** olarak adlandırılan **deyimler** ise ifadeleri de kapsayan daha geniş bir kavramdır. Buna göre bütün expression'lar aynı zamanda birer statement'dir. Daha doğrusu, expression'ların bir araya gelmesi ile statement'lar oluşturulabilir. Python'da her line bir statement'dir. **C** programlama dilinde ise ';' işareti **statement terminator** olarak adlandırılır. Örneğin:
+```py
+a = 5 (Python’da bütün değer atama işlemleri birer deyimdir.)
+
+if a:
+    print(a)
+
+for i in range(10):
+    print(i)
+
+while True:
+    print(1)
+    break
+```
 `exec()` fonksiyonu, `eval()`'den farklı olarak sadece expression'ları değil, statement'leri de çalıştırabilir. `exec()` içinde bir variable tanımladığınızda, `exec()`, çalıştığı scope'da bu variable'yi tanımlar.
 ```py
 def fuck():
@@ -378,7 +404,21 @@ print(list(map(karesini_al, l))) # Output: [1, 4, 9, 16, 25]
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#map).
 
 # `next(iterator, default)`
+**Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
+- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
+-  **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
+
+**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
+- **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
+
+- **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
+
+- **Set**, indexlenemez (yani sırasız) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
+
+- **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next).
+
+`next()` fonksiyonu, bir `generator` nesnesinden bir sonraki öğeyi alır.
 
 # `object()`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#object).

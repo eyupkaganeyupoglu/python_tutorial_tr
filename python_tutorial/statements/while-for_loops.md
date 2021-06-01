@@ -36,12 +36,74 @@ print(liste[index])
 `while` loop, koşul durumu `True` olduğu sürece çalışır demiştik. Buna göre, `while` loop'un koşul durumuna `true` value'sini verirsek `while (true)` şeklinde bir yapı elde etmiş oluruz ve bu loop'u çalıştırırsak kendini sonsuz kere tekrarlar. Bu yapıyı kullanışlı hale getirmek için ileride bahsedeceğimiz `break` deyimini kullanacağız.
 
 # `for` Loop
-`for` loop'un `while` loop'dan farkı, tekrar sayısını manuel olarak ayarlayabilmemizdir. Syntax'ı:
+`for` loop `for` loop'un `while` loop'dan farkı, tekrar sayısını manuel olarak ayarlayabilmemizdir. `for` loop, kendisine verilen **Iterable** objeden, loop içinde kullanmak için bir **Iterator** oluşturuyor. Bu aşama arka planda gerçekleşen bir işlem olduğu için kullanıcılar tarafından direkt göslemlenemez. Daha sonra bu **Iterator**, `StopIteration` hatası döndürene kadar yenilenmeye (next) devam eder. Aşağıdaki `for` ve `while` loop kodları biribiryle tamamen aynı çalışır:
+```py
+a = [1,2,3,4,5]
+for i in a:
+	print(i)
+```
+```py
+a = [1,2,3,4,5]
+b = iter(a) # Iterator oluşturmak için kullanılan bir fonksiyon.
+while True:
+	try:
+		i = next(b)
+	except StopIteration:
+		break
+	print(i)
+```
+`for` loop'un syntax'ı
 ```py
 for <var> in <iterable>:
 	# Kodlar
 ```
-Buradaki `<var>`, local variable; `<iterable>` ise üzerinde gezinilebilen objedir. Python'daki `for` loop, mantığı, diğer low level dillerdeki **for-each** loop mantığına dayanır. for-each loop ile ilgili bilgi için [**buraya**](https://en.wikipedia.org/wiki/Foreach_loop), for loop'un çalışma mantığıyla ilgili ayrıntılı bilgi için de [**buraya**](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c) tıklayınız.
+Buradaki `<var>`, `for` loop'un scope'unda kullanılabilen bir local variable; `<iterable>` ise üzerinde gezinilebilen objedir. `<iterable>`'ı daha ayrıntılı açıklamak gerekirse:
+
+**Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
+- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
+-  **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
+
+**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
+- **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
+
+- **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
+
+- **Set**, indexlenemez (yani sırasız) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
+
+- **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
+Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next).
+
+[`iter()`](asd) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
+```py
+liste = ["l", "i", "s", "t", "e"]
+liste_iter1 = iter(liste)
+liste_iter2 = iter(liste)
+  
+print(next(liste_iter1)) # Output: l
+print(next(liste_iter1)) # Output: i
+print(next(liste_iter1)) # Output: s
+print(next(liste_iter1)) # Output: t
+print(next(liste_iter1)) # Output: e
+  
+print(liste_iter2.__next__()) # Output: l
+print(liste_iter2.__next__()) # Output: i
+print(liste_iter2.__next__()) # Output: s
+print(liste_iter2.__next__()) # Output: t
+print(liste_iter2.__next__()) # Output: e
+```
+**Not:** Bütün **Iterator**'ler **Iterable**'dir ama her **Iterable** obje, **Iterator** değildir. Örneğin bir `list` **Iterable** bir objedir ama **Iterator** değildir.
+
+**Not:** Bir **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası döndürülür. Örnek:
+```py
+iterable_item = ["selam", "merhaba"]
+iterator = iter(iterable_item)
+
+print(next(iterator)) # Output: selam
+print(next(iterator)) # Output: merhaba
+print(next(iterator)) # Output: StopIteration
+```
+
+Python'daki `for` loop, mantığı, diğer low level dillerdeki **for-each** loop mantığına dayanır. for-each loop ile ilgili bilgi için [**buraya**](https://en.wikipedia.org/wiki/Foreach_loop), for loop'un çalışma mantığıyla ilgili ayrıntılı bilgi için de [**buraya**](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c) tıklayınız.
 
 Örnek:
 ```py

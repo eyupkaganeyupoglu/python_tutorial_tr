@@ -256,16 +256,16 @@ Yukarıdaki kodda `nonlocal` keyword'ünü kullanmasaydık `UnboundLocalError: l
 
 Önemli bir örnek:
 ```py
-def sayıcı():
+def fonk1():
     sayı = 0
-    def say():
-        nonlocal sayı
+    def fonk2():
+        nonlocal sayı # sayı = 0
         sayı += 1
         return sayı
-    return say
+    return fonk2
 
-s1 = sayıcı()
-s2 = sayıcı()
+s1 = fonk1()
+s2 = fonk1()
 
 print(s1()) # Output: 1
 print(s1()) # Output: 2
@@ -277,21 +277,45 @@ print(s2()) # Output: 3
 
 ```
 Yukarıdaki fonksiyon şöyle çalışır:
-- Önce `def sayıcı():` okunur ve `<function sayıcı at 0x000001D8E02135E0>` objesi oluşturulur.
-- sonra, `s1 = sayıcı()` okunur ve sırasıyla şöyle çalışır:
-	- Python bu satırdaki `sayıcı()` kodu yüzünden `sayıcı()` fonksiyonunu çalıştırır. Çalıştırılan bu `sayıcı()` fonksiyonu ile ilk başta oluşturulan `sayıcı()` objesi aynıdır. Yani `s1 = sayıcı()` satırı okunduğunda `sayıcı()` objesi tekrar oluşturulmaz.
-	- `sayıcı()` çalışınca `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
-	- Sonra `def say():` satırı okunur 
+- Önce `def fonk1():` okunur ve `<function fonk1 at 0x000001D8E02135E0>` objesi oluşturulur.
+- Sonra, `s1 = fonk1()` okunur ve sırasıyla şöyle çalışır:
+	- Python bu satırdaki `fonk1()` kodu yüzünden `fonk1()` fonksiyonunu çalıştırır. Bu fonksiyon `<function fonk1 at 0x000001D8E02135E0>` objesini çağırır.
+	- Sonra, `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
+	- Sonra `def fonk2():` satırı okunur ve bu fonksiyonun `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi oluşturulur. Bu obje, `s1 = sayıcı()` kodu ile çağırılan `<function fonk1 at 0x000001D8E02135E0>` objenin o anki durumunu geçerli kabul eder (Örneğin `sayı` variablesinin `0`'a eşit olduğu kabul eder).
+	- Sonra, `return fonk2` kodu ile `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi `s1`'e atanır.
+- Sonra, `s2 = fonk1()` okunur ve sırasıyla şöyle çalışır:
+	- Python bu satırdaki `fonk1()` kodu yüzünden `fonk1()` fonksiyonunu çalıştırır. Bu fonksiyon `<function fonk1 at 0x000001D8E02135E0>` objesini çağırır.
+	- Sonra, `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
+	- Sonra `def fonk2():` satırı okunur ve bu fonksiyonun `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objesi oluşturulur. Bu obje, `s1` variable'ına atanan objeden farklı bir objedir. Bu obje, `s2 = sayıcı()` kodu ile çağırılan `<function fonk1 at 0x000001D8E02135E0>` objenin o anki durumunu geçerli kabul eder (Örneğin `sayı` variablesinin `0`'a eşit olduğu kabul eder).
+	- Sonra, `return fonk2` kodu ile `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objesi `s2`'e atanır.
+- Sonra, her `print(s1())` komutu çalıştırıldığında, outputlar 1, 2, 3, ... artarak bastırılır.
+- Sonra, her `print(s2())` komutu çalıştırıldığında, outputlar, `print(s1())`'deki gibi 1, 2, 3, ... artarak bastırılır. Bir tane `<function fonk1 at 0x000001D8E02135E0>` objesi olmasına rağmen `s1` ve `s2`'nin birbirinden bağımsız `sayı` değerlerine sahip olmalasının nedeni şudur:
+	- `global` statement'da, global scope'daki bir variable'nin değerini local scope'da değiştirdiğinizde, global scope'daki variable'ın da değeri değişiyordu. Birbiriyle tamamen aynı birden fazla global scope olsaydı, her bir global scope'un içindeki değerler, o scope'un kapsamında değişirdi.
+	- `nonlocal` statement'i de `global` satetement mantıkla düşünmeliyiz. `fonk1()` her çağırıldığında, `<function fonk1 at 0x000001D8E02135E0>` objesinin ilk hali geçerli olur. `print(s1())` komutu her çalıştığında `sayı` variable'ının değeri bir arttığından, her output bir öncekinden bir fazladır. Ama `print(s1())` komutunu üç kere çalıştırdıktan sınra `print(s2())` komutunu çalıştırdığımızda `4` outputunu vermek yerine `1` outputunu verir. Bunun sebebi, `s1` ve `s2`'ye atanan birbirinden farklı `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` ve `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objeleri, `<function fonk1 at 0x000001D8E02135E0>` objesinin ilk halini tanımalarıdır. Bu yüzden `s1` ve `s2`'nin içindeki `nonlocal` statement'in çağırdığı `sayı` variableleri birbirinden bağımsız.
+	- global scope'daki variable'lara erişimimiz olduğu için o variable'lerin programın life-time'ı boyunca nasıl değiştiriğini kontrol edebiliriz ama local variable'lara erişimimiz olmadığı için kontrol edemeyiz. Local variable'lere sadece nasted fonksiyonların erişimi vardır. Bu yüzden `print(s1())` ve `print(s2())` komutları çalışırken, debugger'da `fonk2`'nin döndürdüğü sayıları görsek de, `fonk2`'nin yaptığı işlemleri göremeyiz.
 ```py
-def sayıcı():
+def fonk1():
     sayı = 0
-    def say():
-        nonlocal sayı
+    def fonk2():
+        nonlocal sayı # sayı = 0
         sayı += 1
         return sayı
-    return say
+    return fonk2
 
-print(sayıcı()()) # Output: 1
-print(sayıcı()()) # Output: 1
-print(sayıcı()()) # Output: 1
+print(fonk1()()) # Output: 1
+print(fonk1()()) # Output: 1
+print(fonk1()()) # Output: 1
 ```
+Yukarıdaki fonksiyon şöyle çalışır:
+- Önce `def fonk1():` okunur ve `<function fonk1 at 0x000001D8E02135E0>` objesi oluşturulur.
+- Sonra, `print(fonk1()())` okunur ve sırasıyla şöyle çalışır:
+	- `fonk1()()`'in `fonk1()` kısmı çalıştırılır ve bu fonksiyon `<function fonk1 at 0x000001D8E02135E0>` objesini çağırır.
+	- Sonra, `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
+	- Sonra `def fonk2():` satırı okunur ve bu fonksiyonun `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi oluşturulur. Bu obje `<function fonk1 at 0x000001D8E02135E0>` objenin o anki durumunu geçerli kabul eder (Örneğin `sayı` variablesinin `0`'a eşit olduğu kabul eder).
+	- Sonra, `return fonk2` kodu ile `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi global scope'a gönderilir (bundan sonra bu objeye kısaca `fonk2` objesi diyeceğim).
+	- `fonk1()()` fonksiyonunun `fonk1()` kısmındaki işlemler bittikten sonra global scope'a gönderilen `fonk2` objesi `fonks2()` şeklinde çalıştırılır. `fonk1()()`'deki 2 tane parantezin olayı budur. `fonk1()()`'deki `fonk1()` fonksiyonu `fonk2` objesin döndürdüğü için python `fonk1()()`'yi `fonk2()` olarak görür ve çalıştırır.
+	- `fonk2()` çalıştıktan sonra `sayı` variable'ına 1 ekler ve `sayı` variable'ının değeri `1` olur.
+	- Sonra, `return sayı` ile `sayı` variable'sini döndürür ve `print()` fonksiyonu bu değeri ekrana basar.
+- `print(fonk1()())`'in `s2 = fonk1()` ya da `s2 = fonk1()`'den en büyük farkı:
+	- `fonk1()` ile oluşturulan `fonk2` objesi bir `s1` ya da `s2` variable'larına atandığı için hafızada tutulur ve her çağırıldığında, `print()` ile ekrana bastırılan output farklı olur.
+	- Ama `fonk1()()` kodundaki `fonk1()` ile oluşturulan `fonk2` objesi, ikinci parantez yüzünden `fonk2()` şeklinde kullanıldıktan sonra bellekten silinir. Bu yüzden her `print(fonk1()())` kodu `1` output'unu verir.

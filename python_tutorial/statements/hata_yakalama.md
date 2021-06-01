@@ -249,7 +249,7 @@ try:
 	bölünen = int(input("bölünecek sayı: "))
 	bölen = int(input("bölen sayı: "))
 	print(bölünen/bölen)
-except ZeroDivisionError  as hata:
+except ZeroDivisionError as hata:
 	print("bir sayıyı 0'a bölemezsiniz", hata, sep="\n")
 ```
 **Output:**
@@ -261,7 +261,51 @@ division by zero
 ```
 gördüğünüz gibi `try` - `except <ErrorCode>` - `as <identifier>` yapısında sadece `ZeroDivisionError` hatasının hata mesajı ekrana bastırıldı. Hatanın hangi line'da olduğu, hangi kodda oluştuğu vs. gibi bilgiler eksik.
 
-## `assert <condition>,<error message>` Statement
+`raise` keyword'ünü `from` keyword'ü ile birlikte kullanınca, python'un verdiği tepki değişir. Örnek:
+```py
+try:
+    print(i)
+except NameError as NE:
+    raise ValueError("From için")
+```
+**Output:**
+```
+Traceback (most recent call last):
+  File "d:\hata_yakalama.py", line 2, in <module>
+    print(i)
+NameError: name 'i' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\hata_yakalama.py", line 4, in <module>
+    raise ValueError("From için")
+ValueError: From için
+```
+Yukarıdaki output'da `During handling of the above exception, another exception occurred:`, yani `Yukarıdaki exception'ın işlenmesi sırasında başka bir exception oluştu:` yazmaktadır. Bunun anlamı: "`NameError` oluştuğu sırada, başka bir exception olan (another exception) `ValueError` oluştu." şeklindedir.
+```py
+try:
+    print(i)
+except NameError as NE:
+    raise ValueError("From için") from NE
+```
+**Output:**
+```
+Traceback (most recent call last):
+  File "d:\hata_yakalama.py", line 2, in <module>
+    print(i)
+NameError: name 'i' is not defined
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\hata_yakalama.py", line 4, in <module>
+    raise ValueError("From için") from NE
+ValueError: From için
+```
+Yukarıdaki output'da `The above exception was the direct cause of the following exception:`, yani `Yukarıdaki exception, aşağıdaki exception'ın doğrudan nedeniydi:` yazmaktadır. Bunun anlamı: "`ValueError` oluşma nedeni `NameError`'dür." şeklindedir.
+
+## `assert <condition>, <error message>` Statement
 `assert` deyimi `raise` deyiminin aksine, özelleştirilebilir Hata kodları yaratmamıza olanak tanır. `assert <condition>,<error message>` syntax'ına sahiptir. Buradaki `<condition>`, logic bir ifadedir ve `False` sonucuna eşit olursa `assert` çalışır. `assert` çalıştığında `AssertionError` hata koduyla birlikte `<error message>`'da belirtilen hata mesajını döndürür. Örneğin, aşağıdaki iki kod aynı işleve sahiptir:
 ```py
 giriş = input("Merhaba! Adın ne? ")
