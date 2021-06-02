@@ -329,3 +329,112 @@ for i in herhangi_bir_üreteç():
     yield i
 ```
 `1. Yapı` ve `2. Yapı`'da belirliten kodlar aynı işleve sahiptir.
+
+# Comprehension
+**Comprehension**, tek satırda oluşturduğumuz **Generator** yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Örnek:
+```py
+generator_exp = ((i**2) for i in range(1,4))
+
+print(generator_exp) # Output: <generator object <genexpr> at 0x0000016A87522120>
+
+for i in generator_exp:
+    print(i, end=" ") # Output: 1 4 9
+```
+Yukarıdaki `((i**2) for i in range(1,4))` kodu, aşağıdaki anlama gelmektedir:
+```py
+def generator():
+    for i in range(10):
+        yield i
+
+generator_exp = generator()
+
+print(generator_exp) # Output: <generator object <genexpr> at 0x0000016A87522120>
+
+for i in generator_exp:
+    print(i, end=" ") # Output: 1 4 9
+```
+**Generator Comprehension** yapısı (Örneğin `((i**2) for i in range(1,4))` kodu), sadece bir tane **Generator** objesi oluşturur. Bu yüzden sadece bir tur yenilenebilir. Tekrar kullanılmaya kalkarsanız `StopIteration` hatası alırsınız. Örnek:
+```py
+generator_exp = ((i**2) for i in range(1,4))
+
+print(next(generator_exp)) # Output: 1
+print(next(generator_exp)) # Output: 4
+print(next(generator_exp)) # Output: 9
+print(next(generator_exp)) # Output: StopIteration
+```
+Bu **Generator** objesini çeşitli data type'lara dönüştürerek kullanabilirsiniz.
+
+## List Comprehension
+Bir **Generator Comprehension**'ı, `list` data type'ında kullandığımız yapıdır. `[expression for item in iterable]` syntax'ına sahiptir. Örnek:
+```py
+list_exp = [(i**2) for i in range(1,4)]
+
+print(list_exp) # Output: [1, 4, 9]
+
+for i in list_exp:
+    print(i, end=" ") # Output: 1 4 9
+```
+`[expression for item in list]` syntax'ını kullanmak zorunda değilsiniz. Bir **Generator** objesi oluşturup sonradan bu objeyi listeye de çevirebilirsiniz ama `[expression for item in list]` syntax'ını kullanmak daha uygundur.
+```py
+generator_exp = ((i**2) for i in range(1,4))
+print(generator_exp) # Output: <generator object <genexpr> at 0x0000016A87522120>
+list_exp = list(generator_exp)
+print(type(list_exp)) # Output: <class 'list'>
+
+print(list_exp) # Output: [1, 4, 9]
+
+for i in list_exp:
+    print(i, end=" ") # Output: 1 4 9
+```
+Aşağıda, 0'dan 60'a kadar (0 ve 60 dahil) olan sayıların 6'ya bölünebilenlerini liste halinde depolayan özel bir yapı vardır.
+```py
+liste = [i for i in range(60) if i % 6 == 0]
+print(liste) # Output: [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60]
+```
+Bu koddaki `[i for i in range(60) if i % 6 == 0]` kodu aşağıdaki anlama gelmektedir:
+```py
+liste = []
+for i in range(61):
+    if i % 6 == 0:
+        liste.append(i)
+```
+### Nasted List Comprehension
+???
+
+## Dictionary Comprehension
+Bir **Generator Comprehension**'ı, `dict` data type'ında kullandığımız yapıdır. `{item_1:item_1 for item_1 in iterable}` syntax'ına sahiptir. Örnek:
+```py
+dict_exp = {(i):(i**2) for i in range(1,4)}
+
+print(dict_exp) # Output: {1: 1, 2: 4, 3: 9}
+
+for i in dict_exp:
+    print(i, end=" ") # Output: 1 2 3
+```
+`{item_1:item_1 for item_1 in iterable}` syntax'ını kullanmak zorunda değilsiniz. Bir **Generator** objesi oluşturup sonradan bu objeyi dictionary'e de çevirebilirsiniz ama `{item_1:item_1 for item_1 in iterable}` syntax'ını kullanmak daha uygundur.
+```py
+generator_exp = ((i,i**2) for i in range(5))
+print(generator_exp) # Output: <generator object <genexpr> at 0x0000016A87522120>
+
+dict_exp = list(generator_exp)
+print(dict_exp) # Output: [(0, 0), (1, 1), (2, 4), (3, 9), (4, 16)]
+
+dict_exp = dict(generator_exp)
+print(dict_exp) # Output: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+print(type(dict_exp)) # Output: <class 'dict'>
+
+for i in dict_exp:
+    print(i, end=" ") # Output: 0 1 2 3 4
+```
+Aşağıda, 0'dan 10'a kadar (0 ve 10 dahil) olan sayıların çift olanlarının karalerini alan ve bunları dictionary halinde depolayan özel bir yapı vardır.
+```py
+dict_exp = {i:i**2 for i in range(11) if i % 2 == 0}
+print(dict_exp) # Output: {0: 0, 2: 4, 4: 16, 6: 36, 8: 64, 10: 100}
+```
+Bu koddaki `[i for i in range(60) if i % 6 == 0]` kodu aşağıdaki anlama gelmektedir:
+```py
+dict_exp = dict()
+for i in range(11):
+    if i % 2 == 0:
+        dict_exp.update({i:i**2})
+```
