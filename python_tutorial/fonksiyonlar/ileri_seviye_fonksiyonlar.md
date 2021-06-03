@@ -105,6 +105,22 @@ def yazıcı():
 ```
 Yukarıdaki fonksiyonda, `yazıcı()` fonksiyonunu çağırmadan `yaz()` fonksiyonunu çağıramayız. Bu her yerde böyledir. Çünkü `yazıcı()` fonksiyonunu çağırdığımızda onu tanımlamış oluyoruz ve `yazıcı()` fonksiyonunu tanımlamadan `yaz()` fonksiyonunu direkt çağıramayız. `yazıcı()` fonksiyonu her çağırıldığında `yaz()` fonksiyonu baştan tanımlanır. Yani `yazıcı()` fonksiyonunu ilk çağırışınızdaki `yaz()` fonksiyonu ile  `yazıcı()` fonksiyonunu ikinci çağırışınızdaki `yaz()` fonksiyonu birbirinden farklı objelerdir. Bu objeler `<function yazıcı.<locals>.yaz at 0x00000210D9235558>` şeklindedir.
 
+## Örnek Uygulama
+```py
+def four(f = None): return 4 if not f else f(4)
+def five(f = None): return 5 if not f else f(5)
+def plus(y): return lambda x: x+y
+
+print(four(plus(five()))) # Output: 9
+```
+Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
+- Python'un bir kodu nasıl okuyup çalıştırdığını **[temel_kavramlar.md](asd)**'de anlatıldı. İlk olarak en içteki `five()` çalışır ve parametre olarak bir şey girilmediği için `5` döndürür.
+- Sonra `plus()` çalışır ve parametre olarak aldığı `5`'i kullanarak `lambda x : x+5` fonksiyonunu döndürür.
+- Sonra `four()` çalışır ve parametre olarak lambda fonksiyonu objesi aldığı için `f` parametresi `None` değerini kaybeder. Bu yüzden `if` çalışmaz, `else` çalışır. `else`'e tanımlanmış `f(4)`, `(lambda x : x + 5)(4)` anlamına gelmektedir. Buradaki mantık `plus()()` mantığıyla aynıdır. `plus()()` şöyle okunur:
+    - `plus(5)(4)`'da ilk önce soldaki kısım, yani `plus(5)` fonksiyonu (`<function plus at 0x00000179CF5ABEE0>`)çalışır. `plus(5)` fonksiyonu `lambda x: x+5` lambda fonksiyonu objesini `<function plus.<locals>.<lambda> at 0x00000179CF5ABF70>` döndürür.
+    - Sonra, `plus(5)` fonksiyonunun döndürdüğü `lambda x: x+5` lambda fonksiyonu objesi, `plus(5)` fonksiyonunun yerine geçer ve `plus(5)(4)` yapısı, `(lambda x: x+5)(4)` yapısına dönüşür (asli `<function plus.<locals>.<lambda> at 0x00000179CF5ABF70>(4)`'dür).
+    - Sonra, `(lambda x: x+5)(4)` yapısındaki `lambda x: x+5` lambda fonksiyonu, kendisine girilen `4`'ü işleme sokar ve `4+5`'den `9` sonucunu döndürür.
+
 # Generators (Üreteçler)
 
 **Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
@@ -682,72 +698,19 @@ Yukarıdaki `k:main_dict[i][j][k] for i in main_dict for j in main_dict[i] for k
 **Not:** Dictionary objelerinde **nested**'lik ile bu dictionary'ye erişen **Nested Dictionary Comprehension** objelerindeki `for` loop sayısı doğru orantılıdır. Yani bir dictionary objesi 2 katman (Öreneğin `{1:{1:1, 2:2}, 2:{1:1, 2:2}}`) **nested** ise, bu dictionary'ye erişen **Nested Dictionary Comprehension** objelerindeki `for` loop (Örneğin `j:main_dict[i][j] for i in main_dict for j in main_dict[i]`) sayısı da 2'dir.
 
 #### Örnek 3
-**Nested List Comprehension** objesi oluştururken belli bir koşul belirleyebilirsiniz. Mevcut **nested** listeyi koşula göre ayrıştırma için aşağıdaki örneklere bakınız. Örnek:
+**Nested Dictionary Comprehension** objesi oluştururken belli bir koşul belirleyebilirsiniz. Mevcut **nested** dictionary'yi koşula göre ayrıştırma için aşağıdaki örneklere bakınız. Örnek:
 ```py
-main_list = [[[1,2], [3,4,5], [6]], [[7,8,9,10], [11,12]], [[13,14,15], [16], [17,18],[19,20]]]
+main_dict = {1:{0:0, 2:4, 4:16}, 2:{6:36, 8:64, 10:100}}
 
-flatten_list1 = []
-for i in main_list:
-    for j in i:
-        for k in j:
-            if k % 2 == 0:
-                flatten_list1.append(k)
-print(flatten_list1) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+dict1 = dict()
+for i in main_dict:
+    for j in main_dict[i]:
+        if main_dict[i][j] > 50:
+            dict1.update({j:main_dict[i][j]})
+print(dict1) # Output: {8: 64, 10: 100}
 
-flatten_list2 = [k for i in main_list for j in i for k in j if k % 2 == 0]
-print(flatten_list2) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-```
+dict2 = {j:main_dict[i][j] for i in main_dict for j in main_dict[i] if main_dict[i][j] > 50}
+print(dict2) # Output: {8: 64, 10: 100}
 
-#### Örnek 4
-Mevcut **nested** listeden başka bir **nested** liste üretmek için aşağıdaki örneklere bakınız.
-
-##### Örnek 4.1
-```py
-main_list = [1,2,3]
-
-liste1 = []
-for i in range(2):
-    temp_list = []
-    for j in main_list:
-        temp_list.append(j)
-    liste1.append(temp_list)
-print(liste1)
-
-liste2 = [[j for j in main_list] for i in range(2)]
-print(liste2)
-```
-Yukarıdaki `[j for j in main_list] for i in range(2)` yapısının, `j for i in main_list for j in i` yapısından farkı, `[j for j in main_list] for i in range(2)` yapısının `expression for item in list` syntax'ının mantığıyla çalışmasıdır çünkü `[j for j in main_list] for i in range(2)` yapı ile `expression for item in list` syntax'ı aynı şeydir. Yani `expression for item in list` syntax'ındaki `expression`, `[j for j in main_list] for i in range(2)` yapısındaki `[j for j in main_list]` kısmına karşılık gelmektedir.
-
-##### Örnek 4.2
-```py
-main_list = [[1, 2, 3, 4], [5, 6, 7, 8]]
-
-list1 = []
-for i in range(0, len(main_list[0])):
-    temp_list = []
-    for j in main_list:
-        temp_list.append(j[i])
-    list1.append(temp_list)
-    temp_list = []
-print(list1) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
-
-list2 = [[j[i] for j in main_list] for i in range(len(main_list[0]))]
-print(list2) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
-```
-
-##### Örnek 4.3
-```py
-main_list = [[1, 2], [3, 4], [5, 6], [7, 8]]
-
-list1 = []
-for i in range(0, len(main_list[0])):
-    temp_list = []
-    for j in main_list:
-        temp_list.append(j[i])
-    list1.append(temp_list)
-    temp_list = []
-print(list1) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
-
-list2 = [[j[i] for j in main_list] for i in range(len(main_list[0]))]
-print(list2) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
+print(dict1 == dict2) # Output: True
 ```
