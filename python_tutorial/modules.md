@@ -22,6 +22,8 @@ def module_imported():
 2. Modül dostası Python Lib'de olmalıdır. Bu klasör HP bilgisayarlarda `C:\Users\HP\AppData\Local\Programs\Python\Python39\Lib` path'ında bulunabilir. Buradaki `Python39`, python sürümünüze göre değişiklik gösterebilir.
 3. `sys.path`, python, import edilmeye çalışılan bir modül dosyasını ararken baktığı path'ların tuttuğu, `sys` modülünde bulunan bir listedir. Modül dosyası ile program dosyası, `D:\main_dosya\modules\modul.py` ve `D:\main_dosya\program\main.py` gibi birbiriyle alakasız iki klasör içindeyse `sys` modülündeki `sys.path` methoduna, modülünüzün bulunduğu path'ı `sys.path.append(r"D:\main_dosya\modules")` örneğindeki gibi eklerseniz, daha sonra o path'da bulunan modülünüzü normal `import modul` şeklinde import edip kullanabilirsiniz. Pylance gibi extension'lar bu yöntemi algılayamayıp, `import modul` kodundaki `modul` modülünü bulamadığı için `Import "modul" could not be resolved` hatası verebilirler. Bunlara aldırmanıza gerek yoktur çünkü kodunuz çalışır. Yine de her ihtimale karşı `print(sys.path)` kodunun döndürdüğü liste'de, `sys.path.append()` ile eklediğiniz path varmı diye kontrol etmekte fayda var.
 
+**Not:** Bir modülü import ettikten sonra, modül dosyasında bir değiliklik yaparsanız (Örneğin yeni bir fonksiyon eklerseniz), modülü import ettiğiniz dosya bu değişiklikleri tanımaz (yani yeni eklediğiniz fonksiyonu kullanamazsınız). Bunun önüne geçmek için, `importlib.reload(modül_adı)` modül methodunu kullanarak modülünüzü **reload** yapabilirsiniz. Modülü tekrardan `import modul` şeklinde import etmek işe yaramaz. `importlib.reload(modül_adı)` kullanın.
+
 ## `as` Keyword'ü
 Bir modülü, programınız içerisinde başka bir isimle kullanmak için `as` keyword'ü kullanılır.
 ```py
