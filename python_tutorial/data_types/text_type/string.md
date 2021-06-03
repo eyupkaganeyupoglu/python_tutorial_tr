@@ -242,7 +242,7 @@ print(sorted("afgdhkıi", key=çevrim.get))
 
 # Output: ['a', 'd', 'f', 'g', 'h', 'ı', 'i', 'k']
 ```
-Nasted (iç içe) listelerde ilk elemana göre sıralar:
+Nested (iç içe) listelerde ilk elemana göre sıralar:
 ```py
 elemanlar = [('ahmet',       33,    'karataş'),
              ('mehmet',      45,    'arpaçbahşiş'),

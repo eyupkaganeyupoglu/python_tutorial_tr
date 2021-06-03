@@ -232,7 +232,7 @@ func() # Output: 1
 ```
 
 #### `nonlocal` keyword
-`nonlocal` keyword'ü, üst local scope'da bulunan değerlerin alt local scope'da kullanılmasına imkan sağlayan bir keyword'dür. Bu keyword, nasted fonksiyonlarda kullanılabilir.
+`nonlocal` keyword'ü, üst local scope'da bulunan değerlerin alt local scope'da kullanılmasına imkan sağlayan bir keyword'dür. Bu keyword, nested fonksiyonlarda kullanılabilir.
 ```py
 def  func1():
 	x = 1
@@ -292,7 +292,7 @@ Yukarıdaki fonksiyon şöyle çalışır:
 - Sonra, her `print(s2())` komutu çalıştırıldığında, outputlar, `print(s1())`'deki gibi 1, 2, 3, ... artarak bastırılır. Bir tane `<function fonk1 at 0x000001D8E02135E0>` objesi olmasına rağmen `s1` ve `s2`'nin birbirinden bağımsız `sayı` değerlerine sahip olmalasının nedeni şudur:
 	- `global` statement'da, global scope'daki bir variable'nin değerini local scope'da değiştirdiğinizde, global scope'daki variable'ın da değeri değişiyordu. Birbiriyle tamamen aynı birden fazla global scope olsaydı, her bir global scope'un içindeki değerler, o scope'un kapsamında değişirdi.
 	- `nonlocal` statement'i de `global` satetement mantıkla düşünmeliyiz. `fonk1()` her çağırıldığında, `<function fonk1 at 0x000001D8E02135E0>` objesinin ilk hali geçerli olur. `print(s1())` komutu her çalıştığında `sayı` variable'ının değeri bir arttığından, her output bir öncekinden bir fazladır. Ama `print(s1())` komutunu üç kere çalıştırdıktan sınra `print(s2())` komutunu çalıştırdığımızda `4` outputunu vermek yerine `1` outputunu verir. Bunun sebebi, `s1` ve `s2`'ye atanan birbirinden farklı `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` ve `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objeleri, `<function fonk1 at 0x000001D8E02135E0>` objesinin ilk halini tanımalarıdır. Bu yüzden `s1` ve `s2`'nin içindeki `nonlocal` statement'in çağırdığı `sayı` variableleri birbirinden bağımsız.
-	- global scope'daki variable'lara erişimimiz olduğu için o variable'lerin programın life-time'ı boyunca nasıl değiştiriğini kontrol edebiliriz ama local variable'lara erişimimiz olmadığı için kontrol edemeyiz. Local variable'lere sadece nasted fonksiyonların erişimi vardır. Bu yüzden `print(s1())` ve `print(s2())` komutları çalışırken, debugger'da `fonk2`'nin döndürdüğü sayıları görsek de, `fonk2`'nin yaptığı işlemleri göremeyiz.
+	- global scope'daki variable'lara erişimimiz olduğu için o variable'lerin programın life-time'ı boyunca nasıl değiştiriğini kontrol edebiliriz ama local variable'lara erişimimiz olmadığı için kontrol edemeyiz. Local variable'lere sadece nested fonksiyonların erişimi vardır. Bu yüzden `print(s1())` ve `print(s2())` komutları çalışırken, debugger'da `fonk2`'nin döndürdüğü sayıları görsek de, `fonk2`'nin yaptığı işlemleri göremeyiz.
 ```py
 def fonk1():
     sayı = 0

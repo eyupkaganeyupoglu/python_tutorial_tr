@@ -94,8 +94,8 @@ se
 s
 ```
 
-# Nasted (İç İçe) Fonksiyonlar
-İç içe fonksiyonlarda, en dıştaki (yani global scope'da tanımlanan) fonksiyon **enclosing**, enclosing'in scope'una tanımlanan bütün fonksiyonlar da **nasted** olarak isimlenirilir.
+# Nested (İç İçe) Fonksiyonlar
+İç içe fonksiyonlarda, en dıştaki (yani global scope'da tanımlanan) fonksiyon **enclosing**, enclosing'in scope'una tanımlanan bütün fonksiyonlar da **nested** olarak isimlenirilir.
 ```py
 def yazıcı():
     print("Yazıcı Çalıştı.")
@@ -398,8 +398,145 @@ for i in range(61):
     if i % 6 == 0:
         liste.append(i)
 ```
-### Nasted List Comprehension
-???
+### Nested List Comprehension
+`[[1,2], [3,4], [5,6]]` gibi nested listleri oluşturmak ya da böyle listeler üzerinde işlemler yapmak için kullanılan yapıya denir. Örnekler:
+
+#### Örnek 1
+**Nested** liste oluşturmak için aşağıdaki örneklere bakınız.
+
+##### Örnek 1.1
+```py
+list1 = []
+for i in range(3):
+    list1.append([])
+    for j in range(3):
+        list1[i].append(j)
+print(list1) # Output: [[0, 1, 2], [0, 1, 2], [0, 1, 2]]
+
+list2 = [[j for j in range(3)] for i in range(3)]
+print(list2) # Output: [[0, 1, 2], [0, 1, 2], [0, 1, 2]]
+```
+##### Örnek 1.2
+```py
+list1 = []
+for i in range(3):
+    list1.append([])
+    for j in range(3):
+        list1[i].append(i)
+print(list1) # Output: [[0, 0, 0], [1, 1, 1], [2, 2, 2]]
+
+list2 = [[i for j in range(3)] for i in range(3)]
+print(list2) # Output: [[0, 0, 0], [1, 1, 1], [2, 2, 2]]
+```
+
+#### Örnek 2
+Mevcut **nested** listeyi ayrıştırma için aşağıdaki örneklere bakınız.
+
+##### Örnek 2.1
+```py
+main_list = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
+
+flatten_list1 = []
+for sublist in main_list:
+    for i in sublist:
+        flatten_list1.append(i)
+print(flatten_list1) # Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+flatten_list2 = [i for sublist in main_list for i in sublist]
+print(flatten_list2) # Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+**Not:** `main_list` variable'ına `[0, [1, 2, 3], [4, 5], [6, 7, 8, 9]]` tarzı bir liste girilseydi `TypeError: 'int' object is not iterable` hatası ile karşılaşılırdı çünkü `0` itemi yüzünden `for i in sublist:` kodundaki `sublist`'e atanan değer `0` oluyor. `0` `iterable` bir obje değil, integer bir objedir. Bu yüzden `TypeError: 'int' object is not iterable` hatası ile karşılaşılıyor.
+
+##### Örnek 2.2
+```py
+main_list = [[[1,2], [3,4,5], [6]], [[7,8,9,10], [11,12]], [[13,14,15], [16], [17,18],[19,20]]]
+
+flatten_list1 = []
+for i in main_list:
+    for j in i:
+        for k in j:
+            flatten_list1.append(k)
+print(flatten_list1) # Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+flatten_list2 = [k for i in main_list for j in i for k in j]
+print(flatten_list2) # Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+```
+Yukarıdaki `k for i in main_list for j in i for k in j` kodu şöyle çalışır:
+- En baştaki `k`, en içteki nested `for` loop'un `item`'idir yani `flatten_list1.append(k)` kısmını temsil eder.
+- `k for i in main_list for j in i for k in j` kodunu `(k) (for i in main_list) (for j in i) (for k in j)` şeklinde parçalarsak, `for i in main_list` **enclosing**, ondan sonrakiler soldan sağa doğru **nested** `for` loop oluyor. Yani soldan sağa doğru **nested**'lık artıyor. En sağdaki for loop'un item'ı da (örneğin yukarıdaki `for k in j`'ın `k` item'i), en baştaki expression'ı (örneğin yukarıdaki kodun en sağındaki `k`) temsil eder.
+
+**Not:** Liste objelerinde **nested**'lik ile bu listeye erişen **Nested List Comprehension** objelerindeki `for` loop sayısı doğru orantılıdır. Yani bir liste objesi 2 katman (Oreneğin `[[1,2], [3,4]]`) **nested** ise, bu listeye erişen **Nested List Comprehension** objelerindeki `for` loop (Örneğin `j for i in liste for j in i`) sayısı da 2'dir.
+
+#### Örnek 3
+**Nested List Comprehension** objesi oluştururken belli bir koşul belirleyebilirsiniz. Mevcut **nested** listeyi koşula göre ayrıştırma için aşağıdaki örneklere bakınız. Örnek:
+```py
+main_list = [[[1,2], [3,4,5], [6]], [[7,8,9,10], [11,12]], [[13,14,15], [16], [17,18],[19,20]]]
+
+flatten_list1 = []
+for i in main_list:
+    for j in i:
+        for k in j:
+            if k % 2 == 0:
+                flatten_list1.append(k)
+print(flatten_list1) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+flatten_list2 = [k for i in main_list for j in i for k in j if k % 2 == 0]
+print(flatten_list2) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+```
+
+#### Örnek 4
+Mevcut **nested** listeden başka bir **nested** liste üretmek için aşağıdaki örneklere bakınız.
+
+##### Örnek 4.1
+```py
+main_list = [1,2,3]
+
+liste1 = []
+for i in range(2):
+    temp_list = []
+    for j in main_list:
+        temp_list.append(j)
+    liste1.append(temp_list)
+print(liste1) # Output: [[1, 2, 3], [1, 2, 3]]
+
+liste2 = [[j for j in main_list] for i in range(2)]
+print(liste2) # Output: [[1, 2, 3], [1, 2, 3]]
+```
+Yukarıdaki `[j for j in main_list] for i in range(2)` yapısının, `j for i in main_list for j in i` yapısından farkı, `[j for j in main_list] for i in range(2)` yapısının `expression for item in list` syntax'ının mantığıyla çalışmasıdır çünkü `[j for j in main_list] for i in range(2)` yapı ile `expression for item in list` syntax'ı aynı şeydir. Yani `expression for item in list` syntax'ındaki `expression`, `[j for j in main_list] for i in range(2)` yapısındaki `[j for j in main_list]` kısmına karşılık gelmektedir.
+
+##### Örnek 4.2
+```py
+main_list = [[1, 2, 3, 4], [5, 6, 7, 8]]
+
+list1 = []
+for i in range(0, len(main_list[0])):
+    temp_list = []
+    for j in main_list:
+        temp_list.append(j[i])
+    list1.append(temp_list)
+    temp_list = []
+print(list1) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
+
+list2 = [[j[i] for j in main_list] for i in range(len(main_list[0]))]
+print(list2) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
+```
+
+##### Örnek 4.3
+```py
+main_list = [[1, 2], [3, 4], [5, 6], [7, 8]]
+
+list1 = []
+for i in range(0, len(main_list[0])):
+    temp_list = []
+    for j in main_list:
+        temp_list.append(j[i])
+    list1.append(temp_list)
+    temp_list = []
+print(list1) # Output: [[1, 3, 5, 7], [2, 4, 6, 8]]
+
+list2 = [[j[i] for j in main_list] for i in range(len(main_list[0]))]
+print(list2) # Output: [[1, 3, 5, 7], [2, 4, 6, 8]]
+```
 
 ## Dictionary Comprehension
 Bir **Generator Comprehension**'ı, `dict` data type'ında kullandığımız yapıdır. `{item_1:item_1 for item_1 in iterable}` syntax'ına sahiptir. Örnek:
@@ -437,4 +574,180 @@ dict_exp = dict()
 for i in range(11):
     if i % 2 == 0:
         dict_exp.update({i:i**2})
+```
+
+### Nested Dictionary Comprehension
+`{1: {1: 1, 2: 4}, 2: {1: 1, 2: 4}}` gibi nested dictionary'leri oluşturmak ya da böyle dictionary'ler üzerinde işlemler yapmak için kullanılan yapıya denir. Örnekler:
+
+#### Örnek 1
+**Nested** dictionary oluşturmak için aşağıdaki örneklere bakınız.
+
+##### Örnek 1.1
+```py
+dict1 = dict()
+for i in range(1,3):
+    temp_dict1 = {i:{}}
+    print(type(temp_dict1))
+    for j in range(1,3):
+        temp_dict2 = {j:j**2}
+        temp_dict1[i].update(temp_dict2)
+    dict1.update(temp_dict1)
+print(dict1) # Output: {1: {1: 1, 2: 4}, 2: {1: 1, 2: 4}}
+
+dict2 = {i:{j:j**2 for j in range(1,3)} for i in range(1,3)}
+print(dict2) # Output: {1: {1: 1, 2: 4}, 2: {1: 1, 2: 4}}
+```
+##### Örnek 1.2
+```py
+dict1 = dict()
+for i in range(1,3):
+    temp_dict1 = {i:{}}
+    print(type(temp_dict1))
+    for j in range(1,3):
+        temp_dict2 = {i:j**2}
+        temp_dict1[i].update(temp_dict2)
+    dict1.update(temp_dict1)
+print(dict1) # Output: {1: {1: 4}, 2: {2: 4}}
+
+dict2 = {i:{i:j**2 for j in range(1,3)} for i in range(1,3)}
+print(dict2) # Output: {1: {1: 4}, 2: {2: 4}}
+```
+
+#### Örnek 2
+Mevcut **nested** dictionary'yi ayrıştırma için aşağıdaki örneklere bakınız.
+
+##### Örnek 2.1
+```py
+main_dict = {"1 key":{"nested 1.1 key":"nested 1.1 value",
+                      "nested 1.2 key":"nested 1.2 value",
+                      "nested 1.3 key":"nested 1.3 value"},
+             "2 key":{"nested 2.1 key":"nested 2.1 value"},
+             "3 key":{"nested 3.1 key":"nested 3.1 value",
+                      "nested 3.2 key":"nested 3.2 value"}}
+
+dict1 = dict()
+for i in main_dict:
+    for j in main_dict[i]:
+        dict1.update({j:main_dict[i][j]})
+print(dict1) # Output: {'nested 1.1 key': 'nested 1.1 value', 'nested 1.2 key': 'nested 1.2 value', 'nested 1.3 key': 'nested 1.3 value', 'nested 2.1 key': 'nested 2.1 value', 'nested 3.1 key': 'nested 3.1 value', 'nested 3.2 key': 'nested 3.2 value'}
+
+dict2 = {j:main_dict[i][j] for i in main_dict for j in main_dict[i]}
+print(dict2) # Output: {'nested 1.1 key': 'nested 1.1 value', 'nested 1.2 key': 'nested 1.2 value', 'nested 1.3 key': 'nested 1.3 value', 'nested 2.1 key': 'nested 2.1 value', 'nested 3.1 key': 'nested 3.1 value', 'nested 3.2 key': 'nested 3.2 value'}
+
+print(dict1 == dict2) # Output: True
+```
+**Not:** `main_dict` variable'ına
+```py
+main_dict = {"0 key":"0 value",
+             "1 key":{"nested 1.1 key":"nested 1.1 value",
+                      "nested 1.2 key":"nested 1.2 value",
+                      "nested 1.3 key":"nested 1.3 value"},
+             "2 key":{"nested 2.1 key":"nested 2.1 value"},
+             "3 key":{"nested 3.1 key":"nested 3.1 value",
+                      "nested 3.2 key":"nested 3.2 value"}}
+```
+tarzı bir dictionary girilseydi `TypeError: string indices must be integers` hatası ile karşılaşılırdı çünkü `"0 key":"0 value"` argümanı yüzünden `for j in main_dict[i]` kodundaki `main_dict[i]`'ye denk gelen değer `"0 value"` olduğu için``for j in main_dict[i]` kodu bu string'i parça parça alacaktır. Bu yüzden `dict1.update({j:main_dict[i][j]})` kodundaki `main_dict[i][j]` kısmındaki `main_dict[i]`'ye denk gelen değer ve `j` variable'ının içerdiği değer string olduğu için python string bir değerin indexlerine string bir değerle ulaşamıyor (çünkü string bir data type'ın indexlerine `"0 value"[3]` gibi integer değerlerle ulaşırsın, `"0 value"['v']` gibi string bir değerle ulaşamazsın) ve `TypeError: string indices must be integers` hatası veriyor.
+
+##### Örnek 2.2
+```py
+main_dict = {"1 key":{"nested 1.1 key":{"2x nested 1.1.1 key":"2x nested 1.1.1 value",
+                                        "2x nested 1.1.2 key":"2x nested 1.1.2 value"},
+                      "nested 1.2 key":{"2x nested 1.2.1 key":"2x nested 1.2.1 value"},
+                      "nested 1.3 key":{"2x nested 1.3.1 key":"2x nested 1.3.1 value",
+                                        "2x nested 1.3.2 key":"2x nested 1.3.2 value",
+                                        "2x nested 1.3.3 key":"2x nested 1.3.3 value"}},
+             "2 key":{"nested 2.1 key":{"2x nested 2.1.1 key":"2x nested 2.1.1 value",
+                                        "2x nested 2.1.2 key":"2x nested 2.1.2 value",
+                                        "2x nested 2.1.3 key":"2x nested 2.1.3 value"}},
+             "3 key":{"nested 3.1 key":{"2x nested 3.1.1 key":"2x nested 3.1.1 value",
+                                        "2x nested 3.1.2 key":"2x nested 3.1.2 value"},
+                      "nested 3.2 key":{"2x nested 3.2.1 key":"2x nested 3.2.1 value"}}}
+
+dict1 = dict()
+for i in main_dict:
+    for j in main_dict[i]:
+        for k in main_dict[i][j]:
+            dict1.update({k:main_dict[i][j][k]})
+print(dict1) # Output: {'2x nested 1.1.1 key': '2x nested 1.1.1 value', '2x nested 1.1.2 key': '2x nested 1.1.2 value', '2x nested 1.2.1 key': '2x nested 1.2.1 value', '2x nested 1.3.1 key': '2x nested 1.3.1 value', '2x nested 1.3.2 key': '2x nested 1.3.2 value', '2x nested 1.3.3 key': '2x nested 1.3.3 value', '2x nested 2.1.1 key': '2x nested 2.1.1 value', '2x nested 2.1.2 key': '2x nested 2.1.2 value', '2x nested 2.1.3 key': '2x nested 2.1.3 value', '2x nested 3.1.1 key': '2x nested 3.1.1 value', '2x nested 3.1.2 key': '2x nested 3.1.2 value', '2x nested 3.2.1 key': '2x nested 3.2.1 value'}
+
+dict2 = {k:main_dict[i][j][k] for i in main_dict for j in main_dict[i] for k in main_dict[i][j]}
+print(dict2) # Output: {'2x nested 1.1.1 key': '2x nested 1.1.1 value', '2x nested 1.1.2 key': '2x nested 1.1.2 value', '2x nested 1.2.1 key': '2x nested 1.2.1 value', '2x nested 1.3.1 key': '2x nested 1.3.1 value', '2x nested 1.3.2 key': '2x nested 1.3.2 value', '2x nested 1.3.3 key': '2x nested 1.3.3 value', '2x nested 2.1.1 key': '2x nested 2.1.1 value', '2x nested 2.1.2 key': '2x nested 2.1.2 value', '2x nested 2.1.3 key': '2x nested 2.1.3 value', '2x nested 3.1.1 key': '2x nested 3.1.1 value', '2x nested 3.1.2 key': '2x nested 3.1.2 value', '2x nested 3.2.1 key': '2x nested 3.2.1 value'}
+
+print(dict2 == dict1) # Output: True
+```
+Yukarıdaki `k:main_dict[i][j][k] for i in main_dict for j in main_dict[i] for k in main_dict[i][j]` kodu şöyle çalışır:
+- En baştaki `k:main_dict[i][j][k]`, en içteki nested `for` loop'un `item`'idir yani `dict1.update({k:main_dict[i][j][k]})` kısmını temsil eder.
+- `k:main_dict[i][j][k] for i in main_dict for j in main_dict[i] for k in main_dict[i][j]` kodunu `(k:main_dict[i][j][k]) (for i in main_dict) (for j in main_dict[i]) (for k in main_dict[i][j])` şeklinde parçalarsak, `for i in main_dict` **enclosing**, ondan sonrakiler soldan sağa doğru **nested** `for` loop oluyor. Yani soldan sağa doğru **nested**'lık artıyor. En sağdaki for loop'un item'ı da (örneğin yukarıdaki `for k in main_dict[i][j]`'ın `k` item'i), en baştaki expression'ı (örneğin yukarıdaki kodun en sağındaki `k:main_dict[i][j][k]`) temsil eder.
+
+**Not:** Dictionary objelerinde **nested**'lik ile bu dictionary'ye erişen **Nested Dictionary Comprehension** objelerindeki `for` loop sayısı doğru orantılıdır. Yani bir dictionary objesi 2 katman (Öreneğin `{1:{1:1, 2:2}, 2:{1:1, 2:2}}`) **nested** ise, bu dictionary'ye erişen **Nested Dictionary Comprehension** objelerindeki `for` loop (Örneğin `j:main_dict[i][j] for i in main_dict for j in main_dict[i]`) sayısı da 2'dir.
+
+#### Örnek 3
+**Nested List Comprehension** objesi oluştururken belli bir koşul belirleyebilirsiniz. Mevcut **nested** listeyi koşula göre ayrıştırma için aşağıdaki örneklere bakınız. Örnek:
+```py
+main_list = [[[1,2], [3,4,5], [6]], [[7,8,9,10], [11,12]], [[13,14,15], [16], [17,18],[19,20]]]
+
+flatten_list1 = []
+for i in main_list:
+    for j in i:
+        for k in j:
+            if k % 2 == 0:
+                flatten_list1.append(k)
+print(flatten_list1) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+flatten_list2 = [k for i in main_list for j in i for k in j if k % 2 == 0]
+print(flatten_list2) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+```
+
+#### Örnek 4
+Mevcut **nested** listeden başka bir **nested** liste üretmek için aşağıdaki örneklere bakınız.
+
+##### Örnek 4.1
+```py
+main_list = [1,2,3]
+
+liste1 = []
+for i in range(2):
+    temp_list = []
+    for j in main_list:
+        temp_list.append(j)
+    liste1.append(temp_list)
+print(liste1)
+
+liste2 = [[j for j in main_list] for i in range(2)]
+print(liste2)
+```
+Yukarıdaki `[j for j in main_list] for i in range(2)` yapısının, `j for i in main_list for j in i` yapısından farkı, `[j for j in main_list] for i in range(2)` yapısının `expression for item in list` syntax'ının mantığıyla çalışmasıdır çünkü `[j for j in main_list] for i in range(2)` yapı ile `expression for item in list` syntax'ı aynı şeydir. Yani `expression for item in list` syntax'ındaki `expression`, `[j for j in main_list] for i in range(2)` yapısındaki `[j for j in main_list]` kısmına karşılık gelmektedir.
+
+##### Örnek 4.2
+```py
+main_list = [[1, 2, 3, 4], [5, 6, 7, 8]]
+
+list1 = []
+for i in range(0, len(main_list[0])):
+    temp_list = []
+    for j in main_list:
+        temp_list.append(j[i])
+    list1.append(temp_list)
+    temp_list = []
+print(list1) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
+
+list2 = [[j[i] for j in main_list] for i in range(len(main_list[0]))]
+print(list2) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
+```
+
+##### Örnek 4.3
+```py
+main_list = [[1, 2], [3, 4], [5, 6], [7, 8]]
+
+list1 = []
+for i in range(0, len(main_list[0])):
+    temp_list = []
+    for j in main_list:
+        temp_list.append(j[i])
+    list1.append(temp_list)
+    temp_list = []
+print(list1) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
+
+list2 = [[j[i] for j in main_list] for i in range(len(main_list[0]))]
+print(list2) # Output: [[1, 5], [2, 6], [3, 7], [4, 8]]
 ```

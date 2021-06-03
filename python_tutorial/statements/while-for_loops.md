@@ -201,7 +201,7 @@ for i in a1,a2,a3:
 
 # Output: | [1, 2, 3] | | [4, 5, 6] | | [7, 8, 9] |
 ```
-İki boyutlu listeler üzerinde gezinmek için nasted (iç içe) `for` kullanılabilir. Aşağıdaki örnekte, ilk for `a1` listesinin ikili elemanlarını alır ve içteki (*nasted*) for ise bu ikili elemanları teker teker alır.
+İki boyutlu listeler üzerinde gezinmek için nested (iç içe) `for` kullanılabilir. Aşağıdaki örnekte, ilk for `a1` listesinin ikili elemanlarını alır ve içteki (*nested*) for ise bu ikili elemanları teker teker alır.
 ```py
 a1 = [(1,2),(3,4),(5,6),(7,8)]
 for i in a1:
@@ -243,7 +243,7 @@ print(l1,l2,l3, sep="\n")
 [2, 5, 8]
 [3, 6, 9]
 ```
-Gördüğünüz gibi `for i,j,k` yapısı böyle kullanılıyor. Aşağıdaki gibi bir listenin elemanlarını `for i,j,k` yapısını kullanarak teker teker ekrana bastıramayız. Bunun için nasted `for` loop kullanabiliriz.
+Gördüğünüz gibi `for i,j,k` yapısı böyle kullanılıyor. Aşağıdaki gibi bir listenin elemanlarını `for i,j,k` yapısını kullanarak teker teker ekrana bastıramayız. Bunun için nested `for` loop kullanabiliriz.
 ```py
 a6 = [( (1,2) , (3,4) ) , ( (7,8) , (9,10) )]
 for (x,y,z) in a6:
