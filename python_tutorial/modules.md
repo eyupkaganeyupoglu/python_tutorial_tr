@@ -77,3 +77,34 @@ from random import randint
 
 print(randint(3,9)) # Output: 6
 ```
+
+# Bazı Attribute'ler
+
+## `__all__` Attribute
+Python'da `import modul` ile `from modul import *` komutlarının içeri aktardıkları, içinde function ve attribute'ların bulunduğu grup birbirinden farklıdır.
+```py
+
+```
+`import modül` de her şeyi içeri import ederken, `from modül import *` da test ve private olanları (yani `_` ile başlayanları) import etmez. Spesifik olarak import etmek istediklerinizi `from modül import _örnek` şeklinde import edebilirsiniz.
+
+Bu farklılığın sebebi, import modül de her şeyi içeri import ederken, from modül import * da test ve private olanları ( _ ile başlayanları) import etmez. Bu farklı kullanımın amacı budur. istenirse test ve private olanları direkt from modül import __fonk7 şeklinde import edilebilir. Bunu yapabilmek için isimlerini biliyor olmalısınız. __all__ , import edilmesini istediğiniz ve istemediğiniz fonksiyonları belirlemenize izin verir. Örneğin modül.py'nin en başına __all__ = ['fonk1', 'fonk2', 'fonk3'] eklerseniz, from modül import * yaptığınızda l3'dekiler import edilir:
+
+## `__all__` Attribute
+
+
+## `__all__` Attribute
+
+
+## `__all__` Attribute
+
+
+## `__all__` Attribute
+
+
+## `__all__` Attribute
+
+
+## `__all__` Attribute
+
+
+## `__all__` Attribute
