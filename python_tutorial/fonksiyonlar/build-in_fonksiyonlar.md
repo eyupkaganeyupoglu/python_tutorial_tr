@@ -2,7 +2,7 @@
 Python ve python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Gömülü fonksiyon olarak da bilinen build-in fonksiyonlar, python diline gömülmüş fonksiyonlardır. Python modülleri python diliyle yazılmıştır ama build-in fonksiyonlar **C** diliyle yazılmıştır.
 
 # `__import__()`
-
+Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#__import__).
 
 # `all(iterable)`
 
