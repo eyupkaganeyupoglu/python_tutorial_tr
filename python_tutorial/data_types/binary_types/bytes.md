@@ -2,9 +2,9 @@
 İkili anlam taşıyan sistemler arasında iletişimi sağlamak için yapılan dönüşümlere **kodlama (encoding)** denir. Bu ikili anlam taşıyan değerler binary sistemde **0** ve **1** olarak ifade edilir.
 
 ## 8 bit'lik Sistem
-8 bit'in bir araya gelerek oluşturduğu sisteme denir. Bu sistem, binary sayıları kullanarak 0'dan 255'e (0 ve 255 dahil) kadar olan sayılar üretebilir. Dolayısıyla 256 tane farklı sinyal oluşturabilir. Bir ve byte kavramlarını şöyle listeleyebilirim:
-- 8 bit'in bir araya gelmesi ile oluşan yapıya: byte
-- 1024 byte'ın bir araya gelmesi ile oluşan yapıya: kilobyte
+8 bit'in bir araya gelerek oluşturduğu sisteme denir. Bu sistem, binary sayıları kullanarak 0'dan 255'e (0 ve 255 dahil) kadar olan sayılar üretebilir. Dolayısıyla 256 tane farklı sinyal oluşturabilir. Bir ve bytes kavramlarını şöyle listeleyebilirim:
+- 8 bit'in bir araya gelmesi ile oluşan yapıya: bytes
+- 1024 bytes'ın bir araya gelmesi ile oluşan yapıya: kilobyte
 - 1024 kilobyte'ın bir araya gelmesi ile oluşan yapıya: megabyte
 - 1024 megabyte'ın bir araya gelmesi ile oluşan yapıya: gigabyte
 - 1024 gigabyte'ın bir araya gelmesi ile oluşan yapıya: terabyte
@@ -21,26 +21,31 @@ Bir sistemde, bütün sayıların tek sayı olarak iletilmesini istiyorsak kulla
 `1` ve `0` sinyallerini bir ara getirerek farklı karakterleri temsil etmesini sağlayabiliriz. Örneğin:
 <img src="https://i.ibb.co/6XhWqFb/binary-chart.png" alt="binary-chart" border="0">
 
-# Byte
-
-## Ön Bilgi
-Herhangi bir değerin, bellekte ne kadar yer kapladığı işletim sisteminden işletim sistemine, kod çözücüden kod çözücüye değişebilir. Örneğin Python 2.x sürümlerinde bir karakterlik karakter dizisi, byte dizisi olarak temsil ediliyordu. Bu byte dizisi Windows sistemlerde `1`, GNU/Linux sistemlerde `2` byte ile temsil ediliyordu. Bu yüzden `len()` fonksiyonu ile kullanıldığında farklı sonuçlar döndürür. Bilgisayarınızda tanımlı kod çözücüyü öğrenmek için:
+# Bytes
+**Ön Bilgi:** Herhangi bir değerin, bellekte ne kadar yer kapladığı işletim sisteminden işletim sistemine, kod çözücüden kod çözücüye değişebilir. Örneğin Python 2.x sürümlerinde bir karakterlik karakter dizisi, bytes dizisi olarak temsil ediliyordu. Bu bytes dizisi Windows sistemlerde `1`, GNU/Linux sistemlerde `2` bytes ile temsil ediliyordu. Bu yüzden `len()` fonksiyonu ile kullanıldığında farklı sonuçlar döndürür. Bilgisayarınızda tanımlı kod çözücüyü öğrenmek için:
 ```py
 import locale
 print(locale.getpreferredencoding()) # Output: cp1254
 ```
-`cp1254` kod çözücünün içeriğine ulaşmak için [tıklayınız](https://en.wikipedia.org/wiki/Windows-1254).
+`cp1254` kod çözücünün içeriğine ulaşmak için [tıklayınız](https://en.wikipedia.org/wiki/Windows-1254). Python 3'den sonra bu Python 2'deki olay değişti. Artık `str` veri tipi UNICODE kod konumlarını döndürüyor. Dolayısıyla artık her karakter dizisi, sahip oldukları karakter sayısına göre sayılabiliyor. `string` veri tipinin Python 2'deki halini istiyorsanız, Python 3'deki `bytes()` adlı fonksiyonu kullanabilirsiniz.
 
-Python 3'den sonra bu Python 2'deki olay değişti. Artık `str` veri tipi UNICODE kod konumlarını döndürüyor. Dolayısıyla artık her karakter dizisi, sahip oldukları karakter sayısına göre sayılabiliyor. `string` veri tipinin Python 2'deki halini istiyorsanız, Python 3'deki `bytes()` adlı fonksiyonu kullanabilirsiniz.
+Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablosu dışında kalan karakterler doğrudan bytes olarak temsil edilemez. Bytes data type, string data typr gibi değiştirilemez (immutable) bir data type'dır. 
 
-## Byte Tanımlamak
-Listeler `list`, stringler `str` ile gösterildiği gibi byte'lar da `bytes` ile gösterilir. Örnek:
+## Bytes Tanımlamak
+Listeler `list`, stringler `str` ile gösterildiği gibi bytes'lar da `bytes` ile gösterilir. Örnek:
 ```py
-byte_exp = b""  # Boş bir byte tanımlandı
+byte_exp = b""  # Boş bir bytes tanımlandı
 print(byte_exp) # Output: b''
 ```
 ## `bytes(source, encoding, errors)` Fonksiyonu
-byte data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablosu dışında kalan karakterler doğrudan byte olarak temsil edilemez. Bu durumu düzeltmek için `bytes()` fonksiyonu kullanılır. `bytes()` ile karakterlerin hangi kod çözücü ile kodlanacağını `encoding` parametresinde belirleyebilirsiniz.. Kod çözücünün uyumlu olmadığı durumlarda Python'un nasıl davranacağını da `errors` parametresinde belirleyebilirsiniz. `errors` parametresinin alabileceği değerleri öğrenmek için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict).
+Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablosu dışında kalan karakterler doğrudan bytes olarak temsil edilemez. Bu durumu düzeltmek için `bytes()` fonksiyonu kullanılır. 3 parametresi vardır.
+- `source`, bytes'lardan oluşan bir dizi (sequence) içerir. Bu dizi (sequence) bir string, integer ya da iterable bir obje olabilir.
+    - `source` bir string ise mutlaka `encoding` parametresi belirtilmelidir ki herhangi bir uyuşmazlıkta program sapıtmasın.
+    - `source` bir integer ise girilen sayı kadar `b'\x00'` oluşturulur. Örneğin `print(bytes(12))` kodunun output'u: `b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'`
+    - `source` bir iterable obje ise iterable nesnenin count degeri (eleman sayısı) kadar bir array oluşur. Bu array içerisinde integer değerler olmalıdır. String bir iterable yaparsanız `TypeError` hatası alırsınız. Bu yüzden iterable obje elemanları integer'lardan oluşmalı ve mutlaka `0 <= x < 256` olmalıdır. Eğer `0 <= x < 256` integer kuralına uyulmazsa `ValueError` hatası alırsınız.
+- `encoding`, kod çözücünün ne olacağını argüman olarak girdiğimiz parametredir. `source` parametresine girdiğimiz string value'nin hangi kod çözücü ile çözüleceğini bu parametreye argüman olarak giriyoruz.
+- `errors`, Kod çözücünün uyumlu olmadığı durumlarda Python'un nasıl davranacağını belirlediğimiz parametredir. `errors` parametresinin alabileceği değerleri öğrenmek için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict).
+
 ```py
 print(bytes("şçİ", "utf-8"))
 # Output: b'\xc5\x9f\xc3\xa7\xc4\xb0'
@@ -49,20 +54,19 @@ print(bytes("şçİ", "ascii", "replace"))
 # Output: b'???'
 ```
 
-## Byte Methodları
+## Bytes Methodları
 
 ### `decode(encoding)` Methodu
-Bir stringi belli bir kod çözücü kullanılarak byte formatına, string data type'ının methodu olan `encode()` methodunu kullanarak dönüştürebiliyorduk. Bunun tam tersini `decode()` ile yapıyoruz. Örnek:
+Bir stringi belli bir kod çözücü kullanılarak bytes formatına, string data type'ının methodu olan `encode()` methodunu kullanarak dönüştürebiliyorduk. Bunun tam tersini `decode()` ile yapıyoruz. Örnek:
 ```py
 print("İ".encode("utf-8")) # Output: b'\xc4\xb0'
 print(b"\xc4\xb0".decode("utf-8")) # Output: İ
 ```
 
 ### `fromhex("string")` Methodu
-hexadecimal sayı sistemindeki bir sayıyı temsil eden string değerini byte'a çevirir.
+hexadecimal sayı sistemindeki bir sayıyı temsil eden string değerini bytes'a çevirir.
 ```py
 print(bytes.fromhex("c4b0"))
 # Output: b'\xc4\xb0'
 ```
-
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#func-bytes).

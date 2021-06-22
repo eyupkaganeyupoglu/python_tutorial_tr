@@ -186,5 +186,6 @@ print(random.__spec__.name, random.__spec__.origin, sep="\n")
 ```
 **Output:**
 ```
+random
 C:\Users\XXX\AppData\Local\Programs\Python\Python39\lib\random.py
 ```
