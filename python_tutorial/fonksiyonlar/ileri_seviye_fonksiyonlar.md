@@ -93,6 +93,20 @@ sel
 se
 s
 ```
+Örnek İç içe listeleri tek liste yapma fonksiyonu:
+```py
+def fixed(liste):
+    if not isinstance(liste, list):
+        return [liste]
+    elif not liste:
+        return []
+    else:
+        return fixed(liste[0]) + fixed(liste[1:])
+
+l = [1, 2, 3, [4, 5, 6], [7, 8, 9, [10, 11], 12], 13, [14, 15]]
+
+print(fixed(l)) # Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+```
 
 # Nested (İç İçe) Fonksiyonlar
 İç içe fonksiyonlarda, en dıştaki (yani global scope'da tanımlanan) fonksiyon **enclosing**, enclosing'in scope'una tanımlanan bütün fonksiyonlar da **nested** olarak isimlenirilir.

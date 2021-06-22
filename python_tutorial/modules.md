@@ -83,28 +83,108 @@ print(randint(3,9)) # Output: 6
 ## `__all__` Attribute
 Python'da `import modul` ile `from modul import *` komutlarının içeri aktardıkları, içinde function ve attribute'ların bulunduğu grup birbirinden farklıdır.
 ```py
-
+import_modul = ['__builtins__', '__cached__', '__doc__', '__file__', '__fonk7', '__loader__', '__name__', '__package__', '__spec__', '_fonk6', 'fonk1', 'fonk2', 'fonk3', 'fonk4', 'fonk5', 'fonk8_']
+form_modul_import =['__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'fonk1', 'fonk2', 'fonk3']
+for i in import_modul:
+    if not i in form_modul_import: # import_modul'de olup, form_modul_import'de olmayan. 
+        print(i, end=" , ") 
 ```
-`import modül` de her şeyi içeri import ederken, `from modül import *` da test ve private olanları (yani `_` ile başlayanları) import etmez. Spesifik olarak import etmek istediklerinizi `from modül import _örnek` şeklinde import edebilirsiniz.
+**Output:**
+```
+__cached__ , __file__ , __fonk7 , _fonk6 , fonk4 , fonk5 , fonk8_
+```
+`import modül` de her şeyi içeri import ederken, `from modül import *` da test ve private olanları (yani `_` ile başlayanları) import etmez. Spesifik olarak import etmek istediklerinizi `from modül import _örnek` şeklinde import edebilirsiniz. Tabi böyle yapabilmek için fonksiyonun ismini biliyor olmalısınız. `__all__` , import edilmesini istediğiniz ve istemediğiniz fonksiyonları belirlemenize izin verir. Örneğin `modül.py`'nin en başına `__all__ = ['fonk1', 'fonk2', 'fonk3']` eklerseniz, `from modül import *` yaptığınızda `form_modul_import` listesindekiler import edilir. `__all__ = []` kullanımında, modülün kendi varsayılan fonksiyonları hariç hiçbir fonksiyon içe aktarılmaz.
 
-Bu farklılığın sebebi, import modül de her şeyi içeri import ederken, from modül import * da test ve private olanları ( _ ile başlayanları) import etmez. Bu farklı kullanımın amacı budur. istenirse test ve private olanları direkt from modül import __fonk7 şeklinde import edilebilir. Bunu yapabilmek için isimlerini biliyor olmalısınız. __all__ , import edilmesini istediğiniz ve istemediğiniz fonksiyonları belirlemenize izin verir. Örneğin modül.py'nin en başına __all__ = ['fonk1', 'fonk2', 'fonk3'] eklerseniz, from modül import * yaptığınızda l3'dekiler import edilir:
+**Not:** Örneğin Bir fonksiyon yazdınız. Bu fonksiyonu öyle yazıyorsunuz ki, başka birisi bu fonksiyonu sadece kopyala yapıştır yaparak kendi programına entegre edebiliyor. Buna **code reusability** denir. Yani kodların yeniden kullanılabilir özellikte olmasına **code reusability** denir. Bu kodların kolayca test edilebilmesine de **code testability** denir. Daha fazla bilgi için [tıklayınız](https://medium.com/aykiri-yazilimcilar/kaliteli-yazılım-tasarımı-ve-anti-patternler-üzerine-notlar-a8f9ccfb6847)
 
-## `__all__` Attribute
+## `__import__(name, globals=None, locals=None, fromlist=(), level=0)` Attribute
+`__import__`, modül adını `name` parametresine girerek, herhangi bir modülü içe aktarmamızı sağlayan bir araçtır. Örneğin `vrb = __import__('random')` yaptıktan sonra random modülünün fonksiyonlarını ve attribute'lerini `vrb.randint(45, 500)` örneğindeki gibi kullanabilirsiniz. Bir variable'a atamadan kullanmak istiyorsanız `__import__('random').randint(45, 500)` şeklinde kullanabilirsiniz. Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#__import__)
 
+## `__doc__` Attribute
+**Ön Bilgi:** Teknik dilde, üç tırnak `""" Falan Filan """` içinde gösterilen karakter dizilerine belge dizisi (docstring) veya belgelendirme dizisi (documentation string) adı verilir.
 
-## `__all__` Attribute
+Modüllerin `__doc__` niteliğini kullanarak, bir modül dosyasının en başında bulunan belgelendirme dizilerine erişebiliriz. Bu belgelendirme dizileri, modülle ilgili açıklamalar içerir. Aynı şeye `help()` fonksiyonunu kullanarak da erişebilirsiniz. Örneğin `help(os)` kullanarak `os` modulündeki bu bilgilendirme belgesine ulaşabilirsiniz. Bu belgelendirme dizileri, üç tırnak içinde belirtilir. Örnek:
+```py
+# Modül Dosyası
+"""
+Falan
+Filan
+"""
+```
+```py
+# Program Dosyası
+import modul
+print(modul.__doc__)
+```
+**Output:**
+```
+Falan
+Filan
+```
+çift veya tek tırnak ile belirlediğimiz karakter dizilerine __doc__ ile erişmek istersek sadece ilk satırdaki karakter dizisine erişebiliriz. Örnek:
+```py
+# Modül Dosyası
+"Falan"
+"Filan"
+```
+```py
+# Program Dosyası
+import modul
+print(modul.__doc__)
+```
+**Output:**
+```
+Falan
+```
 
+## `__name__` Attribute
+Her fonksiyon ve modül `__name__` attribute'sine sahiptir. Bu basitçe o fonksiyon ya da modülün ismi ya da spesifik bir şey olabilir.
+```py
+import modul
+print(modul.__name__) # Output: modul
+```
 
-## `__all__` Attribute
+## `__loader__` Attribute
+Bu attribute, ilgili modülü içe aktaran mekanizma hakkında bize çeşitli bilgiler veren birtakım araçlar sunar. Örnek:
+```py
+import os
+yükleyici = os.__loader__
+print(dir(yükleyici))
+```
+**Output:**
+```
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__',
+ '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__',
+ '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__',
+ '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__',
+ '__str__', '__subclasshook__', '__weakref__', '_cache_bytecode',
+ 'exec_module', 'get_code', 'get_data', 'get_filename', 'get_source',
+ 'is_package', 'load_module', 'name', 'path', 'path_mtime', 'path_stats',
+ 'set_data', 'source_to_code']
+```
 
-
-## `__all__` Attribute
-
-
-## `__all__` Attribute
-
-
-## `__all__` Attribute
-
-
-## `__all__` Attribute
+## `__spec__` Attribute
+`__spec__` attribute, modüller hakkında çeşitli bilgiler sunan birtakım araçları içinde barındırır.
+```py
+import random
+print(dir(random.__spec__))
+```
+**Output:**
+```
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__',
+ '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__',
+ '__init__', '__init_subclass__', '__le__', '__lt__', '__module__',
+ '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__',
+ '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__',
+ '_cached', '_initializing', '_set_fileattr', 'cached', 'has_location',
+ 'loader', 'loader_state', 'name', 'origin', 'parent', 'submodule_search_locations']
+```
+Mesela bir modülün ad ve konum bilgilerine ulaşmak için bu niteliği kullanabiliriz.
+```py
+import random
+print(random.__spec__.name, random.__spec__.origin, sep="\n")
+```
+**Output:**
+```
+C:\Users\XXX\AppData\Local\Programs\Python\Python39\lib\random.py
+```
