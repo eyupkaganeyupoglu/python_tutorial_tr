@@ -143,6 +143,7 @@ Her fonksiyon ve modül `__name__` attribute'sine sahiptir. Bu basitçe o fonksi
 import modul
 print(modul.__name__) # Output: modul
 ```
+**Not:** Bir Python programı bağımsız bir program olarak çalıştırıldığında `__name__` attribute'unun değeri `__main__` olur. Örneğin bir xxx.py python dosyasının `__name__` attribute'unu değeri `__main__` ise, xxx.py dosyasını herhangi bir dosyaya import ederek değil, diğer dosyalardan bağımsız olarak, doğrudan (üzerine çift tıklayarak çalıştırmak gibi)çalıştırmışsınız demektir.
 
 ## `__loader__` Attribute
 Bu attribute, ilgili modülü içe aktaran mekanizma hakkında bize çeşitli bilgiler veren birtakım araçlar sunar. Örnek:

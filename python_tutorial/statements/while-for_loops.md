@@ -404,8 +404,8 @@ for i in liste:
 1 3 4 5
 ```
 
-## `pass` Deyimi
-`pass` deyimi, *"hiçbir şey yapma, geç"* anlamına gelmektedir. Python, program içinde herhangi bir yerde bu deyimle karşılaşırsa, hiçbir şey yapmaz ve sonraki koda geçer.
+## `pass` Statement
+`pass` statement, *"hiçbir şey yapma, geç"* anlamına gelmektedir. Python, program içinde herhangi bir yerde bu statement ile karşılaşırsa, hiçbir şey yapmaz ve sonraki koda geçer.
 ```py
 while True:
 	parola = input("parola belirleyin: ")
