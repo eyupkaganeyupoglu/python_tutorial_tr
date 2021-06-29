@@ -191,17 +191,80 @@ b.exp_attribute_3: {'altı': 6, 'beş': 5, 'dört': 4}
 **Instance Attribute**'ları, **Class Attribute**'ları birbiri ile farklı ama alakalı şeylerdir.
 
 ### `__init__` Fonksiyonu ve `self`
-`__init__`, class'lara özgü bir fonksiyondur. Görevi, main class'dan instance oluşturulurken, oluşturulacak instance attribute'leri ve işlemleri tanımlamaktır. `__init__` fonksiyonunun ilk parametresi her instance attribute'leri temsil etmektedir çünkü bu bir syntax kuralıdır. `__init__` fonksiyonunun ilk parametresine yazılan `self`, instance attribute'leri temsil eder. Yani bir instance ile `__init__` block'una tanımlanmış bir attribute'e ulaşmak istiyorsanız o attribute'u `self` prefix'i ile kullanmalısınız. Örnek:
+`__init__`, class'lara özgü bir fonksiyondur ve main class'dan instance oluşturulduğu anda çalışır. Örnek:
 ```py
 class Class():
+    def __init__(self):
+        self.check = "__init__ Çalıştı."
+        print(self.check)
+var = Class() # Output: __init__ Çalıştı.
+```
+Görevi, main class'dan instance oluşturulurken, oluşturulacak instance attribute'leri ve işlemleri tanımlamaktır. `__init__` fonksiyonunun ilk parametresi her instance attribute'leri temsil etmektedir çünkü bu bir syntax kuralıdır. `__init__` fonksiyonunun ilk parametresine yazılan `self`, instance attribute'leri temsil eder. Yani bir instance için instance attribute tanımlamak istiyorsanız, `__init__` block'una o attribute'yi `self` prefix'i ile tanımlamanız gerekmektedir. Bu attribute daha önce class attribute olarak tanımlanmış olsa bile `__init__` içinde kullanabilmek için `self`ile tanımlamalısınız. Örnek:
+```py
+class Class():
+    xxx = []
     def __init__(self):
         a = 1
         b = 2
         self.c = a+b
+        self.xxx.append("exp1")
 
 print(Class().a) # Output: AttributeError: 'Class' object has no attribute 'a'
 print(Class().b) # Output: AttributeError: 'Class' object has no attribute 'b'
 print(Class().c) # Output: 3
+print(Class().xxx) # Output: ['exp1']
+```
+Gördüğünüz gibi `xxx` attribute'sini bir instance'de kullanabilmek için `__init__` içinde `self` prefix'i ile kullandık. Buradan anlamamız gereken şey, Bir instance'de kullanmak istediğimiz bütün attribute'leri `self` ile tanımlamak zorundayız. Bu `__init__` gibi main class'da tanımlanmış bütün fonksiyonlar için geçerli. `__init__` gibi bütün fonksiyonların içindeki attribute'leri instance'de kullanabilmek için bu fonksiyonların ilk parametresini `self` yapıp, bloğundaki attributeleri `self` prefix'i ile tanımlamalıyız. Yani `self = instace attribute`. Örnek:
+```py
+class Class():
+    class_attribute = "Class Attribute"
+
+    def __init__(self):
+        self.class_attribute = "__init__ Instance Attribute"
+
+    def func1(self):
+        self.class_attribute = "func1 Instance Attribute"
+        print(self.class_attribute, end="\n\n")
+    
+    def func2(self):
+        self.class_attribute = "func2 Instance Attribute"
+        print(self.class_attribute)
+
+print(Class.class_attribute, "\n")
+print(Class().class_attribute, "\n")
+Class().func1()
+Class().func2()
+```
+**Output:**
+```
+Class Attribute 
+
+__init__ Instance Attribute
+
+func1 Instance Attribute
+
+func2 Instance Attribute
+```
+Eğer `print(self.class_attribute)`'lar olmasaydı, methodların içindeki attribute'lere ulaşmak için 2 yöntem var:
+```py
+class Class:
+    def __init__(self):
+        self.a = 1
+        self.func()
+        print(self.b)    
+    def func(self):
+        self.b = self.a
+var = Class() # Output: 1
+```
+```py
+class Class:
+    def __init__(self):
+        self.a = 1 
+    def func(self):
+        self.b = self.a
+var = Class()
+var.func()
+print(var.b) # Output: 1
 ```
 Python `Class().a` kodunda, `Class()` kodu ile oluşturulmuş instance'den istenilen `a` instance attribute'e ulaşmak için şu yolu izler: Önce `__init__` içine bakar. `__init__` içinde bulamazsa class attribute'lere bakar. Yine bulamazsa hata verir. Kanıtı:
 ```py
@@ -306,3 +369,21 @@ print(instance_1.instance_liste) # Output: []
 ```
 
 ### Instance Methods
+Main Class'ın içine tanımlanmış her fonksiyon, bu main class'dan üretilen instance'lerin methodlarıdır. Örnek:
+<img src="https://i.ibb.co/gWWNHhh/code.png" alt="code" border="0">
+Buradaki olayları teker teker açıklamak gerekirse:
+- Bir main class'daki bütün fonksiyonların ilk parametresi, instance attribute'lere işaret ettiği için `self` olmalıdır.
+- `Ahmet = Çalışan("Ahmet")` kodundaki `"Ahmet"`, `__init__` fonksiyonunun bloğunda tanımlı olan `self.isim` instance attribute'üne işaret eder.
+- Bir instance'nin methodlarının içindeki attribute'lere ulaşamazsınız. Yani eğer `def personele_ekle(self):` bloğunda `self.a = 1` şeklinde bir instance attribute tanımlı olsaydı, buna`Çalışan().personele_ekle().a` şeklinde ulaşamazdık. `__init__` bloğunda o fonksiyona atifta bulunursak ``self.func()` gibi`, o fonksiyonun içindeki attribute'leri sanki `__init__`'den çağırıyormuş gibi çağırabiliriz.
+```py
+class Class():
+    def __init__(self):
+        self.a = "a"
+        self.func()
+    def func(self):
+        self.b = self.a
+print(Class().b) # Output: a
+```
+- Farklı iki instance'nin instance attribute'lerinin üzerinde yapılan işlemler instance'ye özgü olsa da mutable class attribute'lerinin üzerinde yapılan işlemler bütün instance'leri etkiler.
+- `__init__` içinde tanımlanan instance attribute'lere main class'ın her yerinden erişilebilir.
+- `personel` bir class attribute ise, bir method içinde belirttiğimiz `self.personel.append(self.isim)` ile `Çalışan.personel.append(self.isim)` aynı şeydir.
