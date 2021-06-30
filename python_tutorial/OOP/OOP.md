@@ -418,26 +418,87 @@ print(Class().sayi_3) # Output: 3
 Gördüğünüz gibi `sayi_1` ve `sayi_2` variable'larının başına `self` prefix'i getirmediğimiz için python bunları bir instance attribute olarak kabul etmiyor ve bu yüzden variable'lara `Class().sayi_1` ve `Class().sayi_2` şeklinde ulaşamıyoruz , hata veriyor. Ama bu variable'ları isteğe ve duruma göre `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde kullanabiliriz.
 
 ### Instance Methods
-Bir main class'a, `__init__` fonksiyonu dışında çeşitli user-defined (kullanıcı tanımlı) fonksiyonlar tanımlayabiliriz. Örnek:
+Bir main class'a, `__init__` fonksiyonu dışında çeşitli user-defined (kullanıcı tanımlı) fonksiyonlar tanımlayabiliriz. Bu tanımlanan user-defined (kullanıcı tanımlı) fonksiyonlara **Instance Methods** denir. Örnek:
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+
+    def a_yazdir(self):
+        print("a_yazdir() Çalıştı...")
+
+    def b_yazdir(self):
+        print("b_yazdir() Çalıştı...")
+
+    def c_yazdir(self):
+        print("c_yazdir() Çalıştı...")
+
+var = Class() # Output: __init__ Çalıştı...
+var.a_yazdir() # Output: a_yazdir() Çalıştı...
+var.b_yazdir() # Output: b_yazdir() Çalıştı...
+var.c_yazdir() # Output: c_yazdir() Çalıştı...
+```
+**Not:** Instance method'lara class method denmemesinin sebebi, bu methodları `__main__.Class` objesiyle beraber **bu şekilde** doğrudan kullanamazsınız. Örnek:
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+
+    def a_yazdir(self):
+        print("a_yazdir() Çalıştı...")
+
+Class.a_yazdir() # TypeError: a_yazdir() missing 1 required positional argument: 'self'
+```
+"**bu şekilde** doğrudan kullanamazsınız." dememin sebebi, main class'ı aşağıdaki gibi oluşturursanız `Class.a_yazdir()` çalışır.
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+    @staticmethod
+    def a_yazdir():
+        print("a_yazdir() Çalıştı...")
+
+Class.a_yazdir()
+```
+Buradaki `@staticmethod` daha sonra açıklanacaktır.
+
+Normal şartlarda, global scope'da tanımlanmış iki fonksiyon, global scope'daki variable'lara erişebilir ama birbirinin local variable'larına erişemez. Çünkü bu local variable'lar adı üstünde local variable oldukları için o fonksiyon çalıştırıldığında python bu local variable'ları okuyup bellekte depolar ve fonksiyon sonlandığında silinirler. Örnek:
+```py
+def func1():
+    a = "local a"
+    print(a) # Output: local a
+    print(b) # Output: NameError: name 'b' is not defined
+
+def func2():
+    b = "local b"
+    print(a) # Output: NameError: name 'a' is not defined
+    print(b) # Output: local b
+```
+Ama class'larda tanımlanan `__init__` fonksiyonu bu kuralı yıkıyor. Çünkü `__init__` fonksiyonu içinde tanımlanan instance attribute'lara, main class'ın içindeki **her yerden** erişilebilir. Örnek:
 ```py
 class Class():
     def __init__(self):
         print("__init__ Çalıştı...")
         self.a = "self.a"
-        self.b = "self.b"
-        self.c = "self.c"
+        self.b = []
+        self.c = 100
 
     def a_yazdir(self):
+        self.a = "new self.a"
         print(self.a)
 
     def b_yazdir(self):
+        self.b.append("new self.b")
         print(self.b)
 
     def c_yazdir(self):
+        self.c += 50
         print(self.c)
 
 var = Class() # Output: __init__ Çalıştı...
-var.a_yazdir() # Output: self.a
-var.b_yazdir() # Output: self.b
-var.c_yazdir() # Output: self.c
+var.a_yazdir() # Output: new self.a
+var.b_yazdir() # Output: ['new self.b']
+var.c_yazdir() # Output: 150
 ```
+
+######## `__init__` de user-defined func tanımlamayı falan yazacaksın.
