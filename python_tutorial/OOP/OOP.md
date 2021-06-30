@@ -254,26 +254,34 @@ Dolayısıyla instance attribute'lar, instance'lara özel attribute'lardır diye
 class Class():
     def __init__(self):
         self.check = "Class() ile instance oluşturulduğu anda __init__ Çalıştı." # instance attribute
-        print(self.check) # işlev
-        self.a = 1
 
 print(Class.check) # AttributeError: type object 'Class' has no attribute 'check'
-var = Class() # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
-print(var.a) # Output: 1
+var = Class() 
+print(var.check) # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
 ```
 Gördüğünüz gibi `var = Class()` kodundaki gibi bir instance oluşturulmadan önce `__init__` fonksiyonu çalıştırılmadığı ve içeriği okunmadığı için `Class` main class objesi direkt `__init__` fonksiyonu içindeki `check` instance attribute'una ulaşamadı. Instance objesi oluşturulduktan sonra `print(Class.check)` kodunu çalıştırsak bile aynı hatayı alırdık çünkü `self.check` instance attribute'ü sadece instance'lere özeldir, sadece instance'lar ulaşabilir. Kanıtı:
 ```py
 class Class():
     def __init__(self):
         self.check = "Class() ile instance oluşturulduğu anda __init__ Çalıştı." # instance attribute
+
+
+var = Class() 
+print(Class.check) # AttributeError: type object 'Class' has no attribute 'check'
+print(var.check) # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
+```
+Bir main class içerisinde sadece instance'lerin ulaşabildiği `__init__` fonksiyonunun kapsamında veya user-defined (kullanıcı tanımlı) fonksiyonunun kapsamında bir işlem (örneğin `print()` gibi bir fonksiyon) tanımlarsak, program başlatıldığında python'un main class'ın içeriğini okurken karşılaştığı `print()` fonksiyonlarını çalıştırması gibi, main class'dan bir instance oluşturulduğu için `__init__` fonksiyonu çalıştırıldığında da python karşılaştığı işlemleri (örneğin `print()` gibi bir fonksiyon) çalıştırır. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self.check = "Class() ile instance oluşturulduğu anda __init__ Çalıştı." # instance attribute
         print(self.check) # işlev
-        self.a = 1
 
 var = Class() # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
-print(Class.check) # AttributeError: type object 'Class' has no attribute 'check'
-print(var.a) # Output: 1
 ```
-Yukarıdaki kodda `var = Class()` kodunun `Class() ile instance oluşturulduğu anda __init__ Çalıştı.` outputunu vermesinin bir sebebi var. Bir main class içerisinde sadece instance'lerin ulaşabildiği `__init__` fonksiyonunda veya user-defined (kullanıcı tanımlı) fonksiyonlarda `print()` gibi bir fonksiyon tanımlarsak, program başlatıldığında python'un main class'ın içeriğini okurken karşılaştığı `print()` fonksiyonlarını çalıştırması gibi, main class'dan bir instance oluşturulduğu için `__init__` fonksiyonu çalıştırıldığında da python karşılaştığı `print()` fonksiyonlarını çalıştırır. Bu yüzden `var = Class()` kodu ile main class'dan bir instance türetildiğinde `__init__` fonksiyonu çalıştığı için içeriği okunuyor ve bu sırada python `print(self.check)` kodu ile karşılaşıp, bu kodu çalıştırıp, ekrana `Class() ile instance oluşturulduğu anda __init__ Çalıştı.` bastırılıyor.
+Yukarıdaki kodda, `var = Class()` kodu ile main class'dan bir instance türetildiğinde `__init__` fonksiyonu çalıştığı için `__init__` fonksiyonunun içeriği okunuyor ve bu sırada python `print(self.check)` kodu ile karşılaşıp, bu kodu çalıştırıp, ekrana `Class() ile instance oluşturulduğu anda __init__ Çalıştı.` bastırılıyor.
+
+**Not:** Bir main class'dan her instance türetildiğinde, türetilen instance, kendine özel bir `__init__` fonksiyon objesine ve user-defined (kullanıcı tanımlı) fonksiyon objelerine sahip olur. Bu sayede herhangi bir çakışmaya maruz kalmadan yeniden tanımlama (redefinition) ya da aynı obje üzerinde işlem yapmaya (`Class().attribute.append` gibi) izin verir.
 
 Main class'dan türetilmiş bir instance'dan bir attribute talep ettiğinizde, python main class içinde o attribute'ü önce instance attribute olarak arar, bulamazsa class attribute olarak arar, yine bulamazsa hata verir. Örnek:
  ```py
@@ -363,8 +371,7 @@ class Class1(self): # NameError: name 'self' is not defined
     def __init__(self):
         self.a = 2
 ```
-
-Instance attribute'ların diğer önemli özelliği, instance attribute'lara yaptığınız herhangi bir müdahele sadece ilgili instace'yi etkileyecektir. Bunun sebebi, main class'dan oluşturulan her instance'nin instance attribute'ları, diğer instance'ların instance attribute'larından farklı bir obje (ID'leri farklı) olmasıdır. Yani class attribute'lardaki gibi çakışmalar yaşanmadığı gibi yeniden tanımlama (redefinition) yapmanıza gerek yoktur. Örnek:
+Instance attribute'ların diğer önemli özelliği, instance attribute'lara yaptığınız herhangi bir müdahele sadece ilgili instace'yi etkileyecektir. Bunun sebebi, main class'dan oluşturulan her instance'nin instance attribute'ları, diğer instance'ların instance attribute'larından farklı bir obje (ID'leri farklı) olmasıdır. Yani class attribute'lardaki gibi çakışmalar yaşanmadığı gibi instance attribute'larda yeniden tanımlama (redefinition) yapmak zorunda değilsiniz. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -394,23 +401,43 @@ exp1.sayi:      1 | id: 1433183545648
 exp2.sayi:      1 | id: 1433183545648
 exp1.sayi new:  2 | id: 1433183545680
 ```
-Gördüğünüz gibi `exp1.liste` ile `exp2.liste` liste en başta farklı instance attribute objesi olduğu için class attribute'lardaki gibi çakışma yaşanmadı. 
+Gördüğünüz gibi `exp1.liste` ile `exp2.liste` liste en başta farklı instance attribute objesi (ID'leri farklı) olduğu için class attribute'lardaki gibi çakışma yaşanmadı. 
 
-
-
-
+`self` kelimesinin instance attribute'lara özel bir prefix olduğunu ve `self` kullanılmadan instance attribute tanımlanamayacağını söylemiştik. Main class içindeki `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımladığınız bütün variable'lar instance attribute olarak (yani `self` prefix'i ile) tanımlanmak zorunda değildir. Örnek:
 ```py
 class Class():
-    liste = []
     def __init__(self):
         sayi_1 = 4
         sayi_2 = 5
         self.sayi_3 = sayi_1 + sayi_2
-        self.liste.append("exp1")
 
-print(Class().b) # Output: AttributeError: 'Class' object has no attribute 'a'
-print(Class().c) # Output: AttributeError: 'Class' object has no attribute 'b'
-print(Class().d) # Output: 3
-print(Class().a) # Output: ['exp1']
+print(Class().sayi_1) # Output: AttributeError: 'Class' object has no attribute 'sayi_1'
+print(Class().sayi_2) # Output: AttributeError: 'Class' object has no attribute 'sayi_2'
+print(Class().sayi_3) # Output: 3
 ```
-Gördüğünüz gibi `a` class attribute'ünü, instance'lerde kullanabilmek için bu  attribute olarak kullanmak için bu class attribute'ünü instance attribute şeklinde tanımlamak gerekmektedir.
+Gördüğünüz gibi `sayi_1` ve `sayi_2` variable'larının başına `self` prefix'i getirmediğimiz için python bunları bir instance attribute olarak kabul etmiyor ve bu yüzden variable'lara `Class().sayi_1` ve `Class().sayi_2` şeklinde ulaşamıyoruz , hata veriyor. Ama bu variable'ları isteğe ve duruma göre `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde kullanabiliriz.
+
+### Instance Methods
+Bir main class'a, `__init__` fonksiyonu dışında çeşitli user-defined (kullanıcı tanımlı) fonksiyonlar tanımlayabiliriz. Örnek:
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+        self.a = "self.a"
+        self.b = "self.b"
+        self.c = "self.c"
+
+    def a_yazdir(self):
+        print(self.a)
+
+    def b_yazdir(self):
+        print(self.b)
+
+    def c_yazdir(self):
+        print(self.c)
+
+var = Class() # Output: __init__ Çalıştı...
+var.a_yazdir() # Output: self.a
+var.b_yazdir() # Output: self.b
+var.c_yazdir() # Output: self.c
+```
