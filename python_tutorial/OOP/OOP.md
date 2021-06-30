@@ -438,7 +438,7 @@ var.a_yazdir() # Output: a_yazdir() Çalıştı...
 var.b_yazdir() # Output: b_yazdir() Çalıştı...
 var.c_yazdir() # Output: c_yazdir() Çalıştı...
 ```
-**Not:** Instance method'lara class method denmemesinin sebebi, bu methodları `__main__.Class` objesiyle beraber **bu şekilde** doğrudan kullanamazsınız. Örnek:
+**Not:** Instance method'lara class method denmemesinin sebebi, bu methodları aşağıdaki gibi `__main__.Class` objesiyle beraber doğrudan kullanamazsınız. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -449,7 +449,18 @@ class Class():
 
 Class.a_yazdir() # TypeError: a_yazdir() missing 1 required positional argument: 'self'
 ```
-"**bu şekilde** doğrudan kullanamazsınız." dememin sebebi, main class'ı aşağıdaki gibi oluşturursanız `Class.a_yazdir()` çalışır.
+Bu methodları `Class.a_yazdir()` şekilde doğrudan kullanılamamasının sebebi: Daha önce de anlatıldığı gibi, `self` parametresi instance attribute'leri temsil ettiği için instance'ler, kullanıcıdan aldığı argümanları parametrelere iletirken bu `self` parametresini görmezden gelir. Örnek:
+```py
+class Class():
+    def __init__(self, isim):
+        self.isim = isim
+        print("self.isim:", self.isim) # Output: self.isim: Ahmet
+
+Class("Ahmet") # Output: self.isim: Ahmet
+```
+Gördüğünüz gibi `Class("Ahmet")` kodu çalışınca `__init__` fonksiyonu çalışır ve `Class("Ahmet")` koduna girdiğimiz `"Ahmet"` argümanı, `__init__` fonksiyonunun `self` parametresini atlayarak `isim` parametresine etki eder. Bu durum sadece instance'lara özgüdür. Bu yüzden bir önceki koddaki `Class.a_yazdir()` kodu, main class'dan bir instance türetmediği için `a_yazdir()` methodundaki `self` parametresini atlamaz ve "argüman eksik" anlamına gelen `TypeError: a_yazdir() missing 1 required positional argument: 'self'` hatasını döndürür.
+
+**Not:** Yukarıda anlatılan `Class.a_yazdir()` kodunun çalışmama durumu her zaman geçerli değildir. Main class'ı aşağıdaki gibi oluşturursanız `Class.a_yazdir()` çalışır.
 ```py
 class Class():
     def __init__(self):
@@ -484,21 +495,108 @@ class Class():
         self.c = 100
 
     def a_yazdir(self):
+        print(self.a, end=" | ")
         self.a = "new self.a"
         print(self.a)
 
     def b_yazdir(self):
+        print(self.b,  end=" | ")
         self.b.append("new self.b")
         print(self.b)
 
     def c_yazdir(self):
+        print(self.c,  end=" | ")
         self.c += 50
         print(self.c)
 
 var = Class() # Output: __init__ Çalıştı...
-var.a_yazdir() # Output: new self.a
-var.b_yazdir() # Output: ['new self.b']
-var.c_yazdir() # Output: 150
+var.a_yazdir() # Output: self.a | new self.a
+var.b_yazdir() # Output: [] | ['new self.b']
+var.c_yazdir() # Output: 100 | 150
 ```
+Gördüğünüz gibi bütün user-defined (kullanıcı tanımlı) fonksiyonlar `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara erişebildi ve bu instance attribute'lerin üzerinde işlemler yaparak bu instance attribute'lerin önceki ve sonraki hallerini ekrana bastırdı.
 
-######## `__init__` de user-defined func tanımlamayı falan yazacaksın.
+Bir main class'ın içine user-defined (kullanıcı tanımlı) fonksiyon tanımlayıp, bu fonksiyonun içine de `__init__` fonksiyonunda tanımlı olmayan bir instance attribute tanımlayabilirsiniz. Örnek:
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+        self.init_attribute = "init_attribute"
+
+    def a_yazdir(self):
+        self.a_yazdir_attribute = "a_yazdir_attribute"
+        print(self.a_yazdir_attribute)
+        
+var = Class() # Output: __init__ Çalıştı...
+var.a_yazdir() # Output: a_yazdir_attribute
+print(var.init_attribute) # Output: init_attribute
+print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
+```
+Gördüğünüz gibi `__init__` fonksiyonundaki `self.init_attribute` instance attribute'sine `var.init_attribute` kodu kullanılarak ulaşılabildiği gibi, user-defined (kullanıcı tanımlı) bir fonksiyon olan `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'sine `var.a_yazdir_attribute` kodu kullanılarak ulaşılabildi. Bu da user-defined (kullanıcı tanımlı) fonksiyonların içinde de instance attribute tanımlanabildiğini kanıtlar.
+
+user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına doğrudan `var.a_yazdir_attribute` kodundaki gibi erişebilmek için bazı koşulların sağlanması gerekmektedir. `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara ekstra bir şey yapmadan erişebilmemizin sebebi, main class'dan instance türetildiği anda `__init__` fonksiyonun çalışıyor ve çalıştığı için de python'un bu `__init__` fonksiyonunun içindeki instance attribute'ları okuyup belleğe atıyor olmasıdır. Buradan yola çıkarak şunu söyleyebiliriz: Python main class'ı okurken, `__init__` ve diğer user-defined (kullanıcı tanımlı) fonksiyonların içeriğini okumaz ve bunları fonskiyon objesi olarak bellekte depolar demiştik. Python, main class'dan instance türetildiğinde sadece `__init__` fonksiyonunu çalıştırıp içeriğini okur ama diğer user-defined (kullanıcı tanımlı) fonksiyonları çalıştırmaz ve bunları sadece fonksiyon objesi olarak bellekte depolar. Kanıtı:
+
+<img src="https://i.ibb.co/tsPrX8Q/image.png" alt="image" border="0">
+
+Bu yüzden `var` instance'ının `__init__` fonksiyonunun içindeki `self.init_attribute` instance attribute'una ekstra bir şey yapmadan ulaşabilirken, `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una ulaşabilmek için `a_yazdir()` fonksiyonunun bir kere çalışması gerekmektedir. Çünkü, ancak `a_yazdir()` fonksiyonu çalıştığında python bu fonksiyonun içindeki instance attribute'lerini okuyup belleğe atabilir ve ancak bu işlemden sonra `var.a_yazdir_attribute` şeklinde bu instance attribute'e ulaşabiliriz.
+
+**Not:** `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una `var.a_yazdir().a_yazdir_attribute` şeklinde ulaşmaya çalışırsanız `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası alırsınız. ######### Örnek: Discord OmerBey'e sorduğun sorunun cevabını alınca burayı güncelle.
+
+`a_yazdir()` fonksiyonunu istersek class'ın dışında, istersek `__init__` fonksiyonunun içinde çalıştırarak, user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına ulaşabiliriz.
+```py
+# __init__ içinde
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+        self.init_attribute = "init_attribute"
+        self.a_yazdir() # Output: a_yazdir Çalıştı...
+
+    def a_yazdir(self):
+        print("a_yazdir Çalıştı...")
+        self.a_yazdir_attribute = "a_yazdir_attribute"
+
+var = Class() # Output: __init__ Çalıştı...
+print(var.init_attribute) # Output: init_attribute
+print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
+```
+Gördüğünüz gibi, `__init__` fonksiyonunun içinde `self.a_yazdir()` koduyla `a_yazdir()` fonksiyonunu çalıştırıp (çalıştığını `a_yazdir Çalıştı...` outputu ile kanıtlıyoruz) python'un bu fonksiyonun içeriğini okumasını ve `a_yazdir()` fonksiyonun içinde okuduğu instance attribute'ları belleğe atmasını sağladık.
+```py
+# class dışında
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+        self.init_attribute = "init_attribute"
+
+    def a_yazdir(self):
+        print("a_yazdir Çalıştı...")
+        self.a_yazdir_attribute = "a_yazdir_attribute"
+
+var = Class() # Output: __init__ Çalıştı...
+var.a_yazdir() # Output: a_yazdir Çalıştı...
+print(var.init_attribute) # Output: init_attribute
+print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
+```
+Gördüğünüz gibi python, class dışındaki `var.a_yazdir()` kodu ile karşılaşınca, bu kodu çalıştırdığı için `a_yazdir()` fonksiyonu çalışır ve python bu fonksiyonun içeriğini okuyup, `self.a_yazdir_attribute` instance attribute'unu belleğe atar. Kanıtı:
+
+<img src="https://i.ibb.co/XLCTX0c/image.png" alt="image" border="0">
+
+**Not:** Class attribute olarak tanımlanmış, mutable data type olan bir variable üzerinde işlem yaparken iki türlü yazım vardır. Örnek
+```py
+class Class():
+    liste = []
+    def __init__(self):
+        print("__init__ Çalıştı...")
+
+    def ekle1(self):
+        self.liste.append("1. liste itemi")
+        print(Class.liste)
+
+    def ekle2(self):
+        Class.liste.append("2. liste itemi")
+        print(Class.liste)
+
+var = Class() # Output: __init__ Çalıştı...
+var.ekle1() # Output: ['1. liste itemi']
+var.ekle2() # Output: ['1. liste itemi', '2. liste itemi']
+```
+Gördüğünüz gibi `self.liste.append()` ile `Class.liste.append()` kodları, ilgili attribute class attribute olduğu sürece aynı şeye tekabül eder.
