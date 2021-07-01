@@ -10,9 +10,9 @@ class Class():
 class Class: # Class ile aynı şey.
     pass
 ```
-VSC debugger ile yukarıdaki koda baktığımızda `Class` class'ının hafızada `__main__.Class` şeklinde tanımlandığını görürüz. Bunun anlamı şudur: Bulunduğunuz Python dosyasının adı, o dosyanın içindeyken `__main__`'dir. Bunu bulunduğunuz dosyada `print(__name__)` kodunu çalıştırarak görebilirsiniz. Python'da class'ların class attribute'lerini ifade ederken `class.attribute` şeklinde ifade ederiz. Python dosyamızı da bütünüyle bir class olarak düşünürsek, `Class`' class'ı da python dosyamızın (temsili olarak) bir attribute'si olarak düşünebiliriz. Bu yüzden bulunduğunuz Python dosyasının içindeki class `__main__.class_name` şeklinde ifade edilir. Bu class'dan oluşturulan `<__main__.class_name object at 0x0000022782837730>` gibi objelere de **instance** denir (object = instance = obje = nesne). `<__main__.class_name object at 0x0000022782837730>` bunun anlamı: `0x0000022782837730` bellek numaralı obje `__main__.class_name` class'ından türetilmiş bir instance'dir.
+VSC debugger ile yukarıdaki koda baktığımızda `Class` class'ının hafızada `__main__.Class` şeklinde tanımlandığını görürüz. Bunun anlamı şudur: Bulunduğunuz Python dosyasının adı, o dosyanın içindeyken `__main__`'dir. Bunu bulunduğunuz dosyada `print(__name__)` kodunu çalıştırarak görebilirsiniz. Python'da class'ların class attribute'lerini ifade ederken `class.attribute` şeklinde ifade ederiz. Python dosyamızı da bütünüyle bir class olarak düşünürsek, `Class`' class'ı da Python dosyamızın (temsili olarak) bir attribute'si olarak düşünebiliriz. Bu yüzden bulunduğunuz Python dosyasının içindeki class `__main__.class_name` şeklinde ifade edilir. Bu class'dan oluşturulan `<__main__.class_name object at 0x0000022782837730>` gibi objelere de **instance** denir (object = instance = obje = nesne). `<__main__.class_name object at 0x0000022782837730>` bunun anlamı: `0x0000022782837730` bellek adresli obje `__main__.class_name` class'ından türetilmiş bir instance'dir.
 
-## Class Instantiation
+## Class Instances
 Daha önce `class` statement ile tanımlanmış bir main class'dan (`__main__.class_name`), `<__main__.class_name object at 0x0000022782837730>` gibi objeler türetme işlemine **Instantiation** denir. Türetilen objeye ise **Instance** denir. Örnek:
 ```py
 class Class(): # __main__.Class
@@ -20,7 +20,7 @@ class Class(): # __main__.Class
 
 Class() # <__main__.Class object at 0x0000022782837730>
 ```
-Bu işlem, `def func():` gibi tanımladığımız bir fonksiyonu `func()` gibi çağırmaya (call) benzerdir. `Class()` ile oluşturulan instance, programın geri kalanında kullanılmak isterseniz, bu objeyi bir variable'a atayabilirsiniz. Böylece bu instance, programın run-time'ı (çalıştığı süre) boyunca bellekte kullanıma hazır bir şekilde depolanır. Ama `Class()` ile oluşturulan instance bir variable'da depolanmazsa, python bir sonraki satıra geçtiğinde bu instance bellekten silinir.
+Bu işlem, `def func():` gibi tanımladığımız bir fonksiyonu `func()` gibi çağırmaya (call) benzerdir. `Class()` ile oluşturulan instance, programın geri kalanında kullanılmak isterseniz, bu objeyi bir variable'a atayabilirsiniz. Böylece bu instance, programın run-time'ı (çalıştığı süre) boyunca bellekte kullanıma hazır bir şekilde depolanır. Ama `Class()` ile oluşturulan instance bir variable'da depolanmazsa, Python bir sonraki statement'a geçtiğinde bu instance bellekten silinir.
 
 ## Class Attributes
 Class'ların içine, `__init__` ya da herhangi bir fonksiyonun kapsamının dışında tanımlanan, değer tutan/depolayan variable'lara **class attribute** denir. Örnek:
@@ -32,8 +32,8 @@ class Class():
 Buradaki `attribute_1` ve `attribute_2` variable'ları bir class attribute'dir.
 
 Python'un class'ları okuma ve class'lara davranma şekli fonksiyonları okuma ve fonksiyonlara davranma şeklinden farklıdır.
-- Python `def func():` şeklinde tanımladığınız fonksiyonu okuyup bu fonksiyonun objesini oluşturulduğunda, bu fonksiyonun objesinin içindeki variable'lara sadece o fonksiyon çağırıldığında ulaşılabilir. Çünkü python, ancak bu fonksiyon çağırıldığında bu fonksiyonun bulunduğu line'a gidip fonksiyonu çalıştırır ve içeriğini okur. Bu "içeriğini okuma" sürecindeki bütün variable'lar local variable'lardır ve fonksiyon çalışmayı sonlandırdığında bu local variable'lar bellekten silinir. Yani pyhon, bir fonksiyonla karşılaştığında sadece o fonksiyonun objesini oluşturur (create), içeriğini okumaz.
-- Ama Class'larda içerik okunur. `class Class():` gibi bir class oluşturduğunuzda (create), python, programı yukarıdan aşağıya okurken, fonksiyonlardaki gibi class objesini yaratıp, class'ın içeriği okumayı atlamaz. Class'ın içeriğini de okur. Bu yüzden bu okuma işlemi sırasında class'ın içinde tanımlanmış variable'lar (class attribute) hafızada tutulur ve fonksiyonlar (`print()` gibi) okunduktan hemen sonra çalıştırılır. Örnek:
+- Python `def func():` şeklinde tanımladığınız fonksiyonu okuyup bu fonksiyonun objesini oluşturulduğunda, bu fonksiyonun objesinin içindeki variable'lara sadece o fonksiyon çağırıldığında ulaşılabilir. Çünkü Python, ancak bu fonksiyon çağırıldığında bu fonksiyonun bulunduğu line'a gidip fonksiyonu çalıştırır ve içeriğini okur. Bu "içeriğini okuma" sürecindeki bütün variable'lar local variable'lardır ve fonksiyon çalışmayı sonlandırdığında bu local variable'lar bellekten silinir. Yani pyhon, bir fonksiyonla karşılaştığında sadece o fonksiyonun objesini oluşturur (create), içeriğini okumaz.
+- Ama Class'larda içerik okunur. `class Class():` gibi bir class oluşturduğunuzda (create), Python, programı yukarıdan aşağıya okurken, fonksiyonlardaki gibi class objesini yaratıp, class'ın içeriği okumayı atlamaz. Class'ın içeriğini de okur. Bu yüzden bu okuma işlemi sırasında class'ın içinde tanımlanmış variable'lar (class attribute) hafızada tutulur ve fonksiyonlar (`print()` gibi) okunduktan hemen sonra çalıştırılır. Örnek:
 ```py
 # modul.py dosyası
 class Class():
@@ -46,7 +46,7 @@ class Class():
 Attribute 1
 ['Attribute 2']
 ```
-**Not:** Bu durum bu python dosyası import edildiğinde de yaşanır. Çünkü bu python dosyasını import ettiğinizde, python, o python dosyasını yukarıdan aşağı okumaya başlar ve yukarıda anlattığım olay yaşanır. Örnek:
+**Not:** Bu durum bu Python dosyası import edildiğinde de yaşanır. Çünkü bu Python dosyasını import ettiğinizde, Python, o Python dosyasını yukarıdan aşağı okumaya başlar ve yukarıda anlattığım olay yaşanır. Örnek:
 ```py
 # main.py dosyası
 import modul
@@ -73,7 +73,7 @@ print(modul.Class().var) # Output: modul.class.var çalıştı.
 from modul import Class # Output: modul.class çalıştı.
 print(Class().var) # Output: modul.class.var çalıştı.
 ```
-**Not:** Eğer python class'ın bloğunu okurken `print()` ile karşılaştığı için sizin kontrolünüz dışında ekrana bir şeyler bastırmasını istemiyorsanız pratik bir çözüm olarak bu class attribute'leri class'ın dışında bastırabilirsiniz. Bu sayede bu class attribute'leri bastırmak ya da bastırmamak sizin kontrolünüzde olur. Örnek:
+**Not:** Eğer Python class'ın bloğunu okurken `print()` ile karşılaştığı için sizin kontrolünüz dışında ekrana bir şeyler yazdırmasını istemiyorsanız pratik bir çözüm olarak bu class attribute'leri class'ın dışında bastırabilirsiniz. Bu sayede bu class attribute'leri bastırmak ya da bastırmamak sizin kontrolünüzde olur. Örnek:
 ```py
 class Class():
     attribute_1 = "Attribute 1"
@@ -234,7 +234,7 @@ b.exp_attribute_3: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
 ```
 
 ## Instance Attributes
-**Instance Attribute**'lar ve **Class Attribute**'lar gibidir. Tek farkı bu attribute'lara sadece instance'lar ulaşabilir. Yani instance attribute'lara main class'dan direkt ulaşamazsın. Örnek:
+**Instance Attribute**'lar ve **Class Attribute**'lar gibidir. Tek farkı, instance attribute'lara sadece instance'lar ulaşabilir. Yani instance attribute'lara main class'dan direkt ulaşamazsın. Örnek:
 ```py
 class Class():
     exp1 = 1
@@ -249,7 +249,7 @@ print(Class().exp2) # Output: 2
 Dolayısıyla instance attribute'lar, instance'lara özel attribute'lardır diyebiliriz.
 
 ### `__init__` Fonksiyonu ve `self`
-`__init__`, class'lara özgü bir fonksiyondur. `__init__` fonksiyonunun görevi, main class'dan instance oluşturulurken, instance için oluşturulacak instance attribute'leri (`self.a` gibi) ve işlevleri (`print()` gibi) tanımlamaktır. `__init__` fonksiyonu, main class'dan instance türetildiği anda çalışır. Başka bir deyişle, main class'dan instance türetilmeden önce main class okunurken, `__init__` fonksiyonunu okumaya sıra gelince python sadece `def __init__(self):` kısmını okuyup `__init__` fonksiyon objesini oluşturur. Dolayısıyla python bu sırada `__init__` fonksiyonunu çalıştırmaz ve içeriğini okumaz. Örnek:
+`__init__`, class'lara özgü bir fonksiyondur. `__init__` fonksiyonunun görevi, main class'dan instance oluşturulurken, instance için oluşturulacak instance attribute'leri (`self.a` gibi) ve işlevleri (`print()` gibi) tanımlamaktır. `__init__` fonksiyonu, main class'dan instance türetildiği anda çalışır. Başka bir deyişle, main class'dan instance türetilmeden önce main class okunurken, `__init__` fonksiyonunu okumaya sıra gelince Python sadece `def __init__(self):` kısmını okuyup `__init__` fonksiyon objesini oluşturur. Dolayısıyla Python bu sırada `__init__` fonksiyonunu çalıştırmaz ve içeriğini okumaz. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -270,7 +270,7 @@ var = Class()
 print(Class.check) # AttributeError: type object 'Class' has no attribute 'check'
 print(var.check) # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
 ```
-Bir main class içerisinde sadece instance'lerin ulaşabildiği `__init__` fonksiyonunun kapsamında veya user-defined (kullanıcı tanımlı) fonksiyonunun kapsamında bir işlem (örneğin `print()` gibi bir fonksiyon) tanımlarsak, program başlatıldığında python'un main class'ın içeriğini okurken karşılaştığı `print()` fonksiyonlarını çalıştırması gibi, main class'dan bir instance oluşturulduğu için `__init__` fonksiyonu çalıştırıldığında da python karşılaştığı işlemleri (örneğin `print()` gibi bir fonksiyon) çalıştırır. Örnek:
+Bir main class içerisinde sadece instance'lerin ulaşabildiği `__init__` fonksiyonunun kapsamında veya user-defined (kullanıcı tanımlı) fonksiyonunun kapsamında bir işlem (örneğin `print()` gibi bir fonksiyon) tanımlarsak, program başlatıldığında Python'un main class'ın içeriğini okurken karşılaştığı `print()` fonksiyonlarını çalıştırması gibi, main class'dan bir instance oluşturulduğu için `__init__` fonksiyonu çalıştırıldığında da Python karşılaştığı işlemleri (örneğin `print()` gibi bir fonksiyon) çalıştırır. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -279,11 +279,11 @@ class Class():
 
 var = Class() # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
 ```
-Yukarıdaki kodda, `var = Class()` kodu ile main class'dan bir instance türetildiğinde `__init__` fonksiyonu çalıştığı için `__init__` fonksiyonunun içeriği okunuyor ve bu sırada python `print(self.check)` kodu ile karşılaşıp, bu kodu çalıştırıp, ekrana `Class() ile instance oluşturulduğu anda __init__ Çalıştı.` bastırılıyor.
+Yukarıdaki kodda, `var = Class()` kodu ile main class'dan bir instance türetildiğinde `__init__` fonksiyonu çalıştığı için `__init__` fonksiyonunun içeriği okunuyor ve bu sırada Python `print(self.check)` kodu ile karşılaşıp, bu kodu çalıştırıp, ekrana `Class() ile instance oluşturulduğu anda __init__ Çalıştı.` yazdırıyor.
 
 **Not:** Bir main class'dan her instance türetildiğinde, türetilen instance, kendine özel bir `__init__` fonksiyon objesine ve user-defined (kullanıcı tanımlı) fonksiyon objelerine sahip olur. Bu sayede herhangi bir çakışmaya maruz kalmadan yeniden tanımlama (redefinition) ya da aynı obje üzerinde işlem yapmaya (`Class().attribute.append` gibi) izin verir.
 
-Main class'dan türetilmiş bir instance'dan bir attribute talep ettiğinizde, python main class içinde o attribute'ü önce instance attribute olarak arar, bulamazsa class attribute olarak arar, yine bulamazsa hata verir. Örnek:
+Main class'dan türetilmiş bir instance'dan bir attribute talep ettiğinizde, Python main class içinde o attribute'ü önce instance attribute olarak arar, bulamazsa class attribute olarak arar, yine bulamazsa hata verir. Örnek:
  ```py
 class Class1():
     a = 1
@@ -415,7 +415,7 @@ print(Class().sayi_1) # Output: AttributeError: 'Class' object has no attribute 
 print(Class().sayi_2) # Output: AttributeError: 'Class' object has no attribute 'sayi_2'
 print(Class().sayi_3) # Output: 3
 ```
-Gördüğünüz gibi `sayi_1` ve `sayi_2` variable'larının başına `self` prefix'i getirmediğimiz için python bunları bir instance attribute olarak kabul etmiyor ve bu yüzden variable'lara `Class().sayi_1` ve `Class().sayi_2` şeklinde ulaşamıyoruz , hata veriyor. Ama bu variable'ları isteğe ve duruma göre `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde kullanabiliriz.
+Gördüğünüz gibi `sayi_1` ve `sayi_2` variable'larının başına `self` prefix'i getirmediğimiz için Python bunları bir instance attribute olarak kabul etmiyor ve bu yüzden variable'lara `Class().sayi_1` ve `Class().sayi_2` şeklinde ulaşamıyoruz , hata veriyor. Ama bu variable'ları isteğe ve duruma göre `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde kullanabiliriz.
 
 ### Instance Methods
 Bir main class'a, `__init__` fonksiyonu dışında çeşitli user-defined (kullanıcı tanımlı) fonksiyonlar tanımlayabiliriz. Bu tanımlanan user-defined (kullanıcı tanımlı) fonksiyonlara **Instance Methods** denir. Örnek:
@@ -473,7 +473,7 @@ Class.a_yazdir()
 ```
 Buradaki `@staticmethod` daha sonra açıklanacaktır.
 
-Normal şartlarda, global scope'da tanımlanmış iki fonksiyon, global scope'daki variable'lara erişebilir ama birbirinin local variable'larına erişemez. Çünkü bu local variable'lar adı üstünde local variable oldukları için o fonksiyon çalıştırıldığında python bu local variable'ları okuyup bellekte depolar ve fonksiyon sonlandığında silinirler. Örnek:
+Normal şartlarda, global scope'da tanımlanmış iki fonksiyon, global scope'daki variable'lara erişebilir ama birbirinin local variable'larına erişemez. Çünkü bu local variable'lar adı üstünde local variable oldukları için o fonksiyon çalıştırıldığında Python bu local variable'ları okuyup bellekte depolar ve fonksiyon sonlandığında silinirler. Örnek:
 ```py
 def func1():
     a = "local a"
@@ -514,7 +514,7 @@ var.a_yazdir() # Output: self.a | new self.a
 var.b_yazdir() # Output: [] | ['new self.b']
 var.c_yazdir() # Output: 100 | 150
 ```
-Gördüğünüz gibi bütün user-defined (kullanıcı tanımlı) fonksiyonlar `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara erişebildi ve bu instance attribute'lerin üzerinde işlemler yaparak bu instance attribute'lerin önceki ve sonraki hallerini ekrana bastırdı.
+Gördüğünüz gibi bütün user-defined (kullanıcı tanımlı) fonksiyonlar `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara erişebildi ve bu instance attribute'lerin üzerinde işlemler yaparak bu instance attribute'lerin önceki ve sonraki hallerini ekrana yazdırdı.
 
 Bir main class'ın içine user-defined (kullanıcı tanımlı) fonksiyon tanımlayıp, bu fonksiyonun içine de `__init__` fonksiyonunda tanımlı olmayan bir instance attribute tanımlayabilirsiniz. Örnek:
 ```py
@@ -534,13 +534,48 @@ print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
 ```
 Gördüğünüz gibi `__init__` fonksiyonundaki `self.init_attribute` instance attribute'sine `var.init_attribute` kodu kullanılarak ulaşılabildiği gibi, user-defined (kullanıcı tanımlı) bir fonksiyon olan `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'sine `var.a_yazdir_attribute` kodu kullanılarak ulaşılabildi. Bu da user-defined (kullanıcı tanımlı) fonksiyonların içinde de instance attribute tanımlanabildiğini kanıtlar.
 
-user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına doğrudan `var.a_yazdir_attribute` kodundaki gibi erişebilmek için bazı koşulların sağlanması gerekmektedir. `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara ekstra bir şey yapmadan erişebilmemizin sebebi, main class'dan instance türetildiği anda `__init__` fonksiyonun çalışıyor ve çalıştığı için de python'un bu `__init__` fonksiyonunun içindeki instance attribute'ları okuyup belleğe atıyor olmasıdır. Buradan yola çıkarak şunu söyleyebiliriz: Python main class'ı okurken, `__init__` ve diğer user-defined (kullanıcı tanımlı) fonksiyonların içeriğini okumaz ve bunları fonskiyon objesi olarak bellekte depolar demiştik. Python, main class'dan instance türetildiğinde sadece `__init__` fonksiyonunu çalıştırıp içeriğini okur ama diğer user-defined (kullanıcı tanımlı) fonksiyonları çalıştırmaz ve bunları sadece fonksiyon objesi olarak bellekte depolar. Kanıtı:
+user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına doğrudan `var.a_yazdir_attribute` kodundaki gibi erişebilmek için bazı koşulların sağlanması gerekmektedir. `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara ekstra bir şey yapmadan erişebilmemizin sebebi, main class'dan instance türetildiği anda `__init__` fonksiyonun çalışıyor ve çalıştığı için de Python'un bu `__init__` fonksiyonunun içindeki instance attribute'ları okuyup belleğe atıyor olmasıdır. Buradan yola çıkarak şunu söyleyebiliriz: Python main class'ı okurken, `__init__` ve diğer user-defined (kullanıcı tanımlı) fonksiyonların içeriğini okumaz ve bunları fonskiyon objesi olarak bellekte depolar demiştik. Python, main class'dan instance türetildiğinde sadece `__init__` fonksiyonunu çalıştırıp içeriğini okur ama diğer user-defined (kullanıcı tanımlı) fonksiyonları çalıştırmaz ve bunları sadece fonksiyon objesi olarak bellekte depolar. Kanıtı:
 
 <img src="https://i.ibb.co/tsPrX8Q/image.png" alt="image" border="0">
 
-Bu yüzden `var` instance'ının `__init__` fonksiyonunun içindeki `self.init_attribute` instance attribute'una ekstra bir şey yapmadan ulaşabilirken, `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una ulaşabilmek için `a_yazdir()` fonksiyonunun bir kere çalışması gerekmektedir. Çünkü, ancak `a_yazdir()` fonksiyonu çalıştığında python bu fonksiyonun içindeki instance attribute'lerini okuyup belleğe atabilir ve ancak bu işlemden sonra `var.a_yazdir_attribute` şeklinde bu instance attribute'e ulaşabiliriz.
+Bu yüzden `var` instance'ının `__init__` fonksiyonunun içindeki `self.init_attribute` instance attribute'una ekstra bir şey yapmadan ulaşabilirken, `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una ulaşabilmek için `a_yazdir()` fonksiyonunun bir kere çalışması gerekmektedir. Çünkü, ancak `a_yazdir()` fonksiyonu çalıştığında Python bu fonksiyonun içindeki instance attribute'lerini okuyup belleğe atabilir ve ancak bu işlemden sonra `var.a_yazdir_attribute` şeklinde bu instance attribute'e ulaşabiliriz.
 
-**Not:** `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una `var.a_yazdir().a_yazdir_attribute` şeklinde ulaşmaya çalışırsanız `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası alırsınız. ######### Örnek: Discord OmerBey'e sorduğun sorunun cevabını alınca burayı güncelle.
+**Not:** `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una `var.a_yazdir().a_yazdir_attribute` şeklinde ulaşmaya çalışırsanız `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası alırsınız. Örnek:
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+        self.init_attribute = "init_attribute"
+
+    def a_yazdir(self):
+        self.a_yazdir_attribute = "a_yazdir_attribute"
+        
+var1 = Class() # Output: __init__ Çalıştı...
+print(var1.a_yazdir().a_yazdir_attribute) # Output: AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'
+```
+Bunun nedeni şudur: Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_kavramlar.md#pythonun-çalışma-mantığı) (yani en iç parantezden başlayarak) kodları çalıştırır. `var1.a_yazdir().a_yazdir_attribute` gibi kodlar da en baştan en sona doğru parça parça çalıştırılır. `var1.a_yazdir().a_yazdir_attribute` kodunu açıklamak gerekirse:
+- Python önce `var1` instance'ını alır.
+- Sonra `var1` instance'ının `a_yazdir()` adında bir methodu varmı diye bakar. Varsa, bu `a_yazdir()` methodunu çalıştırır; yoksa, `AttributeError: 'Class' object has no attribute 'a_yazdir'` hatası verir.
+- `var1` instance'ında `a_yazdir()` methodu olduğu için Python bu methodu çalıştırır. 
+- Sonra `a_yazdir()` methodunun `a_yazdir_attribute` adında bir methodu varmı diye bakar. Varsa bu `a_yazdir_attribute` methodunu çalıştırır, yoksa `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası verir.
+- `a_yazdir()` methodunda herhangi bir `raturn` statement tanımlı olmadığı için `return` değeri `NoneType`'dır (`NoneType`, `<class 'NoneType'>`'a ait bir type'dır). `NoneType`'ın `a_yazdir_attribute` adında bir methodu olmadığı için de Python `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası verir.
+- Kısaca `var1.a_yazdir().a_yazdir_attribute` kodu sırasıyla şu formları alır: `var1.a_yazdir().a_yazdir_attribute --> NoneType.a_yazdir_attribute --> AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'`
+
+`a_yazdir()` fonksiyonuna `return self.a_yazdir_attribute` statement eklersek yine `AttributeError` hatası alırız. Çünkü `a_yazdir()` fonksiyonunun return ettiği `"a_yazdir_attribute"` string objesinin `a_yazdir_attribute` adında bir methodu yoktur. Bu string objesinin `a_yazdir_attribute` adında bir methodu olmadığı için de Python `AttributeError: 'str' object has no attribute 'a_yazdir_attribute'` hatası döndürür. Örnek:
+```py
+class Class():
+    def __init__(self):
+        print("__init__ Çalıştı...")
+        self.init_attribute = "init_attribute"
+
+    def a_yazdir(self):
+        self.a_yazdir_attribute = "a_yazdir_attribute"
+        return self.a_yazdir_attribute
+        
+var2 = Class() # Output: __init__ Çalıştı...
+print(var2.a_yazdir().a_yazdir_attribute) # Output: AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'
+```
+Bu koddaki `var2.a_yazdir().a_yazdir_attribute` kodunun çalıştırılma şekli bir önceki koddaki `var1.a_yazdir().a_yazdir_attribute` kodunun çalıştırılma şekliyle tamamen aynıdır. Tek fark, bu sefer `a_yazdir()` fonksiyonu `NoneType` değeri yerine `"a_yazdir_attribute"` string objesini döndürür.
 
 `a_yazdir()` fonksiyonunu istersek class'ın dışında, istersek `__init__` fonksiyonunun içinde çalıştırarak, user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına ulaşabiliriz.
 ```py
@@ -559,7 +594,7 @@ var = Class() # Output: __init__ Çalıştı...
 print(var.init_attribute) # Output: init_attribute
 print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
 ```
-Gördüğünüz gibi, `__init__` fonksiyonunun içinde `self.a_yazdir()` koduyla `a_yazdir()` fonksiyonunu çalıştırıp (çalıştığını `a_yazdir Çalıştı...` outputu ile kanıtlıyoruz) python'un bu fonksiyonun içeriğini okumasını ve `a_yazdir()` fonksiyonun içinde okuduğu instance attribute'ları belleğe atmasını sağladık.
+Gördüğünüz gibi, `__init__` fonksiyonunun içinde `self.a_yazdir()` koduyla `a_yazdir()` fonksiyonunu çalıştırıp (çalıştığını `a_yazdir Çalıştı...` outputu ile kanıtlıyoruz) Python'un bu fonksiyonun içeriğini okumasını ve `a_yazdir()` fonksiyonun içinde okuduğu instance attribute'ları belleğe atmasını sağladık.
 ```py
 # class dışında
 class Class():
@@ -576,7 +611,7 @@ var.a_yazdir() # Output: a_yazdir Çalıştı...
 print(var.init_attribute) # Output: init_attribute
 print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
 ```
-Gördüğünüz gibi python, class dışındaki `var.a_yazdir()` kodu ile karşılaşınca, bu kodu çalıştırdığı için `a_yazdir()` fonksiyonu çalışır ve python bu fonksiyonun içeriğini okuyup, `self.a_yazdir_attribute` instance attribute'unu belleğe atar. Kanıtı:
+Gördüğünüz gibi Python, class dışındaki `var.a_yazdir()` kodu ile karşılaşınca, bu kodu çalıştırdığı için `a_yazdir()` fonksiyonu çalışır ve Python bu fonksiyonun içeriğini okuyup, `self.a_yazdir_attribute` instance attribute'unu belleğe atar. Kanıtı:
 
 <img src="https://i.ibb.co/XLCTX0c/image.png" alt="image" border="0">
 

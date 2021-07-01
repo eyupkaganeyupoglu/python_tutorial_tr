@@ -1,1 +1,0 @@
-https://python-istihza.yazbel.com/nesne_tabanli_programlama2.html
