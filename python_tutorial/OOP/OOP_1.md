@@ -145,28 +145,34 @@ b.exp_attribute_6: frozenset({4, 5, 6})
 ```
 Gördüğünüz gibi `b` variable'ına atanmış instance'nin immutable class attribute'larını yeniden tanımlayarak değiştirip main class'dan ve `a` variable'ına atanmış instance'dan farklı değerlere sahip bir şablon elde etmiş olduk.
 
-Bir instance'daki class attribute'ları yeniden tanımladığımızda bu class attribute'lar, main class'daki class attribute'lar ve diğer instance'daki class attribute'lardan farklı bir objeye dönüşür (ID'si farklı olur). Örnek:
+Bir instance'daki class attribute'ları yeniden tanımladığımızda (redefinition) bu class attribute'lar, main class'daki class attribute'lar ve diğer instance'daki class attribute'lardan farklı bir objeye dönüşür (ID'si farklı olur). Örnek:
 ```py
 class Class():
     a = 1
 
 var1 = Class()
 var2 = Class()
-print("var1.a:    ", var1.a, "id:", id(var1.a))
-print("var2.a:    ", var2.a, "id:", id(var2.a))
+print("Class.a:    ", Class.a, "id:", id(Class.a))
+print("var1.a:     ", var1.a, "id:", id(var1.a))
+print("var2.a:     ", var2.a, "id:", id(var2.a))
 var1.a = 2
-print("var1.a new:", var1.a, "id:", id(var1.a))
+print("var1.a new: ", var1.a, "id:", id(var1.a))
 var2.a = 3
-print("var2.a new:", var2.a, "id:", id(var2.a))
+print("var2.a new: ", var2.a, "id:", id(var2.a))
+Class.a = 4
+print("Class.a new:", Class.a, "id:", id(Class.a))
 ```
 **Output:**
 ```
+Class.a:    1 id: 1616316492080
 var1.a:     1 id: 1616316492080
 var2.a:     1 id: 1616316492080
 var1.a new: 2 id: 1616316492112
 var2.a new: 3 id: 1616316492144
 ```
-Gördüğünüz gibi `var1` ve `var2` instance'larinin ilk başta `a` class attribute'ünün ID'si aynıydı çünkü bu iki class attribute objesi de main class'ın class attribute'ünü işaret ediyordu. Sonra bu instance'ların class attribute'larını yeniden tanımlayınca (redefinition), bu instance'ların class attribute'ları main class'ın class attribute'undan farklı bir objeye dönüştü. Kanıt olarak bu instance'ların class attribute'larının son durumdaki (new) ID'lerine bakabilirsiniz.
+Gördüğünüz gibi `var1`, `var2` instance'larinin ve `Class` main class objesinin ilk başta `a` class attribute'ünün ID'si aynıydı çünkü `var1` ve `var2` instance'ının class attribute objeleri, main class'ın class attribute'ünü işaret ediyordu. Sonra bu instance'ların class attribute'larını yeniden tanımlayınca (redefinition), bu instance'ların class attribute'ları main class'ın class attribute'undan farklı bir objeye dönüştü. Kanıt olarak bu instance'ların class attribute'larının son durumdaki (new) ID'lerine bakabilirsiniz.
+
+**Not:** Yukarıdaki örnekte görüşdüğü gibi, `Class` objesinin `a` class attribute'sini yeniden tanımladığımızda (redefinition) ID'si değişti, yani önceki main class'ın sahip olduğu class attribute'unden farklı bir class attribute'e dönüştü. Buradan şunu söyleyebiliriz; Yeniden tanımlama (redefinition) işlemi, instance attribute'ların ve class attribute'ların, data type'ları ne olursa olsun ID'sini değiştirir (çünkü adı üstünde, yeniden tanımlıyorsunuz).
 
 Class attribute'ler değiştirilebilir (mutable (`list`, `set`, `dict` vb.)) data type'lar ise, bu class'dan türetilmiş farklı instance'lardaki class attribute'ların değerlerini değiştirmek için bu data type'ların methodları kullanılırsa, main class'dan türetilmiş instance'lerin class attribute objeleri, main class'daki class attribute'lere işaret edeceği (aynı ID'ye sahip olacağı) için bu değişiklik main class ve bütün bu main class'dan türetilmiş instance'larda geçerli olur. Örnek:
 ```py
