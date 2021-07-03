@@ -338,7 +338,39 @@ print(Class1().a) # Output: Class1.a
 print(Class2().a) # Output: Class2.a
 print(Class3().a) # Output: Class3.a
 ```
-`self` kelimesinin, class'ın kapsamındaki `__init__` ve bütün user-defined (kullanıcı tanımlı) fonksiyonların ilk parametresinde kullanılmak zorunda olan, instance attribute'leri işaret eden bir prefix'dir. Yani bir main class'ın içinde instace attribute tanımlayacağınız zaman, her zaman `self` prefix'ini kullanmak zorundasınız. Kısaca `self = instace attribute`. Örnek:
+`self` kelimesinin, class'ın kapsamındaki `__init__` ve instance method olarak kullanılacak bütün user-defined (kullanıcı tanımlı) fonksiyonların ilk parametresinde kullanılmak zorunda olan, instance attribute'leri işaret eden bir prefix'dir. Yani bir main class'ın içinde instace attribute tanımlayacağınız zaman, her zaman `self` prefix'ini kullanmak zorundasınız.
+
+`self` parametresi şimdiye kadar anlattıklarımızdan ibaret değildir. Bir parametre varsa, o parametreye girilecek bir argüman da olmak zorundadır. Yani `self` parametresine yeri geldiğinde Python tarafından otomatik olarak, yeri geldiğinde manüel (elle) olarak bir argüman tanımlanır. Örnek:
+```py
+class Class:
+    def __init__(self):
+        pass
+    
+    def func(self):
+        self.a = "self.a attribute"
+        print("Instance method func():", self.a)
+
+Class().func() # Output: Instance method func(): self.a attribute
+Class.func() # TypeError: func() missing 1 required positional argument: 'self'
+```
+Gördüğünüz gibi `Class().func()` kodu hata vermezken `Class.func()` kodu '`self` argümanı eksik' hatası verdi. Bunun sebebi şudur:
+- `Class().func()` kodunda '`self` argümanı eksik' hatası vermemesinin sebebi, bir instance üzerinden bir instance method çağırdığımızda, python bu `self` parametresine otamatik olarak, üzerinden instance method çağırdığımız instace'sini argüman olarak tanımlıyor. Yani `Class().func()` kodundaki `Class()` instancesi, `def func(self):` methodundaki `self` parametresine argüman olarak tanımlanıyor (`def func(Class()):` gibi).
+- `Class.func()` kodunda '`self` argümanı eksik' hatası vermesinin sebebi, `func()` methodunu bir instance üzerinden çağırmadığımız için Python'un `self` parametresini otomatik dolduramamasıdır. Bu durumda `Class.func()` kodunun çalışması için `self` parametresine argüman olarak tanımlanması gereken instance'nin manuel olarak tanımlanması gerekmektedir. Bunu da basitçe `Class.func(Class())` şeklinde yapabilirsiniz ve sonuçta kodun çalıştığını görürsünüz.
+
+**Not:** `Class().func()` kodu ile `Class.func(Class())` kodu tamamen aynı şeyir. Örnek:
+```py
+class Class:
+    def __init__(self):
+        pass
+    
+    def func(self):
+        self.a = "self.a attribute"
+        print("Instance method func():", self.a)
+
+Class().func() # Output: Instance method func(): self.a attribute
+Class.func(Class()) # Output: Instance method func(): self.a attribute
+```
+`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lere de referans verebilirsiniz. Örnek:
 ```py
 class Class1():
     a = 1
