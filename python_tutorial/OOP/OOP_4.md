@@ -175,16 +175,15 @@ var = Class()
 
 <img src="https://i.ibb.co/7XqSJvB/image.png" alt="image" border="0">
 
-Yukarıda gördüğünüz gibi, main class'da property objesi olarak bulunan `func2`, `var` instance'ında attribute olarak bulunmaktadır. Buradan yola çıkarak; `@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getiren property objeleri oluşturmaktır diyebiliriz.
+Yukarıda gördüğünüz gibi, main class'da property objesi olarak bulunan `func2`, `var` instance'ında attribute olarak bulunmaktadır. Buradan yola çıkarak; `@property` decorator'ının en temel işlevi, main class içindeki bir methodu, bu main class'dan türetilen bir instace içinde attribute gibi kullanılabilecek hale getiren property objeleri oluşturmaktır diyebiliriz.
 
-`func2` fonksiyon objesini `var.func2()` şeklinde çağıramazsınız çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası olduğu için main class'da bir method olarak bulunmamaktadır. Dolayısıyla main class'dan türetilen `var` instance'ında da bir method olarak bulunmaz, `'None'` value'suna sahip bir attribute olarak bulunur. `var.func2()` kodunu çalıştırırsanız sırasıyla aşağıdaki olaylar gerçekleşir:
+Yukarıdaki kodda bulunan `func2` fonksiyon objesini `var.func2()` şeklinde çağıramazsınız çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası olduğu için main class'da bir method olarak bulunmamaktadır. Dolayısıyla main class'dan türetilen `var` instance'ında da bir method olarak bulunmaz, `'None'` value'suna sahip bir attribute olarak bulunur. `var.func2()` kodunu çalıştırırsanız sırasıyla aşağıdaki olaylar gerçekleşir:
 - Python, `var.func2()` kodunun önce `var.func2` kısmını okur ve `var` instance'ının `func2` adında bir methodu varmı diye bakar ve `func2` adında bir attribute bulur.
 - Python, `func2` attribute'u `'None'` value'sunu içerdiği için `var.func2` kodu `'None'` çıktısını verir. Bu yüzden `var.func2()` kodu, Python'un gözünde `None()` koduna dönüşür.
 - `None` value'su `NoneType` bir objedir. `NoneType` bir obje çağırılabilir (callable) olmadığı için `TypeError: 'NoneType' object is not callable` hatası yükseltilir.
 
-**!Burada Kaldın!** Aşağıdan devam et. ÖRnek boşta kaldı.
 
-Örnek:
+Şimdiye kadar anlattıklarımızla ilgili bir örnek:
 ```py
 class Class1():
     def __init__(self):
@@ -203,29 +202,32 @@ class Class2():
 var1 = Class1()
 var2 = Class2()
 print(var1.func1()) # Output: Class1 A
-print(Class1().func1) # Output: <bound method Class1.func1 of <__main__.Class1 object at 0x000001BBC14E2280>>
-print(Class2().func2()) # TypeError: 'str' object is not callable
-print(Class2().func2) # Output: Class2 A
+print(var1.func1) # Output: <bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>
+print(var2.func2()) # TypeError: 'str' object is not callable
+print(var2.func2) # Output: Class2 A
 ```
 Yukarıdaki kodda, `print()` fonksiyonlarının outputlarının nedenlerini teker teker açıklamak gerekirse:
-- `print(Class1().func1())`
-    - `Class1` class'ındaki `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur ve `Class1().func1()` kodundaki gibi `func1()` şeklinde çağırılabilir (call: çağırmak, callable: çağırılabilirlik). `print(Class1().func1())` kodu ile bu methodu çağırarak, döndürdüğü değeri `print()` fonksiyonu ile ekrana yazdırıyoruz.
+- `print(var1.func1())`
+    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur ve `Class1().func1()` kodundaki gibi `func1()` şeklinde çağırılabilir (call: çağırmak, callable: çağırılabilirlik). `print(Class1().func1())` kodu ile bu methodu çağırarak, döndürdüğü değeri `print()` fonksiyonu ile ekrana yazdırıyoruz.
 
-- `print(Class1().func1)`
-    - `Class1` class'ındaki `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur. `Class1().func1` kodundaki `func1`, `<function Class1.func1 at 0x00000160370A2790>` objesini temsil eden bir isimdir (identifier). Bu objeyi `func1()` şeklinde çalıştırmadığımız için `print(Class1().func1)` kodu direkt `<function Class1.func1 at 0x00000160370A2790>` objesini işaret eden `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` output'unu döndürüyor. Bu output, "`func1` metodu `Class1` sınıfına ait bir metot ve `0x00000298C68A3FD0` adresinde olan `__main__.Class1` objesine ait" anlamına gelmektedir.   
+- `print(var1.func1)`
+    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur. `var1.func1` kodu "main class'daki 
+    `<function Class1.func1 at 0x00000160370A2790>` instance methoduna bağlı (bound method) olan, `0x00000298C68A3FD0` adresinde olan, `__main__.Class1` objesine ait, `Class1` class'ının `func1` adındaki instance method'u" anlamına gelen `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini verir. Bu yüzden `print(var1.func1)` kodunun output'u bu `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini yazdırır.  
 
-- `print(Class2().func2())`
-    - `Class2` class'ındaki `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve bir property olur. `func2` property'si, daha sonra anlatılacak **değer döndürme** işlevini gerçekleştirir. `func1` methodu çağırılabilir (callable) bir objedir ama `func2`, string type bir property olduğu için ve string'ler çağırılabilir (callable) bir obje olmadığı için `Class2().func2()` kodu, "string objeler çağırılabilir (callable) değildir." anlamına gelen `TypeError: 'str' object is not callable` hatasını yükseltir.
+- `print(var2.func2())`
+    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin bir parçası (`fget` methodu) olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). Python, `var2.func2()` kodunun önce `var2.func2` kısmını okur. `var2.func2` kısmı `Class2 A` string değerini verdiği için `var2.func2()` kodu Python gözünde `'Class2 A'()` koduna dönüşür. String bir obje çağırılabilir (callable) olmadığı için `var2.func2()` kodu "string objeler çağırılabilir (callable) değildir." anlamına gelen `TypeError: 'str' object is not callable` hatasını yükseltir.
 
-- `print(Class2().func2)`
-    - `Class2` class'ındaki `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve bir property olur. `func2` property'si, daha sonra anlatılacak **değer döndürme** işlevini gerçekleştirir. `func2` property'si string bir değer olan `Class2 A`'ya eşit olduğu için `print(Class2().func2)` kodu `Class2 A` değerini yazdırır.
+- `print(var2.func2)`
+    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin bir parçası (`fget` methodu) olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). `print(var2.func2)` kodu, `var2` instance'ında bulunan `func2` attribute'unun içerdiği `Class2 A` stringini yazdırır.
 
-**Not:** `func1`  ve `func2`'nin ikisi de bir method olmasına rağmen `func2` `@property` decorator'ı ile işaretlendiğinde nasıl oluyor da bir property'ye dönüşüp `Class2().func2` şeklinde kullanıldığında `func2` methodunun döndürdüğü değere eşit oluyor gibi sorularınızı cevaplayabilmeniz için [**descriptor**](https://docs.python.org/3/howto/descriptor.html) kavramını araştırmalısınız. Bu konu, Python dışındaki programlama dillerini de ilgilendiren bir mesele olduğu için anlatması çok uzun sürer. Bu yüzden merak eden kendisi araştırı öğrenebilir.
+**Not:** `func1` ve `func2`'nin ikisi de bir method olmasına rağmen `func2`, `@property` decorator'ı ile işaretlendiğinde nasıl oluyor da bir property'ye dönüşüp `var2.func2` şeklinde kullanıldığında `func2` methodunun döndürdüğü değere eşit oluyor gibi sorularınızı cevaplayabilmeniz için [**descriptor**](https://docs.python.org/3/howto/descriptor.html) kavramını araştırmalısınız. Bu konu, Python dışındaki programlama dillerini de ilgilendiren bir mesele olduğu için anlatması çok uzun sürer. Bu yüzden merak eden kendisi araştırı öğrenebilir.
 
-Bunun dışında `@property` decorator'ın üç önemli işlevi bulunur:
+Bunlar dışında `@property` decorator'ın üç önemli işlevi bulunur:
 - Değer döndürmek
 - Değer atamak
 - Değer silmek
+
+**!Burada Kaldın!** Aşağıdan devam et
 
 ## Değer Döndürme
 `@property` decorator'ı ile işaretlen bir method, aksi belirtilmediği sürece sadece `değer döndürme` işlevini gerçekleştirir. Örnek:
