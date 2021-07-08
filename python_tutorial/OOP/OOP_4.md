@@ -157,7 +157,7 @@ Bu koddaki `func1` fonksiyonu bellekte `<function Class.func1 at 0x00000160370A2
 
 <img src="https://i.ibb.co/ydDXLKk/image.png" alt="image" border="0">
 
-Yukarıdaki görselde dikkat edilmesi gereken şey, `func2` fonksiyon objesi `func1` fonksiyon objesi gibi main class objesinin function variables kısmında bulunmuyor, `fget` kısmında bulunuyor çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası haline gelmiştir. Bu property'ler main class'da obje olarak bulunurken, instance'larda sadece attribute olarak bulunur. Örnek:
+Bu görseldeki `fget`, `fset` ve `fdel` methodlarının ne olduğu daha sonra değer döndürme, değer atama ve değer silme başlıklarında anlatılacak. Yukarıdaki görselde dikkat edilmesi gereken şey; `func2` fonksiyon objesi, `func1` fonksiyon objesi gibi main class objesinin function variables kısmında bulunmuyor, `fget` kısmında bulunuyor çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası haline gelmiştir. Bu property'ler main class'da obje olarak bulunurken, instance'larda sadece attribute olarak bulunur. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -169,14 +169,20 @@ class Class():
     @property
     def func2(self):
         pass
+
+var = Class()
 ```
-<img src="https://i.ibb.co/RH6CtHm/image.png" alt="image" border="0">
 
-`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir. Bu yüzden `func2` fonksiyon objesini `var.func2()` kodundaki gibi çağıramazsınız çünkü `@property` decorator'ı, `func2` fonksiyonunu bir attribute haline getirmiştir ve attribute'lar fonksiyon'lar gibi çağırılabilir (callable) değildir. Çağırmaya çalışırsanız, `var.func2()` kodundaki `var.func2` kısmının döndürdüğü çağırılabilir olmayan `NoneType`'ı, `NoneType()` şeklinde çağırmaya çalıştığınız için `TypeError: 'NoneType' object is not callable` hatası alırsınız. Bu görseldeki `fget`, `fset` ve `fdel` methodlarının ne olduğu daha sonra değer döndürme, değer atama ve değer silme başlıklarında anlatılacak. 
+<img src="https://i.ibb.co/7XqSJvB/image.png" alt="image" border="0">
 
-`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir demiştik. Bunu daha ayrıntılı açıklamak gerekirse; `@property` decorator'ının en temel işlevi, etkilediği methodları kullanan bir property objesi oluşturmaktır.
+Yukarıda gördüğünüz gibi, main class'da property objesi olarak bulunan `func2`, `var` instance'ında attribute olarak bulunmaktadır. Buradan yola çıkarak; `@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getiren property objeleri oluşturmaktır diyebiliriz.
 
-**!Burada Kaldın!** en son buraya property'lerin main class'da farklı instace'larda farklı olduğunu, instance'larda property'lerin bulunmadığını, sadece property'lerin attribute şeklindeki hallerinin bulunduğunun kanıtını gösterecektin. Buna ek olarak yukarıdaki uzun yazıda "`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir." kısmını da instance ve main class'da farklı ilediğini (nedenini ilk cümlede anlattım) orada ya aktarıp cümleyi güncelleyecektin.
+`func2` fonksiyon objesini `var.func2()` şeklinde çağıramazsınız çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası olduğu için main class'da bir method olarak bulunmamaktadır. Dolayısıyla main class'dan türetilen `var` instance'ında da bir method olarak bulunmaz, `'None'` value'suna sahip bir attribute olarak bulunur. `var.func2()` kodunu çalıştırırsanız sırasıyla aşağıdaki olaylar gerçekleşir:
+- Python, `var.func2()` kodunun önce `var.func2` kısmını okur ve `var` instance'ının `func2` adında bir methodu varmı diye bakar ve `func2` adında bir attribute bulur.
+- Python, `func2` attribute'u `'None'` value'sunu içerdiği için `var.func2` kodu `'None'` çıktısını verir. Bu yüzden `var.func2()` kodu, Python'un gözünde `None()` koduna dönüşür.
+- `None` value'su `NoneType` bir objedir. `NoneType` bir obje çağırılabilir (callable) olmadığı için `TypeError: 'NoneType' object is not callable` hatası yükseltilir.
+
+**!Burada Kaldın!** Aşağıdan devam et. ÖRnek boşta kaldı.
 
 Örnek:
 ```py
