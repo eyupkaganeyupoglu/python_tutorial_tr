@@ -157,7 +157,22 @@ Bu koddaki `func1` fonksiyonu bellekte `<function Class.func1 at 0x00000160370A2
 
 <img src="https://i.ibb.co/ydDXLKk/image.png" alt="image" border="0">
 
-Yukarıdaki görselde dikkat edilmesi gereken şey, `func2` fonksiyon objesi `func1` fonksiyon objesi gibi main class objesinin function variables kısmında bulunmuyor, `fget` kısmında bulunuyor çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası haline gelmiştir. `@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir. Bu yüzden `func2` fonksiyon objesini `var.func2()` kodundaki gibi çağıramazsınız çünkü `@property` decorator'ı, `func2` fonksiyonunu bir attribute haline getirmiştir ve attribute'lar fonksiyon'lar gibi çağırılabilir (callable) değildir. Çağırmaya çalışırsanız, `var.func2()` kodundaki `var.func2` kısmının döndürdüğü çağırılabilir olmayan `NoneType`'ı, `NoneType()` şeklinde çağırmaya çalıştığınız için `TypeError: 'NoneType' object is not callable` hatası alırsınız. Bu görseldeki `fget`, `fset` ve `fdel` methodlarının ne olduğu daha sonra değer döndürme, değer atama ve değer silme başlıklarında anlatılacak. 
+Yukarıdaki görselde dikkat edilmesi gereken şey, `func2` fonksiyon objesi `func1` fonksiyon objesi gibi main class objesinin function variables kısmında bulunmuyor, `fget` kısmında bulunuyor çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası haline gelmiştir. Bu property'ler main class'da obje olarak bulunurken, instance'larda sadece attribute olarak bulunur. Örnek:
+```py
+class Class():
+    def __init__(self):
+        pass
+
+    def func1(self):
+        pass
+
+    @property
+    def func2(self):
+        pass
+```
+<img src="https://i.ibb.co/RH6CtHm/image.png" alt="image" border="0">
+
+`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir. Bu yüzden `func2` fonksiyon objesini `var.func2()` kodundaki gibi çağıramazsınız çünkü `@property` decorator'ı, `func2` fonksiyonunu bir attribute haline getirmiştir ve attribute'lar fonksiyon'lar gibi çağırılabilir (callable) değildir. Çağırmaya çalışırsanız, `var.func2()` kodundaki `var.func2` kısmının döndürdüğü çağırılabilir olmayan `NoneType`'ı, `NoneType()` şeklinde çağırmaya çalıştığınız için `TypeError: 'NoneType' object is not callable` hatası alırsınız. Bu görseldeki `fget`, `fset` ve `fdel` methodlarının ne olduğu daha sonra değer döndürme, değer atama ve değer silme başlıklarında anlatılacak. 
 
 `@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir demiştik. Bunu daha ayrıntılı açıklamak gerekirse; `@property` decorator'ının en temel işlevi, etkilediği methodları kullanan bir property objesi oluşturmaktır.
 
