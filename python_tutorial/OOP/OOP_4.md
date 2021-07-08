@@ -140,7 +140,7 @@ print(Class().__gizli) # AttributeError: 'Class' object has no attribute '__gizl
 <img src="https://i.ibb.co/YNxwwy6/image.png" alt="image" border="0">
 
 # `@property` Decorator
-Class içinde salt verileri tutan variable'lara attribute, belirli işlevleri yerine getiren fonksiyonlara method adı verildiğini biliyoruz. Property kelimesi de attribute kelimesi gibi nitelik/özellik anlamına gelmektedir. `@property` decorator ile kullanılan fonksiyonlara **property** denir. Örnek:
+Class içinde salt verileri tutan variable'lara attribute, belirli işlevleri yerine getiren fonksiyonlara method adı verildiğini biliyoruz. Property kelimesi de attribute kelimesi gibi nitelik/özellik anlamına gelmektedir. `@property` decorator kullanılarak oluşturulan objelere **property** denir. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -153,9 +153,17 @@ class Class():
     def func2(self):
         pass
 ```
-Bu koddaki `func1` fonksiyonu bellekte `<function Class.func1 at 0x00000160370A2790>` objesi olarak saklanırken, `func2` fonksiyonu bellekte `<property object at 0x00000160370ADC20>` objesi olarak saklanır. Bu durum "`@property` decorator ile kullanılan fonksiyonlara **property** denir." iddasını doğruluyor. Yani `func2` fonksiyonuna **`func2` property'si** diyoruz.
+Bu koddaki `func1` fonksiyonu bellekte `<function Class.func1 at 0x00000160370A2790>` objesi olarak saklanırken, `func2` fonksiyonu bellekte `func2` adındaki `<property object at 0x00000160370ADC20>` property objesinin içinde `fget` methodunda `<function Class.func2 at 0x00000160370A2790>` olarak saklanır. Kanıt:
 
-`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir. Örnek:
+<img src="https://i.ibb.co/ydDXLKk/image.png" alt="image" border="0">
+
+Yukarıdaki görselde dikkat edilmesi gereken şey, `func2` fonksiyon objesi `func1` fonksiyon objesi gibi main class objesinin function variables kısmında bulunmuyor, `fget` kısmında bulunuyor çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası haline gelmiştir. `@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir. Bu yüzden `func2` fonksiyon objesini `var.func2()` kodundaki gibi çağıramazsınız çünkü `@property` decorator'ı, `func2` fonksiyonunu bir attribute haline getirmiştir ve attribute'lar fonksiyon'lar gibi çağırılabilir (callable) değildir. Çağırmaya çalışırsanız, `var.func2()` kodundaki `var.func2` kısmının döndürdüğü çağırılabilir olmayan `NoneType`'ı, `NoneType()` şeklinde çağırmaya çalıştığınız için `TypeError: 'NoneType' object is not callable` hatası alırsınız. Bu görseldeki `fget`, `fset` ve `fdel` methodlarının ne olduğu daha sonra değer döndürme, değer atama ve değer silme başlıklarında anlatılacak. 
+
+`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir demiştik. Bunu daha ayrıntılı açıklamak gerekirse; `@property` decorator'ının en temel işlevi, etkilediği methodları kullanan bir property objesi oluşturmaktır.
+
+**!Burada Kaldın!** en son buraya property'lerin main class'da farklı instace'larda farklı olduğunu, instance'larda property'lerin bulunmadığını, sadece property'lerin attribute şeklindeki hallerinin bulunduğunun kanıtını gösterecektin. Buna ek olarak yukarıdaki uzun yazıda "`@property` decorator'ının en temel işlevi, bir methodu bir attribute gibi kullanılabilecek hale getirmektir." kısmını da instance ve main class'da farklı ilediğini (nedenini ilk cümlede anlattım) orada ya aktarıp cümleyi güncelleyecektin.
+
+Örnek:
 ```py
 class Class1():
     def __init__(self):
@@ -171,9 +179,10 @@ class Class2():
     @property
     def func2(self):
         return "Class2 A"
-
-print(Class1().func1()) # Output: Class1 A
-print(Class1().func1) # Output: <bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>
+var1 = Class1()
+var2 = Class2()
+print(var1.func1()) # Output: Class1 A
+print(Class1().func1) # Output: <bound method Class1.func1 of <__main__.Class1 object at 0x000001BBC14E2280>>
 print(Class2().func2()) # TypeError: 'str' object is not callable
 print(Class2().func2) # Output: Class2 A
 ```
