@@ -231,13 +231,188 @@ Yukarıdaki kodda, `print()` fonksiyonlarının outputlarının nedenlerini teke
 
 ## Property Methodları
 Property'lerin üç önemli build-in methodu vardır:
-- Değer döndürmek için kullanılan `getter`
-- Değer atamak için kullanılan `setter`
-- Değer silmek için kullanılan `deleter`
+- Değer döndürmek için kullanılan, read yetkisini temsil eden `getter`
+- Değer atamak için kullanılan, write yetkisini temsil eden `setter`
+- Değer silmek için kullanılan, delete yetkisini temsil eden`deleter`
 
 Bu build-in methodların etki ettiği üç tane attribute vardır.
 - `getter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fget`
 - `setter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fset`
 - `deleter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fdel`
 
-**!Burada Kaldın!** En son getter, setter, deleter methodları başlıklarını yazacaktın ama yeni property oluşturma saçmalığını bu 3 başlığı yazdıktan sonra açıklayacağın için bütün örneklerdeki method isimlerini aynı yap.
+Bu methodlara aşağıdaki gibi görüntüleyebilirsiniz:
+```py
+print(dir(property), end=f"\n" + "-"*70 + "\n")
+
+for i in dir(property):
+    if not ("_" in i):
+        print(i, end=", ")
+```
+**Output:**
+```
+['__class__', '__delattr__', '__delete__', '__dir__', '__doc__',
+'__eq__', '__format__', '__ge__', '__get__', '__getattribute__',
+'__gt__', '__hash__', '__init__', '__init_subclass__',
+'__isabstractmethod__', '__le__', '__lt__', '__ne__', '__new__',
+'__reduce__', '__reduce_ex__', '__repr__', '__set__', '__setattr__',
+'__sizeof__', '__str__', '__subclasshook__', 'deleter', 'fdel',
+'fget', 'fset', 'getter', 'setter']
+----------------------------------------------------------------------
+deleter, fdel, fget, fset, getter, setter,
+```
+**Not:** `getter`, `setter` ve `deleter` property methodları ile ilgili property'nin `fget`, `fset` ve `fdel` methodlarına atanan instance methodlar (`@property` decorator'unda olduğu gibi) main class'ın `function attributes` kısmında bulunmazlar. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    def sayı1(self):
+        pass
+
+    def sayı2(self):
+        return self._sayı
+
+    def sayı3(self, yeni):
+        self._sayı = yeni
+        return self._sayı
+
+    def sayı4(self):
+        del self._sayı
+
+var = Class()
+```
+
+<img src="https://i.ibb.co/1sVKrFh/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile işaretlenmeyen instance methodlar, `var` instance'ında ve main class'da `function attributes` kısmında bulunmaktalar.
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    @property
+    def sayı(self):
+        pass
+
+    @sayı.getter
+    def sayı(self):
+        return self._sayı
+
+    @sayı.setter
+    def sayı(self, yeni):
+        self._sayı = yeni
+        return self._sayı
+
+    @sayı.deleter
+    def sayı(self):
+        del self._sayı
+```
+
+<img src="https://i.ibb.co/h90n9fM/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile işaretleyen instance methodlar, `fget`, `fset` ve `fdel` methodlarına atandığı için main class'da `function attributes` kısmında bulunmamaktadırlar. Dolayısıyla bu instance methodlar, main class'dan türetilen instance'larda da bulunmazlar.
+
+**!Burada Kaldın!** En son değer döndürme ve read kelimelerini getter methodu başlığındaki açıklamalara yedirmeye çalışıyordun. "**değer döndürme** işlemini gerçekleştiren ve **read** yetkisine sahip olan fonksiyon olarak varlığını sürdürür" cümlesinin ekleyerek bu işi hallettin gibi ama yine de getter methodu başlığını en baştan okuyup `read yetkisi` kelimesini eklemen veya bunu açıklaman gereken yer var mı diye bak. Normalde getter methodu başlığını yazmayı bitirdin. En son şu decoder'lerdeji python türkiyede konuştuğun saçma olayı açıklamayı unutma.
+
+### `getter` Methodu:
+Bir class'ın içinde tanımlı olan instance method üzerinde `getter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fget` methodunda tanımlı, **değer döndürme** işlemini gerçekleştiren ve **read** yetkisine sahip olan fonksiyon olarak varlığını sürdürür. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    @property
+    def sayı(self):
+        pass
+
+    @sayı.getter
+    def sayı(self): # Buna "2. sayı fonksiyonu" diyelim
+        return self._sayı
+var = Class()
+print(var.sayı) # Output: 0
+print(var._sayı) # Output: 0
+```
+Gördüğünüz gibi `@property` decorator'u ile oluşturduğumuz `sayı` adındaki property objesi tanımladık. Daha sonra `getter` property methodunu kullanarak `return self._sayı` kodu ile `_sayı` attribute'unun değerini döndüren 2. `sayı` fonksiyonunu, `sayı` property'sinin `fget` methoduna atadık. Kanıtı:
+
+<img src="https://i.ibb.co/Jt7wmqZ/image.png" alt="image" border="0">
+
+Böylece; `@{Property_object_name}.getter` formatındaki decorator'u kullanarak, `{Property_object_name}` kısmında belirttiğimiz property objesinin değer döndürme işleminden sorumlu olmasını istediğimiz instance methodu, `{Property_object_name}` kısmında belirttiğimiz property objesinin `fget` methoduna atabildiğiniz öğrendik.
+
+`Class` class'ından `sayı` property'si, `var` instance'ında `sayı` adında bir attribute olarak bulunuyor (nedenini daha önce anlattım). Kanıtı:
+
+<img src="https://i.ibb.co/zmmFmTQ/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `var` instance'ında bulunan `sayı` attribute'unun değeri, `_sayı` attribute'undaki gibi `0`'dır. Bunun böyle olması, `fget` methodunda tanımlı, değer döndürme işleminden sorumlu olan 2. `sayı` fonksiyonudaki `return self._sayı` kodu sayesindedir. 2. `sayı` fonksiyonunda `return self._sayı` kodu olmasaydı, 2. `sayı` fonksiyonu hiçbir değer döndürmeyeceği için `var` instance'ındaki `sayı` attribute'unun değeri `'None'` olacaktı. Kanıtı:
+
+<img src="https://i.ibb.co/5TdfjzZ/image.png" alt="image" border="0">
+
+Böylece `var` instance'ında bulunan `sayı` attribute'unun value'sunun, `Class` class'ındaki `sayı` property'sinin `fget` methodunda tanımlı 2. `sayı` fonksiyonundaki `return self._sayı` kodu ile ilişkili olduğunu öğrendik.
+
+`sayı` property'sinde `fset` ve `fdel` methodunda ilgili fonksiyonlar tanımlı olmadığı için `var.sayı = 1` gibi değer atama ya da `del var.sayı` gibi değer silme işlemleri yapamazken, `fget` methodunda ilgili fonksiyon tanımlı olduğu için değer döndürme işlemi yapılabiliyor. Bunun gibi sadece değer döndürme işlemi yapılabilen attribute'lara **Read Only Attribute** (Salt Okunur Attribute) denir.
+
+**Not:** `@{Property_object_name}.getter` formatındaki decorator'u kullanarak bir property için `fget` methoduna ilgili fonksiyonu tanımlamazsanız bile sadece `@property` decorator'u kullanılarak oluşturulan property'lerde `fget` methodunda ilgili fonksiyonun tanımlı olduğunu farketmişsinizdir. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    @property
+    def sayı(self):
+        pass
+
+var = Class()
+print(var.sayı) # Output: None
+print(var._sayı) # Output: 0
+```
+Gördüğünüz gibi `sayı` property'si için `getter` tanımlamasak bile `print(var.sayı)` kodu hata vermiyor, `var` instance'ında tanımlı `sayı` attribute'unun değerini döndürüyor. Çünkü yukarıda da anlattığım gibi, `@property` decorator'u kullanılarak oluşturulan property'lerde `fget` methoduna tanımlanacak fonksiyon otomatik olarak  `@property` decorator'unun hemen altındaki instance method oluyor. `var.sayı` kodunun `'None'` değerini döndürmesi bunu kanıtlıyor çünkü `fget` methoduna tanımlanan `sayı` fonksiyonunda `return self._sayı` kodu yok. Bu yüzden `getter` property methodu ile uğraşmadan sadece `@property` decorator'u kullanarak `fget` methoduna tanımlanacak fonksiyonun Python tarafından otomatik halledilmesini istiyorsanız, yukarıdaki kodu aşağıdaki gibi yazabilirsiniz:   
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    @property
+    def sayı(self):
+        return self._sayı
+
+var = Class()
+print(var.sayı) # Output: 0
+print(var._sayı) # Output: 0
+```
+
+### `setter` Methodu:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### `deleter` Methodu:
