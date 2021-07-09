@@ -139,8 +139,11 @@ print(Class().__gizli) # AttributeError: 'Class' object has no attribute '__gizl
 ```
 <img src="https://i.ibb.co/YNxwwy6/image.png" alt="image" border="0">
 
-# `@property` Decorator
-Class içinde salt verileri tutan variable'lara attribute, belirli işlevleri yerine getiren fonksiyonlara method adı verildiğini biliyoruz. Property kelimesi de attribute kelimesi gibi nitelik/özellik anlamına gelmektedir. `@property` decorator kullanılarak oluşturulan objelere **property** denir. Örnek:
+# Property
+Property kelimesi de attribute kelimesi gibi nitelik/özellik anlamına gelmektedir. Class içinde salt verileri tutan variable'lara attribute, belirli işlevleri yerine getiren fonksiyonlara method adı verildiğini biliyoruz. Property'lerin en temel işlevi, main class'da tanımlı bir methodu, bir instance içinde attribute gibi kullanabilmemizi sağlamasıdır. Property objesi oluşturmak için `@property` decorator'ını ya da `property()` fonksiyonunu kullanabilirsiniz.
+
+## `@property` Decorator
+Bir class'daki instance methodların üzerinde `@property` decorator'ı kullanılarak **property** objeleri oluşturulabilir. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -153,11 +156,13 @@ class Class():
     def func2(self):
         pass
 ```
-Bu koddaki `func1` fonksiyonu bellekte `<function Class.func1 at 0x00000160370A2790>` objesi olarak saklanırken, `func2` fonksiyonu bellekte `func2` adındaki `<property object at 0x00000160370ADC20>` property objesinin içinde `fget` methodunda `<function Class.func2 at 0x00000160370A2790>` olarak saklanır. Kanıt:
+Bu koddaki `func1` methodu bellekte `<function Class.func1 at 0x00000160370A2790>` objesi olarak saklanırken, `func2` methodu bellekte `func2` adındaki `<property object at 0x00000160370ADC20>` property objesinin içinde bulunan `fget` ismindeki methodda `<function Class.func2 at 0x00000160370A2790>` olarak saklanır. Kanıt:
 
 <img src="https://i.ibb.co/ydDXLKk/image.png" alt="image" border="0">
 
-Bu görseldeki `fget`, `fset` ve `fdel` methodlarının ne olduğu daha sonra değer döndürme, değer atama ve değer silme başlıklarında anlatılacak. Yukarıdaki görselde dikkat edilmesi gereken şey; `func2` fonksiyon objesi, `func1` fonksiyon objesi gibi main class objesinin function variables kısmında bulunmuyor, `fget` kısmında bulunuyor çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası haline gelmiştir. Bu property'ler main class'da obje olarak bulunurken, instance'larda sadece attribute olarak bulunur. Örnek:
+Bu görseldeki `fget`, `fset` ve `fdel` methodlarının tam olarak ne olduğu daha sonra property methodları başlığında anlatılacak. Yukarıdaki görselde dikkat edilmesi gereken şey; `func2` fonksiyon objesi, `func1` fonksiyon objesi gibi main class objesinin `function variables` kısmında bulunmuyor, `fget` kısmında bulunuyor. Bunun sebebi; `func2` fonksiyon objesi artık `func2` property'sinin `getter` işleminde kullanılacak olmasıdır.
+
+Property'lerin en temel işlevi, main class'da tanımlı bir methodu, bir instance içinde attribute gibi kullanabilmemizi sağlamasıdır demiştik. Buradan yola çıkarak; property'ler main class'da obje olarak bulunurken, instance'larda sadece attribute olarak bulunur diyebiliriz. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -172,16 +177,19 @@ class Class():
 
 var = Class()
 ```
+Yukarıdaki kodda, main class'da property objesi olarak bulunan `func2`, `var` instance'ında attribute olarak bulunmaktadır. Kanıtı:
 
 <img src="https://i.ibb.co/7XqSJvB/image.png" alt="image" border="0">
 
-Yukarıda gördüğünüz gibi, main class'da property objesi olarak bulunan `func2`, `var` instance'ında attribute olarak bulunmaktadır. Buradan yola çıkarak; `@property` decorator'ının en temel işlevi, main class içindeki bir methodu, bu main class'dan türetilen bir instace içinde attribute gibi kullanılabilecek hale getiren property objeleri oluşturmaktır diyebiliriz.
+`func2` fonksiyon objesini `Class.func2()` ya da `var.func2()` şeklinde çağıramazsınız (call) çünkü `func2` fonksiyon objesi `func2` property'sinin bir parçası olduğu için artık main class'da bir method olarak bulunmamaktadır. Main class'da bir method olarak bulunmayan `func2` fonksiyon objesi, dolayısıyla main class'dan türetilen `var` instance'ında da bir method olarak bulunmaz.
+- `Class.func2()` kodunu çalıştırırsanız sırasıyla aşağıdaki olaylar gerçekleşir:
+    - Python, `Class.func2()` kodunun önce `Class.func2` kısmını okur ve `Class` class'ının `func2` adında bir methodu varmı diye bakar ve `func2` adında bir (`<property object at 0x000001A6D72DBD60>`) property objesi bulur. Bu `<property object at 0x000001A6D72DBD60>` property objesine kısaca "`func2`" diyelim.
+    - Property objeleri çağırılabilir (callable) değildir. Bu yüzden `Class` class'ının `func2` methodunda bulunan property objesini `Class.func2()` şeklinde çağırmaya (call) çalışırsak `TypeError: 'property' object is not callable` hatası yükseltilir.
 
-Yukarıdaki kodda bulunan `func2` fonksiyon objesini `var.func2()` şeklinde çağıramazsınız çünkü `func2` fonksiyon objesi artık `func2` property'sinin bir parçası olduğu için main class'da bir method olarak bulunmamaktadır. Dolayısıyla main class'dan türetilen `var` instance'ında da bir method olarak bulunmaz, `'None'` value'suna sahip bir attribute olarak bulunur. `var.func2()` kodunu çalıştırırsanız sırasıyla aşağıdaki olaylar gerçekleşir:
-- Python, `var.func2()` kodunun önce `var.func2` kısmını okur ve `var` instance'ının `func2` adında bir methodu varmı diye bakar ve `func2` adında bir attribute bulur.
-- Python, `func2` attribute'u `'None'` value'sunu içerdiği için `var.func2` kodu `'None'` çıktısını verir. Bu yüzden `var.func2()` kodu, Python'un gözünde `None()` koduna dönüşür.
-- `None` value'su `NoneType` bir objedir. `NoneType` bir obje çağırılabilir (callable) olmadığı için `TypeError: 'NoneType' object is not callable` hatası yükseltilir.
-
+- `var.func2()` kodunu çalıştırırsanız sırasıyla aşağıdaki olaylar gerçekleşir:
+    - Python, `var.func2()` kodunun önce `var.func2` kısmını okur ve `var` instance'ının `func2` adında bir methodu varmı diye bakar ve `func2` adında bir attribute bulur.
+    - Python, `func2` attribute'u `'None'` value'sunu içerdiği için (neden `'None'` olduğunu `getter` methodu başlığında anlatılacak) `var.func2` kodu `'None'` çıktısını verir. Bu yüzden `var.func2()` kodu, Python'un gözünde `None()` koduna dönüşür.
+    - `None` value'su `NoneType` bir objedir. `NoneType` objeler çağırılabilir (callable) olmadığı için `TypeError: 'NoneType' object is not callable` hatası yükseltilir.
 
 Şimdiye kadar anlattıklarımızla ilgili bir örnek:
 ```py
@@ -208,282 +216,28 @@ print(var2.func2) # Output: Class2 A
 ```
 Yukarıdaki kodda, `print()` fonksiyonlarının outputlarının nedenlerini teker teker açıklamak gerekirse:
 - `print(var1.func1())`
-    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur ve `Class1().func1()` kodundaki gibi `func1()` şeklinde çağırılabilir (call: çağırmak, callable: çağırılabilirlik). `print(Class1().func1())` kodu ile bu methodu çağırarak, döndürdüğü değeri `print()` fonksiyonu ile ekrana yazdırıyoruz.
+    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur ve `Class1().func1()` kodundaki gibi `func1()` şeklinde çağırılabilir (call) çünkü fonksiyonlar çağırılabilir (callable) objelerdir. `print(Class1().func1())` kodundaki `Class1().func1()` kodu ile `func1` methodu çağırarak (call), döndürdüğü değer `print()` fonksiyonu ile yazdırılır.
 
 - `print(var1.func1)`
-    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur. `var1.func1` kodu "main class'daki 
-    `<function Class1.func1 at 0x00000160370A2790>` instance methoduna bağlı (bound method) olan, `0x00000298C68A3FD0` adresinde olan, `__main__.Class1` objesine ait, `Class1` class'ının `func1` adındaki instance method'u" anlamına gelen `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini verir. Bu yüzden `print(var1.func1)` kodunun output'u bu `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini yazdırır.  
+    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur. `var1.func1` kodu, "`0x00000298C68A3FD0` adresindeki `__main__.Class1` objesine ait `<function Class1.func1 at 0x00000160370A2790>` fonksiyonuna bağlı bir method (bound method) olan `func1` adındaki instance method'u" anlamına gelen `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini verir. Bu yüzden `print(var1.func1)` kodunun output'u bu `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini yazdırır.
 
 - `print(var2.func2())`
-    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin bir parçası (`fget` methodu) olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). Python, `var2.func2()` kodunun önce `var2.func2` kısmını okur. `var2.func2` kısmı `Class2 A` string değerini verdiği için `var2.func2()` kodu Python gözünde `'Class2 A'()` koduna dönüşür. String bir obje çağırılabilir (callable) olmadığı için `var2.func2()` kodu "string objeler çağırılabilir (callable) değildir." anlamına gelen `TypeError: 'str' object is not callable` hatasını yükseltir.
+    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` stringini içerir (nasıl olduğu daha önce anlatıldı). Python, `var2.func2()` kodunun önce `var2.func2` kısmını okur. `var2.func2` kısmı `Class2 A` string değerini verdiği için `var2.func2()` kodu Python gözünde `'Class2 A'()` koduna dönüşür. String bir obje çağırılabilir (callable) olmadığı için `var2.func2()` kodu "string objeler çağırılabilir (callable) değildir." anlamına gelen `TypeError: 'str' object is not callable` hatasını yükseltir. Daha önce de `Class` class'ındaki `func2` property'sini `Class.func2()` şeklinde çağırmaya (call) çalışınca `TypeError: 'property' object is not callable` hatası yükseltilmişti. Bu hatayla `var2.func2()` kodunun yükselttiği hata benzerdir çünkü ikisinde de çağırılabilir (callable) olmayan objeleri çağırmaya çalışıyoruz.
 
 - `print(var2.func2)`
-    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin bir parçası (`fget` methodu) olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). `print(var2.func2)` kodu, `var2` instance'ında bulunan `func2` attribute'unun içerdiği `Class2 A` stringini yazdırır.
+    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. `func2` property'si, `Class2` class'ından türetilen `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). `print(var2.func2)` kodu, `var2` instance'ında bulunan `func2` attribute'unun içerdiği `Class2 A` stringini yazdırır.
 
-**Not:** `func1` ve `func2`'nin ikisi de bir method olmasına rağmen `func2`, `@property` decorator'ı ile işaretlendiğinde nasıl oluyor da bir property'ye dönüşüp `var2.func2` şeklinde kullanıldığında `func2` methodunun döndürdüğü değere eşit oluyor gibi sorularınızı cevaplayabilmeniz için [**descriptor**](https://docs.python.org/3/howto/descriptor.html) kavramını araştırmalısınız. Bu konu, Python dışındaki programlama dillerini de ilgilendiren bir mesele olduğu için anlatması çok uzun sürer. Bu yüzden merak eden kendisi araştırı öğrenebilir.
+**Not:** Property kavramını anlamak için [**descriptor**](https://docs.python.org/3/howto/descriptor.html) kavramını araştırmalısınız. Bu konu, Python dışındaki programlama dillerini de ilgilendiren bir mesele olduğu için anlatması çok uzun sürer. Bu yüzden merak eden kendisi araştırı öğrenebilir.
 
-Bunlar dışında `@property` decorator'ın üç önemli işlevi bulunur:
-- Değer döndürmek
-- Değer atamak
-- Değer silmek
+## Property Methodları
+Property'lerin üç önemli build-in methodu vardır:
+- Değer döndürmek için kullanılan `getter`
+- Değer atamak için kullanılan `setter`
+- Değer silmek için kullanılan `deleter`
 
-**!Burada Kaldın!** Aşağıdan devam et
+Bu build-in methodların etki ettiği üç tane attribute vardır.
+- `getter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fget`
+- `setter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fset`
+- `deleter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fdel`
 
-## Değer Döndürme
-`@property` decorator'ı ile işaretlen bir method, aksi belirtilmediği sürece sadece `değer döndürme` işlevini gerçekleştirir. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self.before = 0
-
-    @property
-    def after(self):
-        return self.before
-var = Class()
-print(var.after) # Output: 0
-print(var.before) # Output: 0
-```
-Gördüğünüz gibi `before` attribute'unu döndüren `after` methodunu `@property` decorator'ı ile işaretleyerek, `before` attribute'u gibi kullanabildiğimiz bir property elde etmiş olduk. Bu property'e `var.before = 1` kodundaki gibi `var.after = 1` şeklinde değer atayama çalışırsak `AttributeError: can't set attribute` hatası verir çünkü bu property için (daha sonra öğreneceğimiz) herhangi bir `setter` mekanizması tanımlamadığı için bu property **Read Only**'dir (salt okunur).
-
-**Not:** Property'lerin değer döndürme özelliğinden yararlanarak, bilinçli olarak **Read Only Attribute**'lar (Salt Okunur Attribute'lar) oluşturabilirsiniz. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self._before = 0
-
-    @property
-    def after(self):
-        return self._before
-var = Program()
-print(var.after) # Output: 0
-var._before = 1
-print(var.after) # Output: 1
-var.after = 1 # AttributeError: can't set attribute
-```
-Gördüğünüz gibi `after` property'si için herhangi bir `setter` mekanizması tanımlanmadığı için `var.after = 1` kodu ile `_before` attribute'unun değerini değiştiremeyiz. Değiştirmek istersek `var._before = 1` şeklinde değiştirmek zorundayız ama kodu yazan kullanıcı `_vari` attribute'unu semi-private member olarak tanımladığı için bu hareket etik olmaz. Bu sayede `_before` attribute'unu `after` property'si sayesinde read only attribute olarak kullanabiliyoruz.
-
-## Değer Atama
-**Ön Bilgi:** `setter`, `@property` decorator'unun bir methodudur.
-
-Read only property'lerin değerlerini doğrudan değiştiremeyeceğimizi öğrenmiştik. Eğer amacınız bir attribute'u read only hale getirmek değilse, bir property üzerinde hem read hem de write (property'nin değerini değiştirmek gibi) işlemleri yapmak istiyorsanız, o property için bir `setter` method'u tanımlayabilirsiniz. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self._before = 0
-
-    @property
-    def after(self):
-        return self._before
-
-    @after.setter
-    def after_set(self, yeni_değer):
-        self._before = yeni_değer
-        return self._before
-
-var = Class()
-print(var._before) # Output: 0
-print(var.after) # Output: 0
-
-var.after_set = 1
-print(var.after) # Output: 1
-print(var.after_set) # Output: 1
-var.after = 2 # AttributeError: can't set attribute
-```
-Buradaki durumları madde madde açıklamak gerekirse:
-- `@after.setter` tanımlanmasaydı `after` property'si read only olarak kalacaktı.
-- `setter` methodu, `@{property_name}.setter` formatında kullanılır. `after_set` methodunu `@after.setter` decorator'ı ile işaretleyerek, `after_set` methodunu bir property'e dönüştürmüş oluyoruz (`<property object at 0x000002315179BC70>`).
-- Bir methodu attribute gibi kullanabilmemizi `@property` decorator'ının sağladığını öğrenmiştik. `_before` attribute'unun değerini `after` property'si ile okuyabildiğimiz gibi `after_set` property'si ile yazabiliriz. Burada dikkat çekmek istediğim şey `var.after = 2` kodunun `AttributeError: can't set attribute` hatası vermesi. Bunun sebebi, `after` property'sine sadece read yetkisi vermemizden kaynaklanıyor. `after_set` property'sinin hem değer döndürme hem de değer atama işlemlerini gerçekleştirebilmesinin nedeni, bu property'e hem read hem de write yetkisi verilmesidir. Kanıtı:
-
-<img src="https://i.ibb.co/ykkNXBH/image.png" alt="image" border="0">
-
-<img src="https://i.ibb.co/3f9SJfw/image.png" alt="image" border="0">
-
-Gördüğünüz gibi `after` property'sinin içinde `after()` methodunun objesini içeren `fget` adında bir obje varken, `fset` ve `fdel` objeleri boş. Bu durum `after` property'sinin sadece read yetkisine sahip olmasının kanıtı çünkü `after` property'si read işlemi için `fget` objesindeki `after()` methodunu kullanabilecekken, `fset` ve `fdel` objeleri boş oldundan write ve delete işlemleri için kullanabilecekleri bir method yoktur. Diğer taraftan, `after_Set` property'sinin içinde `after()` methodunun objesini içeren `fget` ve `after_set()` methodunun objesini içeren `fset` objeleri varken, `fdel` objesi boş. Bu durum da `after_set` property'si sadece read ve write yetkisine sahip olması olmasının kanıtı çünkü `after_set` property'si read işlemi için `fget` objesindeki `after()` methodunu ve write işlemi için `fset` objesindeki `after_set()` methodunu kullanabilecekken, `fdel` objesi boş oldundan delete işlemi için kullanabileceği bir method yoktur.
-
-**Not:** Yukarıda read işlemi için `after`, write işlemi için `after_set` property'si tanımlamış olsak bile, bu property'ler için böyle bir isimlendirme (identifier) Python camiasında kabul görmez çünkü bir programın işleyişinde property'nin kolaylık sağladığı en önemli mevzulardan birisi **backwards compatibility** (geriye dönük uyumluluk) sağlamasıdır. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self.veri = 0
-
-    @property
-    def data(self):
-        return self.veri
-
-    @data.setter
-    def data(self, yeni_değer):
-        self.veri = yeni_değer
-        return self.veri
-var = Class()
-print(var.data) # Output: 0
-var.data = 1
-print(var.data) # Output: 1
-```
-Programınızda tanımladığınız bir class içindeki bir attribute'un ismini sonradan değiştirseniz, programınızın eski versiyonunu kullanan kişiler için sıkıntı yaratmış olursunuz. Örneğin `self.veri` attribute'u programınızın eski versiyonunda `self.data` olarak tanımlıysa, `self.data`'yı `self.veri` olarak değiştirdiğiniz zaman programınızın eski versiyonunu kullanan kullanıcılar `self.veri`'yi `self.data` zannettikleri için programlarını yanlış yazıp hata alabilirler. `self.veri` attribute'u üzerinde yapılabilecek read ve write işlemlerini, yukarıdaki kodda olduğu gibi `data` ismindeki property üzerinde de yapılabilecek şekilde ayarlarsanız, bu sorunun önüne geçmiş olursunuz.
-
-`setter` methodu değer doğrulama gibi işlemlerde de kullanışlıdır. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self._sayı = 0
-
-    @property
-    def sayı(self):
-        return self._sayı
-
-    @sayı.setter
-    def sayı(self, yeni_değer):
-        if yeni_değer % 2 == 0:
-            self._sayı = yeni_değer
-        else:
-            print('Çift değil!')
-
-        return self.sayı
-
-var = Class()
-print(var.sayı) # Output: 0
-
-var.sayı = 1 # Output: Çift değil!
-print(var.sayı) # Output: 0
-
-var.sayı = 2
-print(var.sayı) # Output: 2
-```
-
-## Değer Silmek
-`@property` decorator'ının `deleter` methodunu kullanarak bir attribute'u sildiğinizde python'un nasıl davranmasını gerektiğini belirleyebiliyorsunuz. Bunun için `setter` methoduna benzeyen `@{property_name}.deleter` formatını kullanıyoruz. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self._sayı = 0
-
-    @property
-    def sayı(self):
-        return self._sayı
-
-    @sayı.deleter
-    def sayı_del(self):
-        print("sayı Siliniyor...")
-        del self._sayı
-
-var = Class()
-print(var.sayı) # Output: 0
-del var.sayı_del # Output: sayı Siliniyor...
-print(var.sayı) # AttributeError: 'Class' object has no attribute '_sayı'
-```
-Gördüğünüz gibi `del var.sayı_del` kodu çalıştırıldığında Python, `__main__.Class` objesindeki `sayı_del` property'sinin `fdel` objesinde tanımlı olan `<function Class.sayı_del at 0x000001DD6C8C18B0>` objesinde belirtildiği gibi `sayı_del()` fonksiyonunu çalıştırıyor ve bu fonksiyondaki `del self._sayı` kodu sayesinden `self._sayı` attribute'u bellekten siliniyor. Bu işlem sonrasında artık `self._sayı` attribute'u bellekte bulunmadığından `var.sayı` koduyla sayı property'sini Python'dan talep ettiğimizde Python, böyle bir attribute'un olmadığını söyleyen `AttributeError: 'Class' object has no attribute '_sayı'` hatasını yükseltiyor.
-
-## `property(fget=None, fset=None, fdel=None, doc=None)` Fonksiyonu
-`property()` fonksiyonu, daha önce ne olduğunu anlattığımız `fget`, `fset` ve `fdel` methodlarını tanımlayarak bir property oluşturabilmenizi sağlar. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self._sayı = 0
-
-    def sayı(self):
-        return self._sayı
-
-    def sayı_set(self, yeni):
-        self._sayı = yeni
-        return self._sayı
-
-    def sayı_del(self):
-        print("sayı siliniyor...")
-        del self._sayı
-
-    sayı = property(fget = sayı, fset = sayı_set, fdel = sayı_del)
-
-var = Class()
-print(var.sayı) # Output: 0
-var.sayı = 1
-print(var.sayı) # Output: 1
-del var.sayı # Output: sayı siliniyor...
-print(var.sayı) # AttributeError: 'Class' object has no attribute '_sayı'
-```
-gördüğünüz gibi `@property`, `setter` ya da `deleter` decorator kullanmadan bir property oluşturup kullanabildik.
-
-Bir proparty'nin `fget`, `fset` ve `fdel` methodlarına tanımlanan methodlar bir class method ise, bu property'i kullanarak işlemler yapamazsınız. Örnek:
-```py
-class Class():
-    _sayı = 0
-    def __init__(self):
-        pass
-
-    @classmethod
-    def sayı(cls):
-        return cls._sayı
-
-    @classmethod
-    def sayı_set(cls, yeni):
-        cls._sayı = yeni
-        return cls._sayı
-
-    @classmethod
-    def sayı_del(cls):
-        print("sayı siliniyor...")
-        del cls._sayı
-
-    sayı = property(fget = sayı, fset = sayı_set, fdel = sayı_del)
-
-var = Class()
-print(var.sayı) # TypeError: 'classmethod' object is not callable
-var.sayı = 1 # TypeError: 'classmethod' object is not callable
-del var.sayı # TypeError: 'classmethod' object is not callable
-```
-Bu durumun sebebi bir instance üzerinde bu işlemleri yapmaya çalışmak değildir. Aynı işlemleri doğrudan `Class` class'ının üzerinde de yapamazsınız.
-```py
-class Class():
-    _sayı = 0
-    def __init__(self):
-        pass
-
-    @classmethod
-    def sayı(cls):
-        return cls._sayı
-
-    @classmethod
-    def sayı_set(cls, yeni):
-        cls._sayı = yeni
-        return cls._sayı
-
-    @classmethod
-    def sayı_del(cls):
-        print("sayı siliniyor...")
-        del cls._sayı
-
-    sayı = property(fget = sayı, fset = sayı_set, fdel = sayı_del)
-
-print(Class.sayı) # Output: <property object at 0x000002A41CC25EA0>
-Class.sayı = 1
-print(Class.sayı) # Output: 1
-del Class.sayı
-print(Class.sayı) # Output: AttributeError: type object 'Class' has no attribute 'sayı'
-```
-Gördüğünüz gibi istediğimiz sonuçları alamadık. `Class` class'ının üzerinden bu işlemleri yapmak için property kullanmaktan vazgeçip, doğrudan class methodları ve class attribute'ları kullanmalısınız. Örnek:
-```py
-class Class():
-    _sayı = 0
-    def __init__(self):
-        pass
-
-    @classmethod
-    def sayı(cls):
-        return cls._sayı
-
-    @classmethod
-    def sayı_set(cls, yeni):
-        cls._sayı = yeni
-        return cls._sayı
-
-    @classmethod
-    def sayı_del(cls):
-        print("sayı siliniyor...")
-        del cls._sayı
-
-print(Class._sayı) # Output: 0
-print(Class.sayı()) # Output: 0
-print(Class.sayı_set(1)) # Output: 1
-Class.sayı_del() # Output: sayı siliniyor...
-print(Class._sayı) # AttributeError: type object 'Class' has no attribute '_sayı'
-print(Class.sayı()) # AttributeError: type object 'Class' has no attribute '_sayı'
-```
+**!Burada Kaldın!** En son getter, setter, deleter methodları başlıklarını yazacaktın ama yeni property oluşturma saçmalığını bu 3 başlığı yazdıktan sonra açıklayacağın için bütün örneklerdeki method isimlerini aynı yap.
