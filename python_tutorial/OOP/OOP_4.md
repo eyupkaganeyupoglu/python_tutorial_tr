@@ -468,6 +468,112 @@ print(var.sayı) # Output: 2
 ```
 Gördüğünüz gibi `sayı` attribute'una çift sayı değeri atamaya çalışınca, değer atama işlemi gerçekleşmiyor ve `sayı` attribute'unun değeri değişmiyor çünkü `else` bloğunda `return self.sayı` kodu yok.
 
+`setter` methodunun birçok alanda hayat kurtarabilir. Bir tane örnek verelim:
+```py
+class Class():
+    all_instances = []
+    def __init__(self, name):
+        self.instace_name = name
+        self.add_instance()
+
+    def add_instance(self):
+        print(f"'{self.instace_name}' adlı instnace eklendi.")
+        self.all_instances.append(self.instace_name)
+
+    @classmethod
+    def show_all_instance(cls):
+        print("All Instances:", end=" ")
+        for member in cls.all_instances:
+            if member == cls.all_instances[-1]:
+                print(member)
+            else:
+                print(member, end=", ")
+
+var1 = Class("AAA") # Output: 'AAA' adlı instnace eklendi.
+var2 = Class("BBB") # Output: 'BBB' adlı instnace eklendi.
+Class.show_all_instance() # Output: All Instances: AAA, BBB
+
+var1.instace_name = "CCC"
+Class.show_all_instance() # Output: All Instances: AAA, BBB
+print(var1.instace_name) # Output: CCC
+```
+Gördüğünüz gibi main class'dan türetilen instance'ların isimlerini bir class attribute'da depolayan ve `show_all_instance()` class methodu ile bu isimleri listeleyen bir program yazdık. Ama bir sorun var. Yukarıda da gördüğünüz gibi `var1` instance'ının ismini değiştirirseniz, bu değişiklik sadece `var1` instance'ında geçerli olacağı için main class bu değişiklikten etkilenmez ve dolayısı ile `all_instances` listesinin içeriği aynı kalır. Bu sorunun önüne geçebilmek için isim değiştirme işlemini yapan bir fonksiyon tanımlayabilir ya da property'lerden yararlanabilirsiniz. Önce isim değiştirme işlemini yapan bir fonksiyon tanımlayalım:
+```py
+class Class():
+    all_instances = []
+    def __init__(self, name):
+        self._instace_name = name
+        self.add_instance()
+
+    def add_instance(self):
+        print(f"'{self._instace_name}' adlı instnace eklendi.")
+        self.all_instances.append(self._instace_name)
+
+    @classmethod
+    def show_all_instance(cls):
+        print("All Instances:", end=" ")
+        for member in cls.all_instances:
+            if member == cls.all_instances[-1]:
+                print(member)
+            else:
+                print(member, end=", ")
+
+    def change_instance_name(self, new_name):
+        old_name = self._instace_name
+        self.all_instances[self.all_instances.index(self._instace_name)] = new_name
+        print(f"{old_name} -> {new_name}")
+
+var1 = Class("AAA") # Output: 'AAA' adlı instnace eklendi.
+var2 = Class("BBB") # Output: 'BBB' adlı instnace eklendi.
+Class.show_all_instance() # Output: All Instances: AAA, BBB
+var1.change_instance_name("CCC") # Output: AAA -> CCC
+Class.show_all_instance() # Output: All Instances: CCC, BBB
+```
+Artık bir instance'ın ismini değiştirmek için `change_instance_name` instance methodunu kullanabilirsiniz. Bu sayede `instace_name` instance attribute'u ile işimiz kalmadığı için bunu semi_private member haline getirdik. İlla `var1` instance'ının ismini `var1.instace_name = "CCC"` koduyla değiştirmek istiyorum diyorsanız, property'lerden yararlanabilirsiniz. Örnek:
+```py
+class Class():
+    all_instances = []
+    def __init__(self, name):
+        self._instace_name = name
+        self.add_instance()
+
+    def add_instance(self):
+        print(f"'{self._instace_name}' adlı instnace eklendi.")
+        self.all_instances.append(self._instace_name)
+
+    @classmethod
+    def show_all_instance(cls):
+        print("All Instances:", end=" ")
+        for member in cls.all_instances:
+            if member == cls.all_instances[-1]:
+                print(member)
+            else:
+                print(member, end=", ")
+
+    @property
+    def instace_name(self):
+        return self._instace_name
+
+    @instace_name.setter
+    def instace_name(self, new_name):
+        old_name = self._instace_name
+        self._instace_name = new_name
+        self.all_instances[self.all_instances.index(old_name)] = new_name
+        print(f"{old_name} -> {new_name}")
+        return self._instace_name
+
+var1 = Class("AAA")
+var2 = Class("BBB")
+Class.show_all_instance() # Output: All Instances: AAA, BBB
+
+var1.instace_name = "CCC" # Output. AAA -> CCC
+Class.show_all_instance() # Output: All Instances: CCC, BBB
+var1.show_all_instance() # Output: All Instances: CCC, BBB
+var2.show_all_instance() # Output: All Instances: CCC, BBB
+print(var1.instace_name) # Output: CCC
+```
+Gördüğünüz gibi `var1.instace_name = "CCC"` kodunu kullanarak hem `var1` instance'ının ismini değiştirebildik hem de `all_instances` içeriğini her yerde güncelleyebildik.
+
 ### `deleter` Methodu:
 Bir class'ın içinde tanımlı olan instance method üzerinde `deleter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fdel` methodunda tanımlı, **delete** olarak isimlendirilmiş **değer silme** işlemini gerçekleştiren fonksiyon olarak varlığını sürdürür (bundan sonra 'değer silme' işleminden'den 'delete işlemi' olarak bahsedilecek). Örnek:
 ```py
@@ -642,14 +748,13 @@ Gördüğünüz gibi tam bir karmaşa oldu. Burada sorulması gereken soru; "Mad
 Gördüğünüz gibi `@property` decorator'unun ve bu decorator'un `getter`, `setter`, `deleter` methodlarının böyle saçma davranışları olduğu için bu decorator'lar, bir property objesi yaratmanın en iyi yöntemi değildir. Bu yüzden bir property objesi yaratmak istediğinizde bu decorator'ları kullanmak terine `property()` fonksiyonunu tercih etmelisiniz.
 
 ## `property(fget=None, fset=None, fdel=None, doc=None)` Fonksiyonu
-`property()` fonksiyonu, `fget`, `fset` ve `fdel` parametrelerine read, write ve delete işlemlerini gerçekleştirecek fonksiyon objelerini tanımlayıp bir property oluşturabilmenizi sağlar. Örnek:
+`property()` fonksiyonu, `fget`, `fset` ve `fdel` parametrelerine read, write ve delete işlemlerini gerçekleştirecek fonksiyon objelerini argüman olarak verip bir property oluşturabilmenizi sağlar. Örnek:
 ```py
 class Class():
     def __init__(self):
         self._sayı = 0
 
     def sayı_get(self):
-        print("sayı_get çalıştı...")
         return self._sayı
 
     def sayı_set(self, yeni):
@@ -661,19 +766,17 @@ class Class():
         print("sayı_del çalıştı...")
         del self._sayı
 
-    sayı = property(fget = sayı, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
+    sayı = property(fget = sayı_get, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
 
 var = Class()
 print(Class.sayı.__doc__) # Output: Sayı Property'si
 print(var.sayı) # Output: 0
-var.sayı = 1
+var.sayı = 1 # Output: sayı_set çalıştı...
 print(var.sayı) # Output: 1
-del var.sayı # Output: sayı siliniyor...
+del var.sayı # Output: sayı_del çalıştı...
 print(var.sayı) # AttributeError: 'Class' object has no attribute '_sayı'
 ```
-
-
-
+Gördüğünüz gibi read, write ve delete işlemleri için kullanılan fonksiyonların isimleri farklı olsa da hepsine `sayı` property objesi üzerinden erişip kullanabiliyoruz ve decorator'lardaki gibi saçma davranışlarla karşılaşmıyoruz.
 
 **Not:** Global scope'da da property objesi yaratabiliriz. Örnek:
 ```py
@@ -681,7 +784,7 @@ sayı = property(doc="Sayı Property'si")
 print(type(sayı)) # Output: <class 'property'>
 print(sayı.__doc__) # Output: Sayı Property'si
 ```
-Yukarıdaki kodda gördüğünüz gibi, `property()` fonksiyonundaki `doc` parametresine girilen string, bu fonksiyon ile oluşturulan property'nin `__doc__` attribute'una atanır. Kanıtı:
+Yukarıdaki kodda gördüğünüz gibi, `property()` fonksiyonundaki `doc` parametresine verilen argüman, bu fonksiyon ile oluşturulan property'nin `__doc__` attribute'una atanır. Kanıtı:
 
 <img src="https://i.ibb.co/6Y9kFQw/image.png" alt="image" border="0">
 
@@ -705,4 +808,194 @@ by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
 Base 0 means to interpret the base from the string as an integer literal.
 >>> int('0b100', base=0)
 4
+```
+
+**Not:** Decorator'ları anlatırken, decorator ile işaretlenen fonksiyonlar, property objesinin `fget`, `fset` ve `fdel` methodlarına atanıp main class'ın `function variables` kısmından silindiği için `Class.sayı_get()` şeklinde kullanamadığımızı biliyoruz. Ama `property()` fonksiyonu ile oluşturulan property'ler için bu geçerli değildir. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    def sayı_get(self):
+        return self._sayı
+
+    def sayı_set(self, yeni):
+        print("sayı_set çalıştı...")
+        self._sayı = yeni
+        return self._sayı
+
+    def sayı_del(self):
+        print("sayı_del çalıştı...")
+        del self._sayı
+
+    sayı = property(fget = sayı_get, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
+
+var = Class()
+print(var.sayı_get()) # Output: 0
+var.sayı_set(1) # Output: sayı_set çalıştı...
+print(var.sayı_get()) # Output: 1
+var.sayı_del() # Output: sayı_del çalıştı...
+print(var.sayı_get()) # AttributeError: 'Class' object has no attribute '_sayı'
+```
+Gördüğünüz gibi `sayı` property objesinin `fget`, `fset` ve `fdel` methodlarına atanan fonksiyonlar main class'ın `function variables` kısmından silinmediği için bu main class'dan oluşturulan `var` instance'da bu fonksiyonlara sahip oluyor. Kanıtı:
+
+<img src="https://i.ibb.co/N7sKkk9/image.png" alt="image" border="0">
+
+<img src="https://i.ibb.co/VVBcH9Y/image.png" alt="image" border="0">
+
+Bu sayede `var` instance'ında isterseniz property'i isterseniz bu instance methodları kullanın. Bu instance methodların böyle kullanılmasını istemiyorsanız, kullanıcının sadece property objesini kullanmasını istiyorsanız, bu instance methodları private hale getirebilirsiniz. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    def __sayı_get(self):
+        return self._sayı
+
+    def __sayı_set(self, yeni):
+        print("sayı_set çalıştı...")
+        self._sayı = yeni
+        return self._sayı
+
+    def __sayı_del(self):
+        print("sayı_del çalıştı...")
+        del self._sayı
+
+    sayı = property(fget = __sayı_get, fset = __sayı_set, fdel = __sayı_del, doc="Sayı Property'si")
+
+var = Class()
+```
+Bu private instanca methodların `Class` class'ında ve `var` instance'ında nasıl bulunduğuna bakalım:
+
+<img src="https://i.ibb.co/gZhjpKG/image.png" alt="image" border="0">
+
+<img src="https://i.ibb.co/0s8gjh8/image.png" alt="image" border="0">
+
+Bu görüntü size karmaşık gelmiş olabilir ama sonuç olarak bu instance methodları private hale getirdiğimiz için ilk yazdığımız koddaki gibi bu instance methodları `var.sayı_get()`, `var.sayı_set(1)` ya da `var.sayı_del()` gibi kullanamayız. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    def __sayı_get(self):
+        return self._sayı
+
+    def __sayı_set(self, yeni):
+        print("sayı_set çalıştı...")
+        self._sayı = yeni
+        return self._sayı
+
+    def __sayı_del(self):
+        print("sayı_del çalıştı...")
+        del self._sayı
+
+    sayı = property(fget = __sayı_get, fset = __sayı_set, fdel = __sayı_del, doc="Sayı Property'si")
+
+var = Class()
+
+print(var.sayı_get()) # AttributeError: 'Class' object has no attribute 'sayı_get'
+var.sayı_set(1) # AttributeError: 'Class' object has no attribute 'sayı_set'
+print(var.sayı_get()) # AttributeError: 'Class' object has no attribute 'sayı_get'
+var.sayı_del() # AttributeError: 'Class' object has no attribute 'sayı_del'
+print(var.sayı_get()) # AttributeError: 'Class' object has no attribute 'sayı_get'
+```
+
+**Not:** `property()` fonksiyonunun `fget`, `fset` ve `fdel` parametrelerine girilen read, write ve delete işlemlerini gerçekleştirecek fonksiyonlar instance method değil, class method ise, oluşturulan property'yi kullanamazsınız. Örnek:
+```py
+class Class():
+    _sayı = 0
+    def __init__(self):
+        self._sayı
+
+    @classmethod
+    def sayı_get(cls):
+        return cls._sayı
+
+    @classmethod
+    def sayı_set(cls, yeni):
+        print("sayı_set çalıştı...")
+        cls._sayı = yeni
+        return cls._sayı
+
+    @classmethod
+    def sayı_del(cls):
+        print("sayı_del çalıştı...")
+        del cls._sayı
+
+    sayı = property(fget = sayı_get, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
+
+var = Class()
+print(var.sayı) # Output: TypeError: 'classmethod' object is not callable
+var.sayı = 1 # Output: TypeError: 'classmethod' object is not callable
+del var.sayı # Output: TypeError: 'classmethod' object is not callable
+```
+Bu durumun sebebi bir instance üzerinde bu işlemleri yapmaya çalışmak değildir. Aynı işlemleri doğrudan `Class` class'ının üzerinde de yapamazsınız.
+```py
+class Class():
+    _sayı = 0
+    def __init__(self):
+        self._sayı
+
+    @classmethod
+    def sayı_get(cls):
+        return cls._sayı
+
+    @classmethod
+    def sayı_set(cls, yeni):
+        print("sayı_set çalıştı...")
+        cls._sayı = yeni
+        return cls._sayı
+
+    @classmethod
+    def sayı_del(cls):
+        print("sayı_del çalıştı...")
+        del cls._sayı
+
+    sayı = property(fget = sayı_get, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
+
+print(Class.sayı.fget()) # Output: TypeError: 'classmethod' object is not callable
+print(Class.sayı.fset()) # Output: TypeError: 'classmethod' object is not callable
+print(Class.sayı.fdel()) # Output: TypeError: 'classmethod' object is not callable
+```
+**!Bu Hatanın Sebebi Öğrenince Buraya Yaz!**
+
+Bu class method'lara property üzerinden erişemesek bile main class ya da main class'dan türetilmiş bir instance üzerinden doğrudan erişebiliriz. Örnek:
+```py
+class Class():
+    _sayı = 0
+    def __init__(self):
+        self._sayı
+
+    @classmethod
+    def sayı_get(self):
+        return self._sayı
+
+    @classmethod
+    def sayı_set(self, yeni):
+        print("sayı_set çalıştı...")
+        self._sayı = yeni
+        return self._sayı
+
+    @classmethod
+    def sayı_del(self):
+        print("sayı_del çalıştı...")
+        del self._sayı
+
+    sayı = property(fget = sayı_get, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
+
+var = Class()
+print(Class.sayı_get()) # Output: 0
+print(var.sayı_get()) # Output: 0
+
+Class.sayı_set(1) # Output: sayı_set çalıştı...
+print(Class.sayı_get()) # Output: 1
+
+var.sayı_set(2) # Output: sayı_set çalıştı...
+print(var.sayı_get()) # Output: 2
+
+Class.sayı_del() # Output: sayı_del çalıştı...
+print(Class.sayı_get()) # AttributeError: type object 'Class' has no attribute '_sayı'
+
+var.sayı_del() # Output: sayı_del çalıştı...
+print(var.sayı_get()) # AttributeError: type object 'Class' has no attribute '_sayı'
 ```
