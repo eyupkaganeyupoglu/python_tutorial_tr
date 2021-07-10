@@ -576,10 +576,133 @@ var = Class()
 
 <img src="https://i.ibb.co/BtqsGTs/image.png" alt="image" border="0">
 
-Gördüğünüz gibi tam bir karmaşa oldu. Burada sorulması gerekn soru; "Madem `getter`, `setter` ve `deleter` methodları etkilediği fonksiyonların isimlerine sahip yeni property objeleri oluşmasına neden olacaktı, neden `@sayı.getter`, `@sayı.setter` ve `@sayı.deleter` decorator'larında `sayı` kelimesi var? Bu `sayı` kelimesi bu `getter`, `setter` ve `deleter` methodlarının etkilediği fonksiyonların `sayı` property'sinin `fget`, `fset` ve `fdel` methodlarına atanmasına vesile olmuyor da yeni property objeleri oluşmasına neden oluyor?" Buna bir cevap henüz bulamadım. Bu property objelerini daha iyi anlamak için read, write ve delete yetkilerinden hangilerine sahip olduğuna bakmakta fayda var:
+Gördüğünüz gibi tam bir karmaşa oldu. Burada sorulması gereken soru; "Madem `getter`, `setter` ve `deleter` methodları etkilediği fonksiyonların isimlerine sahip yeni property objeleri oluşmasına neden olacaktı, neden `@sayı.getter`, `@sayı.setter` ve `@sayı.deleter` decorator'larında `sayı` kelimesi var? Buradaki `sayı` kelimesi, `getter`, `setter` ve `deleter` methodlarının etkilediği fonksiyonların `sayı` property'sinin `fget`, `fset` ve `fdel` methodlarına atanmasına vesile olmuyor da neden yeni property objeleri oluşmasına vesile oluyor?" Buna bir cevap henüz bulamadım. Bu property objelerini daha iyi anlamak için read, write ve delete yetkilerinden hangilerine sahip olduklarına bakmakta fayda var:
 
-**!Burada Kaldın!** En sonra bu property'lerin içerdiği yetkileri teker teker açıklayacaktın. ve `var` instance'sındaki ilgili attribute'ların bazıları neden None açıkla.
+- `@property` decorator'ı ile oluşturulan property objesinde sadece `fget` methodu tanımlıdır. Kanıtı:
+
+    <img src="https://i.ibb.co/qdH8YsP/image.png" alt="image" border="0">
+
+    Böyle olmasının sebebi, daha önce de anlattığım `@property` decorator'ı ile işaretlenen fonksiyonun otomatik olarak `fget` methoduna atanmasıdır. `fget` methoduna atanmış, read işleminden sorumlu fonksiyonda `return self._sayı` kodu olmadığı için (daha önce de anlattığım gibi) `var` instance'ındaki `sayı` attribute'unun value'su `'None'` olur.
+
+    <img src="https://i.ibb.co/dQDzsGq/image.png" alt="image" border="0">
+
+- `@sayı.getter` decorator'ı ile oluşturulan property objesinde sadece `fget` methodu tanımlıdır. Kanıtı:
+
+    <img src="https://i.ibb.co/7Q86NwN/image.png" alt="image" border="0">
+
+    Main class'daki her property objesinin, bu main class'dan türetilen instance'da kendi adında bir attribute oluşturduğunu biliyoruz. Kanıtı:
+    
+    <img src="https://i.ibb.co/BtqsGTs/image.png" alt="image" border="0">
+    
+    Burada dikkat edilmesi gereken şey; `sayı_get` property'sinin `fget` methoduna atanmış, read işleminden sorumlu fonksiyon, `sayı`, `sayı_set` ve `sayı_del` property'lerinin `fget` methoduna atanmış, read işleminden sorumlu fonksiyondan farklı bir fonksiyon objesidir (deneyip görebilirsiniz). Bu yüzden `var` instance'ındaki `sayı`, `sayı_set` ve `sayı_del` attribute'larının value'su `'None'` iken `sayı_get` attribute'unun value'su `_sayı` attribute'unun value'su ile aynı ve bağlantılıdır. Çünkü `sayı`, `sayı_set` ve `sayı_del` property'lerinin `fget` methoduna atanmış read işleminden sorumlu fonksiyonda `return self._sayı` kodu olmadığından bu property'ler read işlemini gerçekleştirip `_sayı` attribute'unun value'suna erişemez ama `sayı_get` property'sinin `fget` methoduna atanmış read işleminden sorumlu fonksiyonda `return self._sayı` kodu olduğundan `sayı_get` property'si, read işlemini gerçekleştirip `_sayı` attribute'unun value'suna erişebilir. Kanıtı:
+
+    <img src="https://i.ibb.co/gTV2fFh/image.png" alt="image" border="0">
+
+- `@sayı.setter` decorator'ı ile oluşturulan property objesinde hem `fset` hem de `fget` methodları tanımlıdır. Kanıtı:
+
+    <img src="https://i.ibb.co/TPstsLF/image.png" alt="image" border="0">
+
+    Burada dikkat çeken şey, `sayı_set` property'sinin `fget` methodunda tanımlı read işleminden sorumlu fonksiyon objesi ile `sayı` property'sinin `fget` methodunda tanımlı read işleminden sorumlu fonksiyon objesinin aynı olmasıdır. Nedenini bilmesem de buradan, `sayı_set` property'sinin `sayı` property'sinden bir şekilde etkilendiği sonucu çıkarılabilir.
+    
+    `sayı_set` ve `sayı` iki farklı property objesi olduğu için `var` instance'ında `sayı_set` ve `sayı` adında iki farklı attribute oluşmasına neden oluyorlar. Kanıtı:
+
+    <img src="https://i.ibb.co/7RYjdwF/image.png" alt="image" border="0">
+
+    `sayı_set` property'sinin `fget` methoduna atanmış, read işleminden sorumlu fonksiyonda `return self._sayı` kodu olmadığı için (daha önce de anlattığım gibi) `var` instance'ındaki `sayı_set` attribute'unun value'su `'None'` olur. `var.sayı_set = 1` koduyla `sayı_set` property'sinin `fset` methoduna atanmış, write işleminden sorumlu fonksiyonunu çalıştırınca `_sayı` ve dolayısıyla `sayı_get` value'ları `1` olarak güncellense bile `sayı_set` property'sinin `fget` methoduna atanmış, read işleminden sorumlu fonksiyon işlevini yerine getiremediği için `var` instance'ındaki `sayı_set` attribute'unun value'su `'None'` olarak kalıyor. Kanıtı:
+
+    <img src="https://i.ibb.co/cvSLxhv/image.png" alt="image" border="0">
+
+- `@sayı.deleter` decorator'ı ile oluşturulan property objesinde hem `fdel` hem de `fget` methodları tanımlıdır. Kanıtı:
+
+    <img src="https://i.ibb.co/vBfR5cq/image.png" alt="image" border="0">
+
+    Burada dikkat çeken şey, `sayı_del` property'sinin `fget` methodunda tanımlı read işleminden sorumlu fonksiyon objesi ile `sayı` property'sinin `fget` methodunda tanımlı read işleminden sorumlu fonksiyon objesinin aynı olmasıdır. Nedenini bilmesem de buradan, `sayı_del` property'sinin `sayı` property'sinden bir şekilde etkilendiği sonucu çıkarılabilir.
+    
+    `sayı_del` ve `sayı` iki farklı property objesi olduğu için `var` instance'ında `sayı_del` ve `sayı` adında iki farklı attribute oluşmasına neden oluyorlar. Kanıtı:
+
+    <img src="https://i.ibb.co/5vFSMJw/image.png" alt="image" border="0">
+
+    `sayı_del` property'sinin `fget` methoduna atanmış, read işleminden sorumlu fonksiyonda `return self._sayı` kodu olmadığı için (daha önce de anlattığım gibi) `var` instance'ındaki `sayı_del` attribute'unun value'su `'None'` olur. `del var.sayı_del` koduyla `sayı_del` property'sinin `fdel` methoduna atanmış, delete işleminden sorumlu fonksiyonunu çalıştırınca `_sayı` attribute'u bellekten siliniz. `_sayı` attribute'u bellekten silindiği için (daha önce de anlattığım gibi) `sayı_get` property'sinin `fget` methoduna atanmış, read işleminden sorumlu fonksiyondaki `return self._sayı` kodunun `self._sayı` kısmı aşağıdaki hatayı yükseltir.
+    ```
+        Traceback (most recent call last):
+    File "c:\Users\HP\.vscode\extensions\ms-python.python-2021.6.944021595\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_resolver.py", line 193, in _get_py_dictionary
+        attr = getattr(var, name)
+    File "d:\my_folder\education\software\software_lessons\python\python_tutorial\main\.md\tempCodeRunnerFile.py", line 11, in sayı_get
+        return self._sayı
+    AttributeError: 'Class' object has no attribute '_sayı'
+    ```
+    `return` statement bu hata mesajını döndürdüğü için bu hata mesajı `sayı_get` attribute'unun string type value'su olur:
+
+    <img src="https://i.ibb.co/thLB7CY/image.png" alt="image" border="0">
+
+    ```
+    sayı_get: 'Traceback (most recent call last):\n  File "c:\\Users\\HP\\.vscode\\extensions\\ms-python.python-2021.6.944021595\\pythonFiles\\lib\\python\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\pydevd_resolver.py", line 193, in _get_py_dictionary\n    attr = getattr(var, name)\n  File "d:\\my_folder\\education\\software\\software_lessons\\python\\python_tutorial\\main\\.md\\tempCodeRunnerFile.py", line 11, in sayı_get\n    return self._sayı\nAttributeError: \'Class\' object has no attribute \'_sayı\'\n'
+    ```
+
+Gördüğünüz gibi `@property` decorator'unun ve bu decorator'un `getter`, `setter`, `deleter` methodlarının böyle saçma davranışları olduğu için bu decorator'lar, bir property objesi yaratmanın en iyi yöntemi değildir. Bu yüzden bir property objesi yaratmak istediğinizde bu decorator'ları kullanmak terine `property()` fonksiyonunu tercih etmelisiniz.
+
+## `property(fget=None, fset=None, fdel=None, doc=None)` Fonksiyonu
+`property()` fonksiyonu, `fget`, `fset` ve `fdel` parametrelerine read, write ve delete işlemlerini gerçekleştirecek fonksiyon objelerini tanımlayıp bir property oluşturabilmenizi sağlar. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    def sayı_get(self):
+        print("sayı_get çalıştı...")
+        return self._sayı
+
+    def sayı_set(self, yeni):
+        print("sayı_set çalıştı...")
+        self._sayı = yeni
+        return self._sayı
+
+    def sayı_del(self):
+        print("sayı_del çalıştı...")
+        del self._sayı
+
+    sayı = property(fget = sayı, fset = sayı_set, fdel = sayı_del, doc="Sayı Property'si")
+
+var = Class()
+print(Class.sayı.__doc__) # Output: Sayı Property'si
+print(var.sayı) # Output: 0
+var.sayı = 1
+print(var.sayı) # Output: 1
+del var.sayı # Output: sayı siliniyor...
+print(var.sayı) # AttributeError: 'Class' object has no attribute '_sayı'
+```
 
 
 
-isimleri farklı olan fonksiyonları aynı property objesinin `fget`, `fset` ve `fdel` methodlarına atamanın yöntemi var.
+
+**Not:** Global scope'da da property objesi yaratabiliriz. Örnek:
+```py
+sayı = property(doc="Sayı Property'si")
+print(type(sayı)) # Output: <class 'property'>
+print(sayı.__doc__) # Output: Sayı Property'si
+```
+Yukarıdaki kodda gördüğünüz gibi, `property()` fonksiyonundaki `doc` parametresine girilen string, bu fonksiyon ile oluşturulan property'nin `__doc__` attribute'una atanır. Kanıtı:
+
+<img src="https://i.ibb.co/6Y9kFQw/image.png" alt="image" border="0">
+
+`__doc__` attribute'u genelde ilgili obje hakkında bilgi vermek için kullanılan bir şeydir. Örneğin integer type objelerin `__doc__` attribute'una bakalım:
+```py
+print(int.__doc__) # ya da `print((1).__doc__)`
+```
+**Output:**
+```
+int([x]) -> integer
+int(x, base=10) -> integer
+
+Convert a number or string to an integer, or return 0 if no arguments
+are given.  If x is a number, return x.__int__().  For floating point
+numbers, this truncates towards zero.
+
+If x is not a number or if base is given, then x must be a string,
+bytes, or bytearray instance representing an integer literal in the
+given base.  The literal can be preceded by '+' or '-' and be surrounded
+by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
+Base 0 means to interpret the base from the string as an integer literal.
+>>> int('0b100', base=0)
+4
+```
