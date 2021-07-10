@@ -160,7 +160,7 @@ Bu koddaki `func1` methodu bellekte `<function Class.func1 at 0x00000160370A2790
 
 <img src="https://i.ibb.co/ydDXLKk/image.png" alt="image" border="0">
 
-Bu görseldeki `fget`, `fset` ve `fdel` methodlarının tam olarak ne olduğu daha sonra property methodları başlığında anlatılacak. Yukarıdaki görselde dikkat edilmesi gereken şey; `func2` fonksiyon objesi, `func1` fonksiyon objesi gibi main class objesinin `function variables` kısmında bulunmuyor, `fget` kısmında bulunuyor. Bunun sebebi; `func2` fonksiyon objesi artık `func2` property'sinin `getter` işleminde kullanılacak olmasıdır.
+Bu görseldeki `fget`, `fset` ve `fdel` methodlarının tam olarak ne olduğu daha sonra property methodları başlığında anlatılacak. Yukarıdaki görselde dikkat edilmesi gereken şey; `func2` fonksiyon objesi, `func1` fonksiyon objesi gibi main class objesinin `function variables` kısmında bulunmuyor, `fget` kısmında bulunuyor. Bunun sebebi; `func2` fonksiyon objesi artık `func2` property'sinin read işleminde (daha sonra anlayılacak) kullanılacak olmasıdır. 
 
 Property'lerin en temel işlevi, main class'da tanımlı bir methodu, bir instance içinde attribute gibi kullanabilmemizi sağlamasıdır demiştik. Buradan yola çıkarak; property'ler main class'da obje olarak bulunurken, instance'larda sadece attribute olarak bulunur diyebiliriz. Örnek:
 ```py
@@ -260,7 +260,7 @@ for i in dir(property):
 ----------------------------------------------------------------------
 deleter, fdel, fget, fset, getter, setter,
 ```
-**Not:** `getter`, `setter` ve `deleter` property methodları ile ilgili property'nin `fget`, `fset` ve `fdel` methodlarına atanan instance methodlar (`@property` decorator'unda olduğu gibi) main class'ın `function attributes` kısmında bulunmazlar. Örnek:
+**Not:** Bir property'nin `getter`, `setter` ve `deleter` build-in methodları ile  `fget`, `fset` ve `fdel` methodlarına atanan instance methodlar (`@property` decorator'ında olduğu gibi) main class'ın `function attributes` kısmında bulunmazlar. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -312,10 +312,8 @@ class Class():
 
 Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile işaretleyen instance methodlar, `fget`, `fset` ve `fdel` methodlarına atandığı için main class'da `function attributes` kısmında bulunmamaktadırlar. Dolayısıyla bu instance methodlar, main class'dan türetilen instance'larda da bulunmazlar.
 
-**!Burada Kaldın!** En son değer döndürme ve read kelimelerini getter methodu başlığındaki açıklamalara yedirmeye çalışıyordun. "**değer döndürme** işlemini gerçekleştiren ve **read** yetkisine sahip olan fonksiyon olarak varlığını sürdürür" cümlesinin ekleyerek bu işi hallettin gibi ama yine de getter methodu başlığını en baştan okuyup `read yetkisi` kelimesini eklemen veya bunu açıklaman gereken yer var mı diye bak. Normalde getter methodu başlığını yazmayı bitirdin. En son şu decoder'lerdeji python türkiyede konuştuğun saçma olayı açıklamayı unutma.
-
 ### `getter` Methodu:
-Bir class'ın içinde tanımlı olan instance method üzerinde `getter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fget` methodunda tanımlı, **değer döndürme** işlemini gerçekleştiren ve **read** yetkisine sahip olan fonksiyon olarak varlığını sürdürür. Örnek:
+Bir class'ın içinde tanımlı olan instance method üzerinde `getter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fget` methodunda tanımlı, **read** olarak isimlendirilmiş **değer döndürme** işlemini gerçekleştiren fonksiyon olarak varlığını sürdürür (bundan sonra 'değer döndürme işleminden'den 'read işlemi' olarak bahsedilecek). Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -336,21 +334,21 @@ Gördüğünüz gibi `@property` decorator'u ile oluşturduğumuz `sayı` adınd
 
 <img src="https://i.ibb.co/Jt7wmqZ/image.png" alt="image" border="0">
 
-Böylece; `@{Property_object_name}.getter` formatındaki decorator'u kullanarak, `{Property_object_name}` kısmında belirttiğimiz property objesinin değer döndürme işleminden sorumlu olmasını istediğimiz instance methodu, `{Property_object_name}` kısmında belirttiğimiz property objesinin `fget` methoduna atabildiğiniz öğrendik.
+Böylece; `@{Property_object_name}.getter` formatındaki decorator'u kullanarak, `{Property_object_name}` kısmında belirttiğimiz property objesinin read işleminden sorumlu olmasını istediğimiz instance methodu, `{Property_object_name}` kısmında belirttiğimiz property objesinin `fget` methoduna atabildiğiniz öğrendik.
 
 `Class` class'ından `sayı` property'si, `var` instance'ında `sayı` adında bir attribute olarak bulunuyor (nedenini daha önce anlattım). Kanıtı:
 
 <img src="https://i.ibb.co/zmmFmTQ/image.png" alt="image" border="0">
 
-Gördüğünüz gibi `var` instance'ında bulunan `sayı` attribute'unun değeri, `_sayı` attribute'undaki gibi `0`'dır. Bunun böyle olması, `fget` methodunda tanımlı, değer döndürme işleminden sorumlu olan 2. `sayı` fonksiyonudaki `return self._sayı` kodu sayesindedir. 2. `sayı` fonksiyonunda `return self._sayı` kodu olmasaydı, 2. `sayı` fonksiyonu hiçbir değer döndürmeyeceği için `var` instance'ındaki `sayı` attribute'unun değeri `'None'` olacaktı. Kanıtı:
+Gördüğünüz gibi `var` instance'ında bulunan `sayı` attribute'unun değeri, `_sayı` attribute'undaki gibi `0`'dır. Bunun böyle olması, `fget` methodunda tanımlı, read işleminden sorumlu fonksiyon olan 2. `sayı` fonksiyonundaki `return self._sayı` kodu sayesindedir. 2. `sayı` fonksiyonunda `return self._sayı` kodu olmasaydı, 2. `sayı` fonksiyonu hiçbir değer döndürmeyeceği için `var` instance'ındaki `sayı` attribute'unun değeri `'None'` olacaktı. Kanıtı:
 
 <img src="https://i.ibb.co/5TdfjzZ/image.png" alt="image" border="0">
 
-Böylece `var` instance'ında bulunan `sayı` attribute'unun value'sunun, `Class` class'ındaki `sayı` property'sinin `fget` methodunda tanımlı 2. `sayı` fonksiyonundaki `return self._sayı` kodu ile ilişkili olduğunu öğrendik.
+Böylece `var` instance'ında bulunan `sayı` attribute'unun value'sunun, `Class` class'ındaki `sayı` property'sinin `fget` methodunda tanımlı, read işleminden sorumlu fonksiyon olan 2. `sayı` fonksiyonundaki `return self._sayı` kodu ile ilişkili olduğunu öğrendik.
 
-`sayı` property'sinde `fset` ve `fdel` methodunda ilgili fonksiyonlar tanımlı olmadığı için `var.sayı = 1` gibi değer atama ya da `del var.sayı` gibi değer silme işlemleri yapamazken, `fget` methodunda ilgili fonksiyon tanımlı olduğu için değer döndürme işlemi yapılabiliyor. Bunun gibi sadece değer döndürme işlemi yapılabilen attribute'lara **Read Only Attribute** (Salt Okunur Attribute) denir.
+`sayı` property'sinde `fset` methodunda write işlemi ile ilgili fonksiyon ve `fdel` methodunda delete işlemi ile ilgili fonksiyon tanımlı olmadığı için `var.sayı = 1` gibi write (değer atama) ya da `del var.sayı` gibi delete (değer silme) işlemleri yapamazken, `fget` methodunda read işlemi ile ilgili fonksiyon tanımlı olduğu için read işlemi yapılabiliyor. Bunun gibi sadece read işlemi yapılabilen attribute'lara **Read Only Attribute** (Salt Okunur Attribute) denir.
 
-**Not:** `@{Property_object_name}.getter` formatındaki decorator'u kullanarak bir property için `fget` methoduna ilgili fonksiyonu tanımlamazsanız bile sadece `@property` decorator'u kullanılarak oluşturulan property'lerde `fget` methodunda ilgili fonksiyonun tanımlı olduğunu farketmişsinizdir. Örnek:
+**Not:** `@{Property_object_name}.getter` formatındaki decorator'ı kullanarak bir property'nin' `fget` methoduna read işlemi ile ilgili fonksiyonu tanımlamasanız bile, sadece `@property` decorator'u kullanılarak oluşturulan property'lerde `fget` methodunda read işlemi ile ilgili fonksiyonun tanımlı olduğunu farketmişsinizdir. Örnek:
 ```py
 class Class():
     def __init__(self):
@@ -364,7 +362,7 @@ var = Class()
 print(var.sayı) # Output: None
 print(var._sayı) # Output: 0
 ```
-Gördüğünüz gibi `sayı` property'si için `getter` tanımlamasak bile `print(var.sayı)` kodu hata vermiyor, `var` instance'ında tanımlı `sayı` attribute'unun değerini döndürüyor. Çünkü yukarıda da anlattığım gibi, `@property` decorator'u kullanılarak oluşturulan property'lerde `fget` methoduna tanımlanacak fonksiyon otomatik olarak  `@property` decorator'unun hemen altındaki instance method oluyor. `var.sayı` kodunun `'None'` değerini döndürmesi bunu kanıtlıyor çünkü `fget` methoduna tanımlanan `sayı` fonksiyonunda `return self._sayı` kodu yok. Bu yüzden `getter` property methodu ile uğraşmadan sadece `@property` decorator'u kullanarak `fget` methoduna tanımlanacak fonksiyonun Python tarafından otomatik halledilmesini istiyorsanız, yukarıdaki kodu aşağıdaki gibi yazabilirsiniz:   
+Gördüğünüz gibi `sayı` property'si için `getter` tanımlamasak bile `print(var.sayı)` kodu hata vermiyor, `var` instance'ında tanımlı `sayı` attribute'unun değerini döndürüyor. Bunun sebebi, `getter` methodu kullanılmadan sadece `@property` decorator'u kullanılarak oluşturulan property'lerde `fget` methoduna tanımlanacak fonksiyon otomatik olarak  `@property` decorator'unun hemen altındaki instance method oluyor. `var.sayı` kodunun `'None'` değerini döndürmesi bunu kanıtlıyor çünkü `fget` methoduna tanımlanan `sayı` fonksiyonunda `return self._sayı` kodu yok. `getter` property methodu ile uğraşmadan sadece `@property` decorator'u kullanarak `fget` methoduna tanımlanacak fonksiyonun Python tarafından otomatik halledilmesini istiyorsanız, yukarıdaki kodu aşağıdaki gibi yazabilirsiniz:   
 ```py
 class Class():
     def __init__(self):
@@ -380,39 +378,208 @@ print(var._sayı) # Output: 0
 ```
 
 ### `setter` Methodu:
+Bir class'ın içinde tanımlı olan instance method üzerinde `setter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fset` methodunda tanımlı, **write** olarak isimlendirilmiş **değer atama** işlemini gerçekleştiren fonksiyon olarak varlığını sürdürür (bundan sonra 'değer atama' işleminden'den 'write işlemi' olarak bahsedilecek). Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
 
+    @property
+    def sayı(self): # Buna "1. sayı fonksiyonu" diyelim
+        return self._sayı
 
+    @sayı.setter
+    def sayı(self, yeni_değer): # Buna "2. sayı fonksiyonu" diyelim
+        print("Write işleminden sorumlu fonksiyon çalıştı...")
+        self._sayı = yeni_değer
+        return self._sayı
 
+var = Class()
+print(var.sayı) # Output: 0
+print(var._sayı) # Output: 0
+var.sayı = 1 # Output: Write işleminden sorumlu fonksiyon çalıştı...
+print(var.sayı) # Output: 1
+print(var._sayı) # Output: 1
+```
+Gördüğünüz gibi `@property` decorator'u ile oluşturduğumuz `sayı` adındaki property objesi tanımladık. `sayı` property objesinin read işleminden sorumlu fonksiyonu, `@property` decorator'unun hemen altındaki 1. `sayı` fonksiyonu olarak belirlenmiş ve `fget` methoduna tanımlanmıştır. `sayı` property objesinin write işleminden sorumlu fonksiyonu da `@sayı.setter` decorator'ının hemen altındaki 2. `sayı` fonksiyonu olarak belirlenmiş ve `fset` methoduna tanımlanmıştır. Kanıtı:
 
+<img src="https://i.ibb.co/k6RTYSB/image.png" alt="image" border="0">
 
+Böylece; `@{Property_object_name}.setter` formatındaki decorator'u kullanarak, `{Property_object_name}` kısmında belirttiğimiz property objesinin write işleminden sorumlu olmasını istediğimiz instance methodu, `{Property_object_name}` kısmında belirttiğimiz property objesinin `fset` methoduna atabildiğiniz öğrendik.
 
+`Class` class'ından `sayı` property'si, `var` instance'ında `sayı` adında bir attribute olarak bulunuyor (nedenini daha önce anlattım). Kanıtı:
 
+<img src="https://i.ibb.co/WFzdc0V/image.png" alt="image" border="0">
 
+Gördüğünüz gibi `var` instance'ında bulunan `sayı` attribute'unun değeri, `_sayı` attribute'undaki gibi `0`'dır. Bunun böyle olmasının nedenini `getter` methodunda anlattık. `var` instance'ında bulunan `sayı` attribute'unun değerini değiştirmek için `var.sayı = 1` kodunu çalıştırırsak, `fset` methoduna tanımlı, write işleminden sorumlu fonksiyon çalışır (çalıştığını "Write işleminden sorumlu fonksiyon çalıştı..." stringinin yazdırılmasından anlayabilirsiniz) ve hem `sayı` attribute'unun değerini hem de bu fonksiyonun içerdiği kodlar ile `_sayı` attribute'unun değerini `1` olarak değiştirir. Kanıtı:
 
+<img src="https://i.ibb.co/JzGsdmw/image.png" alt="image" border="0">
 
+Buradan, write işleminden sorumlu `def sayı(self, yeni_değer)` fonksiyonunda bulunan `yeni_değer` parametresinin write işlemi için önemli olduğunu çünkü `var.sayı = 1` kodundaki `1` value'sunun `yeni_değer` parametresine argüman olarak verildiğini çıkarabiliriz. Bu örnek koddan, write işleminden sorumlu fonksiyonu `def {Property_object_name}(self, new_value):` formatında tanımlayacağımızı ve `new_value` parametresinin ne işe yaradığını öğrenmiş olduk.
 
+Property'lerde write işlemi **backwards compatibility** (geriye dönük uyumluluk) konusunda avantaj sağlar. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self.veri = 0
 
+    @property
+    def data(self):
+        return self.veri
 
+    @data.setter
+    def data(self, yeni_değer):
+        self.veri = yeni_değer
+        return self.veri
+var = Class()
+print(var.data) # Output: 0
+var.data = 1
+print(var.data) # Output: 1
+```
+Programınızda tanımladığınız bir class içindeki bir attribute'un isimlerini sonradan değiştirseniz, programınızın eski versiyonunu kullanan kişiler için sıkıntı yaratmış olursunuz. Örneğin `self.veri` attribute'u programınızın eski versiyonunda `self.data` isminde tanımlıysa, `self.data` attribute'unun ismini `self.veri` olarak değiştirdiğiniz zaman, programınızın eski versiyonunu kullanan kullanıcılar `self.veri` attribute'unu `self.data` zannettikleri için programlarını yanlış yazıp hata alabilirler. Bu sorunun önüne geçmek için yukarıdaki kodda olduğu gibi, `self.veri` attribute'u üzerinde read ve write işlemleri yapabilen `data` isminde bir property tanımlayabilirsiniz. Bu sayede programınızda **backwards compatibility** (geriye dönük uyumluluk) sağlamış olursunuz.
 
+`setter` methodu değer doğrulama gibi işlemlerde de kullanışlıdır. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
 
+    @property
+    def sayı(self):
+        return self._sayı
 
+    @sayı.setter
+    def sayı(self, yeni_değer):
+        if yeni_değer % 2 == 0:
+            self._sayı = yeni_değer
+        else:
+            print('Çift değil!')
 
+        return self.sayı
 
+var = Class()
+print(var.sayı) # Output: 0
 
+var.sayı = 1 # Output: Çift değil!
+print(var.sayı) # Output: 0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var.sayı = 2
+print(var.sayı) # Output: 2
+```
+Gördüğünüz gibi `sayı` attribute'una çift sayı değeri atamaya çalışınca, değer atama işlemi gerçekleşmiyor ve `sayı` attribute'unun değeri değişmiyor çünkü `else` bloğunda `return self.sayı` kodu yok.
 
 ### `deleter` Methodu:
+Bir class'ın içinde tanımlı olan instance method üzerinde `deleter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fdel` methodunda tanımlı, **delete** olarak isimlendirilmiş **değer silme** işlemini gerçekleştiren fonksiyon olarak varlığını sürdürür (bundan sonra 'değer silme' işleminden'den 'delete işlemi' olarak bahsedilecek). Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+
+    @property
+    def sayı(self): # Buna "1. sayı fonksiyonu" diyelim
+        return self._sayı
+
+    @sayı.deleter
+    def sayı(self): # Buna "2. sayı fonksiyonu" diyelim
+        print("Delete işleminden sorumlu fonksiyon çalıştı...")
+        del self._sayı
+
+var = Class()
+print(var.sayı) # Output: 0
+print(var._sayı) # Output: 0
+del var.sayı # Output: Delete işleminden sorumlu fonksiyon çalıştı...
+print(var.sayı) # AttributeError: 'Class' object has no attribute '_sayı'
+```
+Gördüğünüz gibi `@property` decorator'u ile oluşturduğumuz `sayı` adındaki property objesi tanımladık. `sayı` property objesinin read işleminden sorumlu fonksiyonu, `@property` decorator'unun hemen altındaki 1. `sayı` fonksiyonu olarak belirlenmiş ve `fget` methoduna tanımlanmıştır. `sayı` property objesinin delete işleminden sorumlu fonksiyonu da `@sayı.deleter` decorator'ının hemen altındaki 2. `sayı` fonksiyonu olarak belirlenmiş ve `fdel` methoduna tanımlanmıştır. Kanıtı:
+
+<img src="https://i.ibb.co/8X638hH/image.png" alt="image" border="0">
+
+Böylece; `@{Property_object_name}.deleter` formatındaki decorator'u kullanarak, `{Property_object_name}` kısmında belirttiğimiz property objesinin delete işleminden sorumlu olmasını istediğimiz instance methodu, `{Property_object_name}` kısmında belirttiğimiz property objesinin `fdel` methoduna atabildiğiniz öğrendik.
+
+`Class` class'ından `sayı` property'si, `var` instance'ında `sayı` adında bir attribute olarak bulunuyor (nedenini daha önce anlattım). Kanıtı:
+
+<img src="https://i.ibb.co/WFzdc0V/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `var` instance'ında bulunan `sayı` attribute'unun değeri, `_sayı` attribute'undaki gibi `0`'dır. Bunun böyle olmasının nedenini `getter` methodunda anlattık. `var` instance'ında bulunan `sayı` attribute'unun değerini silmek için `del var.sayı` kodunu çalıştırırsak, `fdel` methoduna tanımlı, delete işleminden sorumlu fonksiyon çalışır (çalıştığını "Delete işleminden sorumlu fonksiyon çalıştı..." stringinin yazdırılmasından anlayabilirsiniz) ve `_sayı` attribute'unu bellekten siler. Kanıtı:
+
+<img src="https://i.ibb.co/Lgz2kTk/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `_sayı` variable'ı bellekten silindi. `_sayı` variable'ı bellekten silindiği için `fget` methodunda tanımlı, read işleminden sorumlu fonksiyonun içerdiği `return self._sayı` kodundaki `self._sayı` kodu, `_self` attribute'u bellekten silindiği için aşağıdaki hatayı yükseltir:
+```
+Traceback (most recent call last):
+  File "c:\Users\HP\.vscode\extensions\ms-python.python-2021.6.944021595\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_resolver.py", line 193, in _get_py_dictionary
+    attr = getattr(var, name)
+  File "d:\my_folder\education\software\software_lessons\python\python_tutorial\main\.md\tempCodeRunnerFile.py", line 7, in sayı
+    return self._sayı
+AttributeError: 'Class' object has no attribute '_sayı'
+```
+`return` statement bu hata mesajını döndürdüğü için bu hata mesajı `sayı` attribute'unun string type value'su olur:
+```
+sayı: 'Traceback (most recent call last):\n  File "c:\\Users\\HP\\.vscode\\extensions\\ms-python.python-2021.6.944021595\\pythonFiles\\lib\\python\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\pydevd_resolver.py", line 193, in _get_py_dictionary\n    attr = getattr(var, name)\n  File "d:\\my_folder\\education\\software\\software_lessons\\python\\python_tutorial\\main\\.md\\tempCodeRunnerFile.py", line 7, in sayı\n    return self._sayı\nAttributeError: \'Class\' object has no attribute \'_sayı\'\n'
+```
+`print(var.sayı)` kodu ile `sayı` propery'sinin `fget` methodunda tanımlı, read işleminden sorumlu fonksiyonu çalıştırdığımız için yine `return self._sayı` kodu yüzünden `AttributeError: 'Class' object has no attribute '_sayı'` hatası yükseltilir.
+
+### Decorator'ların Saçmalığı
+Şimdiye kadar read, write ve delete işlemlerini gerçekleştirmesi için `fget`, `fset` ve `fdel` methodlarına atadığımız fonksiyonların aynı isme (identifier) sahip olduğunu farketmişsinizdir. Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+    
+    @property
+    def sayı(self):
+        pass
+
+    @sayı.getter
+    def sayı(self):
+        return self._sayı
+
+    @sayı.setter
+    def sayı(self, yeni_değer):
+        self._sayı = yeni_değer
+        return self._sayı
+
+    @sayı.deleter
+    def sayı(self):
+        del self._sayı
+
+var = Class()
+```
+
+<img src="https://i.ibb.co/b7GT6L5/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `sayı` ismindeki property'nin `fget`, `fset` ve `fdel` methodlarına ilgili `sayı` ismindeki fonksiyonlar atandı. Peki bu fonksiyonları isimleri `sayı` yerine farklı farklı şeyler olsaydı? Örnek:
+```py
+class Class():
+    def __init__(self):
+        self._sayı = 0
+    
+    @property
+    def sayı(self):
+        pass
+
+    @sayı.getter
+    def sayı_get(self):
+        return self._sayı
+
+    @sayı.setter
+    def sayı_set(self, yeni_değer):
+        self._sayı = yeni_değer
+        return self._sayı
+
+    @sayı.deleter
+    def sayı_del(self):
+        del self._sayı
+
+var = Class()
+```
+
+<img src="https://i.ibb.co/BtqsGTs/image.png" alt="image" border="0">
+
+Gördüğünüz gibi tam bir karmaşa oldu. Burada sorulması gerekn soru; "Madem `getter`, `setter` ve `deleter` methodları etkilediği fonksiyonların isimlerine sahip yeni property objeleri oluşmasına neden olacaktı, neden `@sayı.getter`, `@sayı.setter` ve `@sayı.deleter` decorator'larında `sayı` kelimesi var? Bu `sayı` kelimesi bu `getter`, `setter` ve `deleter` methodlarının etkilediği fonksiyonların `sayı` property'sinin `fget`, `fset` ve `fdel` methodlarına atanmasına vesile olmuyor da yeni property objeleri oluşmasına neden oluyor?" Buna bir cevap henüz bulamadım. Bu property objelerini daha iyi anlamak için read, write ve delete yetkilerinden hangilerine sahip olduğuna bakmakta fayda var:
+
+**!Burada Kaldın!** En sonra bu property'lerin içerdiği yetkileri teker teker açıklayacaktın. ve `var` instance'sındaki ilgili attribute'ların bazıları neden None açıkla.
+
+
+
+isimleri farklı olan fonksiyonları aynı property objesinin `fget`, `fset` ve `fdel` methodlarına atamanın yöntemi var.
