@@ -364,6 +364,20 @@ print(isinstance('ornek', str)) # Output: True
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#isinstance).
 
 # `issubclass(class, classinfo)`
+`class` parametresine tanımlanan class, `classinfo` parametresine tanımlanan class'ın subclass'ı mı diye kontrol eder. Örnek:
+```py
+class base_class():
+    pass
+
+class sub_class(base_class):
+    pass
+
+instance = sub_class
+
+print(issubclass(sub_class, base_class)) # Output: True
+print(issubclass(instance, sub_class)) # Output: True
+print(issubclass(instance, base_class)) # Output: True
+```
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#issubclass).
 
 # `iter(object, sentinel)`
