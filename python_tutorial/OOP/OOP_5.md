@@ -178,7 +178,7 @@ print(var2.c) # AttributeError: 'Class2' object has no attribute 'c'
 Yukarıdaki kodda `Class1` base class'ından miras aldığımız `self.a` instance attribute'unun değerini `4` olarak yeniden tanımlamak (redefinition) istedik ama bunu yaparak `Class2` subclass'ında `__init__` tanımlamış olduğumuz için `Class1` base class'ındaki `__init__` override edildi. Bu yüzden `Class2` subclass'ında `b` ve `c` instance attribute'larına ulaşamayıp veri kaybı yaşadık. Bu sorunu yaşamamak için `super()` fonksiyonu kullanılır.
 
 #### `super(<subclass>, <subclass object>)` Fonksiyonu
-`super()` build-in fonksiyonu, base class'ın methodlarına erişmemizi sağlayan bir proxy objesi (base class'ın geçici (temporary) objesi) döndürür. Bu sayede subclass methodlarının içeriğini değiştirirken, override sorununun yolumuza çıkmasını engellemiş oluyoruz (`<subclass>` ve `<subclass object>` parametreleri daha sonra açıklanacak). Örnek:
+`super()` build-in fonksiyonu, base class'ın istediğimiz bir method'una erişmemizi sağlayan bir proxy objesi (base class'ın geçici (temporary) objesi) döndürür. Bu sayede subclass methodlarının içeriğini değiştirirken override sorununun yolumuza çıkmasını engellemiş oluyoruz (`<subclass>` ve `<subclass object>` parametreleri daha sonra açıklanacak). Örnek:
 ```py
 class Class1():
     def __init__(self, p1, p2, p3):
@@ -212,9 +212,33 @@ class Class1():
         self.c = p3
 
 class Class2(Class1):
-    def __init__(self, p1):
-        super(Class2, self).__init__(p1, p1, p1)
-        self.d = p1
+    def __init__(self, p4, *args):
+        super(Class2, self).__init__(*args)
+        self.d = p4
+
+var1 = Class1(1,2,3) # Output: init çalıştı...
+var2 = Class2(1,2,3,4) # Output: init çalıştı...
+print(var1.a) # Output: 1
+print(var1.b) # Output: 2
+print(var1.c) # Output: 3
+print(var2.a) # Output: 1
+print(var2.b) # Output: 2
+print(var2.c) # Output: 3
+print(var2.d) # Output: 4
+```
+Eğer parametreleri tek tek tanımlamak istemiyorsanız, yukarıdaki gibi bir tane base class'daki method'un parametreleri için, bir tane de subclass'daki method'un parametreleri için `*args` (`p1 = "Falan Filan"` gibi default value'ya sahip parametreler varsa `*args` yerine `**kwargs`) tanımlamanız yeterlidir. Başka bir örnek:
+```py
+class Class1():
+    def __init__(self, p1, p2, p3):
+        print("init çalıştı...")
+        self.a = p1
+        self.b = p2
+        self.c = p3
+
+class Class2(Class1):
+    def __init__(self, a1):
+        super(Class2, self).__init__(a1, a1, a1)
+        self.d = a1
 
 var1 = Class1(1,2,3) # Output: init çalıştı...
 var2 = Class2(1) # Output: init çalıştı...
@@ -226,7 +250,7 @@ print(var2.b) # Output: 1
 print(var2.c) # Output: 1
 print(var2.d) # Output: 1
 ```
-Gördüğünüz gibi `super()` fonksiyonunu ilk koddaki gibi `super(Class2, self).__init__(p1, p2, p3)` şeklinde yazamıyoruz. Çünkü `super(Class2, self).__init__(p1, p2, p3)` kodundaki `__init__(p1, p2, p3)` kodu fonksiyon tanımlama (function definition) olarak değerlendirilmediği için `p2` ve `p3` isimleri (identifier) parametre olarak değerlendirilmiyor. Bu yüzden Python, `p2` ve `p3` kısımlarını okuduğunda `NameError: name 'p2' is not defined` ve `NameError: name 'p3' is not defined` hatalarını döndürür. Bu sorunla karşılaşmamak için `super(Class2, self).__init__(p1, p2, p3)` kodundaki `p2` ve `p3` isimleri (identifier) yerine bulunduğunuz scope'da tanımlı olan (`p1` gibi) isimleri (identifier) kullanmalısınız.
+Gördüğünüz gibi `super()` fonksiyonunu ilk koddaki gibi `super(Class2, self).__init__(p1, p2, p3)` şeklinde yazamıyoruz. Çünkü `super(Class2, self).__init__(p1, p2, p3)` kodundaki `__init__(p1, p2, p3)` kodu fonksiyon tanımlama (function definition) olarak değerlendirilmediği için `p2` ve `p3` isimleri (identifier) parametre olarak değerlendirilmiyor. Bu yüzden Python, `p2` ve `p3` kısımlarını okuduğunda `NameError: name 'p2' is not defined` ve `NameError: name 'p3' is not defined` hatalarını döndürür. Bu sorunla karşılaşmamak için `super(Class2, self).__init__(p1, p2, p3)` kodundaki `p2` ve `p3` isimleri (identifier) yerine, bulunduğunuz scope'da tanımlı olan (`a1` gibi) isimleri (identifier) kullanmalısınız.
 
 `super()` build-in fonksiyonu `__init__` instance methodunda olduğu gibi diğer instance, class ve static methodlarda da kullanabiliriz. Örnek:
 ```py
@@ -267,55 +291,271 @@ var2.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1
 var2.class_method() # Output: Class1'in class_method'u çalıştı: Class1'in Class Attribute'u
 var2.static_method() # Output: Class1'in static_method'u çalıştı: Class1'in Static Attribute'u
 ```
-`super()` fonksiyonunun `<subclass>` ve `<subclass object>` olmak üzere 2 parametresi vardır. `super(<subclass>, <subclass object>).method()` fonksiyonu sırasıyla şu şekilde çalışır:
+`super()` fonksiyonunun `<subclass>` ve `<subclass object>` olmak üzere 2 parametresi vardır. Python, `super(<subclass>, <subclass object>).method()` fonksiyonu sırasıyla şu şekilde okunur ve çalıştırır:
 - Python önce `<subclass>` parametresinde belirtilen subclass'ın base class'ına gidiyor.
 - Sonra base class içinde `method` methoduna gidiyor.
-- `method` methodunu, `<subclass object>` parametresinde belirtilen instance objesini kullanarak çalıştırıyor. `<subclass object>` parametresi instance methodlarda (`__init__`'de bir instance method) `self`, class methodlarda `cls`, static methodlarda `<subclass>()`'dır. Subclass'ın instance veya class methodunun ilk parametresinde belirtilen isim (identifier) ile bu methodun içindeki `super()` fonksiyonunun `<subclass object>` parametresinde belirtilen isim (identifier) aynı olduğu sürece ne olduğu önemli değildir. Örnek:
-    ```py
-    class Class1():
-        class_attribute = "Class1'in Class Attribute'u"
+- `method` methodunu, `<subclass object>` parametresinde belirtilen instance objesini kullanarak çalıştırıyor.
 
-        def instance_method(self):
-            self.instance_attribute = "Class1'in Instance Attribute'u"
-            print("Class1'in instance_method'u çalıştı:", end=" ")
+`<subclass object>` parametresi; instance methodlarda (`__init__`'de bir instance method) `self`, class methodlarda `cls`, static methodlarda `<subclass>()`'dır. Subclass'ın instance veya class methodunun ilk parametresinde belirtilen isim (identifier) (örneğin `self` ya da `cls`) ile bu methodun içinde tanımlanmış `super()` fonksiyonunun `<subclass object>` parametresinde belirtilen isim (identifier) aynı olduğu sürece bu ismin (identifier) ne olduğu önemli değildir. Örnek:
+```py
+class Class1():
+    class_attribute = "Class1'in Class Attribute'u"
 
-        @classmethod
-        def class_method(cls):
-            cls.class_attribute
-            print("Class1'in class_method'u çalıştı:", end=" ")
+    def instance_method(self):
+        self.instance_attribute = "Class1'in Instance Attribute'u"
+        print("Class1'in instance_method'u çalıştı:", end=" ")
 
-    class Class2(Class1):
-        def instance_method(falan):
-            super(Class2, falan).instance_method()
-            print(falan.instance_attribute)
+    @classmethod
+    def class_method(cls):
+        cls.class_attribute
+        print("Class1'in class_method'u çalıştı:", end=" ")
 
-        @classmethod
-        def class_method(filan):
-            super(Class2, filan).class_method()
-            print(filan.class_attribute)
-            
-    var2 = Class2() # Output: init çalıştı...
-    var2.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
-    var2.class_method() # Output: Class1'in class_method'u çalıştı: Class1'in Class Attribute'u
-    ```
-    Static methodların ilk parametresine instance objesi tanımlamadığı için static method içinde tanımladığınız `super()` fonksiyonunun `<subclass object>` parametresine, bu static method'un bulunduğu class'dan türetilen instance'ı tanımlamalısınız. Bunun sebebi; static methodlar çalıştıktan sonra, static methodların scope'larında bulunan local variable'lar belleğe kaydedilmez. Ama instance ve class methodlarda kaydedilir. Bu yüzden instance ve class methodlardan farklı olarak static methodlarda, bu local variable'ları döndürmemiz gerekir. Ancak bu sayede subclass'da bu local variable'ları kullanabiliriz. Örnek:
-    ```py
-    class Class1():
+class Class2(Class1):
+    def instance_method(falan): # self yerine falan kullanıldı
+        super(Class2, falan).instance_method()
+        print(falan.instance_attribute)
 
-        @staticmethod
-        def static_method():
-            static_attribute = "Class1'in Static Attribute'u"
-            print("Class1'in static_method'u çalıştı:", end=" ")
-            return static_attribute
+    @classmethod
+    def class_method(filan): # cls yerine filan kullanıldı
+        super(Class2, filan).class_method()
+        print(filan.class_attribute)
+        
+var2 = Class2() # Output: init çalıştı...
+var2.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
+var2.class_method() # Output: Class1'in class_method'u çalıştı: Class1'in Class Attribute'u
+```
+Gördüğünüz gibi, OOP konusunun ilk başlarında anlattığımız "`self` ve `cls` yerine herhangi bir şey yazabilirsiniz çünkü Python için asıl önemli olan, bu instance ve class method'larının ilk parametreside `self` ya da `cls` yazması değil, bir şey yazmasıdır." durumu burada da geçerli.
 
-    class Class2(Class1):
+Static methodların ilk parametresine instance objesi tanımlamadığı için static method içinde tanımladığınız `super()` fonksiyonunun `<subclass object>` parametresine, bu static method'un bulunduğu class'dan türetilen instance'ı tanımlamalısınız. Instance ve class methodların scope'larında bulunan local variable'lar, bu methodlar sonlansa bile bellekten silinmez. Ama static methodlar sonlandıktan sonra, scope'larında bulunan local variable'lar bellekten silinir. Bu yüzden instance ve class methodlardan farklı olarak static methodlarda, bu local variable'ların `return` statement ile döndürülmesi gerekir. Ancak bu sayede subclass'daki static methodların local variable'larını kullanabiliriz. Örnek:
+```py
+class Class1():
+    @staticmethod
+    def static_method():
+        static_attribute = "Class1'in Static Attribute'u"
+        print("Class1'in static_method'u çalıştı:", end=" ")
+        return static_attribute
 
-        @staticmethod
-        def static_method():
-            print(super(Class2, Class2()).static_method())
-            
-    var2 = Class2() # Output: init çalıştı...
-    var2.static_method() # Output: Class1'in static_method'u çalıştı: Class1'in Static Attribute'u
-    ```
-    **Not:** `<subclass object>` parametresinin ne olduğunu ve nasıl kullanıldığını anlamadıysanız, OOP konusunun en başında `self` ve `cls`'nin ne olduğunu anlattığım kısımları okuyup sonra bu kısmı tekrardan okuyunuz.  
+class Class2(Class1):
+    @staticmethod
+    def static_method():
+        print(super(Class2, Class2()).static_method())
+        
+var2 = Class2() # Output: init çalıştı...
+var2.static_method() # Output: Class1'in static_method'u çalıştı: Class1'in Static Attribute'u
+```
+Buradaki `super(Class2, Class2()).static_method()` kodu `static_attribute` local variable'ını döndürdü ve bu sayede bu değeri `Class2` class'ının `static_method` methodunda kullanabildik.
 
+**Not:** Bir base class'ın static methodunu bir subclass'a miras verirken `super()` fonksiyonunu kullanarak bu method üzerinde değişiklik yapmanızı gerektirecek bir durum aşırı nadir gerçekleşir. Yukarıdaki kodda olduğu gibi static methodlarda `super(Class2, Class2()).static_method()` gibi kodlar kullanmama dikkat edin çünkü istenmeyen durumlara yol açabilir. Örnek:
+```py
+class Class1():
+    def __init__(self):
+        print("init çalıştı...")
+
+    @staticmethod
+    def static_method():
+        static_attribute = "Class1'in Static Attribute'u"
+        print("Class1'in static_method'u çalıştı:", end=" ")
+        return static_attribute
+
+class Class2(Class1):
+    @staticmethod
+    def static_method():
+        print(super(Class2, Class2()).static_method())
+        
+var2 = Class2() # Output: init çalıştı...
+var2.static_method() # Output: init çalıştı...\nClass1'in static_method'u çalıştı: Class1'in Static Attribute'u
+```
+**Output:**
+```
+init çalıştı...
+init çalıştı...
+Class1'in static_method'u çalıştı: Class1'in Static Attribute'u
+```
+gördüğünüz gibi sadece `var2 = Class2()` kodundaki `Class2()` çalışınca `init çalıştı...` yazdırılması gerekirken 2 tane `init çalıştı...` yazdırıldı. Bunun sebebi `super(Class2, Class2()).static_method()` kodundaki `Class2()` kodudur. Bunun gibi dezavantajlar yüzünden static methodlarda `super(Class2, Class2()).static_method()` gibi kodlarla inheritance yapılmaması gerekir. Daha sonra anlatacağımız eski yöntemi kullanarak bunun üstesinden gelebilirsiniz. Örnek:
+```py
+class Class1():
+    def __init__(self):
+        print("init çalıştı...")
+
+    @staticmethod
+    def static_method():
+        static_attribute = "Class1'in Static Attribute'u"
+        print("Class1'in static_method'u çalıştı:", end=" ")
+        return static_attribute
+
+class Class2(Class1):
+    @staticmethod
+    def static_method():
+        print(Class1.static_method())
+        
+var2 = Class2() # Output: init çalıştı...
+var2.static_method() # Output: Class1'in static_method'u çalıştı: Class1'in Static Attribute'u
+```
+Gördüğünüz gibi istediğimiz output'u aldık.
+
+**Not:** `super()` fonksiyonunu kullanırken `RuntimeError: super(): no arguments` hatası alıyorsanız, büyük ihtimal ya bir instance veya class method'a `self` veya `cls` parametresi eklemeyi unuttunuz ya da `super()` fonksiyonunun parametrelerine yanlış argümanlar girdiniz.
+
+**Not:** `<subclass object>` parametresinin ne olduğunu ve nasıl kullanıldığını anlamadıysanız, OOP konusunun en başında `self` ve `cls`'nin ne olduğunu anlattığım kısımları okuyup sonra bu kısmı tekrardan okuyunuz.  
+
+`super()` fonksiyonunun `<subclass>` parametresine illa `super()` fonksiyonunu içinde kullandığınız subclass'ı yazmak zorunda değilsiniz. Örnek:
+```py
+class Dikdörtgen:
+    def __init__(self, uzunluk, genişlik):
+        self.uzunluk = uzunluk
+        self.genişlik = genişlik
+
+    def alan(self):
+        return self.uzunluk * self.genişlik
+
+class Kare(Dikdörtgen):
+    def __init__(self, uzunluk):
+        super(Kare, self).__init__(uzunluk, uzunluk)
+
+class Küp(Kare):
+    def yüzey_alanı(self):
+        karenin_alanı = super(Kare, self).alan()
+        return karenin_alanı * 6
+
+    def hacim(self):
+        karenin_alanı = super(Kare, self).alan()
+        return karenin_alanı * self.uzunluk
+```
+Gördüğünüz gibi `Küp` subclass'ının içinde `super(Kare, self).alan()` fonksiyonu tanımlı. Bu `super()` fonksiyonunun ilk parametresinde `Küp` subclass'ı değil `Kare` subclass'ı tanımlı. `super(Kare, self).alan()` fonksiyonu sırasıyla şunları yapar:
+- `Kare` subclass'ının base class'ı olan `Dikdörtgen` base class'ına gider.
+- `Dikdörtgen` base class'ındaki `alan()` instance methoduna gider ve bu methodu `self` ile çalıştırır.
+- `alan()` fonksiyonundaki `self.uzunluk * self.genişlik` değerini döndürür ve bu değer `karenin_alanı` local variable'ına eşitlenir.
+
+**Note:** Technically, `super()` doesn’t return a method. It returns a proxy object. This is an object that delegates calls to the correct class methods without making an additional object in order to do so.
+
+Yukarıdaki kodda bulunan `super(Kare, self)` fonksiyonu yerine `super()` yazsaydınız aynı sonucu alırsınız. Yani `super(Kare, self)` ile `super()` aynı şeydir. Buradan yola çıkarak şunu söyleyebiliriz; `super()` fonksiyonu, parametrelerine argüman girilmese bile, bulunduğu subclass'ı ve bu subclass'ın instance objesini otomatik tanımlayabilir. Bu yüzden `super()` fonksiyonu, spesifik durumlar söz konusu olmadığı sürece parametresiz kullanılır.
+
+**Not:** Genelde parametresiz super() kullanımı tavsiye edilir. Eğer parametresiz kulanamıyorsanız, programınızda büyük tasarım hataları var demektir.
+
+`super()` fonksiyonu Python'a sonradan eklenmiştir. `super()` fonksiyonu eklenmeden önce bu fonksiyonun yerine doğrudan base class'ın adı kullanılıyordu. Örnek:
+```py
+class Class1():
+    def instance_method(self):
+        self.instance_attribute = "Class1'in Instance Attribute'u"
+        print("Class1'in instance_method'u çalıştı:", end=" ")
+
+class Class2(Class1):
+    def instance_method(self):
+        super().instance_method()
+        print(self.instance_attribute)
+
+class Class3(Class1):
+    def instance_method(self):
+        Class1.instance_method(self)
+        print(self.instance_attribute)
+
+var1 = Class2()
+var2 = Class3() # Output: init çalıştı...
+var1.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
+var2.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
+```
+Gördüğünüz gibi `super().instance_method()` kodu yerine `Class1.instance_method(self)` kullanabiliyoruz. `Class1.instance_method(self)` kodunun `super().instance_method()` kodundan en önemli farkı, `self` instance objesini method'a parametre olarak tanımlamak zorunda olmamız. Tüm method type'larından örnek:
+```py
+class Class1():
+    class_attribute = "Class1'in Class Attribute'u"
+    
+    def __init__(self):
+        print("init çalıştı...")
+
+    def instance_method(self):
+        self.instance_attribute = "Class1'in Instance Attribute'u"
+        print("Class1'in instance_method'u çalıştı:", end=" ")
+
+    @classmethod
+    def class_method(cls):
+        cls.class_attribute
+        print("Class1'in class_method'u çalıştı:", end=" ")
+
+    @staticmethod
+    def static_method():
+        static_attribute = "Class1'in Static Attribute'u"
+        print("Class1'in static_method'u çalıştı:", end=" ")
+        return static_attribute
+
+class Class2(Class1):
+    def __init__(self):
+        super(Class2, self).__init__()
+
+    def instance_method(self):
+        super(Class2, self).instance_method()
+        print(self.instance_attribute)
+
+    @classmethod
+    def class_method(cls):
+        super(Class2, cls).class_method()
+        print(cls.class_attribute)
+
+    @staticmethod
+    def static_method():
+        print(super(Class2, Class2()).static_method())
+
+class Class3(Class1):
+    def __init__(self):
+        Class1.__init__(self)
+
+    def instance_method(self):
+        Class1.instance_method(self)
+        print(self.instance_attribute)
+
+    @classmethod
+    def class_method(cls):
+        Class1.class_method()
+        print(cls.class_attribute)
+
+    @staticmethod
+    def static_method():
+        print(Class1.static_method())
+        
+var1 = Class2() # Output: init çalıştı...
+var2 = Class3() # Output: init çalıştı...
+var1.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
+var1.class_method() # Output: Class1'in class_method'u çalıştı: Class1'in Class Attribute'u
+var1.static_method() # Output: "init çalıştı...\nClass1'in static_method'u çalıştı: Class1'in Static Attribute'u"
+var2.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
+var2.class_method() # Output: Class1'in class_method'u çalıştı: Class1'in Class Attribute'u
+var2.static_method() # Output: Class1'in static_method'u çalıştı: Class1'in Static Attribute'u
+```
+Bu kodda `var1.static_method()` kodunun `Class1` class'ındaki `__init__` constructor'ını neden çalıştırdığını daha önce anlatmıştık. Özet:
+- `var1.static_method()` kodu `Class2`'deki `static_method()`'u çalıştırır.
+- `Class2` deki `static_method()` çalıştığı için bu methodun bloğundaki `super(Class2, Class2()).static_method()` kodu çalışır.
+- `super(Class2, Class2()).static_method()` kodu çalıştığı için bu koddaki `Class2()` çalışır.
+- `Class2()` çalıştığı için `Class2` class'ının `__init__` constructor'ı çalışır.
+- `Class2` class'ının `__init__` constructor'ı çalıştığı için bu constructor'ın bloğundaki `super(Class2, self).__init__()` kodu çalışır.
+- `super(Class2, self).__init__()` kodu çalıştığı için `Class1` class'ının `__init__` constructor'ı çalışır.
+- `Class1` class'ının `__init__` constructor'ı çalışıtığı için bu constructor'ın bloğundaki `print("init çalıştı...")` çalışır.
+- `print("init çalıştı...")` çalıştığı için `init çalıştı...` yazdırılır.
+
+`Class3`'ün `class_method()`'unun bloğundaki `Class1.class_method()` kodunun parantezinin içine, `instance_method()` method'unun bloğundaki `Class1.instance_method(self)` kodunun parantezinin içine `self` yazdığımız gibi `cls` yazamamızın sebebi; nasıl bir instance'ın üzerinden bir instance method çağırırken (`var1.instance_method()` gibi) instance methodlarda kullanılan `self` parametresini tanımlamıyorsan (`var1.instance_method(self)` gibi), bir main class'ın üzerinden bir class method çağırırken (`Class2.instance_method()` gibi) de class methodlarda kullanılan `cls` parametresini tanımlayamazsın (`varClass21.instance_method(cls)` gibi).
+
+## Object Class
+Class'lar, Python'ın' 3.x öncesi sürümlerinde **yeni tip class'lar** ve **eski tip class'lar** olmak üzere ikiye ayrılıyordu. Eski tip class'lara örnek:
+```py
+class Class1():
+    pass
+
+class Class2(Class1):
+    pass
+```
+Yeni tip class'lara örnek:
+```py
+class Class1(object):
+    pass
+
+class Class2(Class1):
+    pass
+```
+Python'ın' 3.x öncesi sürümlerinde, yeni tip class'larla birlikte gelen bazı özellikler vardı (Örneğin `@property` decorator'u). Bir class'da yeni tip özellikleri kullanmak istediğinizde, bu class'ın `object` adındaki bir class'da miras alması gerekiyordu. Eski tip class'lar `object` adındaki bir class'da miras almadıkları için bu yeni tip özellikleri kullanamıyorlardı. Python 3'den sonra, bütün class'lar yeni tip class olarak güncellenmiştir. Bu yüzden Python 3'den sonra bir class, `object` adındaki bir class'da miras alsa da almasa da yeni tip özellikleri kullanabilir. Yani Python 3'den sonra aşağıdaki class tanımlamaları arasında hiçbir fark yoktur:
+```py
+class Sınıf:
+    pass
+
+class Sınıf():
+    pass
+
+class Sınıf(object):
+    pass
+```
