@@ -189,7 +189,7 @@ class Class1():
 
 class Class2(Class1):
     def __init__(self, p1, p2, p3, p4):
-        super().__init__(p1, p2, p3)
+        super(Class2, self).__init__(p1, p2, p3)
         self.d = p4
 
 var1 = Class1(1,2,3) # Output: init çalıştı...
@@ -202,72 +202,6 @@ print(var2.b) # Output: 2
 print(var2.c) # Output: 3
 print(var2.d) # Output: 4
 ```
-Gördüğünüz gibi  `Class2` subclass'ından türetilmiş `var2` instance'sini kullanarak, `Class2` subclass'ının `__init__` methoduna elle tanımlamadığımız instance attribute'lara bile erişebiliyoruz. Bunu, `super()` build-in fonksiyonunun döndürdüğü proxy objesine borçluyuz. Başka bir örnek:
-```py
-class Class1():
-    def __init__(self, p1, p2, p3):
-        print("init çalıştı...")
-        self.a = p1
-        self.b = p2
-        self.c = p3
+Gördüğünüz gibi  `Class2` subclass'ından türetilmiş `var2` instance'sini kullanarak, `Class2` subclass'ının `__init__` methoduna elle tanımlamadığımız instance attribute'lara bile erişebiliyoruz. Bunu, `super()` build-in fonksiyonunun döndürdüğü proxy objesine borçluyuz.
 
-class Class2(Class1):
-    def __init__(self, p1):
-        super().__init__(p1, p1, p1)
-        self.d = p1
-
-var1 = Class1(1,2,3) # Output: init çalıştı...
-var2 = Class2(1) # Output: init çalıştı...
-print(var1.a) # Output: 1
-print(var1.b) # Output: 2
-print(var1.c) # Output: 3
-print(var2.a) # Output: 1
-print(var2.b) # Output: 1
-print(var2.c) # Output: 1
-print(var2.d) # Output: 1
-```
-Gördüğünüz gibi `super()` fonksiyonunu ilk koddaki gibi `super().__init__(p1, p2, p3)` şeklinde yazamıyoruz. Çünkü `super().__init__(p1, p2, p3)` kodundaki `__init__(p1, p2, p3)` kodu fonksiyon tanımlama (function definition) olarak değerlendirilmediği için `p2` ve `p3` isimleri (identifier) parametre olarak değerlendirilmiyor. Bu yüzden Python, `p2` ve `p3` kısımlarını okuduğunda `NameError: name 'p2' is not defined` ve `NameError: name 'p3' is not defined` hatalarını döndürür. Bu sorunla karşılaşmamak için `super().__init__(p1, p2, p3)` kodundaki `p2` ve `p3` isimleri (identifier) yerine bulunduğunuz scope'da tanımlı olan (`p1` gibi) isimleri (identifier) tercih ederek `super().__init__(p1, p2, p3)` kodunun yerine yukarıdaki gibi `super().__init__(p1, p1, p1)` kodunu kullanın.
-
-`super()` build-in fonksiyonu, instance ve class methodlarda da kullanabiliriz. Örnek:
-```py
-class Class1():
-    class_attribute = "Class1'in Class Attribute'u"
-
-    def instance_method(self):
-        self.instance_attribute = "Class1'in Instance Attribute'u"
-        print("Class1'in instance_method'u çalıştı:", end=" ")
-
-    @classmethod
-    def class_method(cls):
-        cls.class_attribute
-        print("Class1'in static_method'u çalıştı:", end=" ")
-
-class Class2(Class1):
-
-    def instance_method(self):
-        super().instance_method()
-        print(self.instance_attribute)
-
-    @classmethod
-    def class_method(cls):
-        super().class_method()
-        print(cls.class_attribute)
-        
-var1 = Class1() # Output: init çalıştı...
-var2 = Class2() # Output: init çalıştı...
-var2.class_method() # Output: Class1'in static_method'u çalıştı: Class1'in Class Attribute'u
-var2.instance_method() # Output: Class1'in instance_method'u çalıştı: Class1'in Instance Attribute'u
-```
-`super()` fonksiyonu genelde yukarıdaki gibi kullanılır. `super()` fonksiyonunun `<subclass>` ve `<subclass object>` olmak üzere iki parametresi vardır. Python bu parametrelere argumanları otomatik atadığı için `super()` fonksiyonuna bu argumanları elle girmek zorunda kalmıyoruz. Örnek:
-
-
-
-
-
-Ama nadir de olsa bazı durumlarda `super()` fonksiyonu (kullanıcı hataları hariç) `RuntimeError: super(): no arguments` hatası verebiliyor. Bu durumlada
-
-**!Burada Kaldın!** staticmethod'larda neden super() kullanamadığını araştırıyordun. Python türkiyeye soru sordun.
-https://stackoverflow.com/questions/53508770/python-3-error-runtimeerror-super-no-arguments/53509145
-https://docs.quantifiedcode.com/python-anti-patterns/correctness/missing_argument_to_super.html
-https://www.programiz.com/python-programming/inheritance
-https://docs.python.org/3/library/functions.html (Bu issubclass ve isinstance build-in için)
+`super()` fonksiyonunun `<subclass>` ve `<subclass object>` olmak üzere 2 parametresi vardır. Yukarıdaki kodda gördüğünüz gibi `<subclass>` parametresine 
