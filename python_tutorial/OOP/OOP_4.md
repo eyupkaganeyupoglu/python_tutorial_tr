@@ -227,7 +227,9 @@ Yukarıdaki kodda, `print()` fonksiyonlarının outputlarının nedenlerini teke
 - `print(var2.func2)`
     - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. `func2` property'si, `Class2` class'ından türetilen `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). `print(var2.func2)` kodu, `var2` instance'ında bulunan `func2` attribute'unun içerdiği `Class2 A` stringini yazdırır.
 
-**Not:** Property kavramını anlamak için [**descriptor**](https://docs.python.org/3/howto/descriptor.html) kavramını araştırmalısınız. Bu konu, Python dışındaki programlama dillerini de ilgilendiren bir mesele olduğu için anlatması çok uzun sürer. Bu yüzden merak eden kendisi araştırı öğrenebilir.
+**Not:** Property kavramını anlamak için **descriptor** kavramını araştırmalısınız. Gerekli siteler sırasıyla:
+- [Tıklayınız](https://docs.python.org/3.7/howto/descriptor.html).
+- [Tıklayınız](https://docs.python.org/3/howto/descriptor.html).
 
 ## Property Methodları
 Property'lerin üç önemli build-in methodu vardır:
