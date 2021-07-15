@@ -778,7 +778,8 @@ var.print_msg()
 ```
 **Not:** `D` subclass'ında `C.print_msg(self)` yerine `super(D, self).print_msg()` kullanırsanız, `super(D, self).print_msg()` kodundan dolayı Python `TypeError: super(type, obj): obj must be an instance or subtype of type` hatası yükseltir.
 
-
+**!Burada Kaldın!**
+İşin bitince Buraya "Deneyseldir" olduğunu belirt. Çünkü kesin bir bilgiye ulaşmadın, sadece deneysel sonuçlara dayandı.
 
 
 
@@ -827,9 +828,9 @@ super fonksiyonunun 2. parametresi mro ile ilgilidir. multi inhert'den örnek ve
 
 bir multi inherit iinde birden fazla super kullanabiliyoruz okey de bunu sadece subclass'ın miras aldığı class'lar üzerinde mi yapabiliyoruz araştır.
 
+https://python-history.blogspot.com/2010/06/method-resolution-order.html
 
-
-
+https://stackoverflow.com/questions/3277367/how-does-pythons-super-work-with-multiple-inheritance
 
 
 
@@ -841,3 +842,4 @@ bir multi inherit iinde birden fazla super kullanabiliyoruz okey de bunu sadece 
 **Not:** `super()` fonksiyonunu kullanırken `RuntimeError: super(): no arguments` hatası alıyorsanız, büyük ihtimal ya bir instance veya class method'a `self` veya `cls` parametresi eklemeyi unuttunuz ya da `super()` fonksiyonunun parametrelerine yanlış argümanlar girdiniz.
 
 **Not:** `<subclass object>` parametresinin ne olduğunu ve nasıl kullanıldığını anlamadıysanız, OOP konusunun en başında `self` ve `cls`'nin ne olduğunu anlattığım kısımları okuyup sonra bu kısmı tekrardan okuyunuz.
+
