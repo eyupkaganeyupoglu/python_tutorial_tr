@@ -601,36 +601,7 @@ var.static_method() # Output: Class1'in static_method'u çalıştı: Class1'in S
 ```
 Yıkarıdaki kodda, `var.instance_method()` kodundaki `instance_method` methodunun parantez içine `self` yazmadığımız gibi, `Class2` subclass'ının `class_method` methodunu `Class2.class_method()` şeklinde çağırırken parantez içine `cls` yazmayız (nedenini daha önce anlattım). Bu yüzden `Class2` subclass'ının `class_method` methodunun bloğunda tanımlı `Class1.class_method()` kodunun parantezlerinde `cls` yazmıyor. Yani, bir instance üzerinden instance method çağırırken `self` parametresine argüman girmediğimiz gibi, bir class üzerinden class method çağırırken `cls` parametresine argüman girmeyiz.
 
-
-
-
-
-
-
-
-
-
-## Multiple Inheritance (Çoklu Miras Alma) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Object Class
+# Object Class
 Class'lar, Python'ın' 3.x öncesi sürümlerinde **yeni tip class'lar** ve **eski tip class'lar** olmak üzere ikiye ayrılıyordu. Eski tip class'lara örnek:
 ```py
 class Class1():
@@ -659,7 +630,162 @@ class Sınıf(object):
     pass
 ```
 
-## MRO (Method Resolution Order)
+# Multiple Inheritance (Çoklu Miras Alma)
+**Başlamadan önce oku:** Burada bahsedilen MRO, `__mro__`, `mro()` gibi kavramların ne olduğu daha sonra MRO (Method Resolution Order) başlığında açıklanacak.
+
+Bir subclass'ın birden fazla base class'dan miras almasına **Multiple Inheritance (Çoklu Miras Alma)** denir. Örnek:
+```py
+class A():
+    def a(self):
+        print("A a()")
+
+class B():
+    def b(self):
+        print("B b()")
+
+class C():
+    def c(self):
+        print("C c()")
+
+class D(A, B, C):
+    pass
+
+var = Class4()
+var.a() # Output: A a()
+var.b() # Output: B b()
+var.c() # Output: C c()
+```
+
+Python, bir subclass'ın miras aldığı base class'larda aynı isme (identifier) sahip fonksiyonlar varsa, bu subclass'ın MRO'sunda belirtilen sıraya göre öncelik verip diğer base class'lardaki aynı isme (identifier) sahip methodları görmezden gelir. Bu subclass'ın MRO sırasına ulaşmak için `print(subclass.__mro__)` veya `print(subclass.mro())` kodlarını kullanabilirsiniz. Örnek:
+```py
+class A():
+    def a(self):
+        print("Class A")
+
+class B():
+    def a(self):
+        print("Class B")
+
+class C():
+    def a(self):
+        print("Class C")
+
+class D(A, B, C):
+    pass
+
+var = D()
+print(D.__mro__) # Output: (<class '__main__.D'>, <class '__main__.A'>, <class '__main__.B'>, <class '__main__.C'>, <class 'object'>)
+print(D.mro()) # Output: [<class '__main__.D'>, <class '__main__.A'>, <class '__main__.B'>, <class '__main__.C'>, <class 'object'>]
+var.a() # Output: Class A
+```
+`D` subclass'ının MRO'su `D -> A -> B -> C -> object` şeklindedir. Bu yüzden `D` subclass'ı `a()` fonksiyonunu `A` base class'ından alıp diğer base class'lardaki `a()` methodlarını görmezden geldi.
+
+Bu methodları MRO'dan sırasının herhangi bir yerinden çekip de kullanabilirsiniz. Örnek:
+```py
+class A:
+    def print_msg(self):
+        print("Class A")
+
+class B:
+    def print_msg(self):
+        print("Class B")
+
+class C:
+    def print_msg(self):
+        print("Class C")
+
+class D(A, B, C):
+    def print_msg(self):
+        super(D, self).print_msg() # Output: Class A
+        super(A, self).print_msg() # Output: Class B
+        super(B, self).print_msg() # Output: Class B
+
+var1 = D()
+print(D.__mro__) # Output: (<class '__main__.D'>, <class '__main__.A'>, <class '__main__.B'>, <class '__main__.C'>, <class 'object'>)
+var1.print_msg()
+```
+D class'ının MRO'su `D -> A -> B -> C -> object` şeklindedir.
+- `super(D, self).print_msg()`'nin MRO'su `A -> B -> C -> object` şeklindedir. Bu yüzden `var1.print_msg()` kodu `Class A` output'unu verecekti.
+
+- `super(A, self).print_msg()`'nin MRO'su `B -> C -> object` şeklindedir. Bu yüzden `var1.print_msg()` kodu `Class B` output'unu verecekti.
+
+- `super(B, self).print_msg()`'nin MRO'su `C -> object` şeklindedir. Bu yüzden `var1.print_msg()` kodu `Class C` output'unu verecekti.
+
+- Eğer `super(C, self).print_msg()` olsaydı, MRO'su `object` şeklinde olacaktı. `object` class'ında `print_msg` adında bir fonksiyon olmadığı için `AttributeError: 'super' object has no attribute 'print_msg'` hatası yükseltilecekti.
+
+`super()` fonksiyonunu kullanarak bir subclass'ın miras almadığı (yani parantezine yazılmayan) class'lardan bile miras alabilirsiniz. Örnek:
+```py
+class A:
+    def print_msg(self):
+        print("Class A")
+
+class B:
+    def print_msg(self):
+        print("Class B")
+
+class C:
+    def print_msg(self):
+        print("Class C")
+
+class D(C):
+    def print_msg(self):
+        super(D, self).print_msg() # Output: Class C
+
+class E(A, B, C):
+    def print_msg(self):
+        super(E, self).print_msg() # Output: Class A
+        super(A, self).print_msg() # Output: Class B
+        super(B, self).print_msg() # Output: Class C
+        super(D, D()).print_msg() # Output: Class C
+
+var = E()
+print(E.__mro__) # Output: (<class '__main__.E'>, <class '__main__.A'>, <class '__main__.B'>, <class '__main__.C'>, <class 'object'>)
+print(D.__mro__) # Output: (<class '__main__.D'>, <class '__main__.C'>, <class 'object'>)
+var.print_msg()
+```
+Gördüğünüz gibi `E` subclass'ı `D` subclass'ını referans almasa (parantezine yazılı olmasa) bile `super(D, D()).print_msg()` kodu çalıştı. Buradan da şu sonucu çıkarabiliriz; `super()` fonksiyonu, `<subclass object>` parametresinde tanımlı instance'ın türetildiği subclass'ın MRO'sunun dikkate alarak, bu MRO'nun `<subclass>` parametresinde tanımlı class'dan sonrasını miras alır. Yani `super(D, D()).print_msg()` kodundaki `super()` fonksiyonu, `<subclass object>` parametresinde belirtilen `D()` instance'ının türetildiği `D` subclass'ının MRO'sunu (`D -> C -> object`) dikkate alarak `<subclass>` parametresinde belirtilen `D` class'ından sonrasını (`C -> object`) miras alır. `print_msg` methodu `C -> object` sırasına göre ilk `C` class'ında bulunduğu için `super(D, D()).print_msg` kodu, `C` class'ının `print_msg` methodunun proxy objesini üretir ve `super(D, D()).print_msg()` kodu ile bu proxy objesi çağırılır (call).
+
+Subclass'ın miras almadığı (subclass'ın parantezine yazılmamış) class'lardan miras almak için `super()` yerine eski yöntemi de kullanabilirsiniz. Örnek:
+```py
+class A:
+    def print_msg(self):
+        print("Class A")
+
+class B:
+    def print_msg(self):
+        print("Class B")
+
+class C:
+    def print_msg(self):
+        print("Class C")
+
+class D(C):
+    def print_msg(self):
+        C.print_msg(self)
+
+class E(A, B, C):
+    def print_msg(self):
+        A.print_msg(self)
+        B.print_msg(self)
+        C.print_msg(self)
+        D.print_msg(self)
+
+
+var = E()
+print(E.__mro__) # Output: (<class '__main__.E'>, <class '__main__.A'>, <class '__main__.B'>, <class '__main__.C'>, <class 'object'>)
+print(D.__mro__) # Output: (<class '__main__.D'>, <class '__main__.C'>, <class 'object'>)
+var.print_msg()
+```
+**Not:** `D` subclass'ında `C.print_msg(self)` yerine `super(D, self).print_msg()` kullanırsanız, `super(D, self).print_msg()` kodundan dolayı Python `TypeError: super(type, obj): obj must be an instance or subtype of type` hatası yükseltir.
+
+
+
+
+
+
+
+
+# MRO (Method Resolution Order)
 Method resolution order (kısaca MRO), 'method çözümleme sırası' anlamına gelmektedir. MRO, **[directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph)**'dan (kısaca DAG) türetilen, **[C3 linearization algorithm](https://en.wikipedia.org/wiki/C3_linearization)** tarafından oluşturulan **[total order](https://en.wikipedia.org/wiki/Total_order)**'dır.
 
 Bir class'ın inheritance hierarchy'sini temsil eden, 'yönlendirilmiş döngüsel olmayan grafik' anlamına gelen bir graph'a **Directed Acyclic Graph (DAG)** denir. Kısacası class'ların inheritance konusunda birbirleriyle olan bağlantılarının gösterildiği grafiktir. Örnek:
@@ -675,7 +801,7 @@ class A(B,C): pass
 
 <img src="https://i.ibb.co/X5XstLP/A.png" alt="A" border="0">
 
-Bu graph bize sadece hangi kılasın hangi class'dan miras aldığını söyler, MRO hakkında bir bilgi vermez.
+Bu graph bize sadece hangi class'ın hangi class'dan miras aldığını söyler, MRO hakkında bir bilgi vermez.
 
 Multiple inheritance söz konusu olduğunda,
 
@@ -697,9 +823,9 @@ Bir sınıfın MRO'su, "C3 doğrusallaştırma algoritması" tarafından oluştu
 
 Bu nispeten basit örnekte, "toplam düzen" grafiğin yalnızca en-birinci çapraz geçişi gibi görünmektedir, ancak bu genel olarak doğru değildir. Grafiğin kendisi "D", "E" ve "F" için özel bir "yatay" sıralama dayatmaz; sadece MRO'ya karşılık gelecek şekilde çizilmiştir.
 
+super fonksiyonunun 2. parametresi mro ile ilgilidir. multi inhert'den örnek ver, simple örnek ver.
 
-
-
+bir multi inherit iinde birden fazla super kullanabiliyoruz okey de bunu sadece subclass'ın miras aldığı class'lar üzerinde mi yapabiliyoruz araştır.
 
 
 
