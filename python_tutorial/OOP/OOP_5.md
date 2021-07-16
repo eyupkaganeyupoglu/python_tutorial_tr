@@ -1,5 +1,60 @@
+# MRO (Method Resolution Order)
+Method resolution order (kısaca MRO), "method çözümleme sırası" anlamına gelmektedir. MRO, **[directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph)**'dan (kısaca DAG) türetilen, **[C3 linearization algorithm](https://en.wikipedia.org/wiki/C3_linearization)** tarafından oluşturulan **[total order](https://en.wikipedia.org/wiki/Total_order)**'dır.
+
+Bir class'ın inheritance hierarchy'sini temsil eden, "yönlendirilmiş döngüsel olmayan grafik" anlamına gelen graph'a (graph'ın ne olduğunu bilmiyorsanız araştırın) **Directed Acyclic Graph (DAG)** denir. Kısacası class'ların inheritance konusunda birbirleriyle olan bağlantılarının gösterildiği grafiktir. Örnek:
+```py
+O = object
+class F(O): pass
+class E(O): pass
+class D(O): pass
+class C(D,F): pass
+class B(E,D): pass
+class A(B,C): pass
+```
+
+<img src="https://i.ibb.co/X5XstLP/A.png" alt="A" border="0">
+
+Bu graph bize sadece hangi class'ın hangi class'dan miras aldığını söyler, single ya da multiple inheritance'ın MRO'su hakkında bir bilgi vermez.
+
+Multiple inheritance'ın MRO'su 2 kurala göre belirlenir:
+1. Subclass her zaman ilk sıradadır.
+2. Subclass'ın miras aldığı base class'ların subclass'a tanımlanma sırasına saygı gösterilir. (örneğin `class A(B, C)` kodunda `B`, `C`'den önce gelir.)
+
+MRO'ya ulaşmak için ilgili class'ın `__mro__` ya da `mro()` methodlarından faydalanabilirsiniz. Örnek:
+```py
+O = object
+class F(O): pass
+class E(O): pass
+class D(O): pass
+class C(D,F): pass
+class B(E,D): pass
+class A(B,C): pass
+
+print(A.__mro__) # A -> B -> E -> C -> D -> F -> object
+print(B.__mro__) # B -> E -> D -> object
+print(C.__mro__) # C -> D -> F -> object
+print(D.__mro__) # D -> object
+print(E.__mro__) # E -> object
+print(F.__mro__) # F -> object
+```
+**Output:**
+```
+(<class '__main__.A'>, <class '__main__.B'>, <class '__main__.E'>, <class '__main__.C'>, <class '__main__.D'>, <class '__main__.F'>, <class 'object'>)
+(<class '__main__.B'>, <class '__main__.E'>, <class '__main__.D'>, <class 'object'>)
+(<class '__main__.C'>, <class '__main__.D'>, <class '__main__.F'>, <class 'object'>)
+(<class '__main__.D'>, <class 'object'>)
+(<class '__main__.E'>, <class 'object'>)
+(<class '__main__.F'>, <class 'object'>)
+```
+
+**Not:** MRO'yu anlamak için inheritance bilgisi, inheritance'ı anlamak için de MRO bilgisi gerekmektedir. Bu yüzden inheritance ve multiple inheritance bölümlerini iyice öğrendikten sonra tekrardan MRO'yu araştırmanızda fayda var. Inheritance ve multiple inheritance konu başlıklarında bol bol MRO kavramıyla karşılaşacaksınız. Bu konu başlıklarında MRO kavramıyla ilgili bol bol örnek verildiği için MRO'yu ayriyetten araştırmadan önce bu başlıkları okumayı bitirin. Buna rağmen MRO'yu hala anlamadıysanız, yukarıdaki linklerden de yararlanarak kendi başınıza MRO'nun ne olduğunu öğreniniz.
+
+MRO hakkında daha fazla bilgi için:
+- **[Python history blogspot](https://python-history.blogspot.com/2010/06/method-resolution-order.html)**
+- **[Stackoverflow](https://stackoverflow.com/questions/3277367/how-does-pythons-super-work-with-multiple-inheritance)**
+
 # Inheritance (Miras Alma)
-Bir class'ın, başka bir class'ın method ve class attribute'larına miras alma yoluyla erişip kullanabilmesine **Inheritance (Miras Alma)** denir. Method ve class attribute'ları miras alınan class'a parent class, super class, base class olarak isimlendirilir. Base class'ın method ve class attribute'larını miras alan class'da child class, derived class, subclass olarak isimlendirilir. Ben tutorial boyunca bunlardan **base class** ve **subclass** olarak bahsedeceğim. Inheritance (Miras Alma), belli method'ları ya da class attribute'ları her class'a tekrar tekrar yazma zahmetinden bizi kurtarır. Örnek:
+Bir class'ın, başka bir class'ın method ve class attribute'larına miras alma yoluyla erişip kullanabilmesine **Inheritance (Miras Alma)** denir. Method ve class attribute'ları miras alınan class'a parent class, super class, base class olarak isimlendirilir. Base class'ın method ve class attribute'larını miras alan class'da child class, derived class, subclass olarak isimlendirilir. Ben tutorial boyunca bunlardan **base class** ve **subclass** olarak bahsedeceğim. Inheritance (Miras Alma), aynı kodları her class'a tekrar tekrar yazma zahmetinden bizi kurtarır. Örnek:
 ```py
 class Class1():
     cs1 = "Class Attribute 1"
@@ -16,7 +71,7 @@ class Class2(Class1):
 
 <img src="https://i.ibb.co/BVRW73Q/image.png" alt="image" border="0">
 
-Gördüğünüz gibi `Class2` subclass'ı, `Class1` base class'ın method (`__init__` ve dolayısıyla `__init__`'deki instance attribute'lar dahil) ve class attribute'larını miras almış.
+Gördüğünüz gibi `Class2` subclass'ı, `Class1` base class'ın method ve class attribute'larını miras almış.
 
 Inheritance (Miras Alma) işleminde subclass, base class'ın method ve class attribute'larının kopyasını kendi class objesinde oluşturmaz, base class'daki method ve class attribute'lara atıfta bulunur. Örnek:
 ```py
@@ -36,7 +91,7 @@ class Class2(Class1):
 
 <img src="https://i.ibb.co/VwQgtXv/image.png" alt="image" border="0">
 
-Gördüğünüz gibi `Class2` subclass'ındaki instance method objesinde `function Class1.func1` yazmaktadır. Buradaki `Class1.func1` ifadesi, `func1` fonksiyonunun `Class1`'in instance method objesi olduğunu söylemektedir. Yani `Class2` subclass'ındaki `func1` objesi, `Class1` base class'ındaki `func1` objesine atıfta bulunur. Atıfta bulunma durumu söz konusu olduğu için base class'da bir değişiklik yapıldığında bundan subclass'da etkilenir. Örneğin Yukarıdaki koda `Class1.cs1 = "Yeni Class Attribute 1"` kodunu ekleyip çalıştırırsak, hem `Class1` base class'ının hem de `Class2` subclass'ının `cs1` class attribute'unun değeri değişir. Kanıtı:
+Gördüğünüz gibi `Class2` subclass'ındaki instance method objesinde `<function Class1.func1 ... >` yazmaktadır. Buradaki `Class1.func1` ifadesi, `func1` fonksiyonunun `Class1`'in instance method objesi olduğunu söylemektedir. Yani `Class2` subclass'ındaki `func1` objesi, `Class1` base class'ındaki `func1` objesine atıfta bulunur (refers). Atıfta bulunma durumu söz konusu olduğu için base class'da bir değişiklik yapıldığında bundan subclass'da etkilenir. Örneğin yukarıdaki koda `Class1.cs1 = "Yeni Class Attribute 1"` kodunu ekleyip çalıştırırsak, hem `Class1` base class'ının hem de `Class2` subclass'ının `cs1` class attribute'unun değeri değişir. Kanıtı:
 
 <img src="https://i.ibb.co/CwZGwxM/image.png" alt="image" border="0">
 
@@ -848,52 +903,6 @@ super'den ya da multi inherit'den önce MRO'yu açıklayabilirsin. İşin bitinc
 
 
 
-
-# MRO (Method Resolution Order)
-Method resolution order (kısaca MRO), 'method çözümleme sırası' anlamına gelmektedir. MRO, **[directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph)**'dan (kısaca DAG) türetilen, **[C3 linearization algorithm](https://en.wikipedia.org/wiki/C3_linearization)** tarafından oluşturulan **[total order](https://en.wikipedia.org/wiki/Total_order)**'dır.
-
-Bir class'ın inheritance hierarchy'sini temsil eden, 'yönlendirilmiş döngüsel olmayan grafik' anlamına gelen bir graph'a **Directed Acyclic Graph (DAG)** denir. Kısacası class'ların inheritance konusunda birbirleriyle olan bağlantılarının gösterildiği grafiktir. Örnek:
-```py
-O = object
-class F(O): pass
-class E(O): pass
-class D(O): pass
-class C(D,F): pass
-class B(E,D): pass
-class A(B,C): pass
-```
-
-<img src="https://i.ibb.co/X5XstLP/A.png" alt="A" border="0">
-
-Bu graph bize sadece hangi class'ın hangi class'dan miras aldığını söyler, MRO hakkında bir bilgi vermez.
-
-Multiple inheritance söz konusu olduğunda,
-
-**!Burada Kaldın!** soru sordun ve aldığın cevaba göre super'i baştan inşa edebilir ya da yeni bilfiler MRO ile ilgili olduğu için basitçe bu başlıkta açıklayabilirsin.
-
-https://gist.github.com/e-k-eyupoglu/bf5f05487e0b8d820031ab5c71ef194e
-
-multi inheritance'i MRO'nun üstüne yaz.
-
-
-
-
-
-Tablonuz, "A"nın kalıtım hiyerarşisini temsil eden bir "yönlendirilmiş döngüsel olmayan grafiktir" (DAG). Bir DAG olarak, ilgili sınıfların kısmi bir sırasını ifade eder. Örneğin, "A", hem "B" hem de "C"den önce gelir, ancak grafik "B"nin "C"den veya "C"nin "B"den önce gelip gelmediği hakkında hiçbir şey söylemez. Aslında ikisi de doğru değil.
-
-Bir sınıfın MRO'su, "C3 doğrusallaştırma algoritması" tarafından oluşturulan DAG'dan türetilen "toplam bir düzendir". Herhangi iki sınıf verildiğinde, iki basit kurala göre birinin diğerinden önce geldiğini söyleyebiliriz:
-- Bir sınıf her zaman üst sınıflarından herhangi birinin önüne geçer
-- Temel sınıfın sırasına saygı duyulur. (Örneğin, "A", "B" ve "C"den bu sırayla miras alır, bu nedenle "B", "C"den önce gelir.)
-
-Bu nispeten basit örnekte, "toplam düzen" grafiğin yalnızca en-birinci çapraz geçişi gibi görünmektedir, ancak bu genel olarak doğru değildir. Grafiğin kendisi "D", "E" ve "F" için özel bir "yatay" sıralama dayatmaz; sadece MRO'ya karşılık gelecek şekilde çizilmiştir.
-
-super fonksiyonunun 2. parametresi mro ile ilgilidir. multi inhert'den örnek ver, simple örnek ver.
-
-bir multi inherit iinde birden fazla super kullanabiliyoruz okey de bunu sadece subclass'ın miras aldığı class'lar üzerinde mi yapabiliyoruz araştır.
-
-https://python-history.blogspot.com/2010/06/method-resolution-order.html
-
-https://stackoverflow.com/questions/3277367/how-does-pythons-super-work-with-multiple-inheritance
 
 
 
