@@ -1059,3 +1059,18 @@ var.print_msg() # Error
 **Not:** `<subclass object>` parametresinin ne olduğunu ve nasıl kullanıldığını anlamadıysanız, OOP konusunun en başında `self` ve `cls`'nin ne olduğunu anlattığım kısımları okuyup sonra bu kısmı tekrardan okuyunuz.
 
 **Not:** Tekrar söyleyeyim; burada anlatılan şeyler deneysel olduğu için inheritance konusunu farklı kaynaklardan da çalışmanızda fayda var.
+
+# Abstract Class
+Abstract class'lar, aynı özellikleri taşıyan objeleri aynı çatı altında toplayıp bir template (şablon) oluşturmamızı ve bu abstract class'dan miras alan bütün subclass'ları bu template'e uymak zorunda bırakabilmemizi sağlıyor. Buradaki template olayına şöyle açıklayabilirim; Bütün insanlar uyumak, yemek, nefes almak gibi temel işlevleri yapar. Daha özele indiğimizde ise bazı insanlar bu işlevlere ek olarak futbol oynamak, kitap yazmak gibi daha özel işlevleri yapar. O zaman buradaki uyumak, yemek, nefes almak gibi temel işlevler, insanların template'idir.
+
+## Abstract Class Özellikleri:
+- Abstract class'lar, en az bir tane abstract method içermelidir.
+- 
+
+https://www.geeksforgeeks.org/abstract-classes-in-python/
+
+https://startupvadisi.com/python-oop-soyutlama-abstraction/
+
+https://www.obenseven.com.tr/yazilim/python/nesne-tabanli-programlama/python-kompozisyon-composition/
+
+https://www.sinanerdinc.com/python-abc-modulu-kullanimi
