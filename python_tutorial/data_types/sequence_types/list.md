@@ -325,7 +325,12 @@ print(liste)
 ```
 Türkçe karakterlerde sıkıntı çıkabiliyor. Buna alternatif çözüm:
 ```py
-???
+import locale
+locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254') 
+
+liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
+liste.sort(key=locale.strxfrm)
+print(liste)
 ```
 
 ## `sorted(list, key = ..., reverse = False)` Fonksiyonu
@@ -338,10 +343,14 @@ print(sorted(liste))
 print(sorted(liste, reverse = True))
 # Output: ['Şule', 'İsmail', 'Zeynep', 'Seyhan', 'Mehmet', 'Mahmut', 'Ceylan', 'Ahmet']
 ```
-```
 Türkçe karakterlerde sıkıntı çıkabiliyor. Buna alternatif çözüm:
 ```py
-???
+import locale
+locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254') 
+
+liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
+sorted(liste, key=locale.strxfrm)
+print(liste)
 ```
 
 ## `index(item)` Methodu

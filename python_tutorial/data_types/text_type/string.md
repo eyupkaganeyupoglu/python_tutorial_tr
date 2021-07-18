@@ -334,10 +334,6 @@ print(*enumerate('ornek'))
 [(0, 'o'), (1, 'r'), (2, 'n'), (3, 'e'), (4, 'k')]
 (0, 'o') (1, 'r') (2, 'n') (3, 'e') (4, 'k') 
 ```
-`enumerate()` kullanarak da encoding standartı oluşturabilirsiniz. Örnek:
-```py
-# Daha sonra eklenecek.
-```
 
 # Karakter Dizisi Biçimlendirme
 
@@ -425,7 +421,7 @@ Ahmet'in parası
 Ahmet'in çocuğu
 
 ```
-Burada da gördüğünüz gibi elimizde `%(key)` ve `%{key: value}` syntax'ına sahip iki kod var. Bunları yukarıdaki kodda gösterildiği gibi kullanarak istenilen sonuca ulaşabilirsiniz. Bu `{key: value}` yapısına dictionary denir.
+Burada da gördüğünüz gibi elimizde `%(key)` ve `%{key: value}` syntax'ına sahip iki kod var. Bunları yukarıdaki kodda gösterildiği gibi kullanarak istenilen sonuca ulaşabilirsiniz. (`{key: value}` yapısına dictionary denir).
 
 ### Biçimlendirme Karakterler
 
