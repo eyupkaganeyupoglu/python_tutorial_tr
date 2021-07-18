@@ -329,4 +329,3 @@ Yukarıdaki fonksiyon şöyle çalışır:
 - `print(fonk1()())`'in `s2 = fonk1()` ya da `s2 = fonk1()`'den en büyük farkı:
 	- `fonk1()` ile oluşturulan `fonk2` objesi bir `s1` ya da `s2` variable'larına atandığı için hafızada tutulur ve her çağırıldığında, `print()` ile ekrana bastırılan output farklı olur.
 	- Ama `fonk1()()` kodundaki `fonk1()` ile oluşturulan `fonk2` objesi, ikinci parantez yüzünden `fonk2()` şeklinde kullanıldıktan sonra bellekten silinir. Bu yüzden her `print(fonk1()())` kodu `1` output'unu verir.
-

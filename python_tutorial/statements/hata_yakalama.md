@@ -38,7 +38,7 @@ Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasınd
 | `UnicodeError` | UNICODE'da `\U` ya da `\u` kullanımında, kod çözücü kodu çözemediğinde oluşan encoding ya da decoding hatasından dolayı döndürülen hata mesajıdır. |
 | `UnicodeEncodeError` | Stringlerdeki `encode()` methodu, kodu çözemediğinde döndürülen hata mesajıdır. |
 | `UnicodeDecodeError` | Stringlerdeki `decode()` methodu, kodu çözemediğinde döndürülen hata mesajıdır. |
-| `UnicodeTranslateError` |  döndürülen hata mesajıdır. |
+| `UnicodeTranslateError` | `UnicodeError` ile ilgili bir hata mesajıdır. `UnicodeError`'ün subclass'ıdır. |
 | `ValueError` | Bir fonksiyon, doğru type'da ancak uygun olmayan value'de bir arguman aldığında döndürülen hata mesajıdır. |
 | `ZeroDivisionError` | Bir division ya da modulo işleminde, ikinci operand'ın sıfır olmasından dolayı döndürülen hata mesajıdır. |
 **Not:** Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/exceptions.html).

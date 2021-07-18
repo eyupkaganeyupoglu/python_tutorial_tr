@@ -385,6 +385,7 @@ print(a is not b)            # Output: True
 print("Önceki a: ", id(a))   # Output: Önceki a:  1747376761776
 print("Sonraki b: ", id(b))  # Output: Sonraki b:  1747377137584
 ```
+Buradaki olaya **String Concatenation** denir. Daha fazla bilgi için [tıklayınız](https://medium.datadriveninvestor.com/how-does-memory-allocation-work-in-python-and-other-languages-d2d8a9398543#:~:text=Each%20string%20in%20python%20needs,and%20needs%20to%20be%20reallocated.&text=Instead%20of%20“%2B”%20for%20string%20concatenation%2C%20USE%20%27%27.).
 Buradaki olayı açıklamadan önce **id** ile **bellek adresi** kavramlarını açıklayalım.
 
 **Bellek adresi** kavramını anlamak için **pointer** kavramını anlamak gerekiyor. **Pointer** kavramı, **C** dil ailesini alakadar eden bir kavram. Kısaca bellek adresi, bir variable veya objenin bellekte depolandığı alanın adresidir.
@@ -522,8 +523,8 @@ Kullanıcı adınızı Eyüp olarak seçtiniz.
 
 # Operatör Önceliği
 Bir operatörün önceliğini arttırmak için o operatörün bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operatörünün önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz. Aşağıdaki operatörler, en öncelikliden son öncelikliye doğru olmak üzere yukarıdan aşağıya sıralanmıştır.
-| Operator | Açıklama |
-|----------|----------|
+| Operator | Description |
+|----------|-------------|
 | `()` | Parentheses |
 | `**` | Exponent |
 | `+x`, `-x`, `~x` | Unary plus, Unary minus, Bitwise NOT |
@@ -537,3 +538,7 @@ Bir operatörün önceliğini arttırmak için o operatörün bulunduğu işlemi
 | `not` | Logical NOT |
 | `and` | Logical AND |
 | `or` | Logical OR |
+
+Daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/reference/expressions.html#operator-precedence).
+
+**Not:** Yukarıdaki linkte ilk sırada olan Binding'in ne olduğunu öğrenmek için [tıklayınız](https://mathieularose.com/python-variables).

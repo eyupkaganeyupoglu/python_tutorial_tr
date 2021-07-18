@@ -158,12 +158,16 @@ for j in l1:
 	index += 1
 	
 print(release)
+print(i)
 ```
 **Output:**
 ```
 Bir cümle yazınız: python tutorial klasörü.md
 python_tutorial_klasörü.md
+d
 ```
+Burada dikkat çekilmesi gereken şey; ilk `for` loop sonlansa bile `i` variable'ı global bellekten silinmez çünkü bu `for` loop global scope'da çalışıyor.
+
 **Örnek Program:**
 ```py
 # İki string arasındaki farkları bulmak

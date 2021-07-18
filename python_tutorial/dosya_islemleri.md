@@ -24,9 +24,9 @@ print(io.DEFAULT_BUFFER_SIZE) # Output: 8192
 
 - `newline`: Farklı işletim sistemlerinde satır sonları birbirinden farklı şekilde gösterirlir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. Dosyada yazılı olan her satırın sonundaki kaçış dizilerini etkiler. Default değeri `None` olarak ayarlıdır ve bu arguman kullanılırsa, son satır hariç her satırın sonunda `\n` kaçış dizisi olur. Boş string `""` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\n"` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\r"` argumanı verilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur. `\r\n` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. Bu argumanlardan başka arguman kabul etmez.a
 
-- `closefd`: ?
+- `closefd`: `closefd` `False` ise ve file parametresine *filename* yerine *file descriptor* verilmişse, dosya kapatıldığında (close) temeldeki (underlying) *file descriptor* açık tutulacaktır. file parametresine *filename* verilmişse, `closefd`' default değeri olan `True` olmalıdır. Aksi halde hata oluşur. 
 
-- `opener`: ?
+- `opener`: Python'un kendi opener'ı vardır. Custom opener tanımlamak için bu parametreyi kullanabilirsiniz.
 
 `open()` ile açtığınız dosyayı programınızda kullanabilmek için bir variable'a `dosya = open(...)` şeklinde atamanız gerekmektedir.
 
@@ -254,7 +254,8 @@ dosya.close()
 ```
 
 ### `seek(offset, whence = SEEK_SET)` Methodu
-`seek()` methodu, imleci, `offset` parametresinde belirtilen konumdaki byte'a konumlandırmanızı sağlar. Bu konumlandırmayı yaparken kaçış dizilerini de dikkate alır. Örneğin, `offset` parametresine `2` değerini girersek, imleci 2. index'deki byte'a konumlandırır ve sonrasında yapılacak **write** (yazma) ve **read** (okuma) işlemlerini, 2. index'deki byte'ı dahil ederek yapar. Bu konumlandırmayı, index'lerdeki karakterlere göre değil, byte'lara göre yapar. Örneğin `"i"` karakteri, `utf-8` kod çözücüde 1 byte ile temsil edilirken, `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edilir. Bu yüzden aşağıdaki gibi bir durumla karşılaşılabilir:
+`seek()` methodu, imleci, `offset` parametresinde belirtilen konumdaki byte'a konumlandırmanızı sağlar. Bu konumlandırmayı yaparken kaçış dizilerini de dikkate alır. Örneğin, `offset` parametresine `2` değerini, `whence` parametres
+ne `SEEK_SET` değerini girersek, imleç baştan 2. byte'a konumlandırır ve sonrasında yapılacak **write** (yazma) ve **read** (okuma) işlemlerini, 2. byte'ı dahil ederek yapar. Bu konumlandırmayı, index'lerdeki karakterlere göre değil, byte'lara göre yapar. Örneğin `"i"` karakteri, `utf-8` kod çözücüde 1 byte ile temsil edilirken, `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edilir. Bu yüzden aşağıdaki gibi bir durumla karşılaşılabilir:
 
 **Dosya:**
 ```
@@ -300,6 +301,51 @@ lk Satır
 Üçüncü Satır.
 ```
 Buradaki `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edildiği için sıfırıncı ve birinci index'lerdeki byte'ları (`"İ"`) atlayıp, 2. index'deki byte'dan itibaren (2. index'deki byte dahil) `read()` methodunu çalıştırdı.
+
+`seek()` methodu ile konumlandırma işleminde kaçış dizileri de dikkate alınır. Örnek:
+
+**Dosya**
+```
+ilk Satır
+İkinci Satır
+Üçüncü Satır
+```
+**Kod:**
+```py
+dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya.seek(10)
+print(dosya.read())
+print("\n")
+
+dosya.seek(11)
+print(dosya.read())
+print("\n")
+
+dosya.seek(12)
+print(dosya.read())
+
+dosya.close()
+```
+**Output:**
+```
+İkinci Satır
+Üçüncü Satır
+
+İkinci Satır
+Üçüncü Satır
+
+İkinci Satır
+Üçüncü Satır
+```
+`deneme.txt` dosyasının 10. ve 11. byte'larında `\n` kaçış dizisi vardır. kullanıcının gözünden bakıldığında kaçış dizileri görünmez. Bu yüzden Python 2. satırın başından itibaten yazdırır. 12. byte'da da aynı output'u almamızın sebebi, 12. byte'ın 2. satırın en başına denk gelmesinden kaynaklanmaktadır. 9. byte'dan itibaren yazdırmak isteseydik şöyle bir çıktı alırdık:
+```
+r
+İkinci Satır
+Üçüncü Satır
+PS D:\my_folder\ed
+```
+
+**Not:** `seek(0)` dosyanın en başına gider.
 
 `whence` parametresinde ise, imleci konumlandırırken kullanacağı ölçütü belirleyebilirsiniz. `whence` parametresine `SEEK_SET` ya da `0` girilirse, dosyanın başını referans alır ve `offset` sıfır ya da positif integer'lar olmalıdır; `SEEK_CUR` ya da `1` girilirse, mevcut (current) konumu (reading, writing işlemlerinde ya da `seek()` methoduyla değişen konum) referans alır ve `offset` negatif integer'lar olabilir; `SEEK_END` ya da `2` girilirse, dosyanın sonunu referans alır ve `offset` genellikle negatif integer'lardır. `whence` parametresine 1 ya da 2 argumanlar kullanılacaksa, dosya binary (rb, wb, ab, xb, rb+, wb+, ab+, xb+) modda açılmalıdır. Dosya binary modda açılmazsa, bu argumanları kullandığınızda `io.UnsupportedOperation: can't do nonzero end-relative seeks` hatası alırsınız.
 
@@ -544,7 +590,7 @@ dosya.close()
 Bir dosyayı `open()` fonksiyonu ile açtığınızda, `open()` fonksiyonunda belirtilen parametrelere göre özelleştirilmiş bir `<class '_io.TextIOWrapper'>` objesi (stream, file object, file-like object) oluşturuluyor. Bu objenin methodları ve attribute'ları sayesinde, hedef dosya üzerinde **write** (yazma) ve **read** (okuma) işlemleri yapabiliyoruz. `detach()` merhodu kullanıldığında, ilgili dosyanın **raw-stream** objesi döndürülür. Bu obje, ilgili dosya **read** (okuma) yetkisine sahip bir kiple açılmışsa `io.BufferedReader`, **write** (yazma) yetkisine sahip bir kiple açılmışsa `io.BufferedWriter`, hem **write** (yazma) hem **read** (okuma) yetkisine sahip bir kiple açılmışsa `io.BufferedRandom` objesidir. Bu method uygulandığında, sonraki bütün işlemler **raw-stream** üzerinden yapılır. Yani en başta `open()` fonksiyonu ile oluşturulan dosya objesi kullanılamaz. Bu yüzden en başta `open()` fonksiyonu ile oluşturulan dosya objesini kullanarak işlem yapmaya çalışırsanız `ValueError: underlying buffer has been detached` hatası alırsınız. `detach()` methodu ile oluşturulan **raw-stream** objesi, üzerinde daha detaylı dosya işlemleri yapılmasına olanak tanır. Kısaca, zaten en başta `open()` fonksiyonu ile oluşturulan dosya objesinin üzerinde yapılabilen işlemleri, daha çok ayrıntıya girmene izin vererek yapmana izin verir ama daha çok uğraştırır. Bu metod `io.IOBase` class'ından inherit edildiği için high level programming language (örneğin python) ile uğraşanların bilmesi ya da kullanması gerekmemektedir. `io` modülündeki class'lara aşına olmak isteyenler araştırabilir. Daha ayrıntılı için [**`io` modülüne**](https://docs.python.org/3/library/io.html) bakabilirsiniz.
 
 ### `fileno()` Methodu
-**File descriptor** numarası, underlying implementation tarafından işletim sisteminden `I/O` işlemlerini talep etmek için kullanılır. Bu method, ilgili dosya için **File descriptor** integer değeri döndürür. `open()` ile bir dosyayı açmaya çalıştığında, açma iznin olmadığı için ilgili dosyayı açamadığında, ilgili dosyayı kapatmadan önce (Yani `open()` fonksiyonu ile `close()` methodu arasına) `fileno()` methodu kullanılırsa, `-1` outputunu verir.
+**File descriptor** numarası, underlying implementation (temel uygulama) tarafından işletim sisteminden **I/O** işlemlerini talep etmek için kullanılır. Bu, `fcntl` modülü veya `os.read()` veya bunlar gibi file descriptor kullanan diğer daha düşük seviyeli interface'ler için daha kullanışlı olabilir. Bu method, ilgili dosya için **File descriptor** integer değeri döndürür. `open()` ile bir dosyayı açmaya çalıştığında, açma iznin olmadığı için ilgili dosyayı açamadığında, ilgili dosyayı kapatmadan önce (Yani `open()` fonksiyonu ile `close()` methodu arasına) `fileno()` methodu kullanılırsa, `-1` outputunu verir.
 
 ### `flush()` Methodu
 `open()` fonksiyonu ile bir dosyayı açtıktan sonra o dosyada yaptığınız değişiklikler, **buffer** (tampon) adı verilen bir bölgede bekletilir ve dosya `close()` methodu ile kapatıldığında, bu değişiklikler dosyaya işlenir. `flush()` methodu, bufferdaki değişikliklerin dosyaya işlenmesini sağlar. Bu sayede, dosyada yapılan değişiklikleri, dosyayı `close()` methodu ile kapatmak zorunda kalmadan dosyaya işleyebilirsiniz.
