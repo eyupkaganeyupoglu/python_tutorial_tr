@@ -428,6 +428,7 @@ for i in range(61):
     if i % 6 == 0:
         liste.append(i)
 ```
+
 ### Nested List Comprehension
 `[[1,2], [3,4], [5,6]]` gibi nested listleri oluşturmak ya da böyle listeler üzerinde işlemler yapmak için kullanılan yapıya denir. Örnekler:
 
@@ -452,7 +453,7 @@ list1 = []
 for i in range(3):
     list1.append([])
     for j in range(3):
-        list1[i].append(i)
+        list1[i].append(i) # j yerine i yazıldı.
 print(list1) # Output: [[0, 0, 0], [1, 1, 1], [2, 2, 2]]
 
 list2 = [[i for j in range(3)] for i in range(3)]
@@ -499,6 +500,8 @@ Yukarıdaki `k for i in main_list for j in i for k in j` kodu şöyle çalışı
 
 #### Örnek 3
 **Nested List Comprehension** objesi oluştururken belli bir koşul belirleyebilirsiniz. Mevcut **nested** listeyi koşula göre ayrıştırma için aşağıdaki örneklere bakınız. Örnek:
+
+##### Örnek 3.1
 ```py
 main_list = [[[1,2], [3,4,5], [6]], [[7,8,9,10], [11,12]], [[13,14,15], [16], [17,18],[19,20]]]
 
@@ -512,6 +515,24 @@ print(flatten_list1) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 
 flatten_list2 = [k for i in main_list for j in i for k in j if k % 2 == 0]
 print(flatten_list2) # Output: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+```
+
+##### Örnek 3.1
+```py
+main_list = [[[1,2], [3,4,5], [6]], [[7,8,9,10], [11,12]], [[13,14,15], [16], [17,18],[19,20]]]
+
+flatten_list1 = []
+for i in main_list:
+    for j in i:
+        for k in j:
+            if k % 2 == 0:
+                flatten_list1.append(k)
+            else:
+                flatten_list1.append(k*0)
+print(flatten_list1) # Output: [0, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20]
+
+flatten_list2 = [(k if k % 2 == 0 else k*0) for i in main_list for j in i for k in j]
+print(flatten_list2) # Output: [0, 2, 0, 4, 0, 6, 0, 8, 0, 10, 0, 12, 0, 14, 0, 16, 0, 18, 0, 20]
 ```
 
 #### Örnek 4

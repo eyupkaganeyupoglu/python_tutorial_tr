@@ -159,173 +159,253 @@ print(func()) # Output: None
 ```
 **Not:** Bir fonksiyon `return` deyimi ile karşılaşırsa, `return` deyiminden sonra yazılan ifadeyi döndürdükten sonra sonlanır.
 
+## Namespace Kavramı
+Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. **Local** ve **Global** olmak üzere 2 çeşit namespace (isim alanı) vardır. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
+
 ## Scope Kavramı
-Python'da, local ve global olmak üzere 2 çeşit scope (alan) vardır. Global scope'daki değerlere programın her yerinden erişilebilirken, local scope'daki değerlere programın her yerinden erişilemez. Local scope'lar arasında da böyle bir ilişki vardır. Bir local scope, kendi bloğundaki başka bir local scope'da tanımlı bir değere erişemez. `def` ile tanımlanan fonksiyonun bloğu, `class` ile tanımlanan class'ın bloğu, for döngüsündeki initializer variable, local scope'a örnektir.
+Scope, "kapsam" anlamına gelmektedir. Global namespace aynı zamanda "her şeyi kapsayan" anlamına gelen "global scope" olarak da adlandırılabilir. `def` ve `class` keyword'leri ile tanımladığımız fonksiyon ve class'lar, for loop'un initializer variable'ı local scope'a örnektir. Bir local scope, kendisini kapsayan bütün scope'ların (başka bir değişle "kapsamında bulunduğu bütün scope'ların") içerdiği objelere erişebilir. Örnek:
 ```py
-a = 1 # global variable
-print(a) # Output: 1
-print(b) # Output: NameError: name 'b' is not defined
-def  func():
-	b = 2  # local variable
-	print(a, b) # Output: 1 2
-	
-func() # Output: 1 2
-```
-Gördüğünüz gibi `NameError` veren `print(b)` fonksiyonunun hata verme nedeni, `func()` fonksiyonunda bulunan local `b` variable'ını görememesidir. Ama `func()` fonksiyonunun içindeki `print(a, b)` fonksiyonu, global scope'daki `a` variablesini görür. Bu da kanıtlıyor ki, local scope'dan global scope'a yaklaştıkça görünürlük artarken, tam tersinde azalır.
-
-### Farklı Scope'lardaki Variable'larda İşlemler
-Aynı ada sahip farklı objeler söz konusu olduğunda, python önce o objenin talep edildiği scope'a bakar, o objenin talep edildiği scope'da yoksa bir üstteki scope'a bakar.
-```py
-x = 1
-def  func1():
-	x = 2
-	return (x)
-  
-def  func2():
-	return (x)
-  
-print(x) # Output: 1
-print(func1()) # Output: 2
-print(func2()) # Output: 1
-```
-Burada `func1()` fonksiyonunda `return` deyimiyle `x` variable'ı talep ediliyor ve python ilk bulunduğu scope'a bakıyor. Bulunduğu scope'da bu değer yoksa, `func2()`'deki gibi bir üst scope'da arar. Bu yüzden `func2()`, global scope'da bulunan `x` variable'ının değerini döndürdü.  Bu iki `x` variable'ı, farklı scope'larda oldukları için farklı objelerdir. Bu olay sadece veri talep ettiğinde geçerlidir. Mevut veriyi değiştirmeye kalktığında farklı durumlar oluşur. Örneğin:
-```py
-x = 1
-def  func1():
-	x += 2
-	return (x)
-	
-print(x) # Output: 1
-print(func()) # Output: UnboundLocalError: local variable 'x' referenced before assignment
-```
-Buradaki `x += 2` kodu `x = x + 2` koduyla aynı anlama geldiği için ikinci kod üzerinden anlatacağım. `UnboundLocalError` hatası almamızın sebebi, Python'un `x = x + 2` işlemini okuma şeklidir. Python, `x = x + 2` kısmını okurken ilk olarak `x =` kısmını okuyup, bunu *"Burada bir variable tanımlanıyor"* şeklinde yorumlar. Bu yüzden bir variable tanımlamaya çalışırken `x = x + 2` işlemiyle karşılaşınca, henüz tanımlamadığı variable'a `2` eklemeye çalışıyor ve böyle bir şey mümkün olmayacağı için `UnboundLocalError: local variable 'x' referenced before assignment` hatası alıyorsunuz. Bu durum birçok data type'da geçerlidir çünkü hataya sebep olan şey data type değil `x +=` kısmıdır. Bu durum, local scope'dan global scope'a ya da alt local scope'dan üst local scope'a ulaşmaya çalışırken oluşabilir. Bu durumları çözmek için `global` ve `nonlocal` keyword'lerinden yararlanılabilir.
-
-**Not:** Python da `bool`, `int`, `float`, `tuple`, `str`, `frozenset` gibi data değiştirilemez (immutable) type'ların değerini değiştirmek için onu yeniden tanımlamak zorundasınız. Bu global scope'da da, local scope'da da böyledir. Local scope'da ek olarak, global scope'da tanımladığınız immutable bir data type'ı local scope'da yeniden tanımlayamazsınız. Örnek:
-
-```py
-x = "Eski"
-x += "Yeni"  # x, yaniden tanımlanarak değişti.
-print(x) # Output: EskiYeni
-```
-```py
-x = "Eski"
-def  fonk():
-	x += "Yeni"  # x, yeniden tanımlanamadığı için değişmedi.
-	return x
-print(fonk()) # Output: UnboundLocalError: local variable 'x' referenced before assignment
-```
-Bir listeye `append()` methoduyla bir öğe ekleyeceğiniz zaman `UnboundLocalError` hatası almazsanız çünkü `list`, `set` ve `dict` data type'lar değiştirilebilir (mutable) data type'lardır:
-
-```py
-x = []
-print(f"X'in eski hali: {x}")
-def  func():
-	x.append("öğe")
-	return (x)
-func()
-print(f"X'in yeni hali: {x}")
+a = "a"
+def f1():
+    b = "b"
+    def f2():
+        c = "c"
+        def f3():
+            d = "d"
+            print(a,b,c,d, sep=", ") # Output: a, b, c, d
+        f3()
+    f2()
+f1() 
 ```
 **Output:**
 ```
-X'in eski hali: []
-X'in eski hali: ['öğe']
+a, b, c, d
 ```
+Gördüğünüz gibi `print(a,b,c,d, sep=", ")` kodu, kapsamında bulunduğu bütün scope'lara erişebildiği için `a`, `b`, `c` ve bulunduğu scope'daki `d` variable'larının hepsine erişebildi ve yazdırdı. Başka bir örnek:
+```py
+a = "a"
+def f1():
+    b = "b"
+    def f2():
+        c = "c"
+        def f3():
+            d = "d"
+
+        def f4():
+            e = "e"
+            print(a,b,c,d,e, sep=", ") # NameError: name 'd' is not defined
+        f4()
+    f2()
+f1() # Error
+```
+**Output:**
+```
+    print(a,b,c,d,e, sep=", ") # NameError: name 'd' is not defined
+NameError: name 'd' is not defined
+```
+`print(a,b,c,d,e, sep=", ")` kodu, kapsamında bulunduğu scope'lardaki `a`, `b`, `c` ve bulunduğu scope'daki `e` variable'larına erişebilse de, `f4` fonksiyonu `f3` fonksiyonunun kapsamında bulunmadığı için `d` variable'ına erişemiyor ve `print(a,b,c,d,e, sep=", ")` fonksiyonu `NameError: name 'd' is not defined` hatası yükseltiyor.
+
+### Farklı Scope'lardaki Variable'larda İşlemler
+Python, bulunduğu scope'da talep edilen bir obje'yi bulamazsa, bulunduğu scope'u kapsayan scope'ları kontrol eder. Örnek:
+```py
+a = "a"
+def f1():
+    def f2():
+        def f3():
+            print(a) # Output: a
+        f3()
+    f2()
+f1()
+```
+**Output:**
+```
+a
+```
+Gördüğünüz gibi `print(a)` fonksiyonu, talep ettiği `a` variable'ını bulana kadar sırasıyla `f3 -> f2 -> f1 -> global` scope'lara bakar ve ilk bulduğu yer olan global scope'dan kullanır. Burada dikkat çekilmesi gereken şey; `a` variable'ını bulduğu ilk scope'dan çekmesi. Örnek:
+```py
+a = "a"
+def f1():
+    a = "f1 scope a"
+    def f2():
+        def f3():
+            print(a) # Output: f1 scope a
+        f3()
+    f2()
+f1()
+```
+**Output:**
+```
+f1 scope a
+```
+Gördüğünüz gibi `print(a)` fonksiyonu, talep ettiği `a` variable'ını ilk bulduğu `f1` fonksiyonunun scope'undan kullanır. `a` ismindeki bu iki obje, farklı scoplarda oldukları için aynı isimde (identifier) farklı objelerdir.
+
+Mevcut data'yı talep etmek ile değiştirmek farklı şeylerdir. Kapsam dahilinde ama farklı bir scope'da bulunan variable'lar üzerinde yeniden tanımlama (redefinition) işlemi yapamayız. Örnek:
+```py
+a = "a"
+def f1():
+    a = "f1 scope a"
+    def f2():
+        def f3():
+            a += 2 # UnboundLocalError: local variable 'a' referenced before assignment
+            print(a)
+        f3()
+    f2()
+f1()
+```
+**Output:**
+```
+f1 scope a
+```
+`UnboundLocalError: local variable 'a' referenced before assignment` hatası, local bir variable'ı bildirmeden (declare) önce değer atamaya (assignment) çalıştığımızda ortaya çıkan hatadır. Python `a += 2` kodunu şöyle yorunlar:
+- `a += 2` kodu ile `a = a + 2` aynı şeylerdir. Python, `a = a + 2` kodunu soldan sağa doğru okurken ilk olarak `a = ` ifadesindeki assignment operator (`=`) ile karşılaştığı için bir atama işlemi yapmaya hazırlanıyor.
+- Python, assignment operator'den sonraki `a + 2` ifadesindeki toplama işlemini gerçekleştirmek için bulunduğu scope'da `a` variable'ını arar ama bulamadığı için `UnboundLocalError: local variable 'a' referenced before assignment` hatası yükseltir. Python'da `bool`, `int`, `float`, `tuple`, `str`, `frozenset` gibi değiştirilemez (immutable) data type'ların değerini değiştirmek için onu yeniden tanımlamak (redefinition) zorundasınız. Olmayan bir şeyi yeniden tanımlayamayacağınız için yukarıdaki örnekteki gibi, bildirmediğiniz (declare) bir variable'ı da yeniden tanımlayamazsınız (redefinition).
+
+Peki neden Python her zaman yaptığı gibi bulunuduğu scope'u kapsayan scope'lara bakmıyor? Python'a "bunu bul" dediğinizde onu bulur, "bunu değiştir" dediğinizde onu değiştirir. Sadece "bunu değiştir" komutunu verdiğinizde, "dur ben bunu bulayım sonra değiştireyim" diyecek kadar zeki değildir Python. Bu yüzden Python'a hem "bunu bul" hem de "bunu değiştir" komutlarını sırayla vermelisiniz. Bunu `nonlocal` ve `global` keyword'leri ile yapabilirsiniz.
+
+değiştirilebilir (mutable) data type'ların değerini, yeniden tanımlama (redefinition) işlemi yapmadan da değiştirebildiğiniz için bu sorunla karşılaşmazsınız. Ama değiştirilebilir (mutable) data type'ın değerini yeniden tanımlama (redefinition) yöntemi ile değiştirmeye çalışırsanız yine aynı sebepten dolayı hata alırsınız. Örnek:
+```py
+def f1():
+    a = ["f1 scope a"]
+    b = ["f1 scope b"]
+    def f2():
+        def f3():
+            a.append("Yeni f1 scope a")
+            print(a) # 
+            b += ['Yeni f1 scope b'] # UnboundLocalError: local variable 'b' referenced before assignment
+            print(b)
+        f3()
+    f2()
+f1()
+```
+**Output:**
+```
+['f1 scope a', 'Yeni f1 scope a']
+    b += ['Yeni f1 scope b']
+UnboundLocalError: local variable 'b' referenced before assignment
+```
+Gördüğünüz gibi sorun değiştirilebilir (mutable) ya da değiştirilemez (immutable) data type'larda değil, yeniden tanımlama (redefinition) işleminden kaynaklanıyormuş.
 
 #### `global` keyword
-`global` keyword'ü, global scope'da bulunan değerlerin local scope'da kullanılmasına imkan sağlayan bir keyword'dür.
+`global` keyword'ü, global namespace'de tanımlanmış objeleri local namespace'de kullanabilmemizi sağlar.
 ```py
-x = 1
-def  func():
-	global x
-	print(x)
-func() # Output: 1
+a = 1
+def f1():
+    def f2():
+        def f3():
+            global a
+            a += 1
+            print(a) # Output: 2
+        f3()
+    f2()
+f1()
+```
+**Output:**
+```
+2
 ```
 
 #### `nonlocal` keyword
-`nonlocal` keyword'ü, üst local scope'da bulunan değerlerin alt local scope'da kullanılmasına imkan sağlayan bir keyword'dür. Bu keyword, nested fonksiyonlarda kullanılabilir.
+`nonlocal` keyword'ü, local namespace'de bulunan alt scope'ların üst scope'lardaki objelere erişmesine imkan verir. Örnek:
 ```py
-def  func1():
+def  f1():
 	x = 1
-	def  func2():
+	def  f2():
 		nonlocal x
 		x += 1
-		print(x)
-	func2()
-func1() # Output: 2
+		print(x) # Output: 2
+	f2()
+f1()
 ```
+**Output:**
+```
+2
+```
+Gördüğünüz gibi `nonlocal` keyword'ü sayesinde, daha önce aldığımız `UnboundLocalError: local variable 'x' referenced before assignment` gibi hatalar almıyoruz. Başka bir örnek:
+```py
+def  f1(p1):
+	def  f2():
+		nonlocal p1
+		p1 += "Dünya!"
+		print(p1) # Output: 2
+	f2()
+f1("Selam ")
+```
+**Output:**
+```
+Selam Dünya!
+```
+`nonlocal` keyword'ü ile üst scope'daki fonksiyonun parametresine de ulaşabiliyoruz. Başka bir örnek:
+```py
+def f1():
+    s = 0
+    def f2():
+        nonlocal s
+        s += 1
+        return s
+    return f2
+
+var1 = f1()
+var2 = f1()
+
+print(var1()) # Output: 1
+print(var1()) # Output: 2
+print(var1()) # Output: 3
+
+print(var2()) # Output: 1
+print(var2()) # Output: 2
+print(var2()) # Output: 3
+```
+**Output:**
+```
+1
+2
+3
+1
+2
+3
+```
+Bu örnekle ilgili bazı önemli noktalar var:
+- Fonksiyonlar sadece çağırıldıklarında blocklarındaki kodları çalıştırırlar. Bu yüzden bir fonksiyonu çağırdığınızda, fonksiyonun local objeleri oluşturulup belleğe kaydedilir ve fonksiyon çalışmayı sonlandırdığında local objeler bellekten silinir.
+- `f1` fonksiyon objesi `f1()` şeklinde her çağırıldığında farklı bir local `s` integer ve `f2` fonksiyon objesi oluşturulup belleğe kaydedilir ve fonksiyon çalışmayı sınlandırdığında local bellekten silinir. Bu yüzden `var1` ve `var2` variable'larında depolanan `f2` fonksiyon objeleri birbirinden farklı objelerdir. Bu `f2` fonksiyonu objeleri oluşturulurken, `f1` fonksiyonundaki `s` variable'ının sadece o anki value'sunu bilirler. `var1` ve `var2` variable'larına atanan `f2` fonksiyonlarının üzerinde yapılan işlemlerinin birbirine etki etmeyip bağımsız olmasının sebebi budur.
+
+Anlamayanlar için sırasıyla `var1 = f1()` ve `var2 = f1()` kodları şöyle çalışır:
+- `f1` fonksiyonu `f1()` kodu sayesinde çağırılır.
+- Sırasıyla `s` variable'ı ve `f2` fonksiyon objesi oluşturulur.
+- `return f2` kodu ile `f2` local fonksiyon objesi döndürülür ve `var1` variable'ına atanır. `var1`'e atanan `f2` local fonksiyon objesi (`<function f1.<locals>.f2 at 0x000001BED3B99EE0>`) için `s` variable value'su `0`'dır.
+- Aynı şey `var2` variable'ı için de gerçekleşir. `var2`'ye atanan `f2` local fonksiyon objesi (`<function f1.<locals>.f2 at 0x000001BED3B99E50>`) için de `s` variable value'su `0`'dır. Kanıt:
+
+    <img src="https://i.ibb.co/grySwBs/image.png" alt="image" border="0">
+
+    Global namespace içindeki objelere doğrudan erişimimiz olduğu için programın life-time'ı boyunca nasıl değiştiklerini gözlemleyebiriz ama aynı şeyi local namespace'de yapamayız (örneğin debugger ile falan gözlemleyemeyiz). Local namespace'deki işlemlere sadece local namespace'deki objeler erişebilir.
+
 Başka bir örnek:
 ```py
-def yazıcı(mesaj):
-    def yaz():
-        nonlocal mesaj
-        mesaj += " Dünya"
-        print(mesaj)
-    return yaz
+def f1():
+    s = 0
+    def f2():
+        nonlocal s
+        s += 1
+        return s
+    return f2
+
+print(f1()()) # Output: 1
+print(f1()()) # Output: 1
+print(f1()()) # Output: 1
 ```
-Yukarıdaki kodda `nonlocal` keyword'ünü kullanmasaydık `UnboundLocalError: local variable 'mesaj' referenced before assignment` hatası alırdık. Çünkü daha önce de bahsettiğim gibi `+=` operatörü, `mesaj` variable'ını tanımlamadan, `+` operatörü aracılığıyla henüz tanımlamadığı bir variable'a `" Dünya"` stringini eklemeye çalışıyor. `+=` operatörünün sıkıntı çıkarmaması için önce `mesaj` variable'ını tanımlamamız gerekiyor. Bunu da `nonlocal` keyword'ünü kullanarak yapıyoruz.
-
-Önemli bir örnek:
-```py
-def fonk1():
-    sayı = 0
-    def fonk2():
-        nonlocal sayı # sayı = 0
-        sayı += 1
-        return sayı
-    return fonk2
-
-s1 = fonk1()
-s2 = fonk1()
-
-print(s1()) # Output: 1
-print(s1()) # Output: 2
-print(s1()) # Output: 3
-
-print(s2()) # Output: 1
-print(s2()) # Output: 2
-print(s2()) # Output: 3
-
+**Output:**
 ```
-Yukarıdaki fonksiyon şöyle çalışır:
-- Önce `def fonk1():` okunur ve `<function fonk1 at 0x000001D8E02135E0>` objesi oluşturulur.
-- Sonra, `s1 = fonk1()` okunur ve sırasıyla şöyle çalışır:
-	- Python bu satırdaki `fonk1()` kodu yüzünden `fonk1()` fonksiyonunu çalıştırır. Bu fonksiyon `<function fonk1 at 0x000001D8E02135E0>` objesini çağırır.
-	- Sonra, `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
-	- Sonra `def fonk2():` satırı okunur ve bu fonksiyonun `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi oluşturulur. Bu obje, `s1 = sayıcı()` kodu ile çağırılan `<function fonk1 at 0x000001D8E02135E0>` objenin o anki durumunu geçerli kabul eder (Örneğin `sayı` variablesinin `0`'a eşit olduğu kabul eder).
-	- Sonra, `return fonk2` kodu ile `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi `s1`'e atanır.
-- Sonra, `s2 = fonk1()` okunur ve sırasıyla şöyle çalışır:
-	- Python bu satırdaki `fonk1()` kodu yüzünden `fonk1()` fonksiyonunu çalıştırır. Bu fonksiyon `<function fonk1 at 0x000001D8E02135E0>` objesini çağırır.
-	- Sonra, `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
-	- Sonra `def fonk2():` satırı okunur ve bu fonksiyonun `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objesi oluşturulur. Bu obje, `s1` variable'ına atanan objeden farklı bir objedir. Bu obje, `s2 = sayıcı()` kodu ile çağırılan `<function fonk1 at 0x000001D8E02135E0>` objenin o anki durumunu geçerli kabul eder (Örneğin `sayı` variablesinin `0`'a eşit olduğu kabul eder).
-	- Sonra, `return fonk2` kodu ile `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objesi `s2`'e atanır.
-- Sonra, her `print(s1())` komutu çalıştırıldığında, outputlar 1, 2, 3, ... artarak bastırılır.
-- Sonra, her `print(s2())` komutu çalıştırıldığında, outputlar, `print(s1())`'deki gibi 1, 2, 3, ... artarak bastırılır. Bir tane `<function fonk1 at 0x000001D8E02135E0>` objesi olmasına rağmen `s1` ve `s2`'nin birbirinden bağımsız `sayı` değerlerine sahip olmalasının nedeni şudur:
-	- `global` statement'da, global scope'daki bir variable'nin değerini local scope'da değiştirdiğinizde, global scope'daki variable'ın da değeri değişiyordu. Birbiriyle tamamen aynı birden fazla global scope olsaydı, her bir global scope'un içindeki değerler, o scope'un kapsamında değişirdi.
-	- `nonlocal` statement'i de `global` satetement mantıkla düşünmeliyiz. `fonk1()` her çağırıldığında, `<function fonk1 at 0x000001D8E02135E0>` objesinin ilk hali geçerli olur. `print(s1())` komutu her çalıştığında `sayı` variable'ının değeri bir arttığından, her output bir öncekinden bir fazladır. Ama `print(s1())` komutunu üç kere çalıştırdıktan sınra `print(s2())` komutunu çalıştırdığımızda `4` outputunu vermek yerine `1` outputunu verir. Bunun sebebi, `s1` ve `s2`'ye atanan birbirinden farklı `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` ve `<function fonk1.<locals>.fonk2 at 0x000001CC0CDC3940>` objeleri, `<function fonk1 at 0x000001D8E02135E0>` objesinin ilk halini tanımalarıdır. Bu yüzden `s1` ve `s2`'nin içindeki `nonlocal` statement'in çağırdığı `sayı` variableleri birbirinden bağımsız.
-	- global scope'daki variable'lara erişimimiz olduğu için o variable'lerin programın life-time'ı boyunca nasıl değiştiriğini kontrol edebiliriz ama local variable'lara erişimimiz olmadığı için kontrol edemeyiz. Local variable'lere sadece nested fonksiyonların erişimi vardır. Bu yüzden `print(s1())` ve `print(s2())` komutları çalışırken, debugger'da `fonk2`'nin döndürdüğü sayıları görsek de, `fonk2`'nin yaptığı işlemleri göremeyiz.
-```py
-def fonk1():
-    sayı = 0
-    def fonk2():
-        nonlocal sayı # sayı = 0
-        sayı += 1
-        return sayı
-    return fonk2
-
-print(fonk1()()) # Output: 1
-print(fonk1()()) # Output: 1
-print(fonk1()()) # Output: 1
+1
+1
+1
 ```
-Yukarıdaki fonksiyon şöyle çalışır:
-- Önce `def fonk1():` okunur ve `<function fonk1 at 0x000001D8E02135E0>` objesi oluşturulur.
-- Sonra, `print(fonk1()())` okunur ve sırasıyla şöyle çalışır:
-	- `fonk1()()`'in `fonk1()` kısmı çalıştırılır ve bu fonksiyon `<function fonk1 at 0x000001D8E02135E0>` objesini çağırır.
-	- Sonra, `sayı = 0` satırı okunur ve `sayı = 0` kodu yüzünden `sayı: 0` değeri locals'de tutulur.
-	- Sonra `def fonk2():` satırı okunur ve bu fonksiyonun `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi oluşturulur. Bu obje `<function fonk1 at 0x000001D8E02135E0>` objenin o anki durumunu geçerli kabul eder (Örneğin `sayı` variablesinin `0`'a eşit olduğu kabul eder).
-	- Sonra, `return fonk2` kodu ile `<function fonk1.<locals>.fonk2 at 0x000002A4834C39D0>` objesi global scope'a gönderilir (bundan sonra bu objeye kısaca `fonk2` objesi diyeceğim).
-	- `fonk1()()` fonksiyonunun `fonk1()` kısmındaki işlemler bittikten sonra global scope'a gönderilen `fonk2` objesi `fonks2()` şeklinde çalıştırılır. `fonk1()()`'deki 2 tane parantezin olayı budur. `fonk1()()`'deki `fonk1()` fonksiyonu `fonk2` objesin döndürdüğü için python `fonk1()()`'yi `fonk2()` olarak görür ve çalıştırır.
-	- `fonk2()` çalıştıktan sonra `sayı` variable'ına 1 ekler ve `sayı` variable'ının değeri `1` olur.
-	- Sonra, `return sayı` ile `sayı` variable'sini döndürür ve `print()` fonksiyonu bu değeri ekrana basar.
-- `print(fonk1()())`'in `s2 = fonk1()` ya da `s2 = fonk1()`'den en büyük farkı:
-	- `fonk1()` ile oluşturulan `fonk2` objesi bir `s1` ya da `s2` variable'larına atandığı için hafızada tutulur ve her çağırıldığında, `print()` ile ekrana bastırılan output farklı olur.
-	- Ama `fonk1()()` kodundaki `fonk1()` ile oluşturulan `fonk2` objesi, ikinci parantez yüzünden `fonk2()` şeklinde kullanıldıktan sonra bellekten silinir. Bu yüzden her `print(fonk1()())` kodu `1` output'unu verir.
+Burada her `print()` fonksiyonunun önceki koddaki gibi 1, 2, 3 şeklinde çıktı vermemesinin sebebi; her `f1()` kodu yeni bir `f2` local fonksiyon objesi döndürür. Sonrasında `f1()()` kodu Python'un gözünde `f2()` koduna dönüşür ve `f2()` koduyla `f2` local fonksiyon objesi çalıştırılır. Bu yüzden her `f2` local fonksiyon objesi bir kere çalıştığı için `1` output'unu verir.
+
+
+
+
+
+
+
+
+
+Namespace ve Scope kavramlarıyla alakalı daha fazla bilgi işin [tıklayınız](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces).

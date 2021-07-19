@@ -254,6 +254,8 @@ print(Class().exp2) # Output: 2
 ```
 Dolayısıyla instance attribute'lar, instance'lara özel attribute'lardır diyebiliriz.
 
+**Not:** Instance attribute'lar sadece instance methodlar içinde tanımlanabilir.
+
 ### `__init__` Fonksiyonu ve `self`
 `__init__`, class'lara özgü bir fonksiyondur. `__init__` fonksiyonunun görevi, main class'dan instance oluşturulurken, instance için oluşturulacak instance attribute'leri (`self.a` gibi) ve işlevleri (`print()` gibi) tanımlamaktır. `__init__` fonksiyonu, main class'dan instance türetildiği anda çalışır. Başka bir deyişle, main class'dan instance türetilmeden önce main class okunurken, `__init__` fonksiyonunu okumaya sıra gelince Python sadece `def __init__(self):` kısmını okuyup `__init__` fonksiyon objesini oluşturur. Dolayısıyla Python bu sırada `__init__` fonksiyonunu çalıştırmaz ve içeriğini okumaz. Örnek:
 ```py

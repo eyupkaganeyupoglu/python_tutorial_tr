@@ -91,6 +91,20 @@ print(harfli_sözlük)
  'y': 27, 'z': 28}
 ```
 
+**Not:** `[(0, 0), (1, 1), (2, 4), (3, 9), (4, 16)]` bunun gibi bir yapıyı `{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}` bunun gibi bir sözlüğe doğrudan dönüştürülerbilir. Örnek:
+```py
+a = [(0, 0), (1, 1), (2, 4), (3, 9), (4, 16)]
+b = {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+c = dict(a)
+
+print(b, c, sep="\n")
+```
+**Output:**
+```
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+```
+
 # Dictionary'lerde İşlemler
 Bir diçtionary'nin bir öğesine erişmek için index kullanamazsınız çünkü dictionary'lerde *sıra* denen kavram yoktur. Bir diçtionary'nin bir öğesine erişmek için aşağıdaki syntax'ı kullanabilirsiniz:
 ```py

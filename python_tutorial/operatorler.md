@@ -247,7 +247,7 @@ print(bao_1 >> 2)
 
 # Assignment Operators
 
-## `=` Operatörü
+## Assignment `=` Operatörü
 Sağdaki operand'ı soldaki opranda **atamak** için kullanılır. Örneğin bir value'yu bir variable'a atamanızı sağlar. Ornek:
 ```py
 a = 15

@@ -26,7 +26,7 @@ Türkçe'deki **komplex sayının** İngilizce karşılığı **Complex**'dır. 
 # Numeric Data Types
 
 ## `int(x, base=10)`
-Tam sayı anlamına gelen integer sayıları temsil eder. `x`parametresine girilen argümanı **uygunsa** `int` data type'ına dönüştürmekte kullanılabilir. `base` parametresine, bu çevirme işleminin hangı sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur. Örneğin 8'li sayı sistemindeki `1010` sayısı, 10'lu sayı sistemindeki `520` sayısına eşit olduğu için `int("1010", base=8)` işleminin sonucu `520`'dir.
+Tam sayı anlamına gelen integer sayıları temsil eder. `int()` build-in fonksiyonu, `x`parametresine girilen argümanı **uygunsa** `int` class'ında belirtilen integer data type'a dönüştürmekte kullanılabilir. `base` parametresine, bu çevirme işleminin hangı sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur. Örneğin 8'li sayı sistemindeki `1010` sayısı, 10'lu sayı sistemindeki `520` sayısına eşit olduğu için `int("1010", base=8)` işleminin sonucu `520`'dir.
 ```py
 print(int(0b1010)) # Output: 10
 print(int("10")) # Output: 10

@@ -22,17 +22,17 @@ print(list(range(10, 0, 1))) # Output: []
 
 **Not:** `sys.maxsize` (`Py_ssize_t` type bir variable'ın alabileceği max sayı. 32 bir sistemlerde `2**31 - 1`, 64 bir sistemlerde `2**63 - 1` kadardır.) değerinden daha büyük büyük sayılara izin verilir ama `len()` gibi bazı özellikler (features) `OverflowError` hatasına neden olabilir.
 
-**Not:** Ranges implement all of the [common sequence operations](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq-common) except concatenation and repetition (due to the fact that range objects can only represent sequences that follow a strict pattern and repetition and concatenation will usually violate that pattern).
+**Not:** Range'ler, concatenation ve repetition dışında tüm [common sequence operation'ları](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq-common) uygular (implement). Çünkü range obje'leri yalnızca strict bir pattern'i takip eden sequence'ları takip edebilir. Concatenation ve repetition genellikle bu pattern'leri ihlal eder (violate).
 
 **Not:** `range` type'ın `list` ya da `tuple` type'dan avantajlı olmasının sebebi, `range` type sadece `start`, `stop` ve `step` verilerini tuttuğu için `range(0,1,1)` objesi ile `range(0,255,1)` objesinin bellek boyutu aynıdır ama `list(range(0,1,1))` ile `list(range(0,255,1))`'in boyutu aynı değildir.
 ```py
 print(list(range(0,1,1)).__sizeof__()) # Output: 48
 print(list(range(0,9999,1)).__sizeof__()) # Output: 80048
 print(range(0,1,1).__sizeof__()) # Output: 48
-print(range(0,9999,1).__sizeof__()) # Output: 48
+print(range(0,9999,1).__sizeof__()) # Output: 48E
 ```
 
-**Not:** Range objects implement the collections.abc.Sequence ABC, and provide features such as containment tests, element index lookup, slicing and support for negative indices (see [Sequence Types — list, tuple, range](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq)):
+**Not:** Range objelerini diğer [Sequence Types](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq) objelere dönüştürebilir, membership (`in`) operator'ı ile içeriğine erişebilir ve indexleyebilirsin (negatif index'lemeyi destekler). Daha fazla bilgi için [tıklayınız](https://newbedev.com/does-range-really-create-lists).
 ```py
 r = range(0, 20, 2)
 print(r) # Output: range(0, 20, 2)
@@ -42,6 +42,8 @@ print(r.index(10)) # Output: 5
 print(r[5]) # Output: 10
 print(r[:5]) # Output: range(0, 10, 2)
 print(r[-1]) # Output: 18
+print(list(r)) # Output: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+print(tuple(r)) # Output: (0, 2, 4, 6, 8, 10, 12, 14, 16, 18)
 ```
 
 **Not:** İki `range` objesinin üzerinde `==` ve `!=` işlemleri yapabiliriz. Bu işlemler, bu iki `range` objesinin içeriği aynı ya da farklı olmasına göre sonuçlar verir. Örnekler:
@@ -58,6 +60,4 @@ print(range(0,2,1) == range(2,4,1)) # Output: False
 print(range(0,2,1) != range(2,4,1)) # Output: True
 ```
 
-**Not:** The [linspace recipe](https://code.activestate.com/recipes/579000/) shows how to implement a lazy version of range suitable for floating point applications.
-
-https://docs.python.org/3/library/stdtypes.html?highlight=range#ranges
+**Not:** [linspace recipe](https://code.activestate.com/recipes/579000/), floating point application'larda uygun lazy version bir range'in nasıl uygulanacağını (implement) gösterir.
