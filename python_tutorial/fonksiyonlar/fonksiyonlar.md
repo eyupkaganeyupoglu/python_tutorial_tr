@@ -398,14 +398,6 @@ print(f1()()) # Output: 1
 1
 1
 ```
-Burada her `print()` fonksiyonunun önceki koddaki gibi 1, 2, 3 şeklinde çıktı vermemesinin sebebi; her `f1()` kodu yeni bir `f2` local fonksiyon objesi döndürür. Sonrasında `f1()()` kodu Python'un gözünde `f2()` koduna dönüşür ve `f2()` koduyla `f2` local fonksiyon objesi çalıştırılır. Bu yüzden her `f2` local fonksiyon objesi bir kere çalıştığı için `1` output'unu verir.
-
-
-
-
-
-
-
-
+Burada her `print()` fonksiyonunun önceki koddaki gibi 1, 2, 3 şeklinde çıktı vermemesinin sebebi; her `f1()` fonksiyonu çağırıldığında (call) yeni bir `f2` local fonksiyon objesi döndürür. Sonrasında `f1()()` kodu Python'un gözünde `f2()` koduna dönüştüğü için `f2` local fonksiyon objesi çağırır (call). Bu yüzden her `f2` local fonksiyon objesi bir kere çalıştığı için `1` output'unu verir.
 
 Namespace ve Scope kavramlarıyla alakalı daha fazla bilgi işin [tıklayınız](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces).
