@@ -401,3 +401,31 @@ print(f1()()) # Output: 1
 Burada her `print()` fonksiyonunun önceki koddaki gibi 1, 2, 3 şeklinde çıktı vermemesinin sebebi; her `f1()` fonksiyonu çağırıldığında (call) yeni bir `f2` local fonksiyon objesi döndürür. Sonrasında `f1()()` kodu Python'un gözünde `f2()` koduna dönüştüğü için `f2` local fonksiyon objesi çağırır (call). Bu yüzden her `f2` local fonksiyon objesi bir kere çalıştığı için `1` output'unu verir.
 
 Namespace ve Scope kavramlarıyla alakalı daha fazla bilgi işin [tıklayınız](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces).
+
+# Type Hints ve Function Annotations
+Python, **dynamic type checking** yapmaktadır. Yani variable'ların type'ları runtime sırasında belirmeketedir. Bu yüzden low level programlama dillerindeki gibi, bir variable tanımladığımızda onun type'ını belirtmek zorunda değiliz. O variable'a verdiğimiz değer ne ise variable'ın type'ı o olacaktır. Kodun devamında variable'ın type'ını değiştirdiğimizde Python yine bunu anlayacak ve variable type'ını yeni değerine göre değiştirecektir. **Type Hint** (`:`) ve **Function Annotation** (`->`) işaretleri, tek başına koda işlevsel olarak bir katkıda bulunmasa da, kodu okuyan kişinin neyin ne olduğunu anlamasına büyük katkı sağlar. Örnek:
+```py
+def func(name:str, number:int, boolean:bool = True) -> str:
+    return "Outputs: " + name + ", " + str(number) + ", " + str(boolean)
+
+print(func("Ali", 23)) # Output: Outputs: Ali, 23, True
+print(func("Ali", 23, False)) # Output: Outputs: Ali, 23, False
+```
+Yukarıdaki kodda:
+- `name:str` kodu, kullanıcıya, `name` isimli variable'ın `str` type bir argüman alması gerektiğini,
+- `number:int` kodu, kullanıcıya, `number` isimli variable'ın `int` type bir argüman alması gerektiğini,
+- `boolean:bool` kodu, kullanıcıya, `boolean` isimli variable'ın `bool` type bir argüman alması gerektiğini (ayrıca `boolean` parametresinin default değeri `True`'dur),
+- `-> str` kodu, kullanıcıya, `func` isimli fonksiyonun `str` type bir değer döndürmesi gerektiğini döylemektedir.
+
+Bu işaretlerin kendi başlarına, kullanıcıyı bilgilendirmek dışında bir işlevi olmasa bile, **mypy** modülü etkisiyle anlam kazanır.
+
+**mypy** Modülü:
+- [`mypy` pypi linki](https://pypi.org/project/mypy/#description)
+- [`mypy` documentation](https://mypy.readthedocs.io/en/stable/getting_started.html)
+- [`mypy` GitHub](https://github.com/python/mypy)
+
+`mypy` sayesinde:
+- **Type Hint** (`:`) ve **Function Annotation** (`->`) ile belirtilen durumlara aykırı durumlar oluşunca `mypy` harekete geçer. Örneğin `name:str` şeklinde tanımladığınız `name` parametresine string type dışında bir argüman girerseni veya `func` fonksiyonu string type dışında bir değer döndürürse `mypy` bir hata rapıru oluşturur.
+- `mypy` modülünün aykırı durumlarla karşılaşınca bir hata raporu oluşturması, Python'un çalışmasına engel teşkil etmez. Yani Python her zaman yaptığı gibi kodu çalıştırır. Yani ilgili kodu çalıştırdığınızda `mypy`, Python'dan bağımsız olarak çalışır.
+
+- Python'un yine her zamanki gibi kodu çalıştırsa bile, .

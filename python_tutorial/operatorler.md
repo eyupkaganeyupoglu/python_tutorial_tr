@@ -438,6 +438,16 @@ print("Sonraki b: ", id(b)) # Output: Sonraki b: 2152492908432
 ```
 Yukarıdaki gibi Büyük value'lerle işlem yaparken son durumda `a` ve `b`'nin id'leri farklı olur.
 
+**Not:** `is` operator'ı, iki operand'ın aynı obje olup olmadığını kontrol eder. `==` operator'ı, iki operand'ın value'larının aynı olup olmadığını kontrol eder. Örnek:
+```py
+a = "Python"
+b = "ython"
+b = "P" + b
+
+print(a is b) # Output: False
+print(a == b) # Output: True
+```
+
 # Membership (`in`) operators
 Sağdaki operand, soldaki operandı içeriyorsa (Yani soldaki operand, sağdaki operand'ın içinde varsa) `True`, içermiyorsa `False` döndürür. `not in` kullanarak bunun tam tersi durumları sorgulayabilirsiniz. Örnek:
 ```py
