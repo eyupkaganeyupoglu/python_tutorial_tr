@@ -1,4 +1,4 @@
-﻿# Tuple Tanımlamak
+﻿# Tuple (`tuple(iterable)`) Tanımlamak
 Tuple'lar listeler gibi değildir. Listeler değiştirilebilir (mutable) bir data type'dır ama Tuple'lar değiştirilemez (immutable) data type'dır. Bir Tuple'ı değiştirmek için onu yeniden tanımlamak gerekir. Bunu yaparsan demetin ID'si değişir ve eski tuple ile yeni tuple birbirinden bağımsız olur yani yeni tuple ile eski tuple hafızada iki farklı yerde saklanır. Bu da daha fazla memory işgaline yol açar. Tuple'ları, değiştirilmesini istemediğiniz verileri saklarken kullanabilirsiniz. Örneğin değiştirilmemesi gereken bir path'ı saklamak için biçilmiş kaptandır.
 
 Tuple tanımlarken parantez `()` kullanılır.

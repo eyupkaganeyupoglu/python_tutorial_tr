@@ -1,4 +1,4 @@
-# Dondurulmuş Kümeler (Frozenset)
+# Dondurulmuş Kümeler (Frozenset) (`frozenset(iterable)`)
 `tuple`, `list`'in değiştirilemez versiyonu olduğu gibi, `frozenset`'de `frozenset`'in değiştirilemez versiyonudur. Yani `frozenset`'de kullanılan, içeriği değiştirmeye yönelik methodlar `frozenset`'de kullanılamaz. `frozenset`'de kullanılabilen `frozenset` methodları:
 
 ## `copy()` Methodu

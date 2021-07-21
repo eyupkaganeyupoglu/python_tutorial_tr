@@ -1,4 +1,4 @@
-﻿# Liste İşlemleri ve Özellikleri
+﻿# Liste (`list(iterable)`) İşlemleri ve Özellikleri
 
 ## Liste tanımlamak
 Köşeli parantez `[]` listeyi temsil eder.

@@ -1,5 +1,39 @@
 ﻿**Ön Bilgi:** Operand, işlenen; operator, işleç/işlemci anlamlarına gelmektedir. `2 + 2` işlemindeki ikiler operand, artı işaret operator'dır.
 
+# Comma Operator (`,`)
+Tek başına spesifik bir kullanım alanı çok yoktur. Örnek:
+```py
+a, b = 1, 2 # a = 1 ; b = 2
+print(a, b) # Output: 1 2
+
+a, b = (1, 2) # <class 'tuple'>
+print(a, b) # Output: 1 2
+
+a, b = [1, 2] # <class 'list'>
+print(a, b) # Output: 1 2
+
+a, b = {1, 2} # <class 'set'>
+print(a, b) # Output: 1 2
+
+print(a, b) # Output: 1 2
+a, b = b, a
+print(a, b) # Output: 2 1
+a,b,c = 1,2,3
+print(a,b,c) # Output: 1 2 3
+a,b,c = c,a,b
+print(a,b,c) # Output: 3 1 2
+
+a, b = 1
+print(a, b) # TypeError: cannot unpack non-iterable int object
+```
+Gördüğünüz gibi comma (virgül) operator'ı, birden fazla variable'a tek satırda value atamak ve swap işlemi için kullanılabilir. Bunlar dışında list, tuple, set, dict vs. gibi yerlerde, sıralı elemanları ayırmak için kullanılır. Örnek:
+```py
+list_exp = [1, 2, 3]
+tuple_exp = (1, 2, 3)
+set_exp = {1, 2, 3}
+dict_exp = {1:"bir", 2:"iki", 3:"üç"}
+```
+
 # Arithmetic Operators
 
 ## Addition (Toplama) (`+`) Operatörü

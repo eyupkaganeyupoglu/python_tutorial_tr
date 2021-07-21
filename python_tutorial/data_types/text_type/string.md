@@ -146,7 +146,7 @@ a = "Python"
 print(len(a)) # Output: 6
 ```
 
-## `str(object, encoding='utf-8', errors='strict')`
+## `str(object=b'', encoding='utf-8', errors='strict')`
 Karakter dizisilerini (*stringleri*) ifade eder. Birçok data type'ı string olarak ifade etmemizi sağlar. Örnek:
 ```py
 int_type = 10

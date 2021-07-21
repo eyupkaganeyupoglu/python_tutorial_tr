@@ -78,7 +78,7 @@ Bir Python programı, kod sayfalarının farklı olmasın durumunda, eksik karak
 
 # Karakter Kodlama İle İlgili Fonksiyonlar
 
-## `repr("string")` Fonksiyonu
+## `repr(object)` Fonksiyonu
 Python programlama dilinde nesneler, **Python’ın göreceği** ve **kullanıcının göreceği** olmak üzere 2 farklı şekilde ifade edilir. Örneğin kaçış dizilerini **kullanıcının göreceği** formatta göremezken, **Python’ın göreceği** formatta görebilirsiniz.
 ```py
 print("karakter dizisi \n")
@@ -105,8 +105,8 @@ print(ascii("€")) # Output: '\u20ac'
 print("€".encode("unicode_escape")) # Output: b'\\u20ac'
 ```
 
-## `ord("string")` Fonksiyonu
-`"string"` parametresine girilen değerin UNICODE tablosundaki integer karşılığını verir.
+## `ord(c)` Fonksiyonu
+`c` parametresine girilen değerin UNICODE tablosundaki integer karşılığını verir.
 ```py
 print(ord("€")) # Output: 8364
 ```

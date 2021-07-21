@@ -1,7 +1,7 @@
 ﻿## Ön Bilgi
 Python ve python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Gömülü fonksiyon olarak da bilinen build-in fonksiyonlar, python diline gömülmüş fonksiyonlardır. Python modülleri python diliyle yazılmıştır ama build-in fonksiyonlar **C** diliyle yazılmıştır.
 
-# `__import__()`
+# `__import__(name, globals=None, locals=None, fromlist=(), level=0)`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#__import__).
 
 # `all(iterable)`
@@ -149,23 +149,8 @@ print(callable(sys.version)) # Output: False
 ```
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#callable).
 
-# `classmethod()`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#classmethod).
-
 # `compile(source, filename, mode, flags=0, dont_inherit=False, optimize=-1)`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#compile).
-
-# `copyright()`
-Python’ın telif haklarına ilişkin bilgilere erişebilirsiniz.
-```py
-copyright()
-```
-
-# `credits()`
-Python programlama diline katkıda bulunanlara teşekkür içeren küçük bir metni ekrana çıktı olarak verir.
-```py
-credits()
-```
 
 # `delattr(object, name)`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#delattr).
@@ -269,10 +254,7 @@ print(a) # Output: 5
 
 bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#exec).
 
-# `exit()`
-O anda çalışan programdan çıkmanızı sağlar. Interactive shell'de kullanılırsa o anda açık olan oturum kapanır.
 
-bilgi için [tıklayınız](???).
 
 # `filter(function, iterable)`
 `function`, ölçütü belirleyen fonksiyon; `iterable`, bu ölçütün uygulanacağı öğedir. İşlemleri `True` ya da `False` olarak değerlendirir. Bu yüzden `function`'in return değeri boolean olmak zorunda. `function`'e girilen fonksiyon, `fonk()` şeklinde değil `fonk` şeklinde olmalıdır.
@@ -385,12 +367,6 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#ite
 
 # `len(s)`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#len).
-
-# `license()`
-Python’ın lisansına ilişkin epey ayrıntılı metinlere ulaşabilirsiniz.
-```py
-license()
-```
 
 # `locals()`
 Python'da scope'lar dictionary type bir data'dır. Örneğin **local scope** basit bir dictionary'ten ibarettir. Bu yüzden dictionary methodlarını kullanabiliyorsunuz. Ama bundan kaçınmalısınız çünkü işin sonunda nereden geldiği belli olmayan değerlerle **local scope**'u kirletmiş olursunuz.**Local scope**'u gösteren dictionary'de bulunan anahtar ve değerleri görmek için `print(locals())` kullanılır. `locals` adlı bu dictionary'nin içeriği, o anda **local scope**'da bulunan nesnelere göre farklılık gösterecektir. Örneğin **local scope**'a `x = 10` tarzı bir şey eklediğinizde,`locals()`'in outputunda `{'a': 'yeni değer'}` eklenmiş olur.
