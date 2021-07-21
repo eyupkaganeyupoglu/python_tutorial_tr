@@ -1,8 +1,5 @@
 ﻿## Ön Bilgi
-Python ve python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Gömülü fonksiyon olarak da bilinen build-in fonksiyonlar, python diline gömülmüş fonksiyonlardır. Python modülleri python diliyle yazılmıştır ama build-in fonksiyonlar **C** diliyle yazılmıştır.
-
-# `__import__(name, globals=None, locals=None, fromlist=(), level=0)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#__import__).
+Python ve python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Gömülü fonksiyon olarak da bilinen build-in fonksiyonlar, python diline gömülmüş fonksiyonlardır. Python modülleri python diliyle yazılmıştır ama build-in fonksiyonlar **C** diliyle yazılmıştır. Aşağıda, tutorialin başka bir konusunda değinilmemiş ya da yeterince değinilmemiş build-in fonksiyonların kullanım alanlarından bahsedilmiştir.
 
 # `all(iterable)`
 
@@ -19,7 +16,7 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#__i
 
 - **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 
-[`iter()`](asd) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
+[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
 ```py
 liste = ["l", "i", "s", "t", "e"]
 liste_iter1 = iter(liste)
@@ -84,7 +81,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 
 - **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 
-[`iter()`](asd) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
+[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
 ```py
 liste = ["l", "i", "s", "t", "e"]
 liste_iter1 = iter(liste)
@@ -151,9 +148,6 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#cal
 
 # `compile(source, filename, mode, flags=0, dont_inherit=False, optimize=-1)`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#compile).
-
-# `delattr(object, name)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#delattr).
 
 # `dir(object)`
 Parametresiz olarak kullanırsak, mevcut scope'deki öğeleri liste olarak verir. `globals()` ve `locals()`'den farkı, çıktıyı dict olarak değil, liste olarak vermesidir. Nesnelerin method ve property'lerini ekrana basar. Örnek:
@@ -254,8 +248,6 @@ print(a) # Output: 5
 
 bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#exec).
 
-
-
 # `filter(function, iterable)`
 `function`, ölçütü belirleyen fonksiyon; `iterable`, bu ölçütün uygulanacağı öğedir. İşlemleri `True` ya da `False` olarak değerlendirir. Bu yüzden `function`'in return değeri boolean olmak zorunda. `function`'e girilen fonksiyon, `fonk()` şeklinde değil `fonk` şeklinde olmalıdır.
 ```py
@@ -287,9 +279,6 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#fil
 # `format(value, format_spec)`
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#breakpoint).
 
-# `getattr(object, name, default)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#getattr).
-
 # `globals()`
 Python'da scope'lar dictionary type bir data'dır. Örneğin **global scope** basit bir dictionary'ten ibarettir. Bu yüzden dictionary methodlarını kullanabiliyorsunuz. Ama bundan kaçınmalısınız çünkü işin sonunda nereden geldiği belli olmayan değerlerle **global scope**'u kirletmiş olursunuz.**Global scope**'u gösteren dictionary'de bulunan anahtar ve değerleri görmek için `print(globals())` kullanılır. `globals` adlı bu dictionary'nin içeriği, o anda **global scope**'da bulunan nesnelere göre farklılık gösterecektir. Örneğin **global scope**'a `x = 10` tarzı bir şey eklediğinizde,`globals()`'in outputunda `{'a': 'yeni değer'}` eklenmiş olur.
 ```py
@@ -301,9 +290,6 @@ print(globals())
 {'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x000001B106D01F70>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, '__file__': 'd:\\build_in_fonksiyonlar.py', '__cached__': None, 'a': 'yeni değer'}
 ```
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#globals).
-
-# `hasattr(object, name)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hasattr).
 
 # `hash(object)`
 Verilen obje ve değerine göre rastgele bir karma (rastgele) tamsayı üretir.
@@ -383,7 +369,7 @@ local_scope()
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#locals).
 
 # `map(function, iterable, ...)`
-`filter()`, `iterable`'deki elemanı/elemanları `function`'deki boolean işleme göre ayırır ve sadece True sonuç verenleri output olarak verir ama `map()` `iterable`'deki elemana/elemanlara `function`'de belirtilen işlemi uygular. Yani `iterable`'deki elemanların hepsi `function`'deki işleme sokulur ve işleme sokulan `iterable` elemanı/elemanları output olarak verilir. `function`'e girilen fonksiyon, `fonk()` şeklinde değil `fonk` şeklinde olmalıdır.
+`filter()`, `iterable`'deki elemanı/elemanları `function`'deki boolean işleme göre ayırır ve sadece `True` sonuç verenleri output olarak verir ama `map()` `iterable`'deki elemana/elemanlara `function`'de belirtilen işlemi uygular. Yani `iterable`'deki elemanların hepsi `function`'deki işleme sokulur ve işleme sokulan `iterable` elemanı/elemanları output olarak verilir. `function`'e girilen fonksiyon, `fonk()` şeklinde değil `fonk` şeklinde olmalıdır.
 ```py
 l = [1,2,3,4,5]
 def karesini_al(i):
@@ -391,6 +377,8 @@ def karesini_al(i):
 print(map(karesini_al, l)) # Output: <map object at 0x000001DA2EF2EFA0>
 print(list(map(karesini_al, l))) # Output: [1, 4, 9, 16, 25]
 ```
+**Not:** `map()` fonksiyonuna birden fazla iterable obje tanımlanabilir. `iterable, ...` buradaki üç nokta bu anlama gelmektedir.
+
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#map).
 
 # `next(iterator, default)`
@@ -409,9 +397,6 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#map
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next).
 
 `next()` fonksiyonu, bir `generator` nesnesinden bir sonraki öğeyi alır.
-
-# `object()`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#object).
 
 # `print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)`
 `print()` fonksiyonu, ekrana bir şeyler bastırmak için kullanılan bir build-in (gömülü) fonksiyondur.
@@ -533,16 +518,7 @@ print(*"TBMM" , sep = ".") # Output: T.B.M.M.
 `len()` gibi fonksiyonlar tek bir parametre aldıkları için len(*"Python") gibi bir şey söz konusu değildir, hata verir.
 Daha fazla Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#print).
 
-# `property(fget=None, fset=None, fdel=None, doc=None)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#property).
 
-# `quit()`
-Programdan çıkmak için kullanılır. Etkileşimli kabukta kullanılırsa, etkileşimli kabuğu kapatacaktır.
-
-Bilgi için [tıklayınız](???).
-
-# `setattr(object, name, value)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#setattr).
 
 # `slice(start, stop, step)`
 ```py
@@ -551,12 +527,6 @@ dl = slice(0,3)
 print(l[dl]) # Output: ['ahmet', 'mehmet', 'ayşe']
 ```
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#slice).
-
-# `staticmethod(function)`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#staticmethod).
-
-# `super()`
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#super).
 
 # `type(object)`
 Bir objenin type'ını verir.
@@ -578,3 +548,37 @@ print(zip(a1, a2)) # Output: <zip object at 0x00000246D74226C0>
 print(list(zip(a1, a2))) # Output: [('a', 'd'), ('b', 'e'), ('c', 'f')]
 ```
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#zip).
+
+# `site` Modülü Tarafından Eklenen Constant'lar
+`site` modülü, ([`-S`](https://docs.python.org/3/using/cmdline.html#id3) command-line option'ı belirtilmedikçe, startup (başlatma) sırasında otomatik olarak import edilir), build-in namespace'e birkaç constant ekler. Interactive interpreter shell için kullanışlıdırlar ama programın içinde kullanılmamalıdırlar.
+
+## `quit(code=None)`
+O anda çalışan programdan çıkmanızı sağlar. Interactive shell'de kullanılırsa o anda açık olan oturum kapanır.
+
+Bilgi için [tıklayınız](https://docs.python.org/3/library/constants.html#quit).
+
+## `exit(code=None)`
+O anda çalışan programdan çıkmanızı sağlar. Interactive shell'de kullanılırsa o anda açık olan oturum kapanır.
+
+Bilgi için [tıklayınız](https://docs.python.org/3/library/constants.html#exit).
+
+## `copyright()`
+Python’ın telif haklarına ilişkin bilgilere erişebilirsiniz.
+```py
+copyright()
+```
+Bilgi için [tıklayınız](https://docs.python.org/3/library/constants.html#copyright).
+
+## `credits()`
+Python programlama diline katkıda bulunanlara teşekkür içeren küçük bir metni ekrana çıktı olarak verir.
+```py
+credits()
+```
+Bilgi için [tıklayınız](https://docs.python.org/3/library/constants.html#credits).
+
+## `license()`
+Python’ın lisansına ilişkin epey ayrıntılı metinlere ulaşabilirsiniz.
+```py
+license()
+```
+Bilgi için [tıklayınız](https://docs.python.org/3/library/constants.html#license).

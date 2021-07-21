@@ -1,4 +1,4 @@
-﻿# Set (`set(iterable)`)Oluşturmak
+﻿# Set (`set(iterable)`) Oluşturmak
 `set`, bildiğimiz matematikteki kümeler gibidir. Her öğeden bir tane bulundurur ve bu öğeler sıralı değildir. Dictionary'lerdeki gibi öğeleri sıralı olmadığı için index kavramı yoktur. Bir `set`'i `print()` fonksiyonu ile ekrana bastırmaya çalışırsanız, öğeleri sıralı olmadığı için programı her çalıştırdığınızda farklı sırada ekrana basılabilir. Örnek:
 ```py
 set_exp = {"bir", "iki", "üç"}
