@@ -433,7 +433,7 @@ print(id(b1))   # Output: 2254419109904
 print(id(b2))   # Output: 2254419109904
 print(id(1000)) # Output: 2254419109904
 ```
-`liste1` ve `liste2` artık aynı value'ya sahip oldukları için ID'leri aynıdır. Bu yüzden id'yi, python'un bir obje veya value'yu işaret etmek için oluşturduğu geçici kimlik gibi düşünebilirsiniz. Program sonlandığında bu id'ler silinir ve tekrar çalıştırıldığında, her obje'ye yeni id'ler atanır.
+`liste1` ve `liste2` artık aynı value'ya sahip oldukları için ID'leri aynıdır. Bu yüzden id'yi, Python'un bir obje veya value'yu işaret etmek için oluşturduğu geçici kimlik gibi düşünebilirsiniz. Program sonlandığında bu id'ler silinir ve tekrar çalıştırıldığında, her obje'ye yeni id'ler atanır.
 
 `a` ve `b` son durumda `Python`'a eşit olmasına rağmen farklı id'lere sahiptirler. Bunun nedeni basitçe, `a` variable'ı `1747376761776` id'sinde `Python` olarak saklanırken, `b` variable'ı `1747376833520` id'sinde  `Pytho` olarak saklanır ve yapılan ekleme işleminin ardından `1747377137584`  id'sinde `Python` olarak saklanır. Sonuç olarak value'lar aynı olsa bile en başta farklı value'lara sahip iki variable söz konusu olduğu için bellek adresleri farklıdır. Bunu şöyle kanıtlayabilirim:
 ```py
@@ -563,7 +563,7 @@ Kullanıcı adı alanı boş bırakılamaz!
 Kullanıcı adınız: Eyüp
 Kullanıcı adınızı Eyüp olarak seçtiniz.
 ```
-**Not:** `None` değeri, boş value anlamına gelir. Yani bir variable'ı `None` değerine eşitlerseniz, python bunu "Bu variable herhangi bir data type'ı içermiyor, boş bir value." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte 16 byte yer açar. `None`, genellikle bir variable'ın data type'ını daha sonra belirlemek istediğinizde kullanılır.
+**Not:** `None` değeri, boş value anlamına gelir. Yani bir variable'ı `None` değerine eşitlerseniz, Python bunu "Bu variable herhangi bir data type'ı içermiyor, boş bir value." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve Python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte 16 byte yer açar. `None`, genellikle bir variable'ın data type'ını daha sonra belirlemek istediğinizde kullanılır.
 
 # Operatör Önceliği
 Bir operatörün önceliğini arttırmak için o operatörün bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operatörünün önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz. Aşağıdaki operatörler, en öncelikliden son öncelikliye doğru olmak üzere yukarıdan aşağıya sıralanmıştır.

@@ -1,6 +1,7 @@
-https://www.askpython.com/python/python-statements#conclusion
+# Keywords
+Keyword, anahtar kelime anlamına gelmektedir. Python'da özel anlamlara gelen ayrışmış (reserved) bazı kelimeler vardır. Bu kelimeleri identifier olarak kullanamazsınız. Bütün keyword'ler: False, await, else, import, pass, None, break, except, in, raise, True, class, finally, is, return, and, continue, for, lambda, try, as, def, from, nonlocal, while, assert, del, global, not, with, async, elif, if, or, yield.
 
-yield bir keyword, iş yapınca da statement olur. mantık bu.
+Daha fazla bilgi için [tıklayınız](https://www.programiz.com/python-programming/keyword-list)
 
 # Expression (İfadeler)
 İngilizcede **expression** denen **ifadeler**, bir value üretmek için kullanılan kod parçalarıdır. Karakter dizileri, sayılar, operatörler, öteki veri tipleri, liste comprehensions, sözlük comprehensions, küme comprehensions, `fonksiyon()` şeklinde çağırdığırılan fonksiyonlar hep birer **expression**'dır Örneğin:
@@ -86,7 +87,7 @@ def foo():
 ```
 
 ### `del` Statement
-`del`, python'da herhangi bir objeyi silmek için kullanılan keyword'dür. `del object_name` şeklinde kullanıldığında statement olarak isimlendirilir.
+`del`, Python'da herhangi bir objeyi silmek için kullanılan keyword'dür. `del object_name` şeklinde kullanıldığında statement olarak isimlendirilir.
 ```py
 a = 1
 del a
@@ -226,3 +227,4 @@ asyncio.run(main())
 hello
 world
 ```
+Coroutines function definition statement ile ilgili daha fazla bilgi için [tıklayınız](https://docs.python.org/3/reference/compound_stmts.html#coroutines).

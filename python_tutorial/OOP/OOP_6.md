@@ -1,67 +1,53 @@
-# Abstract Class (Sınıf):
-
-####### 1.1
-Abstract sınnıflar aynı özellikleri taşıyan nesneleri aynı çatı altında toplayıp, Nesnelere bir şablon çizerek çizilen  şablondan çıkmadan istediğimiz gibi şekil vermemizi sağlar.
-
-####### 1.2
-Hayvan dediğimizde hepimizin aklına genel, elle tutulamaz soyut bir kavram gelir dimi? Evet hayvan genel bir kavramdır. Kuş dediğimizde ise aklımıza hayvanların kuş sınıfına ait canlılar gelir ve bu yöntemle hayvan kavramı kuş olarak somutlaştırılır. Yani Hayvan kavramı soyutken kuş kavramı somuttur. Abstraction kavramıyla ilgili verebileceğim en iyi örneğin bu olacağını düşündüm.
-
-## Abstract Class Özellikleri:
-
-####### 2
-Abstract class‘ların içi ya boş bırakılır yada methodlarla donatılır. Abstract class olmak için en az 1 tane abstract method bulundurmak şarttır.  Abstract Class içerisinde kullanılan methodları kalıtım verdiği bütün sınıflarda kullanmak zorundadır. Asla Abstract sınıftan örnek yaratamayız (new kelimesiylede oluşturamayız)
-
-------------------------------------
-
 # Abstract Class
+Abstract Class'lar, aynı özellikleri taşıyan objelerin aynı çatı altında toplanıp, bu objelere bir şablon (template) görevi gören class'lardır.
 
-####### 1.1
-Abstract class'lar, diğer class'lar için bir template (şablon) olara düşünülebilir.
+## Abstract Class Özellikleri
+- Python, abstract class'ları doğrudan desteklemez. Bu yüzden `from abc import ABC, abstractmethod` şeklinde `ABC` (Abstract Base Class) ve `abstractmethod` decorator'ını programınıza import ederek başlamalısınız.
 
-####### 1.2 ?
-It allows you to create a set of methods that must be created within any child classes built from the abstract class. (Soyut sınıftan oluşturulmuş herhangi bir alt sınıf içinde oluşturulması gereken bir dizi yöntem oluşturmanıza olanak tanır.)
+- `ABC` (Abstract Base Class'dan) ve `ABC`'den miras almış class'lardan instance türetemezsiniz. Aksi halde `TypeError: Can't instantiate abstract class abstract_class_exp with abstract method process` örneğindeki gibi bir hatası alırsınız.
 
-####### 1.3
-Bir veya daha fazla abstract method içeren class'a abstract class denir.
+- Abstract class'lar en az bir tane `@abstractmethod` decoratoru ile decore edilerek abstract method'a dönüştürülmüş method'a sahip olmalıdır.
 
-####### 1.4
-An abstract method is a method that has a declaration but does not have an implementation. (Soyut bir yöntem, bildirimi olan ancak uygulaması olmayan bir yöntemdir.)
+- Abstract class'dan miras alan subclass'lara, abstract class'da bildirilmiş (declaration) ya da tanımlanmış (definition) abstract methodları tanımlamak (definition) zorundasınız. Aksi halde `TypeError: Can't instantiate abstract class abstract_subclass_exp with abstract method process` örneğindeki gibi bir hatası alırsınız.
 
-## declaration 
-####### 1.4.1
-
-## implementation
-####### 1.4.2
-Yazılımlarda **specification** ve **implementation** olmak üzere 2 kavram vardır. Specification, yazılımın doğal bir dille yapısal bir şekilde yazılmasıdır. Buna yazılımın tasarımı da diyebiliriz. Örneğin Python dökümanları bir specification'dır. Implementation ise, yazılımın, o yazılım için üretilmiş specification'dan yararlanarak bir programlama dili ile yazılmasıdır. Örneğin C dili ile yazılmış CPython bir implementation'dır.
-
-####### 1.5
-Büyük functional unit'ler hazırlarken abstract class'lar kullanılır.
-
-####### 1.6
-When we want to provide a common interface for different implementations of a component, we use an abstract class. (Bir bileşenin farklı uygulamaları için ortak bir arayüz sağlamak istediğimizde, soyut bir sınıf kullanırız.)
-
-####### 1.7
-By defining an abstract base class, you can define a common Application Program Interface(API) for a set of subclasses. (Soyut bir temel sınıf tanımlayarak, bir dizi alt sınıf için ortak bir Uygulama Programı Arayüzü (API) tanımlayabilirsiniz.)
-
-####### 1.8
-Bütün class'ların methodlarını aklınızda tutmanızı zorlaştıran büyük programlarda çalışırken size kolaylık sağlar. (bütün class'lar bu template'i miras alırlarsa kullanmak zorunda kalacakları için)
-
-####### 1.9
-Python comes with a module that provides the base for defining Abstract Base classes(ABC) and that module name is ABC. (Python, Soyut Temel sınıfları (ABC) tanımlamak için temel sağlayan bir modülle birlikte gelir ve bu modül adı ABC'dir.)
-
-####### 1.10
-ABC works by decorating methods of the base class as abstract and then registering concrete classes as implementations of the abstract base. (ABC, temel sınıfın yöntemlerini soyut olarak süsleyerek ve ardından somut sınıfları soyut tabanın uygulamaları olarak kaydederek çalışır.)
-
-####### 1.11
-Bir class'ı abstract hale getirmek için `@abstractmethod` decorator'unu kullanırız. Örnek:
+## Abstraction
+Abstraction (soyutlama) işlemine örnek:
 ```py
+from abc import ABC, abstractmethod
 
+class Computer(ABC):
+    @abstractmethod
+    def process(self):
+        print("Çalışıyor...", end=" ")
+
+class Laptop(Computer):
+    def process(self):
+        print("Problem çözüldü.")
+
+class Notebook(Computer):
+    def process(self):
+        super().process()
+        print("Bug çözüldü.")
+
+class WhiteBoard:
+    def write(self):
+        print("Yazı yazıldı.")
+
+class BlackBoard(Computer):
+    def write(self):
+        print("Yazı yazıldı.")
+
+var1 = Computer() # TypeError: Can't instantiate abstract class Computer with abstract method process
+var2 = Laptop()
+var3 = Notebook()
+var4 = WhiteBoard()
+var5 = BlackBoard() # TypeError: Can't instantiate abstract class BlackBoard with abstract method process
+
+var2.process() # Output:Problem çözüldü.
+var3.process() # Output: Çalışıyor... Bug çözüldü.
+var4.process() # AttributeError: 'WhiteBoard' object has no attribute 'process'
 ```
-
-https://www.geeksforgeeks.org/abstract-classes-in-python/
-
-https://startupvadisi.com/python-oop-soyutlama-abstraction/
-
-https://www.obenseven.com.tr/yazilim/python/nesne-tabanli-programlama/python-kompozisyon-composition/
-
-https://www.sinanerdinc.com/python-abc-modulu-kullanimi
+Bu örneği parça parça açıklayalım:
+- `Computer` class'ı `ABC` abstract base class'dan miras alarak bir abstract class'a dönüşmüştür. Bu yüzden yukarıdaki gibi `var1 = Computer()` şeklinde instance türetmeye çalışırsanız `TypeError: Can't instantiate abstract class Computer with abstract method process` hatası alırsınız.
+- `Computer` abstract class'ındaki `process` instance methodu, `@abstractmethod` decorator'u ile bir abstract methoda decore edilmiştir. Bu yüzden `Computer` abstract class'ından miras alan bütün subclass'larda bu `process` abstract methodu yukarıdaki gibi tanımlanmak zorundadır. Eğer tanımlanmazsa, `BlackBoard` subclass'ından instance türetmeye çalışırkenki gibi `TypeError: Can't instantiate abstract class BlackBoard with abstract method process` hatası ile karşılaşırsınız.
+- `Computer` abstract class'ındaki `process` instance methodunu illa `def process(self): pass` şeklinde declare edip bırakmak zorunda değilsiniz. İçine çeşitli şeyler tanımlayıp, bunları `Computer` abstract class'ından miras alan subclass'larda da `super().process()` şeklinde miras vererek kullanabilirsiniz.

@@ -144,7 +144,11 @@ print(sözlük)
 sözlük = {"bir":"1", "bir":5, "iki":"2", "üç": "3"}
 print(sözlük) # Output: {'bir': 5, 'iki': '2', 'üç': '3'}
 ```
-Gördüğünüz gibi `"bir"`'in değeri en son `5` olarak tanımlandığu için python bu değeri dikkate aldı.
+Gördüğünüz gibi `"bir"`'in değeri en son `5` olarak tanımlandığu için Python bu değeri dikkate aldı.
+
+**Not:** Belli değerleri bir liste içinde (örneğin `[20, 175, "eyüp"]` gibi) depolayıp, sonradan bu değerlere ihtiyacınız olduğunda listeden çekip kullanmak yerine, bu değerleri, ne olduklarıyla birlikte (`["yaş":20, "boy":175, "isim":"eyüp"]` gibi) bir dictionary'de depolarsanız, daha pratik ve kullanışlı olur.
+
+- Belli bir yapıda sıralanmış bilgileri bir listede [20, 175, "eyüp"] gibi tutup sonradan bu listeden çekip kullanmak yerine, ["yaş":20, "boy":175, "isim":"eyüp"] gibi dict'lerde depolayın. Böylece daha kolay çekip kullanabilirsiniz.
 
 # Dictionary Methodları
 
@@ -276,7 +280,7 @@ Sözlükten eleman silmek için kullanılır. Silinen key'in value'sini döndür
 sözlük = {'a': 0, 'b': 1, 'c': 2}
 print(sözlük.pop("a")) # Output: 0
 ```
-`key`'e girilen eleman sözlükte yoksa ve `"string"` parametresi tanımlanmamışsa, `KeyError: 'key'` hatası döndürür.
+`key`'e girilen eleman sözlükte yoksa ve `"string"` parametresi tanımlanmamışsa, `KeyError: 'key'` hatası yükseltir.
 ```py
 sözlük = {'a': 0, 'b': 1, 'c': 2}
 print(sözlük.pop("d")) # Output: KeyError: 'd'

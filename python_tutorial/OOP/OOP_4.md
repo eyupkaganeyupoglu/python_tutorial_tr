@@ -216,16 +216,16 @@ print(var2.func2) # Output: Class2 A
 ```
 Yukarıdaki kodda, `print()` fonksiyonlarının outputlarının nedenlerini teker teker açıklamak gerekirse:
 - `print(var1.func1())`
-    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur ve `Class1().func1()` kodundaki gibi `func1()` şeklinde çağırılabilir (call) çünkü fonksiyonlar çağırılabilir (callable) objelerdir. `print(Class1().func1())` kodundaki `Class1().func1()` kodu ile `func1` methodu çağırarak (call), döndürdüğü değer `print()` fonksiyonu ile yazdırılır.
+    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile decore edilmediği için fonksiyon özelliğini korur ve `Class1().func1()` kodundaki gibi `func1()` şeklinde çağırılabilir (call) çünkü fonksiyonlar çağırılabilir (callable) objelerdir. `print(Class1().func1())` kodundaki `Class1().func1()` kodu ile `func1` methodu çağırarak (call), döndürdüğü değer `print()` fonksiyonu ile yazdırılır.
 
 - `print(var1.func1)`
-    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile işaretlenmediği için fonksiyon özelliğini korur. `var1.func1` kodu, "`0x00000298C68A3FD0` adresindeki `__main__.Class1` objesine ait `<function Class1.func1 at 0x00000160370A2790>` fonksiyonuna bağlı bir method (bound method) olan `func1` adındaki instance method'u" anlamına gelen `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini verir. Bu yüzden `print(var1.func1)` kodunun output'u bu `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini yazdırır.
+    - `Class1` class'ında tanımlı `func1` adındaki instance method, `@property` decorator'ı ile decore edilmediği için fonksiyon özelliğini korur. `var1.func1` kodu, "`0x00000298C68A3FD0` adresindeki `__main__.Class1` objesine ait `<function Class1.func1 at 0x00000160370A2790>` fonksiyonuna bağlı bir method (bound method) olan `func1` adındaki instance method'u" anlamına gelen `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini verir. Bu yüzden `print(var1.func1)` kodunun output'u bu `<bound method Class1.func1 of <__main__.Class1 object at 0x00000298C68A3FD0>>` objesini yazdırır.
 
 - `print(var2.func2())`
-    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` stringini içerir (nasıl olduğu daha önce anlatıldı). Python, `var2.func2()` kodunun önce `var2.func2` kısmını okur. `var2.func2` kısmı `Class2 A` string değerini verdiği için `var2.func2()` kodu Python gözünde `'Class2 A'()` koduna dönüşür. String bir obje çağırılabilir (callable) olmadığı için `var2.func2()` kodu "string objeler çağırılabilir (callable) değildir." anlamına gelen `TypeError: 'str' object is not callable` hatasını yükseltir. Daha önce de `Class` class'ındaki `func2` property'sini `Class.func2()` şeklinde çağırmaya (call) çalışınca `TypeError: 'property' object is not callable` hatası yükseltilmişti. Bu hatayla `var2.func2()` kodunun yükselttiği hata benzerdir çünkü ikisinde de çağırılabilir (callable) olmayan objeleri çağırmaya çalışıyoruz.
+    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile decore edildiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. Bu property `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` stringini içerir (nasıl olduğu daha önce anlatıldı). Python, `var2.func2()` kodunun önce `var2.func2` kısmını okur. `var2.func2` kısmı `Class2 A` string değerini verdiği için `var2.func2()` kodu Python gözünde `'Class2 A'()` koduna dönüşür. String bir obje çağırılabilir (callable) olmadığı için `var2.func2()` kodu "string objeler çağırılabilir (callable) değildir." anlamına gelen `TypeError: 'str' object is not callable` hatasını yükseltir. Daha önce de `Class` class'ındaki `func2` property'sini `Class.func2()` şeklinde çağırmaya (call) çalışınca `TypeError: 'property' object is not callable` hatası yükseltilmişti. Bu hatayla `var2.func2()` kodunun yükselttiği hata benzerdir çünkü ikisinde de çağırılabilir (callable) olmayan objeleri çağırmaya çalışıyoruz.
 
 - `print(var2.func2)`
-    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile işaretlendiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. `func2` property'si, `Class2` class'ından türetilen `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). `print(var2.func2)` kodu, `var2` instance'ında bulunan `func2` attribute'unun içerdiği `Class2 A` stringini yazdırır.
+    - `Class2` class'ında tanımlı `func2` adındaki instance method, `@property` decorator'ı ile decore edildiği için fonksiyon özelliğini koruyamaz ve `func2` adındaki property'nin (`fget` methodunda depolanmış) bir parçası olur. `func2` property'si, `Class2` class'ından türetilen `var2` instance'ında `func2` attribute'u olarak bulunur ve `Class2 A` string type value'sunu içerir (nasıl olduğu daha önce anlatıldı). `print(var2.func2)` kodu, `var2` instance'ında bulunan `func2` attribute'unun içerdiği `Class2 A` stringini yazdırır.
 
 **Not:** Property kavramını anlamak için **descriptor** kavramını araştırmalısınız. Gerekli siteler sırasıyla:
 - [Tıklayınız](https://docs.python.org/3.7/howto/descriptor.html).
@@ -238,9 +238,9 @@ Property'lerin üç önemli build-in methodu vardır:
 - Değer silmek için kullanılan, delete yetkisini temsil eden`deleter`
 
 Bu build-in methodların etki ettiği üç tane attribute vardır.
-- `getter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fget`
-- `setter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fset`
-- `deleter` build-in methodu ile işaretlenmiş fonksiyonunun atandığı attribute olan `fdel`
+- `getter` build-in methodu ile decore edilmiş fonksiyonunun atandığı attribute olan `fget`
+- `setter` build-in methodu ile decore edilmiş fonksiyonunun atandığı attribute olan `fset`
+- `deleter` build-in methodu ile decore edilmiş fonksiyonunun atandığı attribute olan `fdel`
 
 Bu methodlara aşağıdaki gibi görüntüleyebilirsiniz:
 ```py
@@ -286,7 +286,7 @@ var = Class()
 
 <img src="https://i.ibb.co/1sVKrFh/image.png" alt="image" border="0">
 
-Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile işaretlenmeyen instance methodlar, `var` instance'ında ve main class'da `function attributes` kısmında bulunmaktalar.
+Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile decore edilmeyen instance methodlar, `var` instance'ında ve main class'da `function attributes` kısmında bulunmaktalar.
 ```py
 class Class():
     def __init__(self):
@@ -312,7 +312,7 @@ class Class():
 
 <img src="https://i.ibb.co/h90n9fM/image.png" alt="image" border="0">
 
-Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile işaretleyen instance methodlar, `fget`, `fset` ve `fdel` methodlarına atandığı için main class'da `function attributes` kısmında bulunmamaktadırlar. Dolayısıyla bu instance methodlar, main class'dan türetilen instance'larda da bulunmazlar.
+Gördüğünüz gibi `getter`, `setter`, `deleter` property methodları ve `@property` decorator'u ile decore edilen instance methodlar, `fget`, `fset` ve `fdel` methodlarına atandığı için main class'da `function attributes` kısmında bulunmamaktadırlar. Dolayısıyla bu instance methodlar, main class'dan türetilen instance'larda da bulunmazlar.
 
 ### `getter` Methodu:
 Bir class'ın içinde tanımlı olan instance method üzerinde `getter` property methodunu kullanırsanız, bu instance method, ilgili property objesinin `fget` methodunda tanımlı, **read** olarak isimlendirilmiş **değer döndürme** işlemini gerçekleştiren fonksiyon olarak varlığını sürdürür (bundan sonra 'değer döndürme işleminden'den 'read işlemi' olarak bahsedilecek). Örnek:
@@ -690,7 +690,7 @@ Gördüğünüz gibi tam bir karmaşa oldu. Burada sorulması gereken soru; "Mad
 
     <img src="https://i.ibb.co/qdH8YsP/image.png" alt="image" border="0">
 
-    Böyle olmasının sebebi, daha önce de anlattığım `@property` decorator'ı ile işaretlenen fonksiyonun otomatik olarak `fget` methoduna atanmasıdır. `fget` methoduna atanmış, read işleminden sorumlu fonksiyonda `return self._sayı` kodu olmadığı için (daha önce de anlattığım gibi) `var` instance'ındaki `sayı` attribute'unun value'su `'None'` olur.
+    Böyle olmasının sebebi, daha önce de anlattığım `@property` decorator'ı ile decore edilen fonksiyonun otomatik olarak `fget` methoduna atanmasıdır. `fget` methoduna atanmış, read işleminden sorumlu fonksiyonda `return self._sayı` kodu olmadığı için (daha önce de anlattığım gibi) `var` instance'ındaki `sayı` attribute'unun value'su `'None'` olur.
 
     <img src="https://i.ibb.co/dQDzsGq/image.png" alt="image" border="0">
 
@@ -812,7 +812,7 @@ Base 0 means to interpret the base from the string as an integer literal.
 4
 ```
 
-**Not:** Decorator'ları anlatırken, decorator ile işaretlenen fonksiyonlar, property objesinin `fget`, `fset` ve `fdel` methodlarına atanıp main class'ın `function variables` kısmından silindiği için `Class.sayı_get()` şeklinde kullanamadığımızı biliyoruz. Ama `property()` fonksiyonu ile oluşturulan property'ler için bu geçerli değildir. Örnek:
+**Not:** Decorator'ları anlatırken, decorator ile decore edilen fonksiyonlar, property objesinin `fget`, `fset` ve `fdel` methodlarına atanıp main class'ın `function variables` kısmından silindiği için `Class.sayı_get()` şeklinde kullanamadığımızı biliyoruz. Ama `property()` fonksiyonu ile oluşturulan property'ler için bu geçerli değildir. Örnek:
 ```py
 class Class():
     def __init__(self):

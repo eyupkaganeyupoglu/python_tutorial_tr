@@ -109,21 +109,21 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 # Numeric Fonksiyonlar
 
 ## `bin(x)`
-`x` parametresine girilen integer sayının binary karşılığını döndürür. Output'u **string** type'dır ve her output `0b` ile başlar çünkü binary sayılar python'da `0b` ya da `0B` ile temsil edilir. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası döndürür. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#bin).
+`x` parametresine girilen integer sayının binary karşılığını döndürür. Output'u **string** type'dır ve her output `0b` ile başlar çünkü binary sayılar Python'da `0b` ya da `0B` ile temsil edilir. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#bin).
 ```py
 print(bin(10)) # Output: 0b1010
 print(bin(10[2:])) # Output: 1010
 ```
 
 ## `oct(x)`
-`x` parametresine girilen integer sayının octal karşılığını döndürür. Output'u **string** type'dır ve her output `0o` ile başlar çünkü binary sayılar python'da `0o` ile temsil edilir. Bu sayede index işlemleri yapabiliriz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası döndürür. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#oct).
+`x` parametresine girilen integer sayının octal karşılığını döndürür. Output'u **string** type'dır ve her output `0o` ile başlar çünkü binary sayılar Python'da `0o` ile temsil edilir. Bu sayede index işlemleri yapabiliriz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#oct).
 ```py
 print(oct(10)) # Output: 0o12
 print(oct(10[2:])) # Output: 12
 ```
 
 ## `hex(x)`
-`x` parametresine girilen integer sayının hexadecimal karşılığını döndürür. Output'u **string** type'dır ve her output `0x` ile başlar çünkü binary sayılar python'da `0x` ile temsil edilir. Bu sayede index işlemleri yapabiliriz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası döndürür. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hex).
+`x` parametresine girilen integer sayının hexadecimal karşılığını döndürür. Output'u **string** type'dır ve her output `0x` ile başlar çünkü binary sayılar Python'da `0x` ile temsil edilir. Bu sayede index işlemleri yapabiliriz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hex).
 ```py
 print(hex(10)) # Output: 0xa
 print(hex(10[2:])) # Output: a
@@ -170,7 +170,7 @@ print(round(-2.5)) # Output: -2
 print(round(0.5)) # Output: 0
 print(round(-0.5)) # Output: 0
 ```
-**Dikkat:** `round()` fonksiyonu, bazı sayılarda istenilen sonucu döndürmez. Örneğin `round(2.675,  2)` fonksiyonunun output'u `2.68` olması beklenirken `2.67` output'unu alırsınız. Bunun nedeni [Float Sapması](https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues)'dır.  Bu kusur, float sapması için spesifik önlemler almamış bütün programlama dillerinde vardır. Örneğin Normal şartlar altında `0.1 + 0.2` işleminin sonucu `0.3`'dür ama python'da `0.30000000000000004` sonucunu alırsınız.
+**Dikkat:** `round()` fonksiyonu, bazı sayılarda istenilen sonucu döndürmez. Örneğin `round(2.675,  2)` fonksiyonunun output'u `2.68` olması beklenirken `2.67` output'unu alırsınız. Bunun nedeni [Float Sapması](https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues)'dır.  Bu kusur, float sapması için spesifik önlemler almamış bütün programlama dillerinde vardır. Örneğin Normal şartlar altında `0.1 + 0.2` işleminin sonucu `0.3`'dür ama Python'da `0.30000000000000004` sonucunu alırsınız.
 ```py
 print(0.1 + 0.2) # Output: 0.30000000000000004
 ```

@@ -164,7 +164,7 @@ print(str(int_type), str(float_type), str(complex_type), sep="\n")
  - `object`,  karakter dizisini ifade eder.
  - `encoding`, encoding değerini ifade eder. Bilgisayar, karakterleri olduğu gibi anlamaz. Bilgisayar elektrik sinyallerini anlar. *ASCII* ya da *UNICODE* gibi kodlama sistemleri, harf, sayı, sembol gibi karakterlerin bilgisayarın anlayacağı karşılığa çevrilip depolandığı sistemlerdir. Bu çevirim bazen binary, bazen decimal, bazen de hexadecimal olabilir. Örneğin sizin `A` olarak bildiğiniz şeyin ASCII'deki decimal karşılığı `65`'dir. Bilgisayar bu decimal karşılığı değerlendirir. Kodlama sistemleri hakkında daha fazla bilgi için [**tıklayınız**](asd).
  - `errors`, kod çözme başarısız olduğunda verilen yanıttır. Default değeri `strict`'dir. Bu parametre 6 değer alabilir:
-	 - `strict`, herhangi bir encoding hatasıyla karşılaşınca bir `UnicodeDecodeError` hata mesajı döndüren default değerdir.
+	 - `strict`, herhangi bir encoding hatasıyla karşılaşınca bir `UnicodeDecodeError` hata mesajı yükselten default değerdir.
 	 - `ignore`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakteri yok sayar. Örnek: `şelam -> elam` 
 	 - `replace`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakterin yerine bir `?` koyar.
 	 - `xmlcharrefreplace`,  herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakterin yerine XML karakter referansını ekler.
@@ -476,7 +476,7 @@ print("'%f', '%f'" %(10, 10.354))
 ```
 
 #### `c` Harfi
-`'a'` gibi tek bir karakteri kabul eder. `"deneme"` gibi karakter dizilerini kabul etmez. Decimal bir sayı girildiğinde, o sayıya karşılık gelen ASCII karakterini ekrana basar. 255'den sonra aptal karakterler basmaya başlar. Deneyin görün.
+`'a'` gibi tek bir karakteri kabul eder. `"deneme"` gibi karakter dizilerini kabul etmez. Decimal bir sayı girildiğinde, o sayıya karşılık gelen ASCII karakterini yazdırır. 255'den sonra aptal karakterler basmaya başlar. Deneyin görün.
 
 ## `format()` methodu (Yeni Yöntem)
 `format()` methodu, string data type'ın bir methodudur. Stringleri biçimlendirmek için kullanılır. Süslü parantez `{}` içine `format()` methoduna girilen değerler **soldan sağa sırasıyla** atanır. Örnek:
@@ -534,9 +534,9 @@ for i in l1:
 Görüldüğü gibi ortalama işlemi istenildiği gibi olmadı çünkü ilk iki string 10 karakterden uzundu.
 
 ### Biçimlendirme Harfleri
-`format()` methodunun `%` formatlama yöneteminden en önemli farklarından birisi, koda, `%` ile kullanılan harfin belirttiği data type dışında bir data type verirseniz, genellikle hata vermez ve tip dönüşümü yapmaya çalışır. Bu tip dönüşümleri bazen hatalı sonuç verebilir. Ama `format()` methodu buna izin vermez. Süslü parantez içinde belirtilen harfin dışında bir değer atanmaya çalışırsa python hata mesajı döndürür.
+`format()` methodunun `%` formatlama yöneteminden en önemli farklarından birisi, koda, `%` ile kullanılan harfin belirttiği data type dışında bir data type verirseniz, genellikle hata vermez ve tip dönüşümü yapmaya çalışır. Bu tip dönüşümleri bazen hatalı sonuç verebilir. Ama `format()` methodu buna izin vermez. Süslü parantez içinde belirtilen harfin dışında bir değer atanmaya çalışırsa Python hata mesajı yükseltir.
 #### `s` Harfi
-Bu harf sayesinde süslü parantez `{}` sadece string değerleri kabul eder. String dışındaki bir değer atanmaya çalışıldığında da python `ValueError` hatası verir. Örnek:
+Bu harf sayesinde süslü parantez `{}` sadece string değerleri kabul eder. String dışındaki bir değer atanmaya çalışıldığında da Python `ValueError` hatası verir. Örnek:
 ```py
 print("{:s} ve {:s} iyi bir ikilidir!".format("Python", "Django"))
 # Output: Python ve Django iyi bir ikilidir!
@@ -688,7 +688,7 @@ print(metin)
  'dilinin pek çok yerde bir yılan figürü ile temsil edilmesi neredeyse bir gelenek',
  'halini almıştır diyebiliriz.']
 ```
-Görüldüğü gibi, `\n` karakterini referans alarak her satırı ayrı ayrı alıp bir liste döndürdü. Burada dikkat çeken şey, bazı liste elemanları tek tırnak `' '` içinde gösterilirken bazılarının çift tırnak `" "` içinde gösterilmesi.  Bunu python otomatik ayarlıyor. Çünkü bazı liste elemanlarında `90'lı` veya `Python's` gibi karakter dizilerinde tek tırnak `'` kullanıldığı için python bu elemanı çift tırnak içinde gösterir. Örnek: `"komedi grubunun, Monty Python's Flying Circus adlı gösterisinden esinlenerek"`
+Görüldüğü gibi, `\n` karakterini referans alarak her satırı ayrı ayrı alıp bir liste döndürdü. Burada dikkat çeken şey, bazı liste elemanları tek tırnak `' '` içinde gösterilirken bazılarının çift tırnak `" "` içinde gösterilmesi.  Bunu Python otomatik ayarlıyor. Çünkü bazı liste elemanlarında `90'lı` veya `Python's` gibi karakter dizilerinde tek tırnak `'` kullanıldığı için Python bu elemanı çift tırnak içinde gösterir. Örnek: `"komedi grubunun, Monty Python's Flying Circus adlı gösterisinden esinlenerek"`
 
 `boolean_value` parametresi default olarak `False` değeri alır. `boolean_value` parametresi `True` değeri alırsa, döndürdüğü listenin her elemanındaki karakter dizisinin sonuna bir `\n` ekler. Örnek Output:
 ```
@@ -980,7 +980,7 @@ print("İstanbul".rpartition("fil"))
 ```
 
 ## `encode(encoding='UTF-8',errors='strict')`
-Karakter dizisini istenilen kodlama sistemine göre kodlamamıza imkan tanır. `encoding` parametresinde istediğiniz kodlama sistemini seçersiniz. Bu değer default olarak `"UTF-8"`'e ayarlıdır. `errors` parametresinde, karakter dizisi `encoding`'de belirtilen kodlama sisteminde kodlanamazsa, python'un nasıl davranacağını belirlersiniz . Bu değer default olarak `"strict"`'e ayarlıdır. `errors` parametresine girilebilecek parametrelerin neler olduğunu ve ne anlama geldiklerini öğrenmek için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict).
+Karakter dizisini istenilen kodlama sistemine göre kodlamamıza imkan tanır. `encoding` parametresinde istediğiniz kodlama sistemini seçersiniz. Bu değer default olarak `"UTF-8"`'e ayarlıdır. `errors` parametresinde, karakter dizisi `encoding`'de belirtilen kodlama sisteminde kodlanamazsa, python'un nasıl davranacağını belirlersiniz . Bu değer default olarak `"strict"`'e ayarlıdır. `errors` parametresine girilebilecek parametrelerin neler olduğunu ve ne anlama geldiklerini öğrenmek için [tıklayınız](https://github.com/e-k-eyupoglu/Python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict).
 ```py
 print("çilek".encode("ascii", "replace"))
 print("çilek".encode("utf-8"))

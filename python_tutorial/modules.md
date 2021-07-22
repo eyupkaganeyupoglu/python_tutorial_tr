@@ -1,11 +1,11 @@
 # Modules (Modüller)
-Bazı işlevleri kolaylıkla yerine getirmemizi sağlayan birtakım function'ları ve attribute'ları içinde barındıran araçlardır/kütüphanelerdir. Bir fonksiyonu farklı python dosyalarında kullanabilmek için o fonksiyonu her dosyada tekrardan tanımlamak yerine modül olarak kullanılabilir. Kullanacağınız fonksiyonları bir python dosyasına tanımladıktan sonra o dosyayı `import` ederek içindeki fonksiyonları kullanabilirsiniz. Yani python ile yazdığınız her dosya, potansiyel bir modüldür. İmport ettiğin dosya **Module (Modül)** olarak isimlendirilir. Python3'deki standart modüller için [tıklayınız](https://docs.python.org/3/library/).
+Bazı işlevleri kolaylıkla yerine getirmemizi sağlayan birtakım function'ları ve attribute'ları içinde barındıran araçlardır/kütüphanelerdir. Bir fonksiyonu farklı Python dosyalarında kullanabilmek için o fonksiyonu her dosyada tekrardan tanımlamak yerine modül olarak kullanılabilir. Kullanacağınız fonksiyonları bir Python dosyasına tanımladıktan sonra o dosyayı `import` ederek içindeki fonksiyonları kullanabilirsiniz. Yani Python ile yazdığınız her dosya, potansiyel bir modüldür. İmport ettiğin dosya **Module (Modül)** olarak isimlendirilir. Python3'deki standart modüller için [tıklayınız](https://docs.python.org/3/library/).
 
 ## `import` Statement
 Modülleri içe aktarmak için `import` keyword'ünü kullanırız.
 ```py
 import random # random modülündeki her şeyi içe aktarır.
-print(dir(random)) # random ile ilgili bütün fonksiyon ve nitelikleri ekrana basar.
+print(dir(random)) # random ile ilgili bütün fonksiyon ve nitelikleri yazdırır.
 ```
 Bu şekilde import edilen modüller `module_name.function_or_attribute` syntax'ıyla kullanılır. Örnek:
 ```py
@@ -19,8 +19,8 @@ def module_imported():
 ```
 **Not:** Bir modül dosyasını programınızın içine import edebilmeniz için 3 seçeneğiniz vardır.
 1. Modül dosyasıyla program dosyası aynı path'da (dizin, dosyaların konumu.) olmalıdır.
-2. Modül dostası Python Lib'de olmalıdır. Bu klasör HP bilgisayarlarda `C:\Users\HP\AppData\Local\Programs\Python\Python39\Lib` path'ında bulunabilir. Buradaki `Python39`, python sürümünüze göre değişiklik gösterebilir.
-3. `sys.path`, python, import edilmeye çalışılan bir modül dosyasını ararken baktığı path'ların tuttuğu, `sys` modülünde bulunan bir listedir. Modül dosyası ile program dosyası, `D:\main_dosya\modules\modul.py` ve `D:\main_dosya\program\main.py` gibi birbiriyle alakasız iki klasör içindeyse `sys` modülündeki `sys.path` methoduna, modülünüzün bulunduğu path'ı `sys.path.append(r"D:\main_dosya\modules")` örneğindeki gibi eklerseniz, daha sonra o path'da bulunan modülünüzü normal `import modul` şeklinde import edip kullanabilirsiniz. Pylance gibi extension'lar bu yöntemi algılayamayıp, `import modul` kodundaki `modul` modülünü bulamadığı için `Import "modul" could not be resolved` hatası verebilirler. Bunlara aldırmanıza gerek yoktur çünkü kodunuz çalışır. Yine de her ihtimale karşı `print(sys.path)` kodunun döndürdüğü liste'de, `sys.path.append()` ile eklediğiniz path varmı diye kontrol etmekte fayda var.
+2. Modül dostası Python Lib'de olmalıdır. Bu klasör HP bilgisayarlarda `C:\Users\HP\AppData\Local\Programs\Python\Python39\Lib` path'ında bulunabilir. Buradaki `Python39`, Python sürümünüze göre değişiklik gösterebilir.
+3. `sys.path`, Python, import edilmeye çalışılan bir modül dosyasını ararken baktığı path'ların tuttuğu, `sys` modülünde bulunan bir listedir. Modül dosyası ile program dosyası, `D:\main_dosya\modules\modul.py` ve `D:\main_dosya\program\main.py` gibi birbiriyle alakasız iki klasör içindeyse `sys` modülündeki `sys.path` methoduna, modülünüzün bulunduğu path'ı `sys.path.append(r"D:\main_dosya\modules")` örneğindeki gibi eklerseniz, daha sonra o path'da bulunan modülünüzü normal `import modul` şeklinde import edip kullanabilirsiniz. Pylance gibi extension'lar bu yöntemi algılayamayıp, `import modul` kodundaki `modul` modülünü bulamadığı için `Import "modul" could not be resolved` hatası verebilirler. Bunlara aldırmanıza gerek yoktur çünkü kodunuz çalışır. Yine de her ihtimale karşı `print(sys.path)` kodunun döndürdüğü liste'de, `sys.path.append()` ile eklediğiniz path varmı diye kontrol etmekte fayda var.
 
 **Not:** Bir modülü import ettikten sonra, modül dosyasında bir değiliklik yaparsanız (Örneğin yeni bir fonksiyon eklerseniz), modülü import ettiğiniz dosya bu değişiklikleri tanımaz (yani yeni eklediğiniz fonksiyonu kullanamazsınız). Bunun önüne geçmek için, `importlib.reload(modül_adı)` modül methodunu kullanarak modülünüzü **reload** yapabilirsiniz. Modülü tekrardan `import modul` şeklinde import etmek işe yaramaz. `importlib.reload(modül_adı)` kullanın.
 
@@ -60,7 +60,7 @@ Modüldeki her şeyi, function ya da class gibi bir local scope'da import etmeye
 def module_imported():
     from random import *
 ```
-**Not:** Bu tavsiye edilen bir yöntem değildir çünkü ihtiyacınız olan olmayan her şeyi python dosyasının içine aktardığınız için performans dostu bir yöntem sayılmaz. Ek olarak, `from modül_adı import *` şeklinde import ettiğiniz modülün function ve attribute'leri ile, sizin yazdığınız function ve attribute'ler çakışabilir. Örnek:
+**Not:** Bu tavsiye edilen bir yöntem değildir çünkü ihtiyacınız olan olmayan her şeyi Python dosyasının içine aktardığınız için performans dostu bir yöntem sayılmaz. Ek olarak, `from modül_adı import *` şeklinde import ettiğiniz modülün function ve attribute'leri ile, sizin yazdığınız function ve attribute'ler çakışabilir. Örnek:
 ```py
 from random import randint
 
@@ -143,7 +143,7 @@ Her fonksiyon ve modül `__name__` attribute'sine sahiptir. Bu basitçe o fonksi
 import modul
 print(modul.__name__) # Output: modul
 ```
-**Not:** Bir Python programı bağımsız bir program olarak çalıştırıldığında `__name__` attribute'unun değeri `__main__` olur. Örneğin bir xxx.py python dosyasının `__name__` attribute'unu değeri `__main__` ise, xxx.py dosyasını herhangi bir dosyaya import ederek değil, diğer dosyalardan bağımsız olarak, doğrudan (üzerine çift tıklayarak çalıştırmak gibi)çalıştırmışsınız demektir.
+**Not:** Bir Python programı bağımsız bir program olarak çalıştırıldığında `__name__` attribute'unun değeri `__main__` olur. Örneğin bir xxx.py Python dosyasının `__name__` attribute'unu değeri `__main__` ise, xxx.py dosyasını herhangi bir dosyaya import ederek değil, diğer dosyalardan bağımsız olarak, doğrudan (üzerine çift tıklayarak çalıştırmak gibi)çalıştırmışsınız demektir.
 
 ## `__loader__` Attribute
 Bu attribute, ilgili modülü içe aktaran mekanizma hakkında bize çeşitli bilgiler veren birtakım araçlar sunar. Örnek:
@@ -199,7 +199,7 @@ print(random.__file__) # Output: C:\Users\HP\AppData\Local\Programs\Python\Pytho
 ```
 
 ## `__cached__` Attribute
-Modülle ilişkili önbelleğe alınmış (cached) dosyanın adını be konumunu (path) içeren bir attribute'dur. Konum bilgisi (path) mevcut python dizinine (current Python directory) göredir.
+Modülle ilişkili önbelleğe alınmış (cached) dosyanın adını be konumunu (path) içeren bir attribute'dur. Konum bilgisi (path) mevcut Python dizinine (current Python directory) göredir.
 ```py
 import random
 print(random.__cached__) # Output: C:\Users\HP\AppData\Local\Programs\Python\Python39\lib\__pycache__\random.cpython-39.pyc
@@ -228,7 +228,7 @@ All Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corpo
 ```
 
 ## `__spec__` Attribute
-Ayrıntılı bilgi için python doc'daki [The import system](https://docs.python.org/3/reference/import.html) kısmını inceleyebilirsiniz. Buradaki ModuleSpec ile ilgili bilgi için [tıklayınız](https://docs.python.org/3/library/importlib.html#importlib.machinery.ModuleSpec).
+Ayrıntılı bilgi için Python doc'daki [The import system](https://docs.python.org/3/reference/import.html) kısmını inceleyebilirsiniz. Buradaki ModuleSpec ile ilgili bilgi için [tıklayınız](https://docs.python.org/3/library/importlib.html#importlib.machinery.ModuleSpec).
 ```py
 import random
 print(random.__spec__) # Output: ModuleSpec(name='random', loader=<_frozen_importlib_external.SourceFileLoader object at 0x000002165D61D730>, origin='C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python39\\lib\\random.py')

@@ -1,5 +1,5 @@
 ﻿# Hata Yakalama Nedir?
-Python, herhangi bir hata ile karşılaşınca default hata mesajları gösterir. **Hata yakalama işlemleri**, bu hata mesajları üzerinde işlemler yapmamızı veya hata ile karşılaşınca python'un nasıl davranacağını belirlememizi sağlar.
+Python, herhangi bir hata ile karşılaşınca default hata mesajları gösterir. **Hata yakalama işlemleri**, bu hata mesajları üzerinde işlemler yapmamızı veya hata ile karşılaşınca Python'un nasıl davranacağını belirlememizi sağlar.
 
 ## Programcı Hataları (Error)
 Yazılan kod, dilin söz dizilimine (syntax'ına) uymaması durumunda karşılaştığımız `SyntaxError` buna örnek verilebilir. Bir programın, programlama dilinin syntax'ına uymaması durumunda oluşan hatalara **Syntax Error** ya da **Parsing Error** denir.
@@ -11,43 +11,43 @@ Eksik yazılan programlar, istenilenin dışında çalışır ve istenilen outpu
 Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasında oluşabilecek hatalara **exceptions** ya da **logical errors** denir. Build-in (gömülü) exception'lar aşağıda gösterilmiştir:
 | Exception | Hatanın Nedeni |
 |-----------|----------------|
-| `AssertionError` | Bir `assert` statement başarısız olduğunda döndürülen hata mesajıdır. |
-| `AttributeError` | Attribute assignment ya da reference fails'de döndürülen hata mesajıdır. |
-| `EOFError` | `input()` fonksiyonu, end-of-file şartına ulaştığında döndürülen hata mesajıdır. |
-| `FloatingPointError` | Bir floating point işlemi başarısız olduğunda döndürülen hata mesajıdır. |
-| `GeneratorExit` | Bir generator'ın `close()` methodu çağırıldığında döndürülen hata mesajıdır. generator'un ne olduğunu öğrenmek için [tıklayınız](asd). |
-| `ImportError` | Imported module bulunamadığında (not found) döndürülen hata mesajıdır. |
-| `IndexError` | Bir sequence'ın index'i out of range olduğunda döndürülen hata mesajıdır. |
-| `KeyError` | Bir dictionary'de `key` bulunamadığında (not found) döndürülen hata mesajıdır. |
-| `KeyboardInterrupt` | Kullanıcı interrupt key'e (`Ctrl+C` ya da `Delete`) bastığında döndürülen hata mesajıdır. |
-| `MemoryError` | Bir işlem sırasında out of memory olduğunda döndürülen hata mesajıdır. Out of memory, diyelim ki öyle bir program yazdınız ki, o program bütün RAM'inizi kullanıyor ve RAM'inizde yer kalmadı. RAM'inizde yer kalmamasına rağmen RAM kullanmaya çalışırsanız bu hata döndürülür. |
-| `NameError` | Bir variable, global veya local scope'da bulunamazsa (not found) döndürülen hata mesajıdır. |
-| `NotImplementedError` | [Abstract method](asd) tarafından döndürülen hata mesajıdır. |
-| `OSError` | Sistem işlemleri, sistemle ilgili hataya neden olduğunda döndürülen hata mesajıdır. |
-| `OverflowError` | Bir aritmetik işlemin sonucu temsil edilemeyecek kadar büyük olduğunda döndürülen hata mesajıdır. |
-| `ReferenceError` | Bir [garbage collection](https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python#:~:text=The%20process%20by%20which%20Python,object%27s%20reference%20count%20reaches%20zero.) referansına erişmek için zayıf bir proxy referansı kullanıldığında döndürülen hata mesajıdır. |
-| `RuntimeError` | Bir error, herhangi bir kategoriye girmediğinde döndürülen hata mesajıdır. |
-| `StopIteration` | `next()` fonksiyonu tarafından döndürülecek başka bir öğe kalmadığında döndürülen hata mesajıdır. |
-| `SyntaxError` | Python'un syntax'ına uymayan bir kodla karşılaşıldığında döndürülen hata mesajıdır. |
-| `IndentationError` | Indentation'ların hatalı kullanılması sonucu döndürülen hata mesajıdır. |
-| `TabError` | Indentation'lar birbiriyle tutarsız olduğunda (örneğin bazıları 2 spaces, bazıları 4 spaces uzunluğunda olduğunda) döndürülen hata mesajıdır. |
-| `SystemError` | [Internal error](https://www.google.com/search?q=what%20is%20internal%20error&client=opera-gx&hs=O1t&sxsrf=ALeKk003LeQ3bOnBhmUKaD-7ImUm4u-0FA:1621149477103&ei=JcegYKPkBcPgkgWt_IOoDw&oq=what%20is%20internal%20error&gs_lcp=Cgdnd3Mtd2l6EAMyBggjECcQEzIECCMQJzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIECAAQHjIECAAQHjoHCCMQsAMQJzoHCAAQRxCwAzoHCCMQsAIQJzoECAAQEzoICAAQDRAeEBNQvl9Yh2FgvmJoAnACeACAAbcBiAGfA5IBAzAuM5gBAKABAaoBB2d3cy13aXrIAQnAAQE&sclient=gws-wiz&ved=0ahUKEwjjite11M3wAhVDsKQKHS3-APUQ4dUDCAw&uact=5) tespit edildiğinde döndürülen hata mesajıdır. |
-| `SystemExit` | `sys.exit()` fonksiyonunun döndürdüğü hata mesajıdır. |
-| `TypeError` | Bir fonksiyon veya işlem, uygunsuz type'da bir objeye uygulandığında döndürülen hata mesajıdır. |
-| `UnboundLocalError` | Global variable üzerinde local scope'da işlem yapmaya çalıştığınızda döndürülen hata mesajıdır. Ayrıntılı bilgi için [tıklayınız](asd). |
-| `UnicodeError` | UNICODE'da `\U` ya da `\u` kullanımında, kod çözücü kodu çözemediğinde oluşan encoding ya da decoding hatasından dolayı döndürülen hata mesajıdır. |
-| `UnicodeEncodeError` | Stringlerdeki `encode()` methodu, kodu çözemediğinde döndürülen hata mesajıdır. |
-| `UnicodeDecodeError` | Stringlerdeki `decode()` methodu, kodu çözemediğinde döndürülen hata mesajıdır. |
+| `AssertionError` | Bir `assert` statement başarısız olduğunda yükseltilen hata mesajıdır. |
+| `AttributeError` | Attribute assignment ya da reference fails'de yükseltilen hata mesajıdır. |
+| `EOFError` | `input()` fonksiyonu, end-of-file şartına ulaştığında yükseltilen hata mesajıdır. |
+| `FloatingPointError` | Bir floating point işlemi başarısız olduğunda yükseltilen hata mesajıdır. |
+| `GeneratorExit` | Bir generator'ın `close()` methodu çağırıldığında yükseltilen hata mesajıdır. generator'un ne olduğunu öğrenmek için [tıklayınız](asd). |
+| `ImportError` | Imported module bulunamadığında (not found) yükseltilen hata mesajıdır. |
+| `IndexError` | Bir sequence'ın index'i out of range olduğunda yükseltilen hata mesajıdır. |
+| `KeyError` | Bir dictionary'de `key` bulunamadığında (not found) yükseltilen hata mesajıdır. |
+| `KeyboardInterrupt` | Kullanıcı interrupt key'e (`Ctrl+C` ya da `Delete`) bastığında yükseltilen hata mesajıdır. |
+| `MemoryError` | Bir işlem sırasında out of memory olduğunda yükseltilen hata mesajıdır. Out of memory, diyelim ki öyle bir program yazdınız ki, o program bütün RAM'inizi kullanıyor ve RAM'inizde yer kalmadı. RAM'inizde yer kalmamasına rağmen RAM kullanmaya çalışırsanız bu hata yükseltilen. |
+| `NameError` | Bir variable, global veya local scope'da bulunamazsa (not found) yükseltilen hata mesajıdır. |
+| `NotImplementedError` | [Abstract method](asd) tarafından yükseltilen hata mesajıdır. |
+| `OSError` | Sistem işlemleri, sistemle ilgili hataya neden olduğunda yükseltilen hata mesajıdır. |
+| `OverflowError` | Bir aritmetik işlemin sonucu temsil edilemeyecek kadar büyük olduğunda yükseltilen hata mesajıdır. |
+| `ReferenceError` | Bir [garbage collection](https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python#:~:text=The%20process%20by%20which%20Python,object%27s%20reference%20count%20reaches%20zero.) referansına erişmek için zayıf bir proxy referansı kullanıldığında yükseltilen hata mesajıdır. |
+| `RuntimeError` | Bir error, herhangi bir kategoriye girmediğinde yükseltilen hata mesajıdır. |
+| `StopIteration` | `next()` fonksiyonu tarafından döndürülecek başka bir öğe kalmadığında yükseltilen hata mesajıdır. |
+| `SyntaxError` | Python'un syntax'ına uymayan bir kodla karşılaşıldığında yükseltilen hata mesajıdır. |
+| `IndentationError` | Indentation'ların hatalı kullanılması sonucu yükseltilen hata mesajıdır. |
+| `TabError` | Indentation'lar birbiriyle tutarsız olduğunda (örneğin bazıları 2 spaces, bazıları 4 spaces uzunluğunda olduğunda) yükseltilen hata mesajıdır. |
+| `SystemError` | [Internal error](https://www.google.com/search?q=what%20is%20internal%20error&client=opera-gx&hs=O1t&sxsrf=ALeKk003LeQ3bOnBhmUKaD-7ImUm4u-0FA:1621149477103&ei=JcegYKPkBcPgkgWt_IOoDw&oq=what%20is%20internal%20error&gs_lcp=Cgdnd3Mtd2l6EAMyBggjECcQEzIECCMQJzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIECAAQHjIECAAQHjoHCCMQsAMQJzoHCAAQRxCwAzoHCCMQsAIQJzoECAAQEzoICAAQDRAeEBNQvl9Yh2FgvmJoAnACeACAAbcBiAGfA5IBAzAuM5gBAKABAaoBB2d3cy13aXrIAQnAAQE&sclient=gws-wiz&ved=0ahUKEwjjite11M3wAhVDsKQKHS3-APUQ4dUDCAw&uact=5) tespit edildiğinde yükseltilen hata mesajıdır. |
+| `SystemExit` | `sys.exit()` fonksiyonunun yükselttiği hata mesajıdır. |
+| `TypeError` | Bir fonksiyon veya işlem, uygunsuz type'da bir objeye uygulandığında yükseltilen hata mesajıdır. |
+| `UnboundLocalError` | Global variable üzerinde local scope'da işlem yapmaya çalıştığınızda yükseltilen hata mesajıdır. Ayrıntılı bilgi için [tıklayınız](asd). |
+| `UnicodeError` | UNICODE'da `\U` ya da `\u` kullanımında, kod çözücü kodu çözemediğinde oluşan encoding ya da decoding hatasından dolayı yükseltilen hata mesajıdır. |
+| `UnicodeEncodeError` | Stringlerdeki `encode()` methodu, kodu çözemediğinde yükseltilen hata mesajıdır. |
+| `UnicodeDecodeError` | Stringlerdeki `decode()` methodu, kodu çözemediğinde yükseltilen hata mesajıdır. |
 | `UnicodeTranslateError` | `UnicodeError` ile ilgili bir hata mesajıdır. `UnicodeError`'ün subclass'ıdır. |
-| `ValueError` | Bir fonksiyon, doğru type'da ancak uygun olmayan value'de bir arguman aldığında döndürülen hata mesajıdır. |
-| `ZeroDivisionError` | Bir division ya da modulo işleminde, ikinci operand'ın sıfır olmasından dolayı döndürülen hata mesajıdır. |
+| `ValueError` | Bir fonksiyon, doğru type'da ancak uygun olmayan value'de bir arguman aldığında yükseltilen hata mesajıdır. |
+| `ZeroDivisionError` | Bir division ya da modulo işleminde, ikinci operand'ın sıfır olmasından dolayı yükseltilen hata mesajıdır. |
 **Not:** Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/exceptions.html).
 
 # Hata Yakalama Kodları
-Hata yakalama kodlar, bir kod parçasında oluşabilecek hataları yakalayıp, python'un nasıl davranacağını belirlememizi sağlar.
+Hata yakalama kodlar, bir kod parçasında oluşabilecek hataları yakalayıp, Python'un nasıl davranacağını belirlememizi sağlar.
 
 ## `try` - `except <ErrorCode>` Yapısı
-`try` ile `except` arasındaki kodda oluşacak hataları yakalayıp, `except` bloğunda python'un davranışını belirlediğimiz yapıdır. Syntax:
+`try` ile `except` arasındaki kodda oluşacak hataları yakalayıp, `except` bloğunda Python'un davranışını belirlediğimiz yapıdır. Syntax:
 ```py
 try:
 	# Kodlar.
@@ -190,7 +190,7 @@ finally:
 ```
 
 ## `raise` Keyword'ü
-`raise` deyimi *yükseltmek* anlamına gelir. Python'da herhangi bir hataya sebep olacak bir işlemde, hata mesajları *yükseltilir*. Yani bu deyim, düzenleyebildiğimiz hata mesajları *yükseltmemizi* sağlar. Hata mesajı python'da kayıtlıysa bu deyimi kullanabilirsiniz. Yani bu deyim, `FalanFilanError` tarzı python'da olmayan hata mesajları üzerinde kullanılamaz. Örnek:
+`raise` deyimi *yükseltmek* anlamına gelir. Python'da herhangi bir hataya sebep olacak bir işlemde, hata mesajları *yükseltilir*. Yani bu keyword, düzenleyebildiğimiz hata mesajları *yükseltmemizi* sağlar. Hata mesajı Python'da kayıtlıysa bu deyimi kullanabilirsiniz. Yani bu keyword, `FalanFilanError` tarzı Python'da olmayan hata mesajları üzerinde kullanılamaz. Örnek:
 ```py
 tr_karakter = "şçğüöıİ"
 parola = input("Parolanız: ")
@@ -243,7 +243,7 @@ Traceback (most recent call last):
     print(bölünen/bölen)
 ZeroDivisionError: division by zero
 ```
-Yukarıdaki kodda hem `print("bir sayıyı 0'a bölemezsiniz")` kodu çalıştı, hem de default `ZeroDivisionError` hata mesajı ekrana bastırıldı. `try` - `except <ErrorCode>` - `as <identifier>` yapısı buna benzer olsa da aynı şey değildir. Örnek:
+Yukarıdaki kodda hem `print("bir sayıyı 0'a bölemezsiniz")` kodu çalıştı, hem de default `ZeroDivisionError` hata mesajı yazdırıldı. `try` - `except <ErrorCode>` - `as <identifier>` yapısı buna benzer olsa da aynı şey değildir. Örnek:
 ```py
 try:
 	bölünen = int(input("bölünecek sayı: "))
@@ -259,9 +259,9 @@ bölen sayı: 0
 bir sayıyı 0'a bölemezsiniz
 division by zero
 ```
-gördüğünüz gibi `try` - `except <ErrorCode>` - `as <identifier>` yapısında sadece `ZeroDivisionError` hatasının hata mesajı ekrana bastırıldı. Hatanın hangi line'da olduğu, hangi kodda oluştuğu vs. gibi bilgiler eksik.
+gördüğünüz gibi `try` - `except <ErrorCode>` - `as <identifier>` yapısında sadece `ZeroDivisionError` hatasının hata mesajı yazdırıldı. Hatanın hangi line'da olduğu, hangi kodda oluştuğu vs. gibi bilgiler eksik.
 
-`raise` keyword'ünü `from` keyword'ü ile birlikte kullanınca, python'un verdiği tepki değişir. Örnek:
+`raise` keyword'ünü `from` keyword'ü ile birlikte kullanınca, Python'un verdiği tepki değişir. Örnek:
 ```py
 try:
     print(i)
@@ -306,7 +306,7 @@ ValueError: From için
 Yukarıdaki output'da `The above exception was the direct cause of the following exception:`, yani `Yukarıdaki exception, aşağıdaki exception'ın doğrudan nedeniydi:` yazmaktadır. Bunun anlamı: "`ValueError` oluşma nedeni `NameError`'dür." şeklindedir.
 
 ## `assert <condition>, <error message>` Statement
-`assert` deyimi `raise` deyiminin aksine, özelleştirilebilir Hata kodları yaratmamıza olanak tanır. `assert <condition>,<error message>` syntax'ına sahiptir. Buradaki `<condition>`, logic bir ifadedir ve `False` sonucuna eşit olursa `assert` çalışır. `assert` çalıştığında `AssertionError` hata koduyla birlikte `<error message>`'da belirtilen hata mesajını döndürür. Örneğin, aşağıdaki iki kod aynı işleve sahiptir:
+`assert` deyimi `raise` deyiminin aksine, özelleştirilebilir Hata kodları yaratmamıza olanak tanır. `assert <condition>,<error message>` syntax'ına sahiptir. Buradaki `<condition>`, logic bir ifadedir ve `False` sonucuna eşit olursa `assert` çalışır. `assert` çalıştığında `AssertionError` hata koduyla birlikte `<error message>`'da belirtilen hata mesajını yükseltir. Örneğin, aşağıdaki iki kod aynı işleve sahiptir:
 ```py
 giriş = input("Merhaba! Adın ne? ")
 if  len(giriş) == 0:
@@ -334,6 +334,6 @@ Traceback (most recent call last):
     assert not (len(giriş) == 0), ("İsim bölümü boş.")
 AssertionError: İsim bölümü boş.
 ```
-**Not:** Bir python kodunu terminalden çalıştırırken `python -O dosya_adı` komutuyla çalıştırırsanız, python dosyası içindeki bütün `assert` statement'lerini görmezden gelir. Bunu sağlayan şey optimize anlamına gelen `-O` parametresidir. Eğer `-O` olmadan `python dosya_adı` koduyla çalıştırırsanız, python dosyası içindeki `assert` statement'lerini görmezden gelmez. Kanıtı:
+**Not:** Bir Python kodunu terminalden çalıştırırken `python -O dosya_adı` komutuyla çalıştırırsanız, Python dosyası içindeki bütün `assert` statement'lerini görmezden gelir. Bunu sağlayan şey optimize anlamına gelen `-O` parametresidir. Eğer `-O` olmadan `python dosya_adı` koduyla çalıştırırsanız, Python dosyası içindeki `assert` statement'lerini görmezden gelmez. Kanıtı:
 <img src="https://i.ibb.co/pZqwRNF/Ekran-Al-nt-s.png" alt="Ekran-Al-nt-s" border="0">
 

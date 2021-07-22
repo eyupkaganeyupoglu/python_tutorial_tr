@@ -1,5 +1,5 @@
 ﻿# Set (`set(iterable)`) Oluşturmak
-`set`, bildiğimiz matematikteki kümeler gibidir. Her öğeden bir tane bulundurur ve bu öğeler sıralı değildir. Dictionary'lerdeki gibi öğeleri sıralı olmadığı için index kavramı yoktur. Bir `set`'i `print()` fonksiyonu ile ekrana bastırmaya çalışırsanız, öğeleri sıralı olmadığı için programı her çalıştırdığınızda farklı sırada ekrana basılabilir. Örnek:
+`set`, bildiğimiz matematikteki kümeler gibidir. Her öğeden bir tane bulundurur ve bu öğeler sıralı değildir. Dictionary'lerdeki gibi öğeleri sıralı olmadığı için index kavramı yoktur. Bir `set`'i `print()` fonksiyonu ile yazdırmaya çalışırsanız, öğeleri sıralı olmadığı için programı her çalıştırdığınızda farklı sırada basılabilir. Örnek:
 ```py
 set_exp = {"bir", "iki", "üç"}
 print(set_exp)
@@ -119,7 +119,7 @@ print(k1) # Output: {2, 3, 4, 5}
 ```
 
 ## `remove(item)` Methodu
-`discard()` ile aynı şeyi yapar. Tek farkı, `item` parametresine set'de bulunmayan bir öğe girildiğinde `KeyError` hatası döndürür.
+`discard()` ile aynı şeyi yapar. Tek farkı, `item` parametresine set'de bulunmayan bir öğe girildiğinde `KeyError` hatası yükseltir.
 ```py
 k1 = {1, 2, 3, 4, 5}
 k1.remove(1)

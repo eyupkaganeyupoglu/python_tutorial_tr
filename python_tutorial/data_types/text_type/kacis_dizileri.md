@@ -3,7 +3,7 @@
 <img src="https://i.ibb.co/k8GSbKw/ASCII.jpg" alt="ASCII" border="0">
 
 ## `\` İşareti
-Bu işaret python'a, kendinden sonra gelen terimi görmezden gelmesini söyler. Örneğin, `\'` ve `\"` gibi kullanımla tırnak işaretlerinin işlevlerini bloke edip string içinde kullanabiliriz.
+Bu işaret Python'a, kendinden sonra gelen terimi görmezden gelmesini söyler. Örneğin, `\'` ve `\"` gibi kullanımla tırnak işaretlerinin işlevlerini bloke edip string içinde kullanabiliriz.
 ```py
 print("Bu \" ve bu \' tırnak işaretidir.")
 print('İstanbul\'un insanları...')
@@ -69,14 +69,14 @@ print('google' , '\b.' , '\bcom') # google.com
 ```
 
 ## `\u` Küçük UNICODE
-Karakterlerin UNICODE karşılıklarını bastırmamızı sağlar. 4 karakterden oluşur.
+Karakterlerin UNICODE karşılıklarını yazdırmamızı sağlar. 4 karakterden oluşur.
 ```py
 print("\u0130") # Output: İ
 print("\u0070") # Output: P
 ```
 
 ## `\U` Büyük UNICODE
-Karakterlerin UNICODE karşılıklarını bastırmamızı sağlar. 8 karakterden oluşur.
+Karakterlerin UNICODE karşılıklarını yazdırmamızı sağlar. 8 karakterden oluşur.
 ```py
 print("\U00000130") # Output: İ
 print("\U00000070") # Output: P

@@ -6,7 +6,7 @@ def func ():
 
 func() # Output: func() çağırıldı.
 ```
-Birbiri ardına aynı isimde iki fonksiyon tamınlandığında, python en son tanımlananı kabul eder. Örnek:
+Birbiri ardına aynı isimde iki fonksiyon tamınlandığında, Python en son tanımlananı kabul eder. Örnek:
 ```py
 def func ():
 	print("İlk tanımlanan fonksiyon.")
@@ -75,15 +75,12 @@ func(parametre1 = "arguman1", parametre2 = "arguman2", "arguman3") # SyntaxError
 func(parametre1 = "arguman1", parametre2 = "arguman2", parametre3 = "arguman3") # Doğru kullanım
 ```
 
-### İsimli ve İsimsiz Parametreler
-İsimsiz parametrelere isimli parametrelere **Keyword Arguments**,
-
 ### Default Value'ye Sahip Parametreler
 Fonksiyon tanımlarken, ilgili fonksiyona tanımladığın parametrelere default argümanlar tanımlayabilirsiniz. Bu sayede o fonksiyonu çağırdığında, ilgili parametreye bir argüman atanmazsa, ilgili parametre default değerini kullanır. Örneğin, `print()` fonksiyonunun çoğu parametresinin default değeri tanımlıdır. Bu fonksiyonu `print("Python")` şeklinde kullansanız bile, Python bunu aşağıdaki gibi görür:
 ```py
 print("Python", sep=" ", end="\n", file=sys.stdout, flush=False)
 ```
-Çünkü diğer `sep`, `end`, `file` ve `flush` parametrelerinin default value'ye sahip oldukları için, o parametrelere argüman atamazsanız python bu default değerleri kullanır.
+Çünkü diğer `sep`, `end`, `file` ve `flush` parametrelerinin default value'ye sahip oldukları için, o parametrelere argüman atamazsanız Python bu default değerleri kullanır.
 
 ### Yıldızlı parametreler
 Bir parametreye birden fazla argüman girmeni sağlayan parametre türüne, yıldızlı parametreler denir. Örneğin, `print()` fonksiyonunda `sep`, `end`, `file` ve `flush` parametreleri haricinde sınırsız string argüman girebiliyorsun. Bu durum, `*objects` yıldızlı parametre sayesinde mümkün oluyor. Yıldızlı parametreler 2'ye ayrılır. `*args` formatındaki tek yıldızlı parametrelere **Non Keyword Arguments**, `**kwargs` formatındaki çift yıldızlı parametrelere ise **Keyword Arguments** denir.
@@ -127,7 +124,7 @@ Kilo: 95
 ```
 
 #### `*args` ve `**kwargs` Beraber Kullanımı
-Bu iki parametre türünü beraber kullanırken kullanmanız gerekn syntax `func(*args, **kwargs)` şeklindedir. `func(**kwargs, *args)` şeklindeki kullanımlar `SyntaxError: invalid syntax`'e sebep olur. `func(*args, **kwargs)` fonksiyonuna parametre girerken, önce `*args` parametresine **non keyword argument**'leri girersiniz, sonra `**kwargs` parametresine **keyword argument**'leri girersiniz. **keyword argument**'leri girmeye başladığınızda python otomatik olarak `*args` parametresine **non keyword argument**'leri girmeyi bıraktığınızı anlar. Örnek:
+Bu iki parametre türünü beraber kullanırken kullanmanız gerekn syntax `func(*args, **kwargs)` şeklindedir. `func(**kwargs, *args)` şeklindeki kullanımlar `SyntaxError: invalid syntax`'e sebep olur. `func(*args, **kwargs)` fonksiyonuna parametre girerken, önce `*args` parametresine **non keyword argument**'leri girersiniz, sonra `**kwargs` parametresine **keyword argument**'leri girersiniz. **keyword argument**'leri girmeye başladığınızda Python otomatik olarak `*args` parametresine **non keyword argument**'leri girmeyi bıraktığınızı anlar. Örnek:
 ```py
 def  func(*args, **kwargs):
 	print(args)
@@ -163,7 +160,7 @@ print(func()) # Output: None
 Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. **Build-in**, **Local** ve **Global** olmak üzere 3 çeşit namespace (isim alanı) vardır. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir. **Build-in** namespace'e ise, [`site` modülü](https://docs.python.org/3/library/site.html#module-site)'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır.
 
 ## Scope Kavramı
-Scope, "kapsam" anlamına gelmektedir. Global namespace aynı zamanda "her şeyi kapsayan" anlamına gelen "global scope" olarak da adlandırılabilir. `def` ve `class` keyword'leri ile tanımladığımız fonksiyon ve class'lar, for loop'un initializer variable'ı local scope'a örnektir. Bir local scope, kendisini kapsayan bütün scope'ların (başka bir değişle "kapsamında bulunduğu bütün scope'ların") içerdiği objelere erişebilir. Örnek:
+Scope, "kapsam" anlamına gelmektedir. Global namespace aynı zamanda "her şeyi kapsayan" anlamına gelen "global scope" olarak da adlandırılabilir. `def` ve `class` statement'leri ile tanımladığımız fonksiyon ve class'lar, for loop'un initializer variable'ı local scope'a örnektir. Bir local scope, kendisini kapsayan bütün scope'ların (başka bir değişle "kapsamında bulunduğu bütün scope'ların") içerdiği objelere erişebilir. Örnek:
 ```py
 a = "a"
 def f1():
@@ -320,7 +317,7 @@ f1()
 ```
 2
 ```
-Gördüğünüz gibi `nonlocal` keyword'ü sayesinde, daha önce aldığımız `UnboundLocalError: local variable 'x' referenced before assignment` gibi hatalar almıyoruz. Başka bir örnek:
+Gördüğünüz gibi `nonlocal x` statement'ı sayesinde, daha önce aldığımız `UnboundLocalError: local variable 'x' referenced before assignment` gibi hatalar almıyoruz. Başka bir örnek:
 ```py
 def  f1(p1):
 	def  f2():
@@ -334,7 +331,7 @@ f1("Selam ")
 ```
 Selam Dünya!
 ```
-`nonlocal` keyword'ü ile üst scope'daki fonksiyonun parametresine de ulaşabiliyoruz. Başka bir örnek:
+`nonlocal p1` statement'ı ile üst scope'daki fonksiyonun parametresine de ulaşabiliyoruz. Başka bir örnek:
 ```py
 def f1():
     s = 0
@@ -425,7 +422,7 @@ Bu işaretlerin kendi başlarına, kullanıcıyı bilgilendirmek dışında bir 
 - [`mypy` GitHub](https://github.com/python/mypy)
 
 `mypy` sayesinde:
-- **Type Hint** (`:`) ve **Function Annotation** (`->`) ile belirtilen durumlara aykırı durumlar oluşunca `mypy` harekete geçer. Örneğin `name:str` şeklinde tanımladığınız `name` parametresine string type dışında bir argüman girerseni veya `func` fonksiyonu string type dışında bir değer döndürürse `mypy` bir hata rapıru oluşturur.
+- **Type Hint** (`:`) ve **Function Annotation** (`->`) ile belirtilen durumlara aykırı durumlar oluşunca `mypy` harekete geçer. Örneğin `name:str` şeklinde tanımladığınız `name` parametresine string type dışında bir argüman girerseni veya `func` fonksiyonu string type dışında bir değer döndürürse `mypy` bir hata raporu oluşturur.
 - `mypy` modülünün aykırı durumlarla karşılaşınca bir hata raporu oluşturması, Python'un çalışmasına engel teşkil etmez. Yani Python her zaman yaptığı gibi kodu çalıştırır. Yani ilgili kodu çalıştırdığınızda `mypy`, Python'dan bağımsız olarak çalışır.
 
 - Python'un yine her zamanki gibi kodu çalıştırsa bile, .

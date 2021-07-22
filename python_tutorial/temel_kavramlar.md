@@ -78,13 +78,13 @@ Satırı
 - Herhangi bir klasör içinde ya da desktop'ta cmd açmak için `shift`'e basılı tutarken ekrana sağ tıklarsanız, karşınıza çıkan arayüzde PowerShell'i açabilirsiniz.
 <img src="https://i.ibb.co/vPjX3nS/resim-2021-05-02-123605.png" alt="resim-2021-05-02-123605" border="0">
 
-- Herhangi bir klasör açıkken arama çubuğuna cmd yazarsanız, o konuma ayarlı bir cmd penceresi açılır. O konumdaki bir python dosyasını çalıştırmak için `python dosya_ismi.py` komutunu kullanabilirsiniz.
+- Herhangi bir klasör açıkken arama çubuğuna cmd yazarsanız, o konuma ayarlı bir cmd penceresi açılır. O konumdaki bir Python dosyasını çalıştırmak için `python dosya_ismi.py` komutunu kullanabilirsiniz.
 <img src="https://i.ibb.co/JQczTMn/resim-2021-05-02-124133.png" alt="resim-2021-05-02-124133" border="0">
 
 - cmd'yi çalıştırdıktan sonra herhangi bir adrese gitmek istiyorsanız `cd adres` komutunu kullanabilirsiniz. Örnek: `cd desktop/Files`
 
 # Python sürümleri
-Python’ın `2.x` serisi ile çalışan bir program Python’ın `3.x` serisi ile muhtemelen çalışmayacaktır. Aynı şekilde bunun tersi de geçerlidir. Bu gibi durumlarda kullanıcıya bir uyarı mesajı göstermek gerekebilir. Kodlarınıza `#!/usr/bin/env pythonX.X veya #! pythonX.X` gibi bir satır eklemek bir çözüm olabilir ama yeterli değildir. Bu satırlar programınızın pythonX.X sürümünde çalışmadığını belirtmiş oluyorsunuz ama eğer çalıştırılırsa ne olacağını belirtmiyorsunuz. Buna çözüm olarak "sys" modülündeki "versiyon_info" değişkeninden yararlanabiliriz.
+Python’ın `2.x` serisi ile çalışan bir program Python’ın `3.x` serisi ile muhtemelen çalışmayacaktır. Aynı şekilde bunun tersi de geçerlidir. Bu gibi durumlarda kullanıcıya bir uyarı mesajı göstermek gerekebilir. Kodlarınıza `#!/usr/bin/env pythonX.X veya #! pythonX.X` gibi bir satır eklemek bir çözüm olabilir ama yeterli değildir. Bu satırlar programınızın PythonX.X sürümünde çalışmadığını belirtmiş oluyorsunuz ama eğer çalıştırılırsa ne olacağını belirtmiyorsunuz. Buna çözüm olarak "sys" modülündeki "versiyon_info" değişkeninden yararlanabiliriz.
 ```py
 sys.version_info(major=|major2|, minor=|minor2|, micro=|micro2|, releaselevel='final', serial=0)
 ```
@@ -123,7 +123,7 @@ try:
 except  AttributeError:
 	print(_2x_metni)
 ```
-Veya kesin çözüm olarak, python'un bütün sürümlerinde çalışan aşağıdaki yöntemi kullanabilirsiniz:
+Veya kesin çözüm olarak, Python'un bütün sürümlerinde çalışan aşağıdaki yöntemi kullanabilirsiniz:
 ```py
 import sys
 
@@ -135,7 +135,7 @@ print(major, minor, micro, sep=".") # Python sürümünü gösterir
 ```
 
 ## Heap ve Stack Yöntemleri
-Python programları sırasında kullanılan her değer, bellekte yer kaplar. Bu yerin boyutu kimi zaman belli yani değişmezken, kimi zaman ise kullanıcının program esnasında gireceği verilere göre değişebilecek durumdadır. Bu farkları sağlayan **Stack** ve **Heap** adında iki yöntem vardır. **Stack** ve **Heap**'in her ikisi de RAM bölgesinde bulunur. **Stack**, bellekten statik olarak yer tahsisi için kullanılırken, **Heap**, dinamik olarak yer tahsisi içindir. Bu yüzden program esnasında boyutları bildirilmiş, değişmez bir değer kullanacaksak ve bu değer çok büyük bir veri değilse (Stack alanı sınırlı olduğundan çok büyük sayıda ve büyük tiplerde veri atanması belleğin dolmasına sebep olabilir) **stack**, boyutu belli olmayan bir değer kullanıyorsak (ki OOP'de bunlara obje denir) o zaman derleyici otomatik olarak **Heap**’ten yer tahsisi yapar. **Stack**’te yer alan veriler direk bellek içine yerleştirilir, dolayısıyla erişimi çok hızlıdır ve programın derleme aşamasında belleğe yerleşirler. **Heap** ise runtime (çalışma zamanı) anında kullanılırlar ve dağınık bir bellek göz yapısı olduğu için erişimi **stack** kadar kolay olmaz, dolayısıyla yavaş çalışır. Daha fazla bilgi ve örnek için [tıklayınız](http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/). Stack bellekteki veri hemen silinirken Heap bellekteki verinin silinmesi **Garbage Collector**’a (Çöp toplama mekanizmasına) bağlıdır. *Swift*, *Objective-C* gibi **Automatic Reference Counting**’e sahip mimarilerde bu konu derleyici tarafından otomatik olarak yapılır. **Stack** ve **Heap** bilgisi, dünyanın en vasat bellek yönetimine sahip scripting dillerinden birisi olan python için çok gerekli bir şey değil. Python, bellekle uğraşmanızı gerektirecek bir dil değildir. Bellekle uğraşmanızı gerektirecek bir dil olan **C** dil ailesiyle işiniz olursa **Stack** ve **Heap** kavramlarına kafa yorunuz.
+Python programları sırasında kullanılan her değer, bellekte yer kaplar. Bu yerin boyutu kimi zaman belli yani değişmezken, kimi zaman ise kullanıcının program esnasında gireceği verilere göre değişebilecek durumdadır. Bu farkları sağlayan **Stack** ve **Heap** adında iki yöntem vardır. **Stack** ve **Heap**'in her ikisi de RAM bölgesinde bulunur. **Stack**, bellekten statik olarak yer tahsisi için kullanılırken, **Heap**, dinamik olarak yer tahsisi içindir. Bu yüzden program esnasında boyutları bildirilmiş, değişmez bir değer kullanacaksak ve bu değer çok büyük bir veri değilse (Stack alanı sınırlı olduğundan çok büyük sayıda ve büyük tiplerde veri atanması belleğin dolmasına sebep olabilir) **stack**, boyutu belli olmayan bir değer kullanıyorsak (ki OOP'de bunlara obje denir) o zaman derleyici otomatik olarak **Heap**’ten yer tahsisi yapar. **Stack**’te yer alan veriler direk bellek içine yerleştirilir, dolayısıyla erişimi çok hızlıdır ve programın derleme aşamasında belleğe yerleşirler. **Heap** ise runtime (çalışma zamanı) anında kullanılırlar ve dağınık bir bellek göz yapısı olduğu için erişimi **stack** kadar kolay olmaz, dolayısıyla yavaş çalışır. Daha fazla bilgi ve örnek için [tıklayınız](http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/). Stack bellekteki veri hemen silinirken Heap bellekteki verinin silinmesi **Garbage Collector**’a (Çöp toplama mekanizmasına) bağlıdır. *Swift*, *Objective-C* gibi **Automatic Reference Counting**’e sahip mimarilerde bu konu derleyici tarafından otomatik olarak yapılır. **Stack** ve **Heap** bilgisi, dünyanın en vasat bellek yönetimine sahip scripting dillerinden birisi olan Python için çok gerekli bir şey değil. Python, bellekle uğraşmanızı gerektirecek bir dil değildir. Bellekle uğraşmanızı gerektirecek bir dil olan **C** dil ailesiyle işiniz olursa **Stack** ve **Heap** kavramlarına kafa yorunuz.
 
 **Stack:**
 - Kullanımı kolaydır.

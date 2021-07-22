@@ -100,6 +100,46 @@ print(t1[7]["Sözlük"]) # Output: dictionary
 ```
 `set` data type'ının neden `TypeError` verdiğini [şuradan](set) öğrenebilirsiniz. Dictionary'nin indeksine nasıl ulaşmak ilgili daha ayrıntılı bilgi için [tıklayınız](asdasd).
 
+# Demet Üreteçleri (Tuple Comprehensions)
+Kısa yoldan tuple üretmek için kullanılır. Küçük çaplı programlarda tercih edilir. Örnek:
+```py
+# 1. Yöntem
+c1 = list()
+for i in range(10):
+	c1 += [i]
+c1 = tuple(c1)
+print(c1) # Output: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+print(type(c1)) # Output: <class 'tuple'>
+
+# 2. Yöntem (Üreteç)
+c2 = tuple(i for i in range(10))
+print(c2) # Output: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+print(type(c2)) # Output: <class 'tuple'>
+
+# 3. Yöntem
+c3 = tuple(range(10))
+print(c3) # Output: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+print(type(c3)) # Output: <class 'tuple'>
+```
+Başka bir örnek:
+```py
+# 1. Yöntem
+liste1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+tümü1 = []
+for i in liste1:
+	for z in i:
+		tümü1 += [z]
+tümü1 = tuple(tümü1)
+print(tümü1) # Output: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+print(type(tümü1)) # Output: <class 'tuple'>
+
+# 2. Yöntem (Üreteç)
+liste2 = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+tümü2 = tuple(z for i in liste2 for z in i)
+print(tümü2) # Output: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+print(type(tümü2)) # Output: <class 'tuple'>
+```
+
 # Tuple Methodları
 
 ## `index(item)` Methodu

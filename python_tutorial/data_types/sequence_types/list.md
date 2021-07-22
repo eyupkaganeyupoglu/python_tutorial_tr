@@ -304,7 +304,7 @@ print(liste) # Output: ['Kiraz', 'Armut', 'Elma']
 ```
 
 ## `pop(index)` Methodu
-`remove()` gibi, bir listeden bir öğeyi silmek için kullanılır. `index` parametresine silmek istediğiniz öğeyi değil, o öğenin bulunduğu index'i yazmalısınız. `remove()`'dan farklı, sildiği öğeyi ekrana bastırmak için kullanılabilir.
+`remove()` gibi, bir listeden bir öğeyi silmek için kullanılır. `index` parametresine silmek istediğiniz öğeyi değil, o öğenin bulunduğu index'i yazmalısınız. `remove()`'dan farklı, sildiği öğeyi yazdırmak için kullanılabilir.
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 print(liste.pop(0)) # Output: Elma

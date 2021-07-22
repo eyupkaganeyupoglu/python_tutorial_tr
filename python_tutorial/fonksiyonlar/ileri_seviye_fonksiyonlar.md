@@ -10,7 +10,7 @@ func2 = lambda p1,p2: (p1 + p2)
 print(func2(2,3)) # Output: 5
 print(func2) # Output: <function <lambda> at 0x000002243DB2BF70>
 ```
-`func1` ile `func2` aynı işleve sahiptir. `lambda` fonksiyonuna tanımlanan `arguments`, `def` ile tanımlanan fonksiyonlardaki parametre kısmına denk gelmektedir. `:`'dan sonraki kısım da `def` ile tanımlanan fonksiyonlardaki `return` keyword'ünü temsil eder. Örnek:
+`func1` ile `func2` aynı işleve sahiptir. `lambda` fonksiyonuna tanımlanan `arguments`, `def` ile tanımlanan fonksiyonlardaki parametre kısmına denk gelmektedir. `:`'dan sonraki kısım da `def` ile tanımlanan fonksiyonlardaki `return` statement'ını temsil eder. Örnek:
 ```py
 func1 = lambda p1: ("Bu 2'dir.") if p1==2 else ("Bu 2 değildir.")
 print(func1(1)) # Output: Bu 2 değildir.
@@ -151,7 +151,7 @@ Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
 - **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next).
 
-[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu ile, **Iterable** (tekrarlanabilir) bir objenin template'i kullanılara bir **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir objeden kopyaladıkları template üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
+[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu ile, **Iterable** (tekrarlanabilir) bir objenin template'i kullanılara bir **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası yükseltilir. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir objeden kopyaladıkları template üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
 ```py
 liste = ["l", "i", "s", "t", "e"]
 liste_iter1 = iter(liste)
@@ -189,7 +189,7 @@ print(next(iter_obj)) # Output: StopIteration
 ```
 **Not:** Bütün **Iterator**'ler **Iterable**'dir ama her **Iterable** obje, **Iterator** değildir. Örneğin bir `list` **Iterable** bir objedir ama **Iterator** değildir.
 
-**Not:** Bir **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası döndürülür. Örnek:
+**Not:** Bir **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası yükseltilir. Örnek:
 ```py
 iterable_item = ["selam", "merhaba"]
 iterator = iter(iterable_item)
@@ -276,16 +276,16 @@ Yukarıdaki kodda, `gen = generator()` kodu ile `generator()` çağırılır ve 
 **Iterator** ile **Generator**'ün farkları şunlardır:
 - **Generator** oluşturmak için fonksiyon kullanılır. **Iterator** oluşturmak için `iter()` ve `next()` fonksiyonları kullanılır.
 - **Generator** `yield` keyword'ünü kullanır ama **Iterator** kullanmaz.
-- **Generator**'daki `yield`, python'daki loop her duraklatıldığında local variable'ların durumlarını kaydeder. **Iterator** local variable'ları kullanmaz. **Iterator**'e, *iterate* edilebilecek *iterable* bir obje vermeniz yeterlidir. **Generator** ve **Iterator**'ın birbirinden en büyük farkı budur.
+- **Generator**'daki `yield`, Python'daki loop her duraklatıldığında local variable'ların durumlarını kaydeder. **Iterator** local variable'ları kullanmaz. **Iterator**'e, *iterate* edilebilecek *iterable* bir obje vermeniz yeterlidir. **Generator** ve **Iterator**'ın birbirinden en büyük farkı budur.
 - Bir **Generator**'a, herhangi bir sayıda `yield` statement tanımlanabilir.
-- Bir class'a **Iterator** implement ederek, **Iterator** ile kullanım desteği kazandırılabilir. **Generator**, python'da bir class'a ihtiyaç duymaz.
-- **Generator** yazmak için bir python fonksiyonu ya da **Comprehension** kullanabilirsiniz. **Iterator** yazmak için `iter()` ve `next()` fonksiyonlarını kullanmak zorundasınız.
+- Bir class'a **Iterator** implement ederek, **Iterator** ile kullanım desteği kazandırılabilir. **Generator**, Python'da bir class'a ihtiyaç duymaz.
+- **Generator** yazmak için bir Python fonksiyonu ya da **Comprehension** kullanabilirsiniz. **Iterator** yazmak için `iter()` ve `next()` fonksiyonlarını kullanmak zorundasınız.
 - Bir **Generator**, **Generator** objesi döndürür (`<generator object generator_exp at 0x0000023D508D6D60>`, `<class ‘generator’>`); bir **Iterator**, kullanılan **Iterable** class'a özel **Iterator** objesi döndürür (Örneğin bir list'i **Iterator**'e dönüştürürseniz, o **Iterator** objesi, oluşturulduğu **Iterable** class'a göre özelleşir: `<list_iterator object at 0x0000023D508EDFD0>`, `<class ‘list_iterator’>`).
 - **Iterator**, bellek açısından daha verimlidir (more memory-efficient). Bir **Generator**, `__sizeof__()` methoduyla kullanılırsa 32; bir **Iterator**, `__sizeof__()` methoduyla kullanılırsa 16 outputunu verir.
 - **Generator**, co-routines'de (ortak rutinler) daha fazla functionality sağlar.
 - **Generator**'ler ve **Iterator**'ler, **iterable object**'e (Yenilenebilir sınıflara) örnektir.
 
-**Not:** Bir **Generator** ya da **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası döndürülür. Örnek:
+**Not:** Bir **Generator** ya da **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası yükseltilir. Örnek:
 ```py
 def Generator():
     yield "selam"
@@ -304,7 +304,7 @@ print(next(iterator)) # Output: merhaba
 print(next(iterator)) # Output: StopIteration
 ```
 ## `yield` Keyword'ü
-`yield` keyword'ü, tek başınayken keyword, bir değer döndürürken (örneğin `yield local_vrb`) statement olarak isimlendirilir. Ne işe yaradığı yukarıda bahsedildi. Spesifik olarak aşağıdaki mekaniklere sahiptir:
+`yield` keyword'ünün ne işe yaradığı yukarıda bahsedildi. Spesifik olarak aşağıdaki mekaniklere sahiptir:
 
 Bir **Generator**'ın içinde başka bir **Generator** `yield` etmek için kullanılabilir. Örnek:
 ```py
@@ -697,7 +697,7 @@ main_dict = {"0 key":"0 value",
              "3 key":{"nested 3.1 key":"nested 3.1 value",
                       "nested 3.2 key":"nested 3.2 value"}}
 ```
-tarzı bir dictionary girilseydi `TypeError: string indices must be integers` hatası ile karşılaşılırdı çünkü `"0 key":"0 value"` argümanı yüzünden `for j in main_dict[i]` kodundaki `main_dict[i]`'ye denk gelen değer `"0 value"` olduğu için``for j in main_dict[i]` kodu bu string'i parça parça alacaktır. Bu yüzden `dict1.update({j:main_dict[i][j]})` kodundaki `main_dict[i][j]` kısmındaki `main_dict[i]`'ye denk gelen değer ve `j` variable'ının içerdiği değer string olduğu için python string bir değerin indexlerine string bir değerle ulaşamıyor (çünkü string bir data type'ın indexlerine `"0 value"[3]` gibi integer değerlerle ulaşırsın, `"0 value"['v']` gibi string bir değerle ulaşamazsın) ve `TypeError: string indices must be integers` hatası veriyor.
+tarzı bir dictionary girilseydi `TypeError: string indices must be integers` hatası ile karşılaşılırdı çünkü `"0 key":"0 value"` argümanı yüzünden `for j in main_dict[i]` kodundaki `main_dict[i]`'ye denk gelen değer `"0 value"` olduğu için``for j in main_dict[i]` kodu bu string'i parça parça alacaktır. Bu yüzden `dict1.update({j:main_dict[i][j]})` kodundaki `main_dict[i][j]` kısmındaki `main_dict[i]`'ye denk gelen değer ve `j` variable'ının içerdiği değer string olduğu için Python string bir değerin indexlerine string bir değerle ulaşamıyor (çünkü string bir data type'ın indexlerine `"0 value"[3]` gibi integer değerlerle ulaşırsın, `"0 value"['v']` gibi string bir değerle ulaşamazsın) ve `TypeError: string indices must be integers` hatası veriyor.
 
 ##### Örnek 2.2
 ```py

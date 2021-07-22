@@ -71,7 +71,7 @@ Yukarıdaki kodun outputlarının sebebini teker teker açıklamak gerekirse:
 - `print(Class().instance_method())`
     - `instance_method()` instance method'u, `__init__` fonksiyonunda tanımlanmış `instance_method` instance attribute'unun üzerinde işlem yapar. Sürecin nasıl işlediğini [Instance Attributes](asd) ve [Instance Methods](asd) konu başlıklarını öğrendiyseniz biliyorsunuzdur.
 
-`cls` prefix'i ile tanımlanan attribute'lar, `self` ile tanımlanan attribute'lar gibi class attribute'lara referanstır. Örnek:
+`cls` prefix'i ile tanımlanan attribute'lar, `self` ile tanımlanan attribute'lar gibi class attribute'lara atıfta bulunur. Örnek:
 ```py
 class Class():
     class_attribute = 0
@@ -128,8 +128,8 @@ var.class_method():        2 id: 1966859512144 (c)
 Buradaki output'ları parça parça açıklamak gerekirse:
 - Gördüğünüz gibi main class'da tanımlı olan `class_attribute` ile `__init__`'de tanımlı olan `self.class_attribute` ilk başta aynı attribute'ü temsil etse de, `var.class_attribute = 1` kodundan sonra main class'da tanımlı olan `class_attribute` ile `__init__`'de tanımlı olan `self.class_attribute` birbirlerinden farklı iki attribute'ü temsil eder hale geliyor. Çünkü main class'da tanımlı olan `class_attribute` `0` değerini içerirken, `__init__`'de tanımlı olan `self.class_attribute` `1` değerini içerir.
 - `Class.class_attribute = 2` kodundan sonra instance attribute olan `self.class_attribute` attribute'unun değeri ve ID'si aynı kalırken, main class'daki class attribute'sinin değeri ve ID'si değişir. Bundan şu çıkarımı yapabiliriz;
-    - Bir instance attribute, class attribute'a referans verse bile bu instance attribute'ü yeniden tanımladığımızda (redefinition) class attribute'dan bağımsız bir attribute'a dönüşür.
-    - Class method içinde tanımlanmış ve class attribute'e referans veren bir attribute (`class_attribute`'e referans veren `cls.class_attribute` gibi), referans verdiği class attribute'un değeri değiştirilse değişir (`class_attribute`'un değeri değiştirilince `cls.class_attribute`'un da değerinin değişmesi gibi) ya da kendisi değiştirilirse referans verdiği class attribute'un değeri değişir (`cls.class_attribute`'un değeri değiştirilince `class_attribute`'un da değerinin değişmesi gibi).
+    - Bir instance attribute, class attribute'a atıfta bulunsa bile bu instance attribute'ü yeniden tanımladığımızda (redefinition) class attribute'dan bağımsız bir attribute'a dönüşür.
+    - Class method içinde tanımlanmış ve class attribute'e atıfta bulunan bir attribute (`class_attribute`'e atıfta bulunan `cls.class_attribute` gibi), atıfta bulunduğu class attribute'un değeri değiştirilse değişir (`class_attribute`'un değeri değiştirilince `cls.class_attribute`'un da değerinin değişmesi gibi) ya da kendisi değiştirilirse atıfta bulunduğu class attribute'un değeri değişir (`cls.class_attribute`'un değeri değiştirilince `class_attribute`'un da değerinin değişmesi gibi).
 
 **Not:** Yukarıdaki kodda görüldüğü gibi class methodlara illa main class'dan (`Class.class_method()` gibi) ulaşacaksınız diye bir kural yok. Class methodlara instance'lardan da ulaşabilirsiniz (`var.class_method()` gibi). Ama hata riskini en aza indirmek için class methodlara main class'dan ulaşmak daha akıllıca bir seçimdir.
 
@@ -160,7 +160,7 @@ class Class():
 Class.static_method("Ahmet") # Output: Selam Ahmet! Static method tanımlandı.
 Class().static_method("Ali") # Output: Selam Ali! Static method tanımlandı.
 ```
-**Not:** Python bir class içine tanımlanan methodları, aksi belirtilmediği sürece instance method olarak değerlendirilir ve bu methodların ilk parametresi, instance attribute'lerin prefix'i olan `self` kelimesi olmak zorundadır. Bir methodu, `@classmethod` decorator'ını kullanarak Python'a class method olarak tanıtabiliyoruz ve bu methodların ilk parametresi, class attribute'lerin prefix'i olan `cls` kelimesi olmak zorundadır. Eğer static method olmasaydı, instance method'ların ve class method'ların ilk parametre kısıtlaması yüzünden python içine instance attribute'larla ya da class attribute'larla uğraşmadan, sadece belli görevleri yapan ve kendi içinde özelleşmiş (Bunun anlamı; static methodun içine hiçbir class ya da instance attribute tanımlanamaması) bir fonksiyonu main class içinde tanımlayamazdık, imkansız olurdu. Bunun gibi bir fonksiyonu ancak class'ın dışına tanımlayabilirdik ama bunun dezavantajlı olduğunu biliyoruz. Bu dezavantajları daha önce anlattım (`dir(Class)` ve `from modul import Class` dezavantajları).
+**Not:** Python bir class içine tanımlanan methodları, aksi belirtilmediği sürece instance method olarak değerlendirilir ve bu methodların ilk parametresi, instance attribute'lerin prefix'i olan `self` kelimesi olmak zorundadır. Bir methodu, `@classmethod` decorator'ını kullanarak Python'a class method olarak tanıtabiliyoruz ve bu methodların ilk parametresi, class attribute'lerin prefix'i olan `cls` kelimesi olmak zorundadır. Eğer static method olmasaydı, instance method'ların ve class method'ların ilk parametre kısıtlaması yüzünden Python içine instance attribute'larla ya da class attribute'larla uğraşmadan, sadece belli görevleri yapan ve kendi içinde özelleşmiş (Bunun anlamı; static methodun içine hiçbir class ya da instance attribute tanımlanamaması) bir fonksiyonu main class içinde tanımlayamazdık, imkansız olurdu. Bunun gibi bir fonksiyonu ancak class'ın dışına tanımlayabilirdik ama bunun dezavantajlı olduğunu biliyoruz. Bu dezavantajları daha önce anlattım (`dir(Class)` ve `from modul import Class` dezavantajları).
 
 Static methodlar, class methodlar gibi main class'ın her yerinden erişilebilir. Yani bir instance'ye method olarak ya da doğrudan main class'a bir method olarak tanımlanabilir. Örnek:
 ```py

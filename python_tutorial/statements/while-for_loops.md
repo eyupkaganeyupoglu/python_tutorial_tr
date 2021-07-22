@@ -19,7 +19,7 @@ print(max_number)
 Kaça kadar sayalım?: 10
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 ```
-Liste elemanlarını `len()` fonksiyonu yardımıyla while loop kullanarak bastırabilirsiniz.
+Liste elemanlarını `len()` fonksiyonu yardımıyla while loop kullanarak yazdırabilirsiniz.
 ```py
 liste = [12,15,18,26,38]
 index = 0
@@ -36,7 +36,7 @@ print(liste[index])
 `while` loop, koşul durumu `True` olduğu sürece çalışır demiştik. Buna göre, `while` loop'un koşul durumuna `true` value'sini verirsek `while (true)` şeklinde bir yapı elde etmiş oluruz ve bu loop'u çalıştırırsak kendini sonsuz kere tekrarlar. Bu yapıyı kullanışlı hale getirmek için ileride bahsedeceğimiz `break` deyimini kullanacağız.
 
 # `for` Loop
-`for` loop `for` loop'un `while` loop'dan farkı, tekrar sayısını manuel olarak ayarlayabilmemizdir. `for` loop, kendisine verilen **Iterable** objeden, loop içinde kullanmak için bir **Iterator** oluşturuyor. Bu aşama arka planda gerçekleşen bir işlem olduğu için kullanıcılar tarafından direkt göslemlenemez. Daha sonra bu **Iterator**, `StopIteration` hatası döndürene kadar yenilenmeye (next) devam eder. Aşağıdaki `for` ve `while` loop kodları biribiryle tamamen aynı çalışır:
+`for` loop `for` loop'un `while` loop'dan farkı, tekrar sayısını manuel olarak ayarlayabilmemizdir. `for` loop, kendisine verilen **Iterable** objeden, loop içinde kullanmak için bir **Iterator** oluşturuyor. Bu aşama arka planda gerçekleşen bir işlem olduğu için kullanıcılar tarafından direkt göslemlenemez. Daha sonra bu **Iterator**, `StopIteration` hatası yükseltilene kadar yenilenmeye (next) devam eder. Aşağıdaki `for` ve `while` loop kodları biribiryle tamamen aynı çalışır:
 ```py
 a = [1,2,3,4,5]
 for i in a:
@@ -73,7 +73,7 @@ Buradaki `<var>`, `for` loop'un scope'unda kullanılabilen bir local variable; `
 - **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next).
 
-[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası döndürülür. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
+[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası yükseltilir. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
 ```py
 liste = ["l", "i", "s", "t", "e"]
 liste_iter1 = iter(liste)
@@ -93,7 +93,7 @@ print(liste_iter2.__next__()) # Output: e
 ```
 **Not:** Bütün **Iterator**'ler **Iterable**'dir ama her **Iterable** obje, **Iterator** değildir. Örneğin bir `list` **Iterable** bir objedir ama **Iterator** değildir.
 
-**Not:** Bir **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası döndürülür. Örnek:
+**Not:** Bir **Iterator**, barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası yükseltilir. Örnek:
 ```py
 iterable_item = ["selam", "merhaba"]
 iterator = iter(iterable_item)
@@ -141,7 +141,7 @@ for i in a1,a2,a3:
 # Output: | Selam | | Ola | | Hello |
 ```
 **Örnek Program:**
-Aşağıdaki programda, `cumle` variable'sine girdiğiniz input değerindeki boşluk `" "` karakterlerini, underscore `"_"` karakteri ile değiştirip, son durumu ekrana basar.
+Aşağıdaki programda, `cumle` variable'sine girdiğiniz input değerindeki boşluk `" "` karakterlerini, underscore `"_"` karakteri ile değiştirip, son durumu yazdırır.
 ```py
 # Stringi editemek
 cumle=input("Bir cümle yazınız: ")
@@ -180,7 +180,7 @@ for s in ikinci_metin:      # ikinci_metin'de 's' dediğimiz bütün öğeler i�
 		if  not s in fark:  # eğer 's' fark'ta da yoksa
 			fark += s       # bu öğeyi fark değişkenine ekle
 			
-print(fark)                 # fark değişkenini ekrana bas
+print(fark)                 # fark değişkenini yaz
 ```
 **Output:**
 ```
@@ -247,7 +247,7 @@ print(l1,l2,l3, sep="\n")
 [2, 5, 8]
 [3, 6, 9]
 ```
-Gördüğünüz gibi `for i,j,k` yapısı böyle kullanılıyor. Aşağıdaki gibi bir listenin elemanlarını `for i,j,k` yapısını kullanarak teker teker ekrana bastıramayız. Bunun için nested `for` loop kullanabiliriz.
+Gördüğünüz gibi `for i,j,k` yapısı böyle kullanılıyor. Aşağıdaki gibi bir listenin elemanlarını `for i,j,k` yapısını kullanarak teker teker yazdıramayız. Bunun için nested `for` loop kullanabiliriz.
 ```py
 a6 = [( (1,2) , (3,4) ) , ( (7,8) , (9,10) )]
 for (x,y,z) in a6:
@@ -331,23 +331,23 @@ a = 1
 while a < 10: # a, 10'dan küçük olduğu sürece
 	a += 1    # a, 1 arttırılır.
 else:         # Ama a, 10'dan küçük olmazsa
-	print(a)  # a'nın değeri ekrana yazdırılır.
+	print(a)  # a'nın değeri yazdırılır.
 ```
 **`for` loop örneği:**
 ```py
 for i in  range(11): # 0'dan 10'a kadar (10 dahil) olan her bir `i` sayısı için
 	pass             # pass komutu çalıştırılır. Yani hiçbir işlem yapılmaz.
 else:                # range(11) objesinin sonuna ulaşılınca
-	print(i)         # `i` değerinin aldığı son değer ekrana yazdırılır.
+	print(i)         # `i` değerinin aldığı son değer yazdırılır.
 ```
 **Örnek program:**
 ```py
 veri_girisi = input("Sayı gir: ")     # Kullanıcıdan değer girmesi istenir.
 while  not veri_girisi.isnumeric():   # Kullanıcının girdiği değer sayı olmadığı müddetçe
-	print("Bu bir sayı değil.")       # "Bu bir sayı değil." ekrana bastır.
+	print("Bu bir sayı değil.")       # "Bu bir sayı değil." yazdır.
 	veri_girisi = input("Sayı gir: ") # Kullanıcıdan tekrar değer girmesi istenir.
 else: 								  # Ama kullanıcının girdiği değer sayı ise
-	print(veri_girisi)				  # Bu değer ekrana yazdırılır.
+	print(veri_girisi)				  # Bu değer yazdırılır.
 ```
 
 # İlgi Araçları
