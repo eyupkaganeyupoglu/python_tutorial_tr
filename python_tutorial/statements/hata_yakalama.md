@@ -22,7 +22,7 @@ Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasınd
 | `KeyboardInterrupt` | Kullanıcı interrupt key'e (`Ctrl+C` ya da `Delete`) bastığında yükseltilen hata mesajıdır. |
 | `MemoryError` | Bir işlem sırasında out of memory olduğunda yükseltilen hata mesajıdır. Out of memory, diyelim ki öyle bir program yazdınız ki, o program bütün RAM'inizi kullanıyor ve RAM'inizde yer kalmadı. RAM'inizde yer kalmamasına rağmen RAM kullanmaya çalışırsanız bu hata yükseltilen. |
 | `NameError` | Bir variable, global veya local scope'da bulunamazsa (not found) yükseltilen hata mesajıdır. |
-| `NotImplementedError` | [Abstract method](asd) tarafından yükseltilen hata mesajıdır. |
+| `NotImplementedError` | [Abstract method](https://www.geeksforgeeks.org/abstract-classes-in-python/) tarafından yükseltilen hata mesajıdır. |
 | `OSError` | Sistem işlemleri, sistemle ilgili hataya neden olduğunda yükseltilen hata mesajıdır. |
 | `OverflowError` | Bir aritmetik işlemin sonucu temsil edilemeyecek kadar büyük olduğunda yükseltilen hata mesajıdır. |
 | `ReferenceError` | Bir [garbage collection](https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python#:~:text=The%20process%20by%20which%20Python,object%27s%20reference%20count%20reaches%20zero.) referansına erişmek için zayıf bir proxy referansı kullanıldığında yükseltilen hata mesajıdır. |
