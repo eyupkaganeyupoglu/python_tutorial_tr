@@ -1,677 +1,870 @@
 # Class
-Class'lar, obje üretmemizi sağlayan data type'lardır. Class yapısı bizi, belli obje ve fonksiyon gruplarını her seferinde en baştan yazma zahmetinden kurtarır. Çünkü bir main class'dan, main class'ın bütün içeriğine sahip subclass'lar üreterek, main class'ın yeteneklerine sahip birçok yapıyı kolayca elde edebiliriz.
+Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu). Class'lar bizi belli obje ve fonksiyon gruplarını her seferinde en baştan yazma zahmetinden kurtarır. Çünkü bir class'dan, bu class'ın bütün içeriğine sahip istediğimiz sayıda **instance** adı verilen objeler üretilebilir.
 
 ## Class Definition
 `class <class_name>` statement kullanılarak class tanımlayabilirsiniz. Örnek:
 ```py
-class Class():
+class A():
     pass
 
-class Class: # Class ile aynı şey.
+class B:
     pass
 ```
-VSC debugger ile yukarıdaki koda baktığımızda `Class` class'ının hafızada `__main__.Class` şeklinde tanımlandığını görürüz. Bunun anlamı şudur: Bulunduğunuz Python dosyasının adı, o dosyanın içindeyken `__main__`'dir. Bunu bulunduğunuz dosyada `print(__name__)` kodunu çalıştırarak görebilirsiniz. Python'da class'ların class attribute'lerini ifade ederken `class.attribute` şeklinde ifade ederiz. Python dosyamızı da bütünüyle bir class olarak düşünürsek, `Class`' class'ı da Python dosyamızın (temsili olarak) bir attribute'si olarak düşünebiliriz. Bu yüzden bulunduğunuz Python dosyasının içindeki class `__main__.class_name` şeklinde ifade edilir. Bu class'dan oluşturulan `<__main__.class_name object at 0x0000022782837730>` gibi objelere de **instance** denir (object = instance = obje = nesne). `<__main__.class_name object at 0x0000022782837730>` bunun anlamı: `0x0000022782837730` bellek adresli obje `__main__.class_name` class'ından türetilmiş bir instance'dir.
+Class tanımlarken parantez kullanmak ve kullanmamak arasında (yukarıdaki gibi) bir fark yoktur. Bu class'lar bellekte `__main__.A` ve `__main__.B` isimleriyle depolanır (bundan sonra bu tarz class'lardan yer yer "main class" olarak bahsedilecek). Buradaki `__main__`, o an bulunduğunuz python dosyasını temsil eden bir isimdir. (bunu `print(__name__)` kodunu çalıştırarak test edebilirsiniz).
 
-## Class Instances
-Daha önce `class` keyword'ü kullanılarak tanımlanmış bir main class'dan (`__main__.class_name`), `<__main__.class_name object at 0x0000022782837730>` gibi objeler türetme işlemine **Instantiation** denir. Türetilen objeye ise **Instance** denir. Örnek:
+Python, `class` statement ile tanımlanan class'ları okurken içeriğini de okur. Bu sayede main class objesi yaratılırken (create), main class objesinin içine tanımlanmış attribute, method vb. diğer objeler de yaratılmış olur. Bu "okuma" olayını, class'ın içine bir `print()` fonksiyonu ekleyerek kanıtlayabiliriz. Örnek:
 ```py
-class Class(): # __main__.Class
-    pass
+class A:
+    class_attribute = "Class Attribute"
 
-Class() # <__main__.Class object at 0x0000022782837730>
-```
-Bu işlem, `def func():` gibi tanımladığımız bir fonksiyonu `func()` gibi çağırmaya (call) benzerdir. `Class()` ile oluşturulan instance, programın geri kalanında kullanılmak isterseniz, bu objeyi bir variable'a atayabilirsiniz. Böylece bu instance, programın run-time'ı (çalıştığı süre) boyunca bellekte kullanıma hazır bir şekilde depolanır. Ama `Class()` ile oluşturulan instance bir variable'da depolanmazsa, Python bir sonraki statement'a geçtiğinde bu instance bellekten silinir.
+    def method_exp1(self):
+        pass
 
-## Class Attributes
-Class'ların içine, `__init__` ya da herhangi bir fonksiyonun kapsamının dışında tanımlanan, değer tutan/depolayan variable'lara **class attribute** denir. Örnek:
-```py
-class Class():
-    attribute_1 = "Attribute 1"
-    attribute_2 = ["Attribute 2"]
-```
-Buradaki `attribute_1` ve `attribute_2` variable'ları bir class attribute'dir.
+    @classmethod
+    def method_exp2(self):
+        pass
 
-Python'un class'ları okuma ve class'lara davranma şekli fonksiyonları okuma ve fonksiyonlara davranma şeklinden farklıdır.
-- Python `def func():` şeklinde tanımladığınız fonksiyonu okuyup bu fonksiyonun objesini oluşturulduğunda, bu fonksiyonun objesinin içindeki variable'lara sadece o fonksiyon çağırıldığında ulaşılabilir. Çünkü Python, ancak bu fonksiyon çağırıldığında bu fonksiyonun bulunduğu line'a gidip fonksiyonu çalıştırır ve içeriğini okur. Bu "içeriğini okuma" sürecindeki bütün variable'lar local variable'lardır ve fonksiyon çalışmayı sonlandırdığında bu local variable'lar bellekten silinir. Yani pyhon, bir fonksiyonla karşılaştığında sadece o fonksiyonun objesini oluşturur (create), içeriğini okumaz.
-- Ama Class'larda içerik okunur. `class Class():` gibi bir class oluşturduğunuzda (create), Python, programı yukarıdan aşağıya okurken, fonksiyonlardaki gibi class objesini yaratıp, class'ın içeriği okumayı atlamaz. Class'ın içeriğini de okur. Bu yüzden bu okuma işlemi sırasında class'ın içinde tanımlanmış variable'lar (class attribute) hafızada tutulur ve fonksiyonlar (`print()` gibi) okunduktan hemen sonra çalıştırılır. Örnek:
-```py
-# modul.py dosyası
-class Class():
-    attribute_1 = "Attribute 1"
-    attribute_2 = ["Attribute 2"]
-    print(attribute_1,attribute_2,sep="\n")
+    @staticmethod
+    def method_exp3(self):
+        pass
 ```
-**Output:**
-```
-Attribute 1
-['Attribute 2']
-```
-**Not:** Bu durum bu Python dosyası import edildiğinde de yaşanır. Çünkü bu Python dosyasını import ettiğinizde, Python, o Python dosyasını yukarıdan aşağı okumaya başlar ve yukarıda anlattığım olay yaşanır. Örnek:
-```py
-# main.py dosyası
-import modul
-```
-**Output:**
-```
-Attribute 1
-['Attribute 2']
-```
-**Not:** Bir modul dosyasındaki bir class'ı kullanmak için o modülü `import modul` şeklinde import ettikten sonra `modul.Class` şeklinde kullanabileceğiniz gibi `form modul import Class` şeklinde class'ı import edip class'ı `modul` prefix'i olmadan da kullanabilirsiniz. Örnek:
+
+<img src="https://i.ibb.co/T8yYpbG/image.png" alt="image" border="0">
+
+**Not:** Bu durum bu, import işlemlerinde de yaşanır çünkü import edilen dosya baştan sona kadar okunur, class'ların içerikleri de dahil.
+
+**Not:** `modul.py` dosyasındaki `A` class'ını kullanmak için `modul.py` dosyasını `import modul` statement ile import ettikten sonra `modul.A` şeklinde kullanabileceğiniz gibi, `form modul import A` şeklinde class'ı import edip `modul` prefix'i olmadan da kullanabilirsiniz. Örnek:
 ```py
 # modul.py
-class Class():
-    print("modul.class çalıştı.")
-    var = "modul.class.var çalıştı."
+class A:
+    print("modul.A çalıştı.")
+    class_attribute = "Class Attribute"
 ```
 ```py
 # dosya_1.py
-import modul # Output: modul.class çalıştı.
-print(modul.Class().var) # Output: modul.class.var çalıştı.
+import modul # Output: modul.A çalıştı.
+print(modul.Class().class_attribute) # Output: Class Attribute
 ```
 ```py
 # dosya_2.py
-from modul import Class # Output: modul.class çalıştı.
-print(Class().var) # Output: modul.class.var çalıştı.
+from modul import Class # Output: modul.A çalıştı.
+print(Class().class_attribute) # Output: Class Attribute
 ```
-**Not:** Eğer Python class'ın bloğunu okurken `print()` ile karşılaştığı için sizin kontrolünüz dışında bir şeyler yazdırmasını istemiyorsanız pratik bir çözüm olarak bu class attribute'leri class'ın dışında yazdırabilirsiniz. Bu sayede bu class attribute'leri yazdırmak ya da yazdırmamak sizin kontrolünüzde olur. Örnek:
+Yukarıdaki kodları anlamadıysanız buradan sonraki **Instantiation** başlığındakileri öğrendikten sonra buraya tekrar bakınız.
+
+## Instantiation
+Main class'dan türetilen, türetildiği class'ın method (class'a tanımlanan fonksiyonlar) ve attribute'larına (class'a tanımlanan variable'lar) sahip olan objelere **instance** denir ("object = instance = obje = nesne" hepsi aynı şey). Bu işleme de **Instantiation** denir. Örnek:
 ```py
-class Class():
-    attribute_1 = "Attribute 1"
-    attribute_2 = ["Attribute 2"]
+class A:
+    pass
 
-print(Class.attribute_1,
-      Class.attribute_2, sep="\n")
+var = A()
 ```
-**Output:**
-```
-Attribute 1
-['Attribute 2']
-```
-Instantiation işleminde, main class'ın şablonu kullanılarak türetilen instance'lar özelleştirilebilir. Yani içerdiği instance attribute'larin veya class attribute'larin değerleri değiştirilebilir. Örnek:
+Gördüğünüz gibi `A` class'ını (`__main__.A`) `A()` şeklinde çağırdığımızda (call), elimize bir instance geçiyor (`<__main__.A object at 0x0000022782837730>`). Bu instance'ı bir variable'a atayarak programınızda kullanabilirsiniz. Bu instance'ı bir variable'a atamadan da kullanabilirsiniz. Örnek:
 ```py
-class Class():
-    attribute_1 = 1
+class A:
+    pass
 
-instance_1 = Class()
-instance_1.attribute_1 = 2
-print(instance_1.attribute_1) # Output: 2
-print(Class.attribute_1) # Output: 1
+A()
 ```
-Main class'dan türetilmiş instance'larda bulunan class attribute'lerinin davranışları farklı olabilir. Class attribute'ler değiştirilemez (immutable (`bool`, `int`, `float`, `complex`, `tuple`, `frozenset` vb.)) data type'lar ise, bu class'dan türetilmiş farklı instance'larda bu değerleri değiştirmek için bu class attribute'ları yeniden tanımlamanız (redefinition) gerekmektedir. Zaten daha önce de öğrendiğiniz gibi, immutable bir data type'ın value'sini değiştirmenin tek yolu onu yeniden tanımlamaktır (redefinition).
+Python `A()` kodunun bulunduğu statement'ı okuduğunda bir instance yaratır ama bir sonraki statement'a geçtiğinde yarattığı bu instance bellekten silinir. Bu yüzden tek kullanımlıktır.
+
+## Class Attributes
+Class methodların (daha sonra anlatılacak) veya doğrudan class'ların içinde, `__init__` ya da (class method hariç) herhangi bir user-defined fonksiyonun kapsamının dışında tanımlanan, değer tutan/depolayan variable'lara **class attribute** denir. Örnek:
 ```py
-class Class():
-    exp_attribute_1 = "String"
-    exp_attribute_2 = 1
-    exp_attribute_3 = 1.1234
-    exp_attribute_4 = 5+5j
-    exp_attribute_5 = tuple([1,2,3])
-    exp_attribute_6 = frozenset([1,2,3])
+class A:
+    class_attribute = "Class Attribute"
 
-a = Class()
-b = Class()
-
-b.exp_attribute_1 = "Değiştirilmiş String"
-b.exp_attribute_2 = 9
-b.exp_attribute_3 = 9.9876
-b.exp_attribute_4 = 9+9j
-b.exp_attribute_5 = tuple([9,8,7])
-b.exp_attribute_6 = frozenset([6,5,4])
-
-for i in dir(a):
-    if "exp_attribute_" in i:
-        eval(f"print('a.{i}:', a.{i}), id(i)")
-
-print("-"*40)
-
-for i in dir(b):
-    if "exp_attribute_" in i:
-        eval(f"print('b.{i}:', b.{i}), id(i)")
+var = A()
+print(var.class_attribute) # Output: Class Attribute
 ```
-**Output:**
-```
-a.exp_attribute_1: String
-a.exp_attribute_2: 1
-a.exp_attribute_3: 1.1234
-a.exp_attribute_4: (5+5j)
-a.exp_attribute_5: (1, 2, 3)
-a.exp_attribute_6: frozenset({1, 2, 3})
-----------------------------------------
-b.exp_attribute_1: Değiştirilmiş String
-b.exp_attribute_2: 9
-b.exp_attribute_3: 9.9876
-b.exp_attribute_4: (9+9j)
-b.exp_attribute_5: (9, 8, 7)
-b.exp_attribute_6: frozenset({4, 5, 6})
-```
-Gördüğünüz gibi `b` variable'ına atanmış instance'nin immutable class attribute'larını yeniden tanımlayarak değiştirip main class'dan ve `a` variable'ına atanmış instance'dan farklı değerlere sahip bir şablon elde etmiş olduk.
 
-Bir instance'daki class attribute'ları yeniden tanımladığımızda (redefinition) bu class attribute'lar, main class'daki class attribute'lar ve diğer instance'daki class attribute'lardan farklı bir objeye dönüşür (ID'si farklı olur). Örnek:
+Main class'ın class attribute'ları ile, main class'dan türetilen instance'ların class attribute'ları ilk başta aynı objeye bağlıdır.
+
+Main class'dan türetilen instance'lar ilk başta main class ile aynı class attribute'a sahiptir (yani bu class attribute'lar aynı objedir. ID'leri aynıdır). Ama sonradan bu instance'ların class attribute'larını yeniden tanımlarsanız (redefinition), bu class attribute ilgili instance için instance attribute'a dönüşür.
 ```py
-class Class():
-    a = 1
+class A():
+    class_attribute = "Class Attribute"
 
-var1 = Class()
-var2 = Class()
-print("Class.a:    ", Class.a, "id:", id(Class.a))
-print("var1.a:     ", var1.a, "id:", id(var1.a))
-print("var2.a:     ", var2.a, "id:", id(var2.a))
-var1.a = 2
-print("var1.a new: ", var1.a, "id:", id(var1.a))
-var2.a = 3
-print("var2.a new: ", var2.a, "id:", id(var2.a))
-Class.a = 4
-print("Class.a new:", Class.a, "id:", id(Class.a))
-```
-**Output:**
-```
-Class.a:    1 id: 1616316492080
-var1.a:     1 id: 1616316492080
-var2.a:     1 id: 1616316492080
-var1.a new: 2 id: 1616316492112
-var2.a new: 3 id: 1616316492144
-```
-Gördüğünüz gibi `var1`, `var2` instance'larinin ve `Class` main class objesinin ilk başta `a` class attribute'ünün ID'si aynıydı çünkü `var1` ve `var2` instance'ının class attribute objeleri, main class'ın class attribute'üne atıfta bulunuyordu. Sonra bu instance'ların class attribute'larını yeniden tanımlayınca (redefinition), bu instance'ların class attribute'ları main class'ın class attribute'undan farklı bir objeye dönüştü. Kanıt olarak bu instance'ların class attribute'larının son durumdaki (new) ID'lerine bakabilirsiniz.
+var = A()
 
-**Not:** Yukarıdaki örnekte görüşdüğü gibi, `Class` objesinin `a` class attribute'sini yeniden tanımladığımızda (redefinition) ID'si değişti, yani önceki main class'ın sahip olduğu class attribute'unden farklı bir class attribute'e dönüştü. Buradan şunu söyleyebiliriz; Yeniden tanımlama (redefinition) işlemi, instance attribute'ların ve class attribute'ların, data type'ları ne olursa olsun ID'sini değiştirir (çünkü adı üstünde, yeniden tanımlıyorsunuz).
+print(A.class_attribute) # Output: Class Attribute
+print(var.class_attribute) # Output: Class Attribute
+print(var.__dict__) # Output: {}
 
-Class attribute'ler değiştirilebilir (mutable (`list`, `set`, `dict` vb.)) data type'lar ise, bu class'dan türetilmiş farklı instance'lardaki class attribute'ların değerlerini değiştirmek için bu data type'ların methodları kullanılırsa, main class'dan türetilmiş instance'lerin class attribute objeleri, main class'daki class attribute'lere atıfta bulunacağı (aynı ID'ye sahip olacağı) için bu değişiklik main class ve bütün bu main class'dan türetilmiş instance'larda geçerli olur. Örnek:
+A.class_attribute = "New Class Attribute"
+print(A.class_attribute) # Output: New Class Attribute
+print(var.class_attribute) # Output: New Class Attribute
+print(var.__dict__) # Output: {}
+
+var.class_attribute = "Instance attribute"
+print(A.class_attribute) # Output: Class Attribute
+print(var.class_attribute) # Output: Instance Attribute
+print(var.__dict__) #Output: {'class_attribute': 'Instance attribute'}
+```
+`__dict__` methodunun ne işe yaradığını daha sonra daha detaylı anlatacağım. Şimdilik `__dict__` methodunun ilgili class ya da instance'ın içerdiği methodların objelerinin ve attribute'ların value'larının depolandığı bir `dict` olarak düşünebilirsiniz. İlk başta `class_attribute`, `A` class'ında ve `var` instance'ında aynı class attribute objesi olarak bulunmaktaydı. Bu class attribute'un value'sunu `A` class'ı üzerinden değiştirdiğimizde `var` instance'ı da bundan etkileniyordu çünkü hala aynı class attribute objesini kullanıyorlar. Ama aynı şeyi `var` instance üzerinden yaptığımızda `var` instance'ının `class_attribute` class attribute'u bir instance attribute'a dönüşüyor ve `A` class'ının class attribute'una bağımlılığı ortadan kalkıyor (farklı bir obje oluyor).
+
+**Not:** Class attribute'lar, instance'larda `__class__` adında bir method'da depolanırlar (`__class__` methodunun ne olduğu daha sonra anlatılacak).
+
+Üzerinde yeniden tanımlama (redefinition) işlemi yapılan her class attribute farklı bir objeye dönüşür (ID'leri değişir). Sahip olduğu value'yu değiştirmek için yeniden tanımlama (redefinition) işleminin zorunlu olduğu değiştirilemez (immutable (`bool`, `int`, `float`, `complex`, `tuple`, `frozenset` vb.)) data type'larda bu durumun önüne geçemeyiz ama değiştirilebilir (mutable (`list`, `set`, `dict` vb.)) data type'larda geçebiliriz. Örnek:
 ```py
-class Class():
-    exp_attribute_1 = [1,2,3]
-    exp_attribute_2 = set([4,5,6])
-    exp_attribute_3 = {"yedi":7, "sekiz":8, "dokuz":9}
+class A:
+    class_attribute_1 = "String"
+    class_attribute_2 = 1
+    class_attribute_3 = 1.1234
+    class_attribute_4 = 5+5j
+    class_attribute_5 = tuple([1,2,3])
+    class_attribute_6 = frozenset([1,2,3])
+    class_attribute_7 = [1,2,3]
+    class_attribute_8 = set([4,5,6])
+    class_attribute_9 = {"yedi":7, "sekiz":8, "dokuz":9}
 
-a = Class()
-b = Class()
+var1 = A()
+var2 = A()
 
-b.exp_attribute_1.append("new_item")
-b.exp_attribute_2.add("new_item")
-b.exp_attribute_3.update({"new":"item"})
+var2.class_attribute_1 = "Değiştirilmiş String"
+var2.class_attribute_2 = 9
+var2.class_attribute_3 = 9.9876
+var2.class_attribute_4 = 9+9j
+var2.class_attribute_5 = tuple([9,8,7])
+var2.class_attribute_6 = frozenset([6,5,4])
+var2.class_attribute_7.append("new_item")
+var2.class_attribute_8.add("new_item")
+var2.class_attribute_9.update({"new":"item"})
 
-for i in dir(a):
-    if "exp_attribute_" in i:
-        eval(f"print('a.{i}:', a.{i})")
+for i in dir(var1):
+    if "class_attribute_" in i:
+        eval(f"print('var1.{i}:', var1.{i})")
 print("-"*69)
-for i in dir(b):
-    if "exp_attribute_" in i:
-        eval(f"print('b.{i}:', b.{i})")
+for i in dir(var2):
+    if "class_attribute_" in i:
+        eval(f"print('var2.{i}:', var2.{i})")
 ```
 **Output:**
 ```
-a.exp_attribute_1: [1, 2, 3, 'new_item']
-a.exp_attribute_2: {4, 5, 6, 'new_item'}
-a.exp_attribute_3: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
+var1.class_attribute_1: String
+var1.class_attribute_2: 1
+var1.class_attribute_3: 1.1234
+var1.class_attribute_4: (5+5j)
+var1.class_attribute_5: (1, 2, 3)
+var1.class_attribute_7: [1, 2, 3, 'new_item']
+var1.class_attribute_8: {4, 5, 6, 'new_item'}
+var1.class_attribute_9: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
 ---------------------------------------------------------------------
-b.exp_attribute_1: [1, 2, 3, 'new_item']
-b.exp_attribute_2: {4, 5, 6, 'new_item'}
-b.exp_attribute_3: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
+var2.class_attribute_1: Değiştirilmiş String
+var2.class_attribute_2: 9
+var2.class_attribute_3: 9.9876
+var2.class_attribute_4: (9+9j)
+var2.class_attribute_5: (9, 8, 7)
+var2.class_attribute_6: frozenset({4, 5, 6})
+var2.class_attribute_7: [1, 2, 3, 'new_item']
+var2.class_attribute_8: {4, 5, 6, 'new_item'}
+var2.class_attribute_9: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
 ```
-Eğer immutable data type'lardaki gibi mutable data type class attribute'ları yeniden tanımlarsak (redefinition), bu sorun ortadan kalkar. Örnek:
-```py
-class Class():
-    exp_attribute_1 = [1,2,3]
-    exp_attribute_2 = set([4,5,6])
-    exp_attribute_3 = {"yedi":7, "sekiz":8, "dokuz":9}
+**ID'ler:**
+```
 
-a = Class()
-b = Class()
-
-b.exp_attribute_1 = [1, 2, 3, 'new_item']
-b.exp_attribute_2 = {4, 5, 6, 'new_item'}
-b.exp_attribute_3 = {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
-
-for i in dir(a):
-    if "exp_attribute_" in i:
-        eval(f"print('a.{i}:', a.{i})")
-print("-"*69)
-for i in dir(b):
-    if "exp_attribute_" in i:
-        eval(f"print('b.{i}:', b.{i})")
+          Class Attri 1  Class Attri 2  Class Attri 3  Class Attri 4  Class Attri 5  Class Attri 6  Class Attri 7  Class Attri 8  Class Attri 9
+Class A : 2193358095600  2193355729200  2193358170704  2193358170128  2193358391744  2193358336736  2193358095680  2193358339424  2193358020864
+var1    : 2193358095600  2193355729200  2193358170704  2193358170128  2193358391744  2193358336736  2193358095680  2193358339424  2193358020864
+var2    : 2193358212528  2193355729456  2193358170608  2193358170672  2193358391872  2193358338976  2193358095680  2193358339424  2193358020864
 ```
-**Output:**
-```
-a.exp_attribute_1: [1, 2, 3]
-a.exp_attribute_2: {4, 5, 6}
-a.exp_attribute_3: {'yedi': 7, 'sekiz': 8, 'dokuz': 9}
----------------------------------------------------------------------
-b.exp_attribute_1: [1, 2, 3, 'new_item']
-b.exp_attribute_2: {5, 4, 'new_item', 6}
-b.exp_attribute_3: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
-```
+Mutable data type'ların methodlarını kullanmak yerine yeniden tanımlama (redefinition) işlemi uygulasaydık, mutable data type'lar da farklı bir objeye dönüşecekti (ID'leri değişecekti).
 
 ## Instance Attributes
-**Instance Attribute**'lar ve **Class Attribute**'lar gibidir. Tek farkı, instance attribute'lara sadece instance'lar ulaşabilir. Yani instance attribute'lara main class'dan direkt ulaşamazsın. Örnek:
+Sadece instance methodların (daha sonra anlatılacak) veya `__init__` constructor'ının içinde tanımlanabilen, değer tutan/depolayan variable'lara **instance attribute** denir. Instance attribute'lara sadece instance'lar ulaşabilir, main class üzerinden ulaşılamaz. Örnek:
 ```py
-class Class():
-    exp1 = 1
+class A:
     def __init__(self):
-        self.exp2 = 2
+        self.a = 1
+        self.b = 2
+        self.c = 3
 
-print(Class.exp1) # Output: 1
-print(Class.exp2) # Output: AttributeError: type object 'Class' has no attribute 'exp2'
-print(Class().exp1) # Output: 1
-print(Class().exp2) # Output: 2
+    def func(self):
+        self.a = 4
+        self.b = 5
+        self.c = 6
+
+print(A.a) # AttributeError: type object 'A' has no attribute 'a'
+
+var = A()
+print(var.a, var.b, var.c) # Output: 1 2 3
+
+var.func()
+print(var.a, var.b, var.c) # Output: 4 5 6
+
+print(A.a) # AttributeError: type object 'A' has no attribute 'a'
 ```
-Dolayısıyla instance attribute'lar, instance'lara özel attribute'lardır diyebiliriz.
+Gördüğünüz gibi instance attribute'lara instance üzerincen ulaşılabilirken, main class üzerinden, `A.a` methodunu `A()` kodundan önce veya sonra talep etmemiz farketmeksizin ulaşılamadı.
 
-**Not:** Instance attribute'lar sadece instance methodlar içinde tanımlanabilir.
-
-### `__init__` Fonksiyonu ve `self`
-`__init__`, class'lara özgü bir fonksiyondur. `__init__` fonksiyonunun görevi, main class'dan instance oluşturulurken, instance için oluşturulacak instance attribute'leri (`self.a` gibi) ve işlevleri (`print()` gibi) tanımlamaktır. `__init__` fonksiyonu, main class'dan instance türetildiği anda çalışır. Başka bir deyişle, main class'dan instance türetilmeden önce main class okunurken, `__init__` fonksiyonunu okumaya sıra gelince Python sadece `def __init__(self):` kısmını okuyup `__init__` fonksiyon objesini oluşturur. Dolayısıyla Python bu sırada `__init__` fonksiyonunu çalıştırmaz ve içeriğini okumaz. Örnek:
+## `self` Parametresi
+Instance methodların ve `__init__` constructor'ının ilk parametresi özel bir anlama sahip olan `self` olmak zorundadır çünkü bu bir syntax kuralıdır. Aksi halde `TypeError: func() takes 0 positional arguments but 1 was given` gibi bir hata alırsınız. `self` parametresi instance attribute'lara özel olduğu için class attribute'larda kullanılamaz. Örnek:
 ```py
-class Class():
+class A:
+    self.attri = 1 # NameError: name 'self' is not defined
     def __init__(self):
-        self.check = "Class() ile instance oluşturulduğu anda __init__ Çalıştı." # instance attribute
-
-print(Class.check) # AttributeError: type object 'Class' has no attribute 'check'
-var = Class() 
-print(var.check) # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
+        self.attri = 2
 ```
-Gördüğünüz gibi `var = Class()` kodundaki gibi bir instance oluşturulmadan önce `__init__` fonksiyonu çalıştırılmadığı ve içeriği okunmadığı için `Class` main class objesi direkt `__init__` fonksiyonu içindeki `check` instance attribute'una ulaşamadı. Instance objesi oluşturulduktan sonra `print(Class.check)` kodunu çalıştırsak bile aynı hatayı alırdık çünkü `self.check` instance attribute'ü sadece instance'lere özeldir, sadece instance'lar ulaşabilir. Kanıtı:
+Bu parametreye farklı isimler de verebilirsiniz ama `self`, programcılar camiasında kalıplaşmış bir kullanım olmasından dolayı tercih edilir. Örnek:
 ```py
-class Class():
+class A:
     def __init__(self):
-        self.check = "Class() ile instance oluşturulduğu anda __init__ Çalıştı." # instance attribute
+        self.attri = "A.attri"
 
-
-var = Class() 
-print(Class.check) # AttributeError: type object 'Class' has no attribute 'check'
-print(var.check) # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
-```
-Bir main class içerisinde sadece instance'lerin ulaşabildiği `__init__` fonksiyonunun kapsamında veya user-defined (kullanıcı tanımlı) fonksiyonunun kapsamında bir işlem (örneğin `print()` gibi bir fonksiyon) tanımlarsak, program başlatıldığında Python'un main class'ın içeriğini okurken karşılaştığı `print()` fonksiyonlarını çalıştırması gibi, main class'dan bir instance oluşturulduğu için `__init__` fonksiyonu çalıştırıldığında da Python karşılaştığı işlemleri (örneğin `print()` gibi bir fonksiyon) çalıştırır. Örnek:
-```py
-class Class():
-    def __init__(self):
-        self.check = "Class() ile instance oluşturulduğu anda __init__ Çalıştı." # instance attribute
-        print(self.check) # işlev
-
-var = Class() # Output: Class() ile instance oluşturulduğu anda __init__ Çalıştı.
-```
-Yukarıdaki kodda, `var = Class()` kodu ile main class'dan bir instance türetildiğinde `__init__` fonksiyonu çalıştığı için `__init__` fonksiyonunun içeriği okunuyor ve bu sırada Python `print(self.check)` kodu ile karşılaşıp, bu kodu çalıştırıp, `Class() ile instance oluşturulduğu anda __init__ Çalıştı.` yazdırıyor.
-
-**Not:** Bir main class'dan her instance türetildiğinde, türetilen instance, kendine özel bir `__init__` fonksiyon objesine ve user-defined (kullanıcı tanımlı) fonksiyon objelerine sahip olur. Bu sayede herhangi bir çakışmaya maruz kalmadan yeniden tanımlama (redefinition) ya da aynı obje üzerinde işlem yapmaya (`Class().attribute.append` gibi) izin verir.
-
-Main class'dan türetilmiş bir instance'dan bir attribute talep ettiğinizde, Python main class içinde o attribute'ü önce instance attribute olarak arar, bulamazsa class attribute olarak arar, yine bulamazsa hata verir. Örnek:
- ```py
-class Class1():
-    a = 1
-    def __init__(self):
-        self.a = 2
-
-class Class2():
-    a = 1
-    def __init__(self):
-        a = 2
-
-class Class3():
-    pass
-    def __init__(self):
-        pass
-
-print(Class1().a) # Output: 2
-print(Class2().a) # Output: 1
-print(Class3().a) # Output: AttributeError: 'Class3' object has no attribute 'a'
-```
-Eğer class ve instance attribute'lerinin isimleri aynıysa ve siz spesifik olarak class attribute'e erişmek istiyorsanız, bu class attribute'ü direkt main class objesinden talep edin. Örnek:
-```py
-class Class1():
-    a = 1
-    def __init__(self):
-        self.a = 2
-
-print(Class1().a) # Output: 2
-print(Class1.a) # Output: 1
-```
-`__init__` fonksiyonunun ilk parametresine her instance attribute'leri temsil edecek parametre tanımlanır çünkü bu bir syntax kuralıdır. Bu parametre herhangi bir şey olabilir ama `self`, programcılar camiasında kalıplaşmış bir kullanım olduğu için tercih edilmelidir. Örnek:
-```py
-class Class1():
-    def __init__(self):
-        self.a = "Class1.a"
-
-class Class2():
+class B:
     def __init__(parametre):
-        parametre.a = "Class2.a"
+        parametre.attri = "B.attri"
 
-class Class3():
+class C:
     def __init__(at_arabasi):
-        at_arabasi.a = "Class3.a"
+        at_arabasi.attri = "C.attri"
 
-print(Class1().a) # Output: Class1.a
-print(Class2().a) # Output: Class2.a
-print(Class3().a) # Output: Class3.a
+print(A().a) # Output: A.attri
+print(B().a) # Output: B.attri
+print(C().a) # Output: C.attri
 ```
-`self` kelimesinin, class'ın kapsamındaki `__init__` ve instance method olarak kullanılacak bütün user-defined (kullanıcı tanımlı) fonksiyonların ilk parametresinde kullanılmak zorunda olan, instance attribute'lere atıfta bulunan bir prefix'dir. Yani bir main class'ın içinde instace attribute tanımlayacağınız zaman, her zaman `self` prefix'ini kullanmak zorundasınız.
 
-`self` parametresi şimdiye kadar anlattıklarımızdan ibaret değildir. Bir parametre varsa, o parametreye girilecek bir argüman da olmak zorundadır. Yani `self` parametresine yeri geldiğinde Python tarafından otomatik olarak, yeri geldiğinde manüel (elle) olarak bir argüman tanımlanır. Örnek:
+Self parametresi, main class'dan türetilen geçerli (current) instance'ı atıfta bulunur. Kanıtı:
 ```py
-class Class:
+class A:
     def __init__(self):
-        pass
-    
-    def func(self):
-        self.a = "self.a attribute"
-        print("Instance method func():", self.a)
+        print("Address of self        :", id(self), self)
 
-Class().func() # Output: Instance method func(): self.a attribute
-Class.func() # TypeError: func() missing 1 required positional argument: 'self'
-```
-Gördüğünüz gibi `Class().func()` kodu hata vermezken `Class.func()` kodu '`self` argümanı eksik' hatası verdi. Bunun sebebi şudur:
-- `Class().func()` kodunda '`self` argümanı eksik' hatası vermemesinin sebebi, bir instance üzerinden bir instance method çağırdığımızda, Python bu `self` parametresine otamatik olarak, üzerinden instance method çağırdığımız instace'sini argüman olarak tanımlıyor. Yani `Class().func()` kodundaki `Class()` instancesi, `def func(self):` methodundaki `self` parametresine argüman olarak tanımlanıyor (`def func(Class()):` gibi).
-- `Class.func()` kodunda '`self` argümanı eksik' hatası vermesinin sebebi, `func()` methodunu bir instance üzerinden çağırmadığımız için Python'un `self` parametresini otomatik dolduramamasıdır. Bu durumda `Class.func()` kodunun çalışması için `self` parametresine argüman olarak tanımlanması gereken instance'nin manuel olarak tanımlanması gerekmektedir. Bunu da basitçe `Class.func(Class())` şeklinde yapabilirsiniz ve sonuçta kodun çalıştığını görürsünüz.
-
-**Not:** `Class().func()` kodu ile `Class.func(Class())` kodu tamamen aynı şeyir. Örnek:
-```py
-class Class:
-    def __init__(self):
-        pass
-    
-    def func(self):
-        self.a = "self.a attribute"
-        print("Instance method func():", self.a)
-
-Class().func() # Output: Instance method func(): self.a attribute
-Class.func(Class()) # Output: Instance method func(): self.a attribute
-```
-`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lara da atıfta bulunabilirsiniz. Örnek:
-```py
-class Class1():
-    a = 1
-    def __init__(self):
-        self.a
-exp = Class1()
-print("Class1.a:    ", Class1.a, " id:", id(Class1.a))
-print("exp.a:       ", exp.a, " id:", id(exp.a))
-exp.a = 2
-print("exp.a new:   ", exp.a, " id:", id(exp.a))
+var = A()
+print("Address of class object:", id(var), var)
 ```
 **Output:**
 ```
-Class1.a:     1  id: 2267102406960
-exp.a:        1  id: 2267102406960
-exp.a new:    2  id: 2267102406992
+Address of self        : 1464086224848 <__main__.A object at 0x00000154E256DFD0>
+Address of class object: 1464086224848 <__main__.A object at 0x00000154E256DFD0>
 ```
-Gördüğünüz gibi en başta `self.a` instance attribute'sine değer atamamış olsak bile, main class'un `a` class attribute'si ile `exp` instance'sinin `self.a` instance attribute'sinin değerlerinin ve ID'lerinin aynı olduğunu görüyoruz. Buradan yola çıkarak, `self.a` instance attribute'si `a` class attribute'una atıfta bulunur diyebiliriz. Başka bir örnek:
+Buradan yola çıkarak, örneğin `self.a = 1` kodunun `A().a = 1` anlamına geldiği sonucunu çıkarabiliriz. `self.a = 1` kodunun `A().a = 1` anlamına gelmesi, instantiation işlemini anlamada önemli bir yere sahiptir. Örnek:
 ```py
-class Class():
+class A:
+    def __init__(self):
+        pass
+
+var = A()
+var.a = 1
+var.b = 2
+var.c = 3
+print(var.a, var.b, var.c) # Output: 1 2 3
+```
+`__init__` constructor'ında herhangi bir instance attribute tanımlı olmamasına rağmen var instance'ı `var.a = 1`, `var.b = 2` ve `var.c = 3` statement'larından sonra 3 farklı instance attribute'a sahip oldu. Kanıtı:
+
+<img src="https://i.ibb.co/2sSjmq9/image.png" alt="image" border="0">
+
+Instantiation işlemi de tam da bu şekilde çalışır. Instantiation işleminde ilk `__init__` constructor'ı çağırılır ve yukarıdaki olayın aynısı gerçekleşir. Örnek:
+```py
+class A:
+    def __init__(self):
+        self.a = 1
+        self.b = 2
+        self.c = 3
+
+var = A()
+print(var.a, var.b, var.c) # Output: 1 2 3
+```
+Buradaki `self` parametresine Python tarafından `var = A()` kodundaki `A()` kodunun yarattığı instance argüman olarak girilir. Bu argümana temsili olarak `X` dersek, `self.a = 1`, `self.b = 2`, `self.c = 3` kodları `X.a = 1`, `X.b = 2`, `X.c = 3` anlamına gelmektedir. Yukarıdaki olayı `setattr()` (daha sonra anlatılacak) build-in fonksiyonunu kullanarak da yapabilirsiniz.
+
+## Instance Methods
+Bir class içinde tanımlanan user-defined (kullanıcı tanımlı) fonksiyonlar, aksi belirtilmediği (`@classmethod` ya da `@staticmethod` decorator'ları ile decore edilmedikleri) sürece Python tarafından **instance method** olarak kabul edilir. Örnek:
+```py
+class A:
+    attri = 1
+    def __init__(self):
+        self.attri2 = 2
+
+    def func1(self):
+        return "asd"
+    
+    @classmethod
+    def func2():
+        pass
+
+    @staticmethod
+    def func3():
+        pass
+
+print(A.__dict__.get("__init__")) # Output: <function A.__init__ at 0x00000245394560D0>
+print(A.__dict__.get("func1")) # Output: <function A.func1 at 0x000002BAF9B26160>
+print(A.__dict__.get("func2")) # Output: <classmethod object at 0x000002BAF9B23FD0>
+print(A.__dict__.get("func3")) # Output: <staticmethod object at 0x000002BAF9B23FA0>
+```
+Gördüğünüz gibi aksi belirtilmediği için `func1` fonksiyonu ve `__init__` constructor'ı instance methoddur.
+
+Main class'ın instance method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların instance method'larını da etkiler. Örnek:
+```py
+class A:
+    def __init__(self):
+        pass
+
+    def func1(self):
+        pass
+
+var = A()
+
+print(var.__init__) #Output: <bound method A.__init__ of <__main__.A object at 0x0000022E5FFA3FD0>>
+A.__init__ = 1
+print(var.__init__) #Output: 1
+
+
+print(var.func1) #Output: <bound method A.func1 of <__main__.A object at 0x0000022E5FFA3FD0>>
+A.func1 = 1
+print(var.func1) #Output: 1
+```
+
+İlk olarak `__init__` constructor'ından bahsedelim.
+
+`__init__`, yapıcı (constructor) olarak bilinen, main class'dan instance türetilirken ilk çağırılan temel aşırı yükleme (overloading) methoddur. 
+
+`__init__` constructor'ı tanımlanmamış `A` ismindeki bir class'ı ele alalım. `A` class'ı `object` base class'ından biras aldığı (daha sonra anlatılacak) için `A` class'ına debugger ile baktığınızda `__init__` constructor'ının special variables sekmesinde `<slot wrapper '__init__' of 'object' objects>` şeklinde depolandığını görürsünüz. Kanıt:
+```py
+class A:
+    pass
+```
+
+<img src="https://i.ibb.co/Vv7zvzw/image.png" alt="image" border="0">
+
+<img src="https://i.ibb.co/XC7s4y5/image.png" alt="image" border="0">
+
+C'de uygulanan (implemented) bir special method'a erişmek (access) için bir extension type'ın dict'ine bir [slot wrapper](https://stackoverflow.com/questions/24708203/what-is-a-slot-wrapper-in-python#:~:text=A%20slot%20wrapper%20is%20installed,variant%20called%20method-wrapper) kurulur. Bu sayede C programlama dilinde yazılmış special methodları Python'da kullanabiliyoruz.
+
+`A` class'ından türetilen instance'a debugger ile baktığınızda `__init__` constructor'ının function variables değil, special variables sekmesinde `<method-wrapper '__init__' of A object at 0x000002288B12D430>` şeklinde depolandığını görürsünüz. Kanıt:
+```py
+class A:
+    pass
+
+var = A()
+```
+
+<img src="https://i.ibb.co/YX198Dv/image.png" alt="image" border="0">
+
+Slot wrapper her zaman unbound'dur ve method wrapper, slot wrapper ile ilişkilidir (bound). Bunları, slot wrapper ve method wrapper kavramlarını gördüğünüzde yadırgamamanız için anlattım.
+
+`__init__` constructor'ı tanımlanmış `A` ismindeki bir class'ı ele alalım. Bu durumda `A` class'ının kendi `__init__` constructor'ı, object base class'ın `__init__` constructor'ını geçersiz kıldığı (override) (daha sonra anlatılacak) için `<function A.__init__ at 0x000001D36879A430>` şeklinde depolanır.
+```py
+class A:
+    def __init__(self):
+        pass
+```
+
+<img src="https://i.ibb.co/749ZxJX/image.png" alt="image" border="0">
+
+`A` class'ından türetilen instance'lardaki `__init__` constructor'ları, `A` class'ının init constructor'ı ile ilişkilidir (bound) ve `<bound method A.__init__ of <__main__.A object at 0x000001D3687A13D0>>` şeklinde depolanır. Bu yüzden `A` class'ının `__init__` constructor'ına yaptığımız müdahaleler, `A` class'ından türetilen instance'ları da etkiler. Kanıtı:
+```py
+class A:
+    def __init__(self):
+        pass
+
+var1 = A()
+var2 = A()
+
+A.__init__ = "Hello"
+print(var1.__init__) # Output: "Hello"
+print(var2.__init__) # Output: "Hello"
+```
+**Not:** `__init__` constructor'ının mekanizması, Python geliştiricileri tarafından titizlikle ayarlanmıştır. Bu yüzden yukarıdaki gibi bu methodu kurcalamayın. Bu methodu işlevi doğrultusunda kullandığınız sürece sorun yaşamazsınız. Artık buradan sonraki kısımlarda `__init__` constructor'ının ve instance methodların kullanım alanlarını ve özelliklerini göreceğiz.
+
+Bir main class'dan her instance türetildiğinde, türetilen her instance kendisine özel instance attribute'lara sahip olur. Örnek:
+```py
+class A:
+    attri = 1
+    def __init__(self):
+        self.attri2 = 2
+
+var1 = A()
+```
+`var1` instance'ına debugger ile aşağıdaki gibi baktığımızda instance ve class attribute'ları ayırt edemeyiz.
+
+<img src="https://i.ibb.co/C7YsqcS/image.png" alt="image" border="0">
+
+Ama ilgili instance'ın special variables sekmesindeki `__dict__` methoduna baktığımızda instance attribute'ları ayırt edebiliriz.
+
+<img src="https://i.ibb.co/Q6qwGZM/image.png" alt="image" border="0">
+
+Gördüğünüz gibi `attri2` attribute'unun bir instance attribute olduğunu bu şekilde ayırt edebildik. Her instance, kedisine özel instance attribute'ları bu şekilde depolar.
+
+Aynı şey instance methodlar'da da geçerlidir. Instance methodların `__init__`'den farkı; instance methodlar `__init__` gibi instantiation işleminde otomatik olarak çağırılmadığı için içindeki instance attribute'ların bellekte depolanması için instance methodları elle 1 kere çağırmamız gerekmektedir. Örnek:
+```py
+class A:
+    def __init__(self):
+        self.attri1 = 123
+    
+    def func(self):
+        self.attri2 = 12334
+
+var = A()
+print(var.__dict__) # Output: {'attri1': 123}
+var.func()
+print(var.__dict__) # Output: {'attri1': 123, 'attri2': 12334}
+```
+Bu işlemin otomatik gerçekleşmesini istiyorsanız, ilgili instance methodu `__init__` içinde çağırabilirsiniz. Böylece instantiation işleminde `__init__` otomatik olarak çağırılınca ilgili instance method da otomatik çağırılmış olur. Örnek:
+```py
+class A:
+    def __init__(self):
+        self.attri1 = 123
+        self.func()
+    
+    def func(self):
+        self.attri2 = 12334
+
+var = A()
+print(var.__dict__) # Output: {'attri1': 123, 'attri2': 12334}
+```
+**Not:** `func()` fonksiyonunun içindeki `self.attri2` instance attribute'una `var.func().attri2` şeklinde ulaşmaya çalışırsanız `AttributeError: 'NoneType' object has no attribute 'attri2'` hatası alırsınız. Örnek:
+```py
+class A():
+
+    def func(self):
+        self.attri2 = "func attribute"
+        
+var = A()
+print(var.func().attri2) # AttributeError: 'NoneType' object has no attribute 'attri2'
+```
+Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_kavramlar.md#pythonun-çalışma-mantığı) kodları çalıştırır. `var.func().attri2` kodu şu sırayla çalışır:
+1. Python önce `var` instance'ı üzerinden `func` methodunu çağırır.
+2. `func` method'unda herhangi bir `return` statement olmadığı için `func` method'u `NoneType` (`<class 'NoneType'>`) döndürür.
+3. Bu işlemlerden sonra `var.func().attri2` kodu Python gözünde `NoneType.attri2` koduna dönüşür.
+4. `NoneType` objesinin `attri2` adında bir methodu olmadığı için `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası yükseltilir.
+
+Peki `func` methoduna `return self.attri2` statement eklersek? Örnek:
+```py
+class A():
+
+    def func(self):
+        self.attri2 = "func attribute"
+        return self.attri2
+        
+var = A()
+print(var.func().attri2) # AttributeError: 'str' object has no attribute 'attri2'
+```
+`var.func().attri2` kodu şu sırayla çalışır:
+1. Python önce `var` instance'ı üzerinden `func` methodunu çağırır.
+2. `func` method'u `self.attri2` instance attribute'unun value'su olan `"func attribute"` string'ini (`<class 'str'>`) döndürür.
+3. Bu işlemlerden sonra `var.func().attri2` kodu Python gözünde `"func attribute".attri2` koduna dönüşür.
+4. `"func attribute"` string objesinin `attri2` adında bir methodu olmadığı için `AttributeError: 'str' object has no attribute 'attri2'` hatası yükseltilir.
+
+**Not:** Class attribute'lar, instance'ların special variables sekmesindeki `__class__` methodunda tanımlıdır. Kanıt:
+
+<img src="https://i.ibb.co/Yb0WsY8/image.png" alt="image" border="0">
+
+Bu yüzden main class üzerinden class attribute'ların value'su değiştirdiğinde, bu değişiklik instance'lara da yansıyor. `__class__` methodunda tanımlı olan class objesi, bu instance'ın türetildiği main class objesidir.
+
+Her instance'ın kendisine özel instance attribute'lara sahip olması bize herhangi bir çakışmaya maruz kalmadan yeniden tanımlama (redefinition) ve aynı obje üzerinde (`A().attribute.append` gibi) işlem yapma özgürlüğü sağlar. Örnek:
+```py
+class A:
+    def __init__(self):
+        print("init çalıştı...")
+        self.attri_1 = 1
+        self.attri_2 = []
+
+var1 = A() # Output: init çalıştı...
+var2 = A() # Output: init çalıştı...
+
+var1.attri_2.append("item1")
+print(var1.attri_2) # Output: ['item1']
+print(var2.attri_2) # Output: []
+```
+Buradaki `attri_1` ve `attri_2` instance attribute'lardır (`__dict__` methodunda saklanır). Bu yüzden `var1`'de yapılan değişiklikler `var2`'yi etkilemez. Burada dikkat edilmesi gereken şey; her instance'ın kendi instance attribute'larına sahip olması, her instance'ın kendi `__init__` constructor objesine de sahip olduğu anlamına gelmez. Instance'lardaki `__init__`  constructor objeleri main class'ın `__init__` constructor objesi ile ilişkilidir (bound). Kanıtı:
+```py
+class A:
+    def __init__(self):
+        self.attri = 1
+
+var = A()
+print(var.attri) # Output: 1
+
+var.attri = 2
+print(var.attri) # Output: 2
+
+var.__init__()
+print(var.attri) # Output: 1
+```
+Gördüğünüz gibi `var` instance'ının `attri` instance attribute'unun value'sunu `2` olarak değiştirsek bile, `var.__init__()` koduyla `var` instance'ı üzerinden `A` class'ının `__init__` constructor'ı ile ilişkili `__init__` constructor'ını (bound method) çağırdığımızda, `attri` instance attribute'unun value'su tekrar `1` oluyor.
+
+Bir instance'da `__init__` constructor'ının içinde instance attribute olarak ve dışında class attribute olarak aynı isimde iki attribute varsa, bu instance, `__init__` constructor'ının içindeki instance attribute'u tanır. Örnek:
+```py
+class A:
+    attri_1 = 2
+    def __init__(self):
+        print("init çalıştı...")
+        self.attri_1 = 1
+
+var = A() # Output: init çalıştı...
+print(var.attri_1) # Output: 1
+```
+Bu senaryoda eğer özellikle class attribute olan `attri_1`'e erişmek istiyorsanız, bu class attribute'u direkt main class üzerinden çağırın. Örnek:
+```py
+class A:
+    a = 2
+    def __init__(self):
+        print("init çalıştı...")
+        self.a = 1
+
+var = A() # Output: init çalıştı...
+print(A.a) # Output: 2
+```
+
+`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lara da atıfta bulunabilirsiniz. Ama bu size herhangi bir kolaylık sağlamaz. Örnek:
+```py
+class A():
+    attri = 1
+    def __init__(self):
+        self.attri
+
+var = A()
+print("A attribute:  ", A.attri, "|", id(A.attri))
+print("var attribute:", var.attri, "|", id(var.attri))
+```
+**Output:**
+```
+A attribute:   1 | 1893013285168
+var attribute: 1 | 1893013285168
+```
+`var` variable'ına atanan instance'a temsili olarak `X` dersek: Buradaki `self.attri`, `X.attri` anlamına gelmektedir. `X.attri`'de direkt `attri` class attribute objesine atıfta bulunduğu için hata yükseltmez. Bu yüzden `self.attri` yazmakla yazmamak arasında işlevsel olarak herhangi fark yoktur. Başka bir örnek:
+```py
+class A():
     liste = []
     def __init__(self):
-        self.liste.append("F")
+        self.liste.append("New Item")
 
-print(Class.liste) # Output: []
-exp = Class()
-print(Class.liste) # Output: ['F']
-print(exp.liste) # Output: ['F']
+print(A.liste) # Output: []
+
+var1 = A()
+print(A.liste) # Output: ['New Item']
+print(var1.liste) # Output: ['New Item']
+
+var2 = A()
+print(A.liste) # Output: ['New Item', 'New Item']
+print(var1.liste) # Output: ['New Item', 'New Item']
+print(var2.liste) # Output: ['New Item', 'New Item']
 ```
-Gördüğünüz gibi `self.liste` instance attribute'ü, `liste` class attribute'una atıfta bulunduğu için `liste` class attribute'üne hata almadan `append` methodunu uygulayabildik. Burada dikkat edilmesi gereken şey, ilk başda `Class` class'ının `liste` class attribute'ü boşken, `exp = Class()` kodu ile instantiation işlemi yaptıktan sonra `__init__` fonksiyonu çalıştırıldığı için `self.liste.append("F")` kodu da çalıştı ve bellekte bulunan `__main__.Class` objesine etki ederek, class attribute olan `liste`'nin değerini değiştirdi. Bu yüzden `exp = Class()` işleminden sonra `print(Class.liste)` kodu boş liste yerine `['F']` listesini döndürüyor (yani `liste` ile eski `liste` aynı id'ye sahip, sadece içeriği değişti).
-
-`self` kelimesinin instance attribute'lara özel bir prefix olduğunu söylemiştik. Dolayısıyla `self` kelimdesini class attribute tanımlarken prefix olarak kullanamazsınız. Aynı zamanda `self` kelimesini, class methodlarının ilk parametresinde kullandığınız gibi class objesinin de ilk parametresine yazarsanız yine `NameError: name 'self' is not defined` hatası alırsınız. Kısaca `self` kelimesi, instance attribute'lara özel bir prefix'dir, class attribute prefix'i olarak kullanılamaz. Örnek:
+`var1` variable'ına atanan instance'a temsili olarak `X`, `var2` variable'ına atanan instance'a temsili olarak `Y` dersek: Benzer şekilde buradaki `self.liste`, `var1` instance'ı için `X.liste`, `var2` instance'ı için `Y.liste` anlamına gelmektedir. `X.liste` ve `Y.liste`'de direkt `liste` class attribute objesine atıfta bulunduğu için hata yükseltmez ve üzerinde `append` methodu uygulanabilir. Bu yüzden `A` main class'ından her instance türetildiğinde `__init__` ve beraberinde `self.liste.append("New Item")` çalıştığı için her seferinde `liste` class attribute'una `"New Item"` stringi ekleniyor. Bunlar instance methodlar için de geçerlidir. Örnek:
 ```py
-class Class1(self): # NameError: name 'self' is not defined
-    self.a = 1 # NameError: name 'self' is not defined
+class A():
+    liste = []
+    attri = 1
     def __init__(self):
-        self.a = 2
+        self.func()
+
+    def func(self):
+        print(self.attri)
+        self.liste.append("New Item")
+
+print(A.liste) # Output: []
+
+var1 = A() # Output: 1
+print(A.liste) # Output: ['New Item']
+print(var1.liste) # Output: ['New Item']
+
+var2 = A() # Output: 1
+print(A.liste) # Output: ['New Item', 'New Item']
+print(var1.liste) # Output: ['New Item', 'New Item']
+print(var2.liste) # Output: ['New Item', 'New Item']
 ```
-Instance attribute'ların diğer önemli özelliği, instance attribute'lara yaptığınız herhangi bir müdahele sadece ilgili instace'yi etkileyecektir. Bunun sebebi, main class'dan oluşturulan her instance'nin instance attribute'ları, diğer instance'ların instance attribute'larından farklı bir obje (ID'leri farklı) olmasıdır. Yani class attribute'lardaki gibi çakışmalar yaşanmadığı gibi instance attribute'larda yeniden tanımlama (redefinition) yapmak zorunda değilsiniz. Örnek:
+
+`__init__` constructor'ı içine tanımlayacağınız variable'ların hepsini `self` ile kullanmak zorunda değilsiniz. Örnek:
 ```py
-class Class():
-    def __init__(self):
-        self.liste = []
-        self.sayi = 1
-
-exp1 = Class()
-exp2 = Class()
-
-print("exp1.liste:    ", exp1.liste, "   | id:", id(exp1.liste))
-print("exp2.liste:    ", exp2.liste, "   | id:", id(exp2.liste))
-exp1.liste.append("F")
-print("exp1.liste new:", exp1.liste, "| id:", id(exp1.liste), end="\n\n")
-
-print("exp1.sayi:     ", exp1.sayi, "| id:", id(exp1.sayi))
-print("exp2.sayi:     ", exp2.sayi, "| id:", id(exp2.sayi))
-exp1.sayi = 2
-print("exp1.sayi new: ", exp1.sayi, "| id:", id(exp1.sayi))
-```
-**Output:**
-```
-exp1.liste:     []    | id: 1433189451072
-exp2.liste:     []    | id: 1433189465536
-exp1.liste new: ['F'] | id: 1433189451072
-
-exp1.sayi:      1 | id: 1433183545648
-exp2.sayi:      1 | id: 1433183545648
-exp1.sayi new:  2 | id: 1433183545680
-```
-Gördüğünüz gibi `exp1.liste` ile `exp2.liste` liste en başta farklı instance attribute objesi (ID'leri farklı) olduğu için class attribute'lardaki gibi çakışma yaşanmadı. 
-
-`self` kelimesinin instance attribute'lara özel bir prefix olduğunu ve `self` kullanılmadan instance attribute tanımlanamayacağını söylemiştik. Main class içindeki `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımladığınız bütün variable'lar instance attribute olarak (yani `self` prefix'i ile) tanımlanmak zorunda değildir. Örnek:
-```py
-class Class():
+class A():
     def __init__(self):
         sayi_1 = 4
         sayi_2 = 5
         self.sayi_3 = sayi_1 + sayi_2
 
-print(Class().sayi_1) # Output: AttributeError: 'Class' object has no attribute 'sayi_1'
-print(Class().sayi_2) # Output: AttributeError: 'Class' object has no attribute 'sayi_2'
-print(Class().sayi_3) # Output: 3
+print(A().sayi_1) # Output: AttributeError: 'Class' object has no attribute 'sayi_1'
+print(A().sayi_2) # Output: AttributeError: 'Class' object has no attribute 'sayi_2'
+print(A().sayi_3) # Output: 3
 ```
-Gördüğünüz gibi `sayi_1` ve `sayi_2` variable'larının başına `self` prefix'i getirmediğimiz için Python bunları bir instance attribute olarak kabul etmiyor ve bu yüzden variable'lara `Class().sayi_1` ve `Class().sayi_2` şeklinde ulaşamıyoruz , hata veriyor. Ama bu variable'ları isteğe ve duruma göre `__init__` fonksiyonunun veya user-defined (kullanıcı tanımlı) fonksiyonların içinde kullanabiliriz.
-
-### Instance Methods
-Bir main class'a, `__init__` fonksiyonu dışında çeşitli user-defined (kullanıcı tanımlı) fonksiyonlar tanımlayabiliriz. Bu tanımlanan user-defined (kullanıcı tanımlı) fonksiyonlara **Instance Methods** denir. Örnek:
+Gördüğünüz gibi buradaki `sayi_1` ve `sayi_2` local variable'larını `self` ile kullanmadığımız için Python bunları instance attribute olarak değerlendirmiyor. Bu yüzden bu local variable'lara doğrudan ulaşamayız ama `__init__` constructor'ı içinde kullanabiliriz. Aynı şey instance methodlar'da da geçerlidir. Örnek:
 ```py
-class Class():
+class A():
+    attri1 = 1
     def __init__(self):
-        print("__init__ Çalıştı...")
+        self.attri2 = 2
 
-    def a_yazdir(self):
-        print("a_yazdir() Çalıştı...")
+    def func(self):
+        a = 1
+        b = 2
+        self.attri2 += a + b
+        return self.attri2
 
-    def b_yazdir(self):
-        print("b_yazdir() Çalıştı...")
-
-    def c_yazdir(self):
-        print("c_yazdir() Çalıştı...")
-
-var = Class() # Output: __init__ Çalıştı...
-var.a_yazdir() # Output: a_yazdir() Çalıştı...
-var.b_yazdir() # Output: b_yazdir() Çalıştı...
-var.c_yazdir() # Output: c_yazdir() Çalıştı...
+var = A()
+print(var.func()) # Output: 5
 ```
-**Not:** Instance method'lara class method denmemesinin sebebi, bu methodları aşağıdaki gibi `__main__.Class` objesiyle beraber doğrudan kullanamazsınız. Örnek:
+
+instance methodlara ve `__init__` constructor'ına `self` dışında parametreler de tanımlayabilirsiniz. Örnek:
 ```py
-class Class():
+class A():
+    def __init__(self, name, size):
+        self.name = name
+        self.size = size
+
+    def func(self, secname, note):
+        print("Full Name:", self.name, secname, f"({note})")
+
+var = A("Eyüp", 175)
+print(var.name) # Output: Eyüp
+print(var.size) # Output: 175
+var.func("Kağan", "Python Dev.") # Output: Full Name: Eyüp Kağan (Python Dev.)
+```
+Gördüğünüz gibi instance method veya `__init__` constructor'a argüman girerken `self`'i görmezden gelerek argüman giriyoruz çünkü instance üzerinden instance method çağırırken Python `self` parametresine ilgili argümanı otomatik olarak girdiği için elle argüman girmemiz gerekmez. Ama bir main class üzerinden instance method çağırırken `self` parametresine elle argüman girmemiz gerekiyor (nedenini daha önce anlattım). Örnek:
+```py
+class A:
     def __init__(self):
-        print("__init__ Çalıştı...")
+        self.a = "self.a attribute"
+    
+    def func(self):
+        print("Instance method func():", self.a)
 
-    def a_yazdir(self):
-        print("a_yazdir() Çalıştı...")
-
-Class.a_yazdir() # TypeError: a_yazdir() missing 1 required positional argument: 'self'
+A().func() # Output: Instance method func(): self.a attribute
+A.func() # TypeError: func() missing 1 required positional argument: 'self'
+A.func(A()) # Output: Instance method func(): self.a attribute
 ```
-Bu methodları `Class.a_yazdir()` şekilde doğrudan kullanılamamasının sebebi: Daha önce de anlatıldığı gibi, `self` parametresi instance attribute'leri temsil ettiği için instance'ler, kullanıcıdan aldığı argümanları parametrelere iletirken bu `self` parametresini görmezden gelir. Örnek:
-```py
-class Class():
-    def __init__(self, isim):
-        self.isim = isim
-        print("self.isim:", self.isim) # Output: self.isim: Ahmet
 
-Class("Ahmet") # Output: self.isim: Ahmet
+## Class Methods
+Python'da `@` işareti kullanılanılarak oluşturulan yapılara **decorator** denir. Python'da class method tanımlamak için `@classmethod` decorator'u kullanılır. `@classmethod` decorator'u, kendinden sonraki fonksiyonun bir class method olduğunu Python'a bildirir. `classmethod` aslında bir class'dır. Kanıtı:
+
+<img src="https://i.ibb.co/StXg8Q9/image.png" alt="image" border="0">
+
+Bu yüzden `@classmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<classmethod object at 0x0000021910BB3430>` şeklinde depolanır. Örnek:
+```py
+class A:
+    @classmethod
+    def class_method_exp(cls):
+        pass
+
+print(A.__dict__["class_method_exp"]) # Output: <classmethod object at 0x0000021910BB3430>
 ```
-Gördüğünüz gibi `Class("Ahmet")` kodu çalışınca `__init__` fonksiyonu çalışır ve `Class("Ahmet")` koduna girdiğimiz `"Ahmet"` argümanı, `__init__` fonksiyonunun `self` parametresini atlayarak `isim` parametresine etki eder. Bu durum sadece instance'lara özgüdür. Bu yüzden bir önceki koddaki `Class.a_yazdir()` kodu, main class'dan bir instance türetmediği için `a_yazdir()` methodundaki `self` parametresini atlamaz ve "argüman eksik" anlamına gelen `TypeError: a_yazdir() missing 1 required positional argument: 'self'` hatasını yükseltir.
 
-**Not:** Yukarıda anlatılan `Class.a_yazdir()` kodunun çalışmama durumu her zaman geçerli değildir. Main class'ı aşağıdaki gibi oluşturursanız `Class.a_yazdir()` çalışır.
+Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların class method'larını da etkiler. Örnek:
 ```py
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-    @staticmethod
-    def a_yazdir():
-        print("a_yazdir() Çalıştı...")
+class A:
+    @classmethod
+    def func1(self):
+        pass
 
-Class.a_yazdir()
+var = A()
+
+print(var.func1) #Output: <bound method A.func1 of <class '__main__.A'>>
+A.func1 = 1
+print(var.func1) #Output: 1
 ```
-Buradaki `@staticmethod` daha sonra açıklanacaktır.
 
-Normal şartlarda, global scope'da tanımlanmış iki fonksiyon, global scope'daki variable'lara erişebilir ama birbirinin local variable'larına erişemez. Çünkü bu local variable'lar adı üstünde local variable oldukları için o fonksiyon çalıştırıldığında Python bu local variable'ları okuyup bellekte depolar ve fonksiyon sonlandığında silinirler. Örnek:
+cls parametresi, main class'a atıfta bulunur. Kanıtı:
 ```py
-def func1():
-    a = "local a"
-    print(a) # Output: local a
-    print(b) # Output: NameError: name 'b' is not defined
+class A:
+    @classmethod
+    def func(cls):
+        print("Address of cls      :", id(cls), cls)
 
-def func2():
-    b = "local b"
-    print(a) # Output: NameError: name 'a' is not defined
-    print(b) # Output: local b
+A.func()
+print("Address of 'A' class:", id(A), A)
 ```
-Ama class'larda tanımlanan `__init__` fonksiyonu bu kuralı yıkıyor. Çünkü `__init__` fonksiyonu içinde tanımlanan instance attribute'lara, main class'ın içindeki **her yerden** erişilebilir. Örnek:
-```py
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-        self.a = "self.a"
-        self.b = []
-        self.c = 100
-
-    def a_yazdir(self):
-        print(self.a, end=" | ")
-        self.a = "new self.a"
-        print(self.a)
-
-    def b_yazdir(self):
-        print(self.b,  end=" | ")
-        self.b.append("new self.b")
-        print(self.b)
-
-    def c_yazdir(self):
-        print(self.c,  end=" | ")
-        self.c += 50
-        print(self.c)
-
-var = Class() # Output: __init__ Çalıştı...
-var.a_yazdir() # Output: self.a | new self.a
-var.b_yazdir() # Output: [] | ['new self.b']
-var.c_yazdir() # Output: 100 | 150
+**Output:**
 ```
-Gördüğünüz gibi bütün user-defined (kullanıcı tanımlı) fonksiyonlar `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara erişebildi ve bu instance attribute'lerin üzerinde işlemler yaparak bu instance attribute'lerin önceki ve sonraki hallerini yazdırdı.
-
-Bir main class'ın içine user-defined (kullanıcı tanımlı) fonksiyon tanımlayıp, bu fonksiyonun içine de `__init__` fonksiyonunda tanımlı olmayan bir instance attribute tanımlayabilirsiniz. Örnek:
-```py
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-        self.init_attribute = "init_attribute"
-
-    def a_yazdir(self):
-        self.a_yazdir_attribute = "a_yazdir_attribute"
-        print(self.a_yazdir_attribute)
-        
-var = Class() # Output: __init__ Çalıştı...
-var.a_yazdir() # Output: a_yazdir_attribute
-print(var.init_attribute) # Output: init_attribute
-print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
+Address of cls      : 1967578676944 <class '__main__.A'>
+Address of 'A' class: 1967578676944 <class '__main__.A'>
 ```
-Gördüğünüz gibi `__init__` fonksiyonundaki `self.init_attribute` instance attribute'sine `var.init_attribute` kodu kullanılarak ulaşılabildiği gibi, user-defined (kullanıcı tanımlı) bir fonksiyon olan `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'sine `var.a_yazdir_attribute` kodu kullanılarak ulaşılabildi. Bu da user-defined (kullanıcı tanımlı) fonksiyonların içinde de instance attribute tanımlanabildiğini kanıtlar.
-
-user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına doğrudan `var.a_yazdir_attribute` kodundaki gibi erişebilmek için bazı koşulların sağlanması gerekmektedir. `__init__` fonksiyonunun içinde tanımlı olan instance attribute'lara ekstra bir şey yapmadan erişebilmemizin sebebi, main class'dan instance türetildiği anda `__init__` fonksiyonun çalışıyor ve çalıştığı için de Python'un bu `__init__` fonksiyonunun içindeki instance attribute'ları okuyup belleğe atıyor olmasıdır. Buradan yola çıkarak şunu söyleyebiliriz: Python main class'ı okurken, `__init__` ve diğer user-defined (kullanıcı tanımlı) fonksiyonların içeriğini okumaz ve bunları fonskiyon objesi olarak bellekte depolar demiştik. Python, main class'dan instance türetildiğinde sadece `__init__` fonksiyonunu çalıştırıp içeriğini okur ama diğer user-defined (kullanıcı tanımlı) fonksiyonları çalıştırmaz ve bunları sadece fonksiyon objesi olarak bellekte depolar. Kanıtı:
-
-<img src="https://i.ibb.co/tsPrX8Q/image.png" alt="image" border="0">
-
-Bu yüzden `var` instance'ının `__init__` fonksiyonunun içindeki `self.init_attribute` instance attribute'una ekstra bir şey yapmadan ulaşabilirken, `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una ulaşabilmek için `a_yazdir()` fonksiyonunun bir kere çalışması gerekmektedir. Çünkü, ancak `a_yazdir()` fonksiyonu çalıştığında Python bu fonksiyonun içindeki instance attribute'lerini okuyup belleğe atabilir ve ancak bu işlemden sonra `var.a_yazdir_attribute` şeklinde bu instance attribute'e ulaşabiliriz.
-
-**Not:** `a_yazdir()` fonksiyonunun içindeki `self.a_yazdir_attribute` instance attribute'una `var.a_yazdir().a_yazdir_attribute` şeklinde ulaşmaya çalışırsanız `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası alırsınız. Örnek:
+Buradan yola çıkarak, örneğin `cls.attri_1 = 1` kodunun `A.attri_1 = 1` anlamına geldiği sonucunu çıkarabiliriz. `cls.attri_1 = 1` kodunun `A.attri_1 = 1` anlamına gelmesi, class attribute create işlemini anlamada önemli bir yere sahiptir. Örnek:
 ```py
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-        self.init_attribute = "init_attribute"
+class A:
+    pass
 
-    def a_yazdir(self):
-        self.a_yazdir_attribute = "a_yazdir_attribute"
-        
-var1 = Class() # Output: __init__ Çalıştı...
-print(var1.a_yazdir().a_yazdir_attribute) # Output: AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'
+A.attri_1 = 1
+A.attri_2 = 2
+A.attri_3 = 3
+
+print(A.attri_1, A.attri_2, A.attri_3) # Output: 1 2 3
 ```
-Bunun nedeni şudur: Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_kavramlar.md#pythonun-çalışma-mantığı) (yani en iç parantezden başlayarak) kodları çalıştırır. `var1.a_yazdir().a_yazdir_attribute` gibi kodlar da en baştan en sona doğru parça parça çalıştırılır. `var1.a_yazdir().a_yazdir_attribute` kodunu açıklamak gerekirse:
-- Python önce `var1` instance'ını alır.
-- Sonra `var1` instance'ının `a_yazdir()` adında bir methodu varmı diye bakar. Varsa, bu `a_yazdir()` methodunu çalıştırır; yoksa, `AttributeError: 'Class' object has no attribute 'a_yazdir'` hatası verir.
-- `var1` instance'ında `a_yazdir()` methodu olduğu için Python bu methodu çalıştırır. 
-- Sonra `a_yazdir()` methodunun `a_yazdir_attribute` adında bir methodu varmı diye bakar. Varsa bu `a_yazdir_attribute` methodunu çalıştırır, yoksa `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası verir.
-- `a_yazdir()` methodunda herhangi bir `raturn` statement tanımlı olmadığı için `return` değeri `NoneType`'dır (`NoneType`, `<class 'NoneType'>`'a ait bir type'dır). `NoneType`'ın `a_yazdir_attribute` adında bir methodu olmadığı için de Python `AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'` hatası verir.
-- Kısaca `var1.a_yazdir().a_yazdir_attribute` kodu sırasıyla şu formları alır: `var1.a_yazdir().a_yazdir_attribute --> NoneType.a_yazdir_attribute --> AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'`
+`A` class'ında herhangi bir class attribute tanımlı olmamasına rağmen `A` class'ı `A.attri_1 = 1`, `A.attri_2 = 2` ve `A.attri_3 = 3` statement'larından sonra 3 farklı class attribute'a sahip oldu. Kanıtı:
 
-`a_yazdir()` fonksiyonuna `return self.a_yazdir_attribute` statement eklersek yine `AttributeError` hatası alırız. Çünkü `a_yazdir()` fonksiyonunun return ettiği `"a_yazdir_attribute"` string objesinin `a_yazdir_attribute` adında bir methodu yoktur. Bu string objesinin `a_yazdir_attribute` adında bir methodu olmadığı için de Python `AttributeError: 'str' object has no attribute 'a_yazdir_attribute'` hatası döndürür. Örnek:
+<img src="https://i.ibb.co/2Kg6ks7/image.png" alt="image" border="0">
+
+Class attribute create işlemi de tam da bu şekilde çalışır. Örnek:
 ```py
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-        self.init_attribute = "init_attribute"
+class A:
+    @classmethod
+    def func(cls):
+        cls.attri_1 = 1
+        cls.attri_2 = 2
+        cls.attri_3 = 3
 
-    def a_yazdir(self):
-        self.a_yazdir_attribute = "a_yazdir_attribute"
-        return self.a_yazdir_attribute
-        
-var2 = Class() # Output: __init__ Çalıştı...
-print(var2.a_yazdir().a_yazdir_attribute) # Output: AttributeError: 'NoneType' object has no attribute 'a_yazdir_attribute'
+print(A.attri_1, A.attri_2, A.attri_3) # AttributeError: type object 'A' has no attribute 'attri_1'
+A.func()
+print(A.attri_1, A.attri_2, A.attri_3) # Output: 1 2 3
 ```
-Bu koddaki `var2.a_yazdir().a_yazdir_attribute` kodunun çalıştırılma şekli bir önceki koddaki `var1.a_yazdir().a_yazdir_attribute` kodunun çalıştırılma şekliyle tamamen aynıdır. Tek fark, bu sefer `a_yazdir()` fonksiyonu `NoneType` değeri yerine `"a_yazdir_attribute"` string objesini döndürür.
-
-`a_yazdir()` fonksiyonunu istersek class'ın dışında, istersek `__init__` fonksiyonunun içinde çalıştırarak, user-defined (kullanıcı tanımlı) fonksiyonların içinde tanımlanan instance attribute'larına ulaşabiliriz.
+Python otomatik olarak `func` class method'undaki `cls` parametresine argüman olarak `A` class'ını girer. Bu yüzden `cls.attri_1 = 1`, `cls.attri_2 = 2`, `cls.attri_3 = 3` kodları `A.attri_1 = 1`, `A.attri_2 = 2`, `A.attri_3 = 3` anlamına gelmektedir. Tabii bu class attribute'ların yaratılması (create) için `func` class method'unun bir kere çağırılması gerekmektedir. Bu yüzden class attribute'ları aşağıdaki gibi tanımlamanız daha doğru olacaktır:
 ```py
-# __init__ içinde
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-        self.init_attribute = "init_attribute"
-        self.a_yazdir() # Output: a_yazdir Çalıştı...
+class A:
+    attri_1 = 1
+    attri_2 = 2
+    attri_3 = 3
 
-    def a_yazdir(self):
-        print("a_yazdir Çalıştı...")
-        self.a_yazdir_attribute = "a_yazdir_attribute"
-
-var = Class() # Output: __init__ Çalıştı...
-print(var.init_attribute) # Output: init_attribute
-print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
+print(A.attri_1, A.attri_2, A.attri_3) # Output: 1 2 3
 ```
-Gördüğünüz gibi, `__init__` fonksiyonunun içinde `self.a_yazdir()` koduyla `a_yazdir()` fonksiyonunu çalıştırıp (çalıştığını `a_yazdir Çalıştı...` outputu ile kanıtlıyoruz) Python'un bu fonksiyonun içeriğini okumasını ve `a_yazdir()` fonksiyonun içinde okuduğu instance attribute'ları belleğe atmasını sağladık.
+Yukarıdaki olayı `setattr()` (daha sonra anlatılacak) build-in fonksiyonunu kullanarak da yapabilirsiniz.
+
+**Not:** Bir method class method olarak tanıtılmamışsa, o methodun `cls` parametresi instance methodlar'daki `self` parametresi gibi davranır.
+
+Instance methodlara main class'dan erişemeyiz ama class methodlara hem main class'dan hem de instance'dan erişebiliriz. Örnek:
 ```py
-# class dışında
-class Class():
-    def __init__(self):
-        print("__init__ Çalıştı...")
-        self.init_attribute = "init_attribute"
+class A:
+    @classmethod
+    def func(cls):
+        return "Class Method Çalıştı."
 
-    def a_yazdir(self):
-        print("a_yazdir Çalıştı...")
-        self.a_yazdir_attribute = "a_yazdir_attribute"
-
-var = Class() # Output: __init__ Çalıştı...
-var.a_yazdir() # Output: a_yazdir Çalıştı...
-print(var.init_attribute) # Output: init_attribute
-print(var.a_yazdir_attribute) # Output: a_yazdir_attribute
+var = A()
+print(A.func()) # Output: Class Method Çalıştı.
+print(var.func()) # Output: Class Method Çalıştı.
 ```
-Gördüğünüz gibi Python, class dışındaki `var.a_yazdir()` kodu ile karşılaşınca, bu kodu çalıştırdığı için `a_yazdir()` fonksiyonu çalışır ve Python bu fonksiyonun içeriğini okuyup, `self.a_yazdir_attribute` instance attribute'unu belleğe atar. Kanıtı:
 
-<img src="https://i.ibb.co/XLCTX0c/image.png" alt="image" border="0">
-
-**Not:** Class attribute olarak tanımlanmış, mutable data type olan bir variable üzerinde işlem yaparken iki türlü yazım vardır. Örnek
+Aynı instance methodlarda olduğu gibi, class methodlarda da class attribute'lara atıfta bulunabilirsiniz. Örnek:
 ```py
-class Class():
+class A:
+    attri = "class attribute"
+
+    def func1(self):
+        temp = self.attri
+        return temp
+
+    @classmethod
+    def func2(cls):
+        temp = cls.attri
+        return temp
+
+print(A.attri, id(A.attri))         # Output: class attribute 3200897484016
+print(A().func1(), id(A().func1())) # Output: class attribute 3200897484016
+print(A.func2(), id(A.func2()))     # Output: class attribute 3200897484016
+```
+
+**Not:** Class methodlara illa main class'dan (`A.func2()` gibi) ulaşacaksınız diye bir kural yok. Class methodlara instance'lardan da ulaşabilirsiniz (`var.func2()` gibi). Ama hata riskini en aza indirmek için class methodlara main class'dan ulaşmak daha akıllıca bir seçimdir.
+
+Class methodlar yerine göre kullanışlı olabilir. Örnek:
+```py
+class A():
     liste = []
-    def __init__(self):
-        print("__init__ Çalıştı...")
 
-    def ekle1(self):
-        self.liste.append("1. liste itemi")
-        print(Class.liste)
+    def __init__(self, list_item):
+        self.list_item = list_item
+        self.listeye_ekle()
 
-    def ekle2(self):
-        Class.liste.append("2. liste itemi")
-        print(Class.liste)
+    def liste_uzunluğu(self):
+        print(len(self.liste))
 
-var = Class() # Output: __init__ Çalıştı...
-var.ekle1() # Output: ['1. liste itemi']
-var.ekle2() # Output: ['1. liste itemi', '2. liste itemi']
+    def listeye_ekle(self):
+        self.liste.append(self.list_item)
+
+var1 = A("Item_1")
+var1.liste_uzunluğu() # Output: 1
 ```
-Gördüğünüz gibi `self.liste.append()` ile `Class.liste.append()` kodları, ilgili attribute class attribute olduğu sürece aynı şeye tekabül eder.
+Bu kodda `len(self.liste)`'nin `0` olduğu bir durum yoktur çünkü `liste_uzunluğu` methodunu sadece bir instance üzerinden çağırabileceğiniz için instantiation işlemi yapmak zorundasınız. Instantiation işlemi yapınca da `__init__` çağırılır ve dolayısıyla `self.listeye_ekle()` kodu yüzünden `listeye_ekle` fonksiyonu çağırılır ve `len(self.liste)`'nin değeri `1` olur. Bu yüzde bu gibi durumlarda class method'lar kullanılabilir. Örnek:
+```py
+class A():
+    liste = []
+
+    def __init__(self, list_item):
+        self.list_item = list_item
+        self.listeye_ekle()
+
+    @classmethod
+    def liste_uzunluğu(self):
+        print(len(self.liste))
+
+    def listeye_ekle(self):
+        self.liste.append(self.list_item)
+
+A.liste_uzunluğu() # Output: 0
+var = A("Item_1")
+var.liste_uzunluğu() # Output: 1
+```
+Bunun dışında alternatif çözümler vardır ama tavsiye edilmez. Örnek:
+```py
+def liste_uzunluğu():
+    print(len(Class.liste))
+
+class A():
+    liste = []
+
+    def __init__(self, list_item):
+        self.list_item = list_item
+        self.listeye_ekle()
+
+    def listeye_ekle(self):
+        self.liste.append(self.list_item)
+
+liste_uzunluğu() # Output: 0
+var = A("Item_1")
+liste_uzunluğu() # Output: 1
+```
+`liste_uzunluğu` fonksiyonunu `A` class'ının dışına tanımlayarak sorunu çözebilirsiniz ama böyle yaparsanız `A` class'ının bütünlüğünü bozarsınız. Bir main class'ın bütünlüğünü bozulması aşağıdaki sorunlara yol açar:
+- `liste_uzunluğu()` fonksiyonu `A` class'ının dışında tanımlandığı için `dir(A)` kodunun döndürdüğü liste içerisinde `liste_uzunluğu()` fonksiyonunu göremezsiniz. Bu da `dir(A)` kullandığımız kısımlarda bize dezavantaj sağlar.
+- `liste_uzunluğu()` fonksiyonu `A` class'ının dışında tanımlandığı için başka bir dosyada (Örneğin `Modul_B` isimli bir dosyada) tanımlanmış `A` class'ını `form Modul_B import A` şeklinde import ettiğimizde, `liste_uzunluğu()` fonksiyonu `A` class'ının dışında tanımlandığı için içeri import edilmez ve dolayısıyla bu fonksiyonu ayrıyetten `form Modul_B import liste_uzunluğu` şeklinde import etmeden kullanamayız.
+
+## Alternative Constructor
+Direkt bir örnekle anlatayım. Örnek:
+```py
+class A:
+    def __init__(self, name = None):
+        self.names = {"Ali": 23,
+                      "Veli": 25,
+                      "Hasan": 32}
+        if not name:
+            print("Lütfen bir isim girin.")
+        elif not name in self.names:
+            print("Girdiğiniz isim listede yok.")
+        elif name:
+            print(self.names[name])
+
+    @classmethod
+    def yas(cls, name = None):
+        cls(name)
+
+A.yas() # Output: Lütfen bir isim girin.
+A.yas("Ayşe") # Output: Girdiğiniz isim listede yok.
+A.yas("Ali") # Output: 23
+A.yas("Veli") # Output: 25
+A.yas("Hasan") # Output: 32
+```
+Yukarıdaki `cls(name)` kodu `A(name)` anlamına gelmektedir ve `A(name)`'de bir instantiation işlemidir. Buradaki `cls(name)` gibi kodlara **alternative constructor** denir.
+
+## Static Methods
+Python'da static method tanımlamak için `@staticmethod` decorator'u kullanılır. `@staticmethod` decorator'u, kendinden sonraki fonksiyonun bir static method olduğunu Python'a bildirir. `staticmethod` aslında bir class'dır. Kanıtı:
+
+<img src="https://i.ibb.co/NNhn86H/image.png" alt="image" border="0">
+
+Bu yüzden `@staticmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<staticmethod object at 0x0000021910BB33D0>` şeklinde depolanır. Örnek:
+```py
+class A:
+    @staticmethod
+    def static_method_exp():
+        pass
+
+print(A.__dict__["static_method_exp"]) # Output: <staticmethod object at 0x0000021910BB33D0>
+```
+Bir methodun herhangi bir class veya instance attribute'a erişmesi gerekmiyorsa, bu method static method olarak tanımlanıp kullanılabilir. Örnek:
+```py
+class A():
+    
+    @staticmethod
+    def static_method_exp():
+        print("Static method tanımlandı.")
+
+A.static_method_exp() # Output: Static method tanımlandı.
+A().static_method_exp() # Output: Static method tanımlandı.
+```
+Gördüğünüz gibi static methodlara hem main class hem de instance üzerinden erişebiliryoruz. Static methodların herhangi bir class veya instance methoda erişmesi gerekmediği için ilk parametresi `self` ya da `cls` gibi özel bir parametre olmak zorunda değildir (yani static methodların içinde herhangi bir class ve instance attribute tanımlayamazsınız). Static methodların bütün parametreleri normal bir parametre muamelesi görür.
+
+Main class'ın static method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların static method'larını da etkiler. Örnek:
+```py
+class A:
+    @staticmethod
+    def func1(self):
+        pass
+
+var = A()
+
+print(var.func1) #Output: <function A.func1 at 0x0000018A33AB0040>
+A.func1 = 1
+print(var.func1) #Output: 1
+```

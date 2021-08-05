@@ -56,6 +56,9 @@ del a
 - `:`, `'`, `”`, `,`, `<`, `>`, `/`, `?`, `|`, `\`, `(`, `)`, `!`, `@`, `#`, `$`, `%`, `^`, `&`, `*`, `~`, `-`, `+` sembolleri kullanılamaz. Sadece `_` (alt çizgi) kullanılabilir. Aksi durumda `SyntaxError: invalid syntax` hatası verir.
 - Keyword'ler identifier olarak kullanılamaz. Örnek: `global = 1`
 
+# Implementation
+"Uygulamak" anlamına gelir. Örneğin kurduğunuz bir algoritmayı koda döktüğünde algoritmayı implemente etmiş olursun. En basit tanımıyla bu. Ayrıntılı bilgi için kendiniz araştırabilirsiniz.
+
 # Yorum (Comment) Satırları
 ### Tek satır yorum satırı:
 ```py

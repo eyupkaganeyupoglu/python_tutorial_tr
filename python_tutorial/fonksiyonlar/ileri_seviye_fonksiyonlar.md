@@ -278,7 +278,7 @@ Yukarıdaki kodda, `gen = generator()` kodu ile `generator()` çağırılır ve 
 - **Generator** `yield` keyword'ünü kullanır ama **Iterator** kullanmaz.
 - **Generator**'daki `yield`, Python'daki loop her duraklatıldığında local variable'ların durumlarını kaydeder. **Iterator** local variable'ları kullanmaz. **Iterator**'e, *iterate* edilebilecek *iterable* bir obje vermeniz yeterlidir. **Generator** ve **Iterator**'ın birbirinden en büyük farkı budur.
 - Bir **Generator**'a, herhangi bir sayıda `yield` statement tanımlanabilir.
-- Bir class'a **Iterator** implement ederek, **Iterator** ile kullanım desteği kazandırılabilir. **Generator**, Python'da bir class'a ihtiyaç duymaz.
+- Bir class'a **Iterator** implement ederek (uygulayarak), **Iterator** ile kullanım desteği kazandırılabilir. **Generator**, Python'da bir class'a ihtiyaç duymaz.
 - **Generator** yazmak için bir Python fonksiyonu ya da **Comprehension** kullanabilirsiniz. **Iterator** yazmak için `iter()` ve `next()` fonksiyonlarını kullanmak zorundasınız.
 - Bir **Generator**, **Generator** objesi döndürür (`<generator object generator_exp at 0x0000023D508D6D60>`, `<class ‘generator’>`); bir **Iterator**, kullanılan **Iterable** class'a özel **Iterator** objesi döndürür (Örneğin bir list'i **Iterator**'e dönüştürürseniz, o **Iterator** objesi, oluşturulduğu **Iterable** class'a göre özelleşir: `<list_iterator object at 0x0000023D508EDFD0>`, `<class ‘list_iterator’>`).
 - **Iterator**, bellek açısından daha verimlidir (more memory-efficient). Bir **Generator**, `__sizeof__()` methoduyla kullanılırsa 32; bir **Iterator**, `__sizeof__()` methoduyla kullanılırsa 16 outputunu verir.
