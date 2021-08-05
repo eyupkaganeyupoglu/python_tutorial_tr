@@ -197,8 +197,55 @@ print(A.a) # AttributeError: type object 'A' has no attribute 'a'
 ```
 Gördüğünüz gibi instance attribute'lara instance üzerincen ulaşılabilirken, main class üzerinden, `A.a` methodunu `A()` kodundan önce veya sonra talep etmemiz farketmeksizin ulaşılamadı.
 
-## `self` Parametresi
-Instance methodların ve `__init__` constructor'ının ilk parametresi özel bir anlama sahip olan `self` olmak zorundadır çünkü bu bir syntax kuralıdır. Aksi halde `TypeError: func() takes 0 positional arguments but 1 was given` gibi bir hata alırsınız. `self` parametresi instance attribute'lara özel olduğu için class attribute'larda kullanılamaz. Örnek:
+
+## Instance Methods
+Bir class içinde tanımlanan user-defined (kullanıcı tanımlı) fonksiyonlar, aksi belirtilmediği (`@classmethod` ya da `@staticmethod` decorator'ları ile decore edilmedikleri) sürece Python tarafından **instance method** olarak kabul edilir. Örnek:
+```py
+class A:
+    attri = 1
+    def __init__(self):
+        self.attri2 = 2
+
+    def func1(self):
+        return "asd"
+    
+    @classmethod
+    def func2():
+        pass
+
+    @staticmethod
+    def func3():
+        pass
+
+print(A.__dict__.get("__init__")) # Output: <function A.__init__ at 0x00000245394560D0>
+print(A.__dict__.get("func1")) # Output: <function A.func1 at 0x000002BAF9B26160>
+print(A.__dict__.get("func2")) # Output: <classmethod object at 0x000002BAF9B23FD0>
+print(A.__dict__.get("func3")) # Output: <staticmethod object at 0x000002BAF9B23FA0>
+```
+Gördüğünüz gibi aksi belirtilmediği için `func1` fonksiyonu ve `__init__` constructor'ı instance methoddur.
+
+Main class'ın instance method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların instance method'larını da etkiler. Örnek:
+```py
+class A:
+    def __init__(self):
+        pass
+
+    def func1(self):
+        pass
+
+var = A()
+
+print(var.__init__) #Output: <bound method A.__init__ of <__main__.A object at 0x0000022E5FFA3FD0>>
+A.__init__ = 1
+print(var.__init__) #Output: 1
+
+
+print(var.func1) #Output: <bound method A.func1 of <__main__.A object at 0x0000022E5FFA3FD0>>
+A.func1 = 1
+print(var.func1) #Output: 1
+```
+
+Instance methodların ve `__init__` constructor'ının ilk parametresi özel bir anlama sahip olan `self` olmak zorundadır çünkü bu bir syntax kuralıdır. Aksi halde `TypeError: func() takes 0 positional arguments but 1 was given` gibi bir hata alırsınız. `self` parametresi instance attribute'lara özel kabul edildiği için class attribute'larda kullanılamaz. Örnek:
 ```py
 class A:
     self.attri = 1 # NameError: name 'self' is not defined
@@ -267,56 +314,7 @@ print(var.a, var.b, var.c) # Output: 1 2 3
 ```
 Buradaki `self` parametresine Python tarafından `var = A()` kodundaki `A()` kodunun yarattığı instance argüman olarak girilir. Bu argümana temsili olarak `X` dersek, `self.a = 1`, `self.b = 2`, `self.c = 3` kodları `X.a = 1`, `X.b = 2`, `X.c = 3` anlamına gelmektedir. Yukarıdaki olayı `setattr()` (daha sonra anlatılacak) build-in fonksiyonunu kullanarak da yapabilirsiniz.
 
-## Instance Methods
-Bir class içinde tanımlanan user-defined (kullanıcı tanımlı) fonksiyonlar, aksi belirtilmediği (`@classmethod` ya da `@staticmethod` decorator'ları ile decore edilmedikleri) sürece Python tarafından **instance method** olarak kabul edilir. Örnek:
-```py
-class A:
-    attri = 1
-    def __init__(self):
-        self.attri2 = 2
-
-    def func1(self):
-        return "asd"
-    
-    @classmethod
-    def func2():
-        pass
-
-    @staticmethod
-    def func3():
-        pass
-
-print(A.__dict__.get("__init__")) # Output: <function A.__init__ at 0x00000245394560D0>
-print(A.__dict__.get("func1")) # Output: <function A.func1 at 0x000002BAF9B26160>
-print(A.__dict__.get("func2")) # Output: <classmethod object at 0x000002BAF9B23FD0>
-print(A.__dict__.get("func3")) # Output: <staticmethod object at 0x000002BAF9B23FA0>
-```
-Gördüğünüz gibi aksi belirtilmediği için `func1` fonksiyonu ve `__init__` constructor'ı instance methoddur.
-
-Main class'ın instance method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların instance method'larını da etkiler. Örnek:
-```py
-class A:
-    def __init__(self):
-        pass
-
-    def func1(self):
-        pass
-
-var = A()
-
-print(var.__init__) #Output: <bound method A.__init__ of <__main__.A object at 0x0000022E5FFA3FD0>>
-A.__init__ = 1
-print(var.__init__) #Output: 1
-
-
-print(var.func1) #Output: <bound method A.func1 of <__main__.A object at 0x0000022E5FFA3FD0>>
-A.func1 = 1
-print(var.func1) #Output: 1
-```
-
-İlk olarak `__init__` constructor'ından bahsedelim.
-
-`__init__`, yapıcı (constructor) olarak bilinen, main class'dan instance türetilirken ilk çağırılan temel aşırı yükleme (overloading) methoddur. 
+İlk olarak `__init__` constructor'ından bahsedelim. `__init__`, yapıcı (constructor) olarak bilinen, main class'dan instance türetilirken ilk çağırılan temel aşırı yükleme (overloading) methoddur. 
 
 `__init__` constructor'ı tanımlanmamış `A` ismindeki bir class'ı ele alalım. `A` class'ı `object` base class'ından biras aldığı (daha sonra anlatılacak) için `A` class'ına debugger ile baktığınızda `__init__` constructor'ının special variables sekmesinde `<slot wrapper '__init__' of 'object' objects>` şeklinde depolandığını görürsünüz. Kanıt:
 ```py
