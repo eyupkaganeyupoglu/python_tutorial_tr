@@ -5,7 +5,7 @@ Bazı işlevleri kolaylıkla yerine getirmemizi sağlayan birtakım function'lar
 Modülleri içe aktarmak için `import` keyword'ünü kullanırız.
 ```py
 import random # random modülündeki her şeyi içe aktarır.
-print(dir(random)) # random ile ilgili bütün fonksiyon ve nitelikleri yazdırır.
+print(dir(random)) # random ile ilgili bütün fonksiyon ve methodları yazdırır.
 ```
 Bu şekilde import edilen modüller `module_name.function_or_attribute` syntax'ıyla kullanılır. Örnek:
 ```py

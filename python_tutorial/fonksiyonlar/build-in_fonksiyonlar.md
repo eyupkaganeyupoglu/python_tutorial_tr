@@ -394,7 +394,7 @@ print(type(list())) # Output: <class 'list'>
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#type).
 
 # `vars(object)`
-Bulunduğunuz scope içindeki method, fonksiyon, nitelik, listeleri gösterir. parametresiz kullanılırsa `locals()` ile aynı çıktıyı verir. parametre olarak bir değer verilirse örneğin `vars(str)`, o nesnenin method ve niteliklerini öğrenmek için kullanabilirsiniz.
+Bulunduğunuz scope içindeki method, fonksiyon, attribute ve listeleri gösterir. parametresiz kullanılırsa `locals()` ile aynı çıktıyı verir. parametre olarak bir değer verilirse örneğin `vars(str)`, o nesnenin method ve attribute'larını öğrenmek için kullanabilirsiniz.
 
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#vars).
 
