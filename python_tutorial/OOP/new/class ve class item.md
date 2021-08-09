@@ -464,7 +464,7 @@ var1.attri_2.append("item1")
 print(var1.attri_2) # Output: ['item1']
 print(var2.attri_2) # Output: []
 ```
-Buradaki `attri_1` ve `attri_2` instance attribute'lardır (`__dict__` methodunda saklanır). Bu yüzden `var1`'de yapılan değişiklikler `var2`'yi etkilemez. Burada dikkat edilmesi gereken şey; her instance'ın kendi instance attribute'larına sahip olması, her instance'ın kendi `__init__` constructor objesine de sahip olduğu anlamına gelmez. Instance'lardaki `__init__`  constructor objeleri main class'ın `__init__` constructor objesi ile ilişkilidir (bound). Kanıtı:
+Buradaki `attri_1` ve `attri_2` instance attribute'lardır (`__dict__` methodunda bulunur). Bu yüzden `var1`'de yapılan değişiklikler `var2`'yi etkilemez. Burada dikkat edilmesi gereken şey; her instance'ın kendi instance attribute'larına sahip olması, her instance'ın kendi `__init__` constructor objesine de sahip olduğu anlamına gelmez. Instance'lardaki `__init__`  constructor objeleri main class'ın `__init__` constructor objesi ile ilişkilidir (bound). Kanıtı:
 ```py
 class A:
     def __init__(self):
@@ -625,7 +625,7 @@ Python'da `@` işareti kullanılanılarak oluşturulan yapılara **decorator** d
 
 <img src="https://i.ibb.co/StXg8Q9/image.png" alt="image" border="0">
 
-Bu yüzden `@classmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<classmethod object at 0x0000021910BB3430>` şeklinde depolanır. Örnek:
+Bu yüzden `@classmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<classmethod object at 0x0000021910BB3430>` şeklinde bulunur ama function variables kısmında `<bound method A.class_method_exp of <class '__main__.A'>>` şeklinde bulunurlar. Örnek:
 ```py
 class A:
     @classmethod
@@ -633,7 +633,11 @@ class A:
         pass
 
 print(A.__dict__["class_method_exp"]) # Output: <classmethod object at 0x0000021910BB3430>
+print(A.class_method_exp) # Output: <bound method A.class_method_exp of <class '__main__.A'>>
+print(callable(A.__dict__["class_method_exp"])) # Output: False
+print(callable(A.class_method_exp)) # Output: True
 ```
+`<classmethod object at 0x0000021910BB3430>` objesi çağırılabilir (callable) bir değilken, `<bound method A.class_method_exp of <class '__main__.A'>>` objesi çağırılabilirdir (callable).
 
 Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların class method'larını da etkiler. Örnek:
 ```py
@@ -831,15 +835,20 @@ Python'da static method tanımlamak için `@staticmethod` decorator'u kullanıl�
 
 <img src="https://i.ibb.co/NNhn86H/image.png" alt="image" border="0">
 
-Bu yüzden `@staticmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<staticmethod object at 0x0000021910BB33D0>` şeklinde depolanır. Örnek:
+Bu yüzden `@staticmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<staticmethod object at 0x0000019A1FBF12E0>` şeklinde bulunur ama function variables kısmında `<function A.sayı_del at 0x0000019A1FBE9940>` şeklinde bulunurlar. Örnek:
 ```py
 class A:
     @staticmethod
     def static_method_exp():
         pass
 
-print(A.__dict__["static_method_exp"]) # Output: <staticmethod object at 0x0000021910BB33D0>
+print(A.__dict__["static_method_exp"]) # Output: <staticmethod object at 0x0000019A1FBF12E0>
+print(A.static_method_exp) # Output: <function A.sayı_del at 0x0000019A1FBE9940>
+print(callable(A.__dict__["static_method_exp"])) # Output: False
+print(callable(A.static_method_exp)) # Output: True
 ```
+`<staticmethod object at 0x0000019A1FBF12E0>` objesi çağırılabilir (callable) bir değilken, `<function A.sayı_del at 0x0000019A1FBE9940>` objesi çağırılabilirdir (callable).
+
 Bir methodun herhangi bir class veya instance attribute'a erişmesi gerekmiyorsa, bu method static method olarak tanımlanıp kullanılabilir. Örnek:
 ```py
 class A():
@@ -851,7 +860,35 @@ class A():
 A.static_method_exp() # Output: Static method tanımlandı.
 A().static_method_exp() # Output: Static method tanımlandı.
 ```
-Gördüğünüz gibi static methodlara hem main class hem de instance üzerinden erişebiliryoruz. Static methodların herhangi bir class veya instance methoda erişmesi gerekmediği için ilk parametresi `self` ya da `cls` gibi özel bir parametre olmak zorunda değildir (yani static methodların içinde herhangi bir class ve instance attribute tanımlayamazsınız). Static methodların bütün parametreleri normal bir parametre muamelesi görür.
+Gördüğünüz gibi static methodlara hem main class hem de instance üzerinden erişebiliryoruz. Static methodların herhangi bir class veya instance attribute'a erişmesi gerekmediği için ilk parametresi `self` ya da `cls` gibi özel bir parametre muamelesi görmez. Static methodların bütün parametreleri normal bir parametre muamelesi görür. Ama bu, static methodların içinde herhangi bir class ya da instance methoda erişemeyiz anlamına gelmez. Örnek:
+```py
+class A:
+    class_attri_exp = "Class Attribute"
+
+    def __init__(self):
+        self.instnace_attri_exp = "Instance Attribute"
+
+    @staticmethod
+    def func(self, cls):
+        print(self.instnace_attri_exp)
+        print(self.class_attri_exp)
+        print(cls.class_attri_exp)
+
+var = A()
+var.func(var, A)
+print()
+A.func(var, A)
+```
+**Output:**
+```
+Instance Attribute
+Class Attribute
+Class Attribute
+
+Instance Attribute
+Class Attribute
+Class Attribute
+```
 
 Main class'ın static method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların static method'larını da etkiler. Örnek:
 ```py
@@ -915,7 +952,7 @@ print(var.yyy) # Output: AttributeError: 'A' object has no attribute 'yyy'
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#getattr).
 
 ### `setattr(object, name, value)`
-`object` parametresine argüman olarak girilen objenin (instance, main class vb.) `name` parametresinde string olarak belirtilen isimde bir obje varsa, bu objeye `value` parametresinde belirtilen değeri atar; yoksa `name` parametresinde string olarak belirtilen isimde bir obje yaratır ve bu objeye `value` parametresinde belirtilen değeri atar. `object` parametresine argüman olarak girilen objede `__dict__()` methodu uygulanmadıysa (implements) `setattr()` fonksiyonu çalışmaz. Örnek:
+`object` parametresine argüman olarak girilen objenin (instance, main class vb.) `name` parametresinde string olarak belirtilen isimde bir obje varsa, bu objeye `value` parametresinde belirtilen değeri atar; yoksa `name` parametresinde string olarak belirtilen isimde bir obje yaratır ve bu objeye `value` parametresinde belirtilen değeri atar. `object` parametresine argüman olarak girilen objede `__dict__` methodu uygulanmadıysa (implements) (yani bu obje `__dict__` methoduna sahip değilse) `setattr()` fonksiyonu çalışmaz. Örnek:
 ```py
 class A:
     xxx = "1. xxx class attribute"
