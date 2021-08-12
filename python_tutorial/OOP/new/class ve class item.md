@@ -60,7 +60,7 @@ class A:
 
 var = A()
 ```
-Gördüğünüz gibi `A` class'ını (`__main__.A`) `A()` şeklinde çağırdığımızda (call), elimize bir instance geçiyor (`<__main__.A object at 0x0000022782837730>`). Bu instance'ı bir variable'a atayarak programınızda kullanabilirsiniz. Bu instance'ı bir variable'a atamadan da kullanabilirsiniz. Örnek:
+Gördüğünüz gibi `A` class'ını (`__main__.A`) `A()` şeklinde çağırdığımızda (call), elimize bir instance geçiyor (`<__main__.A object at 0x0000022782837730>`). `<__main__.A object at 0x0000022782837730>` bu "`0x0000022782837730` konumundaki `A` class'ının nesnesi (yani A class'ından türetilmiş instance)" anlamına gelmektedir. Bu instance'ı bir variable'a atayarak programınızda kullanabilirsiniz. Bu instance'ı bir variable'a atamadan da kullanabilirsiniz. Örnek:
 ```py
 class A:
     pass
@@ -162,13 +162,12 @@ var2.class_attribute_8: {4, 5, 6, 'new_item'}
 var2.class_attribute_9: {'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'new': 'item'}
 ```
 **ID'ler:**
-```
+|  | Class Attri 1 | Class Attri 2 | Class Attri 3 | Class Attri 4 | Class Attri 5 | Class Attri 6 | Class Attri 7 | Class Attri 8 | Class Attri 9 |
+|-|-|-|-|-|-|-|-|-|-|
+| Class A | 2193358095600 | 2193355729200 | 2193358170704 | 2193358170128 | 2193358391744 | 2193358336736 | 2193358095680 | 2193358339424 | 2193358020864 |
+| var1 | 2193358095600 | 2193355729200 | 2193358170704 | 2193358170128 | 2193358391744 | 2193358336736 | 2193358095680 | 2193358339424 | 2193358020864 |
+| var2 | 2193358212528 | 2193355729456 | 2193358170608 | 2193358170672 | 2193358391872 | 2193358338976 | 2193358095680 | 2193358339424 | 2193358020864 |
 
-          Class Attri 1  Class Attri 2  Class Attri 3  Class Attri 4  Class Attri 5  Class Attri 6  Class Attri 7  Class Attri 8  Class Attri 9
-Class A : 2193358095600  2193355729200  2193358170704  2193358170128  2193358391744  2193358336736  2193358095680  2193358339424  2193358020864
-var1    : 2193358095600  2193355729200  2193358170704  2193358170128  2193358391744  2193358336736  2193358095680  2193358339424  2193358020864
-var2    : 2193358212528  2193355729456  2193358170608  2193358170672  2193358391872  2193358338976  2193358095680  2193358339424  2193358020864
-```
 Mutable data type'ların methodlarını kullanmak yerine yeniden tanımlama (redefinition) işlemi uygulasaydık, mutable data type'lar da farklı bir objeye dönüşecekti (ID'leri değişecekti).
 
 ## Instance Attributes
@@ -271,7 +270,7 @@ print(B().a) # Output: B.attri
 print(C().a) # Output: C.attri
 ```
 
-Self parametresi, main class'dan türetilen geçerli (current) instance'ı atıfta bulunur. Kanıtı:
+Self parametresi, main class'dan türetilen geçerli (current) instance'ı atıfta bulunur (refers). Kanıtı:
 ```py
 class A:
     def __init__(self):
@@ -349,7 +348,7 @@ class A:
 
 <img src="https://i.ibb.co/749ZxJX/image.png" alt="image" border="0">
 
-`A` class'ından türetilen instance'lardaki `__init__` constructor'ları, `A` class'ının init constructor'ı ile ilişkilidir (bound) ve `<bound method A.__init__ of <__main__.A object at 0x000001D3687A13D0>>` şeklinde depolanır. Bu yüzden `A` class'ının `__init__` constructor'ına yaptığımız müdahaleler, `A` class'ından türetilen instance'ları da etkiler. Kanıtı:
+`A` class'ından türetilen instance'lardaki `__init__` constructor'ları, `A` class'ının init constructor'ı ile ilişkilidir (bound) ve `<bound method A.__init__ of <__main__.A object at 0x000001D3687A13D0>>` şeklinde depolanır. `<bound method A.__init__ of <__main__.A object at 0x000001D3687A13D0>>` bu "`0x000001D3687A13D0` konumundaki `A` class'ının nesnesinin (yani A class'ından türetilmiş instance) `A` class'ının `__init__` objesine bağlı method" anlamına gelmektedir. "`A` class'ının `__init__` methoduna bağlı method" olduğu için `A` class'ının `__init__` constructor'ına yaptığımız müdahaleler, `A` class'ından türetilen instance'ları da etkiler. Kanıtı:
 ```py
 class A:
     def __init__(self):
@@ -504,7 +503,7 @@ var = A() # Output: init çalıştı...
 print(A.a) # Output: 2
 ```
 
-`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lara da atıfta bulunabilirsiniz. Ama bu size herhangi bir kolaylık sağlamaz. Örnek:
+`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lara da atıfta bulunabilirsiniz (refers). Ama bu size herhangi bir kolaylık sağlamaz. Örnek:
 ```py
 class A():
     attri = 1
@@ -520,7 +519,7 @@ print("var attribute:", var.attri, "|", id(var.attri))
 A attribute:   1 | 1893013285168
 var attribute: 1 | 1893013285168
 ```
-`var` variable'ına atanan instance'a temsili olarak `X` dersek: Buradaki `self.attri`, `X.attri` anlamına gelmektedir. `X.attri`'de direkt `attri` class attribute objesine atıfta bulunduğu için hata yükseltmez. Bu yüzden `self.attri` yazmakla yazmamak arasında işlevsel olarak herhangi fark yoktur. Başka bir örnek:
+`var` variable'ına atanan instance'a temsili olarak `X` dersek: Buradaki `self.attri`, `X.attri` anlamına gelmektedir. `X.attri`'de direkt `attri` class attribute objesine atıfta bulunduğu (refers) için hata yükseltmez. Bu yüzden `self.attri` yazmakla yazmamak arasında işlevsel olarak herhangi fark yoktur. Başka bir örnek:
 ```py
 class A():
     liste = []
@@ -538,7 +537,7 @@ print(A.liste) # Output: ['New Item', 'New Item']
 print(var1.liste) # Output: ['New Item', 'New Item']
 print(var2.liste) # Output: ['New Item', 'New Item']
 ```
-`var1` variable'ına atanan instance'a temsili olarak `X`, `var2` variable'ına atanan instance'a temsili olarak `Y` dersek: Benzer şekilde buradaki `self.liste`, `var1` instance'ı için `X.liste`, `var2` instance'ı için `Y.liste` anlamına gelmektedir. `X.liste` ve `Y.liste`'de direkt `liste` class attribute objesine atıfta bulunduğu için hata yükseltmez ve üzerinde `append` methodu uygulanabilir. Bu yüzden `A` main class'ından her instance türetildiğinde `__init__` ve beraberinde `self.liste.append("New Item")` çalıştığı için her seferinde `liste` class attribute'una `"New Item"` stringi ekleniyor. Bunlar instance methodlar için de geçerlidir. Örnek:
+`var1` variable'ına atanan instance'a temsili olarak `X`, `var2` variable'ına atanan instance'a temsili olarak `Y` dersek: Benzer şekilde buradaki `self.liste`, `var1` instance'ı için `X.liste`, `var2` instance'ı için `Y.liste` anlamına gelmektedir. `X.liste` ve `Y.liste`'de direkt `liste` class attribute objesine atıfta bulunduğu (refers) için hata yükseltmez ve üzerinde `append` methodu uygulanabilir. Bu yüzden `A` main class'ından her instance türetildiğinde `__init__` ve beraberinde `self.liste.append("New Item")` çalıştığı için her seferinde `liste` class attribute'una `"New Item"` stringi ekleniyor. Bunlar instance methodlar için de geçerlidir. Örnek:
 ```py
 class A():
     liste = []
@@ -625,7 +624,7 @@ Python'da `@` işareti kullanılanılarak oluşturulan yapılara **decorator** d
 
 <img src="https://i.ibb.co/StXg8Q9/image.png" alt="image" border="0">
 
-Bu yüzden `@classmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<classmethod object at 0x0000021910BB3430>` şeklinde bulunur ama function variables kısmında `<bound method A.class_method_exp of <class '__main__.A'>>` şeklinde bulunurlar. Örnek:
+Bu yüzden `@classmethod` decorator'u ile decore edilen methodlar main class'ın `__dict__` methodunda `<classmethod object at 0x0000021910BB3430>` şeklinde bulunur ama function variables kısmında `<bound method A.class_method_exp of <class '__main__.A'>>` şeklinde bulunurlar. `<bound method A.class_method_exp of <class '__main__.A'>>` bu "`A` class'ının, `A` class'ının `class_method_exp` objesine bağlı method" anlamına gelmektedir. Örnek:
 ```py
 class A:
     @classmethod
@@ -653,7 +652,7 @@ A.func1 = 1
 print(var.func1) #Output: 1
 ```
 
-cls parametresi, main class'a atıfta bulunur. Kanıtı:
+cls parametresi, main class'a atıfta bulunur (refers). Kanıtı:
 ```py
 class A:
     @classmethod
@@ -721,7 +720,7 @@ print(A.func()) # Output: Class Method Çalıştı.
 print(var.func()) # Output: Class Method Çalıştı.
 ```
 
-Aynı instance methodlarda olduğu gibi, class methodlarda da class attribute'lara atıfta bulunabilirsiniz. Örnek:
+Aynı instance methodlarda olduğu gibi, class methodlarda da class attribute'lara atıfta bulunabilirsiniz (refers). Örnek:
 ```py
 class A:
     attri = "class attribute"

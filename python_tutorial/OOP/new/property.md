@@ -582,6 +582,23 @@ del var.sayı # TypeError: 'staticmethod' object is not callable
 ```
 `classmethod` ve `staticmethod` objeleri çağırılabilir (callable) olmadıkları için `sayı` property'si düzgün çalışmaz.
 
+**Not:** Property objelerinin `fget`, `fset` ve `fdel` methodlarına şimdiye kadar sadece instance method atadığımız için bahsetmemiştim ama son olarak şundan bahsedeyim: Bir property objesi, `fget`, `fset` ve `fdel` methodlarına atanan fonksiyonların ilk parametresine ilgili instance'ı argüman olarak verir. Örnek:
+```py
+class A:
+    def func(self):
+        pass
+
+    pro_exp = property(fget=lambda p1, p2 = "Objesi": f"{p1} {p2}")
+
+var = A()
+print(var.func) # Output: <bound method A.func of <__main__.A object at 0x000001EF49763FD0>>
+print(var.pro_exp) # Output: <__main__.A object at 0x000001EF49763FD0> Objesi
+
+# func    : 0x000001EF49763FD0
+# pro_exp : 0x000001EF49763FD0
+```
+`func` instance fonksiyonunun `<bound method A.func of <__main__.A object at 0x000001EF49763FD0>>` objesinin `<__main__.A object at 0x000001EF49763FD0>` kısmı "`0x000001EF49763FD0` konumundaki `A` class'ının nesnesi (yani A class'ından türetilmiş instance)" anlamına gelmektedir. `pro_exp` property objesi, `fget` methoduna atanan lambda fonksiyonunun ilk parametresine `<__main__.A object at 0x000001EF49763FD0>` instance'ını (`func`'da bahsettiğimiz instance) argüman olarak vermiş, sadece ilk parametresine verdiği için `p2` parametresinin default value'su değişmemiş ve bu sayede `print(var.pro_exp)` fonksiyonu `<__main__.A object at 0x000001EF49763FD0> Objesi` output'unu vermiştir.
+
 **Not:** Property kavramını anlamak için **descriptor** kavramını araştırmalısınız. Gerekli siteler sırasıyla:
 - [Tıklayınız](https://docs.python.org/3.7/howto/descriptor.html).
 - [Tıklayınız](https://docs.python.org/3/howto/descriptor.html).
