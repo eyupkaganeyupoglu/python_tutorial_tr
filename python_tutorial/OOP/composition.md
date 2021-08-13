@@ -29,3 +29,5 @@ Composition kavramının Python'da Inheritance kavramı ile yakından ilişkisi 
 Composition, herhangi bir class'daki objeleri miras almak yerine, herhangi bir class'dan türetilen instance'ı (component) composite class içinde başka bir objeye atayarak kullanmamıza olanak tanır. Bu sayede farklı tür objeleri birleştirerek kompleks class'lar oluşturabiliriz.
 
 İki class arasındaki Composition ilişkisinin gevşek bir şekilde bağlı olduğu kabul edilir. Bu, component'ların nadiren composite class'ları etkilediği, composite class'ın ise component'ları hiçbir zaman etkilemediği anlamına gelir. Bu durum, mevcut kodu etkilemeden yeni gereksinimlere uygun bir şekilde programın değiştirilmesine daha iyi uyum sağlar. Aynı zamanda composite class'ı sildiğimizde, composite class'ın component'larını da silmiş olacağımız için herhangi bir sorun yaşamayız.
+
+Daha fazla bilgi için [tıklayınız](https://realpython.com/inheritance-composition-python/).
