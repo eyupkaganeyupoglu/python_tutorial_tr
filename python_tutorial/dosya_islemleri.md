@@ -892,6 +892,7 @@ PDF belgelerinde, o belge hakkında bazı önemli bilgiler veren birtakım özel
 | `/Keywords` | Belgenin anahtar kelimeleri |
 | `/CreationDate` | Belgenin oluşturulma zamanı |
 | `/ModDate` | Belgenin değiştirilme zamanı |
+
 Bu etiketlerin tamamı bütün PDF dosyalarında tanımlı değildir. Ama özellikle `/Producer` etiketi her PDF dosyasında bulunur. `/Producer` etiketinin devamı `b'/Producer (Acrobat Distiller 2.0 for Macintosh)\r/T` şeklinde olabilir. `/Producer` ifadesinin dosya içinde geçtiği noktanın sıra numarasını bulmak için:
 ```py
 with  open("xxx.pdf", "rb") as dosya:
