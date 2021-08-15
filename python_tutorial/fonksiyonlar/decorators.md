@@ -71,7 +71,7 @@ print(var.__closure__[5], ":", var.__closure__[5].cell_contents) # Output: <cell
 ```
 **Not:** Closure olma şartlarının hepsini sağlayamayan fonksiyonlar closure olamazlar. Closure olmayan fonksiyonların `__closure__` methodu `None` value'suna sahiptir.
 
-Fonksiyonlar ve methodlar çağırılabilir olduklarından **callable** olarak adlandırılırlar. Aslında special `__call__()` methodunun uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable döndüren bir callable'dir. Basitçe decorator, fonksiyonu alır, bazı işlevsellik (functionality) ekler ve onu döndürür (return). Bir fonksiyonu decore etmek için `@{function_name}` kullanılır. Örnek:
+Fonksiyonlar ve methodlar çağırılabilir olduklarından **callable** olarak adlandırılırlar. Aslında special `__call__()` methodunun uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable (fonksiyon) döndüren bir callable'dir (fonksiyondur). Basitçe decorator, fonksiyonu alır, bazı işlevsellik (functionality) ekler ve onu döndürür (return). Bir fonksiyonu decore etmek için `@{function_name}` kullanılır. Örnek:
 ```py
 def decorator_maker(func):
     def inner():
