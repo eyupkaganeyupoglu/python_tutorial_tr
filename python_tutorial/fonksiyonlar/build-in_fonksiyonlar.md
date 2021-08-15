@@ -131,6 +131,7 @@ any(), All False: False
 any(), One False: True
 any(), Empty: False
 ```
+Yani `any()` fonksiyonunun `True` sonucunu vermesi için boolean değeri `True` olan 1 tane element ile karşılaşması yeterlidir.
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#any).
 
 

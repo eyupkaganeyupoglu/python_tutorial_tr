@@ -434,6 +434,48 @@ Burada sorulması gereken soru; "Madem `getter`, `setter` ve `deleter` build-in 
 
 Gördüğünüz gibi `@property` decorator'unun ve bu decorator'un `getter`, `setter`, `deleter` build-in methodlarının böyle saçma davranışları olduğu için bu decorator'lar, bir property objesi yaratmanın en iyi yöntemi değildir. Bu yüzden bir property objesi yaratmak istediğinizde bu decorator'ları kullanmak terine `property()` fonksiyonunu tercih etmelisiniz.
 
+**Not:** Aynı zamanda `@classmethod` ve `@staticmethod` decorator'larını `@property` decorator'ı ile zincirleme (chaining) kullanırsanız, hangisini önce yazdığınıza göre programınızın davranışı değişir. Örnek:
+```py
+class A:
+    @classmethod
+    @property
+    def getter_exp(self):
+        return "getter_exp class method"
+
+    @staticmethod
+    @property
+    def setter_exp():
+        return "getter_exp static method"
+
+var = A()
+print(var.getter_exp) # Output: getter_exp class method
+print(var.setter_exp) # Output: <property object at 0x00000222380F1220>
+```
+Yukarıdaki property'ler `classmethod(property(getter_exp))`, `staticmethod(property(setter_exp))` anlamlarına gelmektedir. Bu yüzden aşağıda gördüğünüz gibi istenmeyen sonuçlar yaratırlar:
+
+<img src="https://i.ibb.co/GpPWntL/image.png" alt="image" border="0">
+
+Bu property'leri doğru sırada kullanırsak bir sorun çıkarmadan görevlerini yaparlar. Örnek:
+```py
+class A:
+    @property
+    @classmethod
+    def getter_exp(self):
+        return "getter_exp class method"
+
+    @property
+    @staticmethod
+    def setter_exp():
+        return "getter_exp static method"
+
+var = A()
+print(var.getter_exp) # TypeError: 'classmethod' object is not callable
+print(var.setter_exp) # TypeError: 'staticmethod' object is not callable
+```
+Gördüğünüz gibi doğru zincirleme (chaining) uygulanan decorator'lar hiçbir sorun çıkarmadan çalıştı. Burada hata almamızın sebebi, daha önce de anlattığımız `classmethod` ve `staticmethod` objelerinin çağırılabilir (callable) olmamasından kaynaklanıyor.
+
+<img src="https://i.ibb.co/YpQMFCd/image.png" alt="image" border="0">
+
 ## `property(fget=None, fset=None, fdel=None, doc=None)` Fonksiyonu
 `property()` fonksiyonu, `fget`, `fset` ve `fdel` parametrelerine sırasıyla read, write ve delete işlemlerini gerçekleştirecek fonksiyon objelerini argüman olarak verip bir property oluşturabilmenizi sağlar. Örnek:
 ```py

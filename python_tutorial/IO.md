@@ -49,7 +49,7 @@ print(15, "Merhaba", 12,45, a+b)
 `print()` fonksiyonuna sınırsız sayıda string argüman girmene olanak tanır.
 
 ### `sep` Parametresi
-`print()` fonksiyonundaki `*object` parametresi olarak eklenen her bir argumanın arasına gelecek olan ifadeyi belirlemekte kullanılıyor. `sep = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `" "` değerini alır.
+`print()` fonksiyonundaki `*object` parametresi olarak eklenen her bir argümanın arasına gelecek olan ifadeyi belirlemekte kullanılıyor. `sep = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `" "` değerini alır.
 ```py
 print(1 , 2 , 3 , 4 , 5 , 6 , sep = "/")
 print(1 , 2 , 3 , 4 , 5 , 6 , sep = "+")
@@ -63,7 +63,7 @@ print("Selam" , "Ben" , "Hiçkimse" , sep = "\t")
 ```
 
 ### `end` Parametresi
-Default olarak `\n`'e ayarlıdır. `print()` fonksiyonunun, `*object` parametresinin en son argumanından sonra gelecek ifadeyi belirlemekte kullanılır. `end = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `"\n"` değerini alır.
+Default olarak `\n`'e ayarlıdır. `print()` fonksiyonunun, `*object` parametresinin en son argümanından sonra gelecek ifadeyi belirlemekte kullanılır. `end = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `"\n"` değerini alır.
 ```py
 print("Selam", "ben", "Eyüp", end = ".")
 # Output: Selam ben Eyüp.

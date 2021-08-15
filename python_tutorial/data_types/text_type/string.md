@@ -162,7 +162,7 @@ print(str(int_type), str(float_type), str(complex_type), sep="\n")
 (15+2j)
 ```
  - `object`,  karakter dizisini ifade eder.
- - `encoding`, encoding değerini ifade eder. Bilgisayar, karakterleri olduğu gibi anlamaz. Bilgisayar elektrik sinyallerini anlar. *ASCII* ya da *UNICODE* gibi kodlama sistemleri, harf, sayı, sembol gibi karakterlerin bilgisayarın anlayacağı karşılığa çevrilip depolandığı sistemlerdir. Bu çevirim bazen binary, bazen decimal, bazen de hexadecimal olabilir. Örneğin sizin `A` olarak bildiğiniz şeyin ASCII'deki decimal karşılığı `65`'dir. Bilgisayar bu decimal karşılığı değerlendirir. Kodlama sistemleri hakkında daha fazla bilgi için [**tıklayınız**](asd).
+ - `encoding`, encoding değerini ifade eder. Bilgisayar, karakterleri olduğu gibi anlamaz. Bilgisayar elektrik sinyallerini anlar. *ASCII* ya da *UNICODE* gibi kodlama sistemleri, harf, sayı, sembol gibi karakterlerin bilgisayarın anlayacağı karşılığa çevrilip depolandığı sistemlerdir. Bu çevirim bazen binary, bazen decimal, bazen de hexadecimal olabilir. Örneğin sizin `A` olarak bildiğiniz şeyin ASCII'deki decimal karşılığı `65`'dir. Bilgisayar bu decimal karşılığı değerlendirir. Kodlama sistemleri hakkında daha fazla bilgi için [**tıklayınız**](karakter_kodlama_character_encoding.md).
  - `errors`, kod çözme başarısız olduğunda verilen yanıttır. Default değeri `strict`'dir. Bu parametre 6 değer alabilir:
 	 - `strict`, herhangi bir encoding hatasıyla karşılaşınca bir `UnicodeDecodeError` hata mesajı yükselten default değerdir.
 	 - `ignore`, herhangi bir encoding hatasıyla karşılaşınca kodlanamayan karakteri yok sayar. Örnek: `şelam -> elam` 

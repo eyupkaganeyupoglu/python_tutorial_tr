@@ -1,6 +1,8 @@
 # Class
 Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu). Class'lar bizi belli obje ve fonksiyon gruplarını her seferinde en baştan yazma zahmetinden kurtarır. Çünkü bir class'dan, bu class'ın bütün içeriğine sahip istediğimiz sayıda **instance** adı verilen objeler üretilebilir.
 
+**Not:** "Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu)" dedim diye class'lar obje değildir diye düşünmeyin. Python'da her şey (class'lar dahil) bir objedir.
+
 ## Class Definition
 `class <class_name>` statement kullanılarak class tanımlayabilirsiniz. Örnek:
 ```py
@@ -270,7 +272,7 @@ print(B().a) # Output: B.attri
 print(C().a) # Output: C.attri
 ```
 
-Self parametresi, main class'dan türetilen geçerli (current) instance'ı atıfta bulunur (refers). Kanıtı:
+Self parametresi, main class'dan türetilen geçerli (current) instance'ı atıfta bulunur (refers to). Kanıtı:
 ```py
 class A:
     def __init__(self):
@@ -313,7 +315,7 @@ print(var.a, var.b, var.c) # Output: 1 2 3
 ```
 Buradaki `self` parametresine Python tarafından `var = A()` kodundaki `A()` kodunun yarattığı instance argüman olarak girilir. Bu argümana temsili olarak `X` dersek, `self.a = 1`, `self.b = 2`, `self.c = 3` kodları `X.a = 1`, `X.b = 2`, `X.c = 3` anlamına gelmektedir. Yukarıdaki olayı `setattr()` (daha sonra anlatılacak) build-in fonksiyonunu kullanarak da yapabilirsiniz.
 
-İlk olarak `__init__` constructor'ından bahsedelim. `__init__`, yapıcı (constructor) olarak bilinen, main class'dan instance türetilirken ilk çağırılan temel aşırı yükleme (overloading) methodudur. 
+İlk olarak `__init__` constructor'ından bahsedelim. `__init__`, yapıcı (constructor) olarak bilinen, main class'dan instance türetilirken ilk çağırılan temel aşırı yükleme (overloading) methodudur. `__init__(self, *args, **kwargs)` syntax'ına sahiptir. `__init__` constructor'ı Initialization (başlatma, ilklendirme) işleminden sorumludur ama `__new__` methodunda yapılabilecek hemen hemen her şeyi `__init__` methodunda da yapılabildiği için  `__new__` methodu yerine `__init__` methoduna constructor denmektedir.
 
 `__init__` constructor'ı tanımlanmamış `A` ismindeki bir class'ı ele alalım. `A` class'ı `object` base class'ından biras aldığı (daha sonra anlatılacak) için `A` class'ına debugger ile baktığınızda `__init__` constructor'ının special variables sekmesinde `<slot wrapper '__init__' of 'object' objects>` şeklinde depolandığını görürsünüz. Kanıt:
 ```py
@@ -503,7 +505,7 @@ var = A() # Output: init çalıştı...
 print(A.a) # Output: 2
 ```
 
-`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lara da atıfta bulunabilirsiniz (refers). Ama bu size herhangi bir kolaylık sağlamaz. Örnek:
+`self` parametresi ile sıfırdan bir instance attribute tanımlayabileceğiniz gibi, class attribute'lara da atıfta bulunabilirsiniz (refers to). Ama bu size herhangi bir kolaylık sağlamaz. Örnek:
 ```py
 class A():
     attri = 1
@@ -519,7 +521,7 @@ print("var attribute:", var.attri, "|", id(var.attri))
 A attribute:   1 | 1893013285168
 var attribute: 1 | 1893013285168
 ```
-`var` variable'ına atanan instance'a temsili olarak `X` dersek: Buradaki `self.attri`, `X.attri` anlamına gelmektedir. `X.attri`'de direkt `attri` class attribute objesine atıfta bulunduğu (refers) için hata yükseltmez. Bu yüzden `self.attri` yazmakla yazmamak arasında işlevsel olarak herhangi fark yoktur. Başka bir örnek:
+`var` variable'ına atanan instance'a temsili olarak `X` dersek: Buradaki `self.attri`, `X.attri` anlamına gelmektedir. `X.attri`'de direkt `attri` class attribute objesine atıfta bulunduğu (refers to) için hata yükseltmez. Bu yüzden `self.attri` yazmakla yazmamak arasında işlevsel olarak herhangi fark yoktur. Başka bir örnek:
 ```py
 class A():
     liste = []
@@ -537,7 +539,7 @@ print(A.liste) # Output: ['New Item', 'New Item']
 print(var1.liste) # Output: ['New Item', 'New Item']
 print(var2.liste) # Output: ['New Item', 'New Item']
 ```
-`var1` variable'ına atanan instance'a temsili olarak `X`, `var2` variable'ına atanan instance'a temsili olarak `Y` dersek: Benzer şekilde buradaki `self.liste`, `var1` instance'ı için `X.liste`, `var2` instance'ı için `Y.liste` anlamına gelmektedir. `X.liste` ve `Y.liste`'de direkt `liste` class attribute objesine atıfta bulunduğu (refers) için hata yükseltmez ve üzerinde `append` methodu uygulanabilir. Bu yüzden `A` main class'ından her instance türetildiğinde `__init__` ve beraberinde `self.liste.append("New Item")` çalıştığı için her seferinde `liste` class attribute'una `"New Item"` stringi ekleniyor. Bunlar instance methodlar için de geçerlidir. Örnek:
+`var1` variable'ına atanan instance'a temsili olarak `X`, `var2` variable'ına atanan instance'a temsili olarak `Y` dersek: Benzer şekilde buradaki `self.liste`, `var1` instance'ı için `X.liste`, `var2` instance'ı için `Y.liste` anlamına gelmektedir. `X.liste` ve `Y.liste`'de direkt `liste` class attribute objesine atıfta bulunduğu (refers to) için hata yükseltmez ve üzerinde `append` methodu uygulanabilir. Bu yüzden `A` main class'ından her instance türetildiğinde `__init__` ve beraberinde `self.liste.append("New Item")` çalıştığı için her seferinde `liste` class attribute'una `"New Item"` stringi ekleniyor. Bunlar instance methodlar için de geçerlidir. Örnek:
 ```py
 class A():
     liste = []
@@ -652,7 +654,7 @@ A.func1 = 1
 print(var.func1) #Output: 1
 ```
 
-cls parametresi, main class'a atıfta bulunur (refers). Kanıtı:
+cls parametresi, main class'a atıfta bulunur (refers to). Kanıtı:
 ```py
 class A:
     @classmethod
@@ -720,7 +722,7 @@ print(A.func()) # Output: Class Method Çalıştı.
 print(var.func()) # Output: Class Method Çalıştı.
 ```
 
-Aynı instance methodlarda olduğu gibi, class methodlarda da class attribute'lara atıfta bulunabilirsiniz (refers). Örnek:
+Aynı instance methodlarda olduğu gibi, class methodlarda da class attribute'lara atıfta bulunabilirsiniz (refers to). Örnek:
 ```py
 class A:
     attri = "class attribute"
@@ -1087,3 +1089,28 @@ v1 = Vektor(2,10)
 v2 = Vektor(5,-2)
 print(v1 + v2) # Output: Vektör (7, 8)
 ```
+
+### `__new__(cls, *args, **kwargs)`
+Instantiation işleminde `__init__` constructor'ından önce çağırılan methoddur. Kanıtı:
+```py
+class A:
+    def __new__(cls):
+        pass
+
+    def __init__(self):
+        print("init çalıştı...")
+
+var = A()
+```
+Gördüğünüz `__new__` methodunu override yaptığım için işlevselliğini kaybetti. İşlevselliğini kaybettiği için işlevselliği arasında `__init__` methodu ile ilgili olan kısmı da kaybetti dolayısıyla. Bu yüzden `__init__` methodundan önce çalıştığı için `__init__` çalışmadı. Düzgün hali:
+```py
+class A:
+    def __new__(cls):
+        return object.__new__(cls)
+
+    def __init__(self):
+        print("init çalıştı...")
+
+var = A()
+```
+Burada `__new__` methodu `object.__new__(cls)` koduyla object base class'ının `__new__` methodunu miras alarak `__new__` methodunun işlevselliğini geri kazandırmış olduk.

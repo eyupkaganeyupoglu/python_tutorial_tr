@@ -36,7 +36,7 @@ print(B.class_exp2) # Output: Second object
 ```
 Gördüğünüz gibi yeniden tanımlama (redefinition) işleminde `B` class'ını `class_exp2` class attribute'u `A` class'ındaki `class_exp2` class attribute'undan farklı bir objeye dönüştüğü için farklı value'lara sahip olmuş olabilir ama `class_exp1` class attribute'una `append` methodu kullanıldığı için farklı bir objeye dönüşmüyor ve dolayısıyla `A` veya `B` class'ı üzerinden yapılan müdahelelere iki class'dan da ulaşılabiliyor.
 
-**Not:** Yukarıdaki olayın sebebi, `B` class'ındaki miras alınan objelerin `B` class'ına ait olmaması. Yani `A` class'ındaki objeler `B` class'ına kopyalanmıyor, `B` class'ındaki objeler `A` class'ındaki objelere atıfta bulunuyor (refers). Kanıt:
+**Not:** Yukarıdaki olayın sebebi, `B` class'ındaki miras alınan objelerin `B` class'ına ait olmaması. Yani `A` class'ındaki objeler `B` class'ına kopyalanmıyor, `B` class'ındaki objeler `A` class'ındaki objelere atıfta bulunuyor (refers to). Kanıt:
 
 <img src="https://i.ibb.co/WDYRsCH/image.png" alt="image" border="0">
 
@@ -45,7 +45,7 @@ Gördüğünüz gibi yeniden tanımlama (redefinition) işleminde `B` class'ın�
 print({(i):(A.__dict__[i]) for i in A.__dict__ if not "__" in i}) # Output: {'class_exp1': [], 'class_exp2': 'First object', 'func1': <function A.func1 at 0x00000203562060D0>, 'func2': <classmethod object at 0x0000020356204FD0>, 'func3': <staticmethod object at 0x0000020356204FA0>, 'property_exp': <property object at 0x00000203561F5E50>}
 print({(i):(B.__dict__[i]) for i in B.__dict__ if not "__" in i}) # Output: {}
 ```
-Gördüğünüz gibi `B` class'ının `A` class'ından miras aldığı objeler `B` class'ını `__dict__` methodunda bulunmuyor. Bu durum, `A` class'ındaki objelerin `B` class'ına kopyalanmadığını, `B` class'ındaki objelerin `A` class'ındaki objelere atıfta bulunduğunu (refers) kanıtlar.
+Gördüğünüz gibi `B` class'ının `A` class'ından miras aldığı objeler `B` class'ını `__dict__` methodunda bulunmuyor. Bu durum, `A` class'ındaki objelerin `B` class'ına kopyalanmadığını, `B` class'ındaki objelerin `A` class'ındaki objelere atıfta bulunduğunu (refers to) kanıtlar.
 
 **Not:** Bir class'ın base class ya da subclass olarak isimlendirilmesi sembolik bir şeydir. Python için bu durumu "`B` class'ı `A` class'ından miras almış." şeklinde yorumlar.
 

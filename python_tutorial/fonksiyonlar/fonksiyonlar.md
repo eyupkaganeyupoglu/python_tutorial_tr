@@ -414,15 +414,15 @@ Yukarıdaki kodda:
 - `boolean:bool` kodu, kullanıcıya, `boolean` isimli variable'ın `bool` type bir argüman alması gerektiğini (ayrıca `boolean` parametresinin default değeri `True`'dur),
 - `-> str` kodu, kullanıcıya, `func` isimli fonksiyonun `str` type bir değer döndürmesi gerektiğini döylemektedir.
 
-Bu işaretlerin kendi başlarına, kullanıcıyı bilgilendirmek dışında bir işlevi olmasa bile, **mypy** modülü etkisiyle anlam kazanır.
+**Not:** Sık sık gördüğümüz "`Any`" kelimesi de `str`, `int` vs. gibi bir type hint'dir.
 
-**mypy** Modülü:
-- [`mypy` pypi linki](https://pypi.org/project/mypy/#description)
-- [`mypy` documentation](https://mypy.readthedocs.io/en/stable/getting_started.html)
-- [`mypy` GitHub](https://github.com/python/mypy)
+Bu işaretlerin kendi başlarına, kullanıcıyı bilgilendirmek dışında bir işlevi olmasa bile, **mypy** modülü etkisiyle anlam kazanır.
 
 `mypy` sayesinde:
 - **Type Hint** (`:`) ve **Function Annotation** (`->`) ile belirtilen durumlara aykırı durumlar oluşunca `mypy` harekete geçer. Örneğin `name:str` şeklinde tanımladığınız `name` parametresine string type dışında bir argüman girerseni veya `func` fonksiyonu string type dışında bir değer döndürürse `mypy` bir hata raporu oluşturur.
 - `mypy` modülünün aykırı durumlarla karşılaşınca bir hata raporu oluşturması, Python'un çalışmasına engel teşkil etmez. Yani Python her zaman yaptığı gibi kodu çalıştırır. Yani ilgili kodu çalıştırdığınızda `mypy`, Python'dan bağımsız olarak çalışır.
 
-- Python'un yine her zamanki gibi kodu çalıştırsa bile, .
+**mypy** Modülü:
+- [`mypy` pypi linki](https://pypi.org/project/mypy/#description)
+- [`mypy` documentation](https://mypy.readthedocs.io/en/stable/getting_started.html)
+- [`mypy` GitHub](https://github.com/python/mypy)

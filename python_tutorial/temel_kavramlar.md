@@ -109,7 +109,7 @@ if (sys.version_info.major < 3):
 else:
 	print(_3x_metni)
 ```
-Program py2.x de çalıştırılırsa, `_2x_metni` variable'ına tanımlanmış karakter dizisinin düzgün gösterilmesi için `u` harfini eklememiz gerek. Bu sayede UNICODE olarak çalıştırmış olacak.
+Program py2.x de çalıştırılırsa, `_2x_metni` variable'ına atanmış karakter dizisinin düzgün gösterilmesi için `u` harfini eklememiz gerek. Bu sayede UNICODE olarak çalıştırmış olacak.
 
 **Önemli Not:** Python’ın 2.7 öncesi sürümlerinde `sys` modülünün `version_info()` metodu farklı çıktılar verir. Mesela Python’ın 2.7 öncesi sürümlerinde `version_info()` metodunun `major`, `minor` veya `micro` gibi methodları bulunmaz. Bu methodlar Python programlama diline 2.7 sürümüyle birlikte geldi. Dolayısıyla yukarıdaki programı Python’ın 2.7 öncesi sürümlerinden biriyle çalıştıran kullanıcılarınız istediğiniz çıktıyı alamayacak, Python bu kullanıcılara hata mesajı göstererek programın çökmesine sebep olacaktır.
 ```py

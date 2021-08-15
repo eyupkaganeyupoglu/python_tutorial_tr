@@ -155,5 +155,4 @@ print(m1.index("3")) # Output: `ValueError: tuple.index(x): x not in tuple`
 ```py
 tuple_exp = ("a","b",("a",),"c")
 print(tuple_exp.count("a")) # Output: 1
-
 ```

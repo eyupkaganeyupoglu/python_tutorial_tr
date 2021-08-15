@@ -5,7 +5,7 @@
 
 - `"file"`: Dosya dizinini (path) temsil eder. Path yazarken `\` ayracını kaçış dizisi olarak algılayabilir. Bu yüzden her path yazdığınızda en başa `r` kaçış dizisini koyun. Yani `r"D:\falan_filan..."` şeklinde kullanın.
 
-- `mode`: Default değeri `"r"` olarak ayarlıdır. Dosyayı açarken hangi modda (örneğin okuma ya da yazma) açacağınızı belirlersiniz. `mode` parametresine girilebilecek argümanlar için [tıklayınız](asd). Devam etmeden önce bu argumanları öğrenmenizde fayda var.
+- `mode`: Default değeri `"r"` olarak ayarlıdır. Dosyayı açarken hangi modda (örneğin okuma ya da yazma) açacağınızı belirlersiniz. `mode` parametresine girilebilecek argümanlar için [tıklayınız](asd). Devam etmeden önce bu argümanları öğrenmenizde fayda var.
 
 - `buffering`: Default değeri `-1` olarak ayarlıdır. Buffering policy ayarlamak için kullanılır. Bir dosyayı açıp veri girdiğimizde, bu veriler tamponda (buffer) bekletilir. Buffer'da bekletilen veriler, dosya kapatıldığında dosyaya işlenir. `buffering` parametresinde ile buffer'a alma işleminin nasıl yürüyeceğini belirliyoruz.
     - `buffering = 0`: Veriler buffer'a alınmadan doğrudan dosyaya işlenir ama bu sadece `'b'` (binary) mode ile açılan dosyalarda mümkündür.
@@ -20,9 +20,9 @@ print(io.DEFAULT_BUFFER_SIZE) # Output: 8192
 
 - `encoding`: Dosyayı hangi kod çözücüyle açacağını belirlediğiniz parametredir.
 
-- `errors`: `encoding` parametresinde belirtilen kod çözücü uygun değilse yükseltilecek hatanın belirlendiği parametredir. Bu parametrenin alabileceği argumanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict) ulaşabilirsiniz.
+- `errors`: `encoding` parametresinde belirtilen kod çözücü uygun değilse yükseltilecek hatanın belirlendiği parametredir. Bu parametrenin alabileceği argümanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict) ulaşabilirsiniz.
 
-- `newline`: Farklı işletim sistemlerinde satır sonları birbirinden farklı şekilde gösterirlir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. Dosyada yazılı olan her satırın sonundaki kaçış dizilerini etkiler. Default değeri `None` olarak ayarlıdır ve bu arguman kullanılırsa, son satır hariç her satırın sonunda `\n` kaçış dizisi olur. Boş string `""` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\n"` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\r"` argumanı verilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur. `\r\n` argumanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. Bu argumanlardan başka arguman kabul etmez.a
+- `newline`: Farklı işletim sistemlerinde satır sonları birbirinden farklı şekilde gösterirlir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. Dosyada yazılı olan her satırın sonundaki kaçış dizilerini etkiler. Default değeri `None` olarak ayarlıdır ve bu argüman kullanılırsa, son satır hariç her satırın sonunda `\n` kaçış dizisi olur. Boş string `""` argümanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\n"` argümanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\r"` argümanı verilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur. `\r\n` argümanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. Bu argümanlardan başka argüman kabul etmez.a
 
 - `closefd`: `closefd` `False` ise ve file parametresine *filename* yerine *file descriptor* verilmişse, dosya kapatıldığında (close) temeldeki (underlying) *file descriptor* açık tutulacaktır. file parametresine *filename* verilmişse, `closefd`' default değeri olan `True` olmalıdır. Aksi halde hata oluşur. 
 
@@ -342,12 +342,11 @@ dosya.close()
 r
 İkinci Satır
 Üçüncü Satır
-PS D:\my_folder\ed
 ```
 
 **Not:** `seek(0)` dosyanın en başına gider.
 
-`whence` parametresinde ise, imleci konumlandırırken kullanacağı ölçütü belirleyebilirsiniz. `whence` parametresine `SEEK_SET` ya da `0` girilirse, dosyanın başına atıfta bulunur (refers) ve `offset` sıfır ya da positif integer'lar olmalıdır; `SEEK_CUR` ya da `1` girilirse, mevcut (current) konuma (reading, writing işlemlerinde ya da `seek()` methoduyla değişen konum) atıfta bulunur (refers) ve `offset` negatif integer'lar olabilir; `SEEK_END` ya da `2` girilirse, dosyanın sonuna atıfta bulunur (refers) ve `offset` genellikle negatif integer'lardır. `whence` parametresine 1 ya da 2 argumanlar kullanılacaksa, dosya binary (rb, wb, ab, xb, rb+, wb+, ab+, xb+) modda açılmalıdır. Dosya binary modda açılmazsa, bu argumanları kullandığınızda `io.UnsupportedOperation: can't do nonzero end-relative seeks` hatası alırsınız.
+`whence` parametresinde ise, imleci konumlandırırken kullanacağı ölçütü belirleyebilirsiniz. `whence` parametresine `SEEK_SET` ya da `0` girilirse, dosyanın başına atıfta bulunur (refers to) ve `offset` sıfır ya da positif integer'lar olmalıdır; `SEEK_CUR` ya da `1` girilirse, mevcut (current) konuma (reading, writing işlemlerinde ya da `seek()` methoduyla değişen konum) atıfta bulunur (refers to) ve `offset` negatif integer'lar olabilir; `SEEK_END` ya da `2` girilirse, dosyanın sonuna atıfta bulunur (refers to) ve `offset` genellikle negatif integer'lardır. `whence` parametresine 1 ya da 2 argümanlar kullanılacaksa, dosya binary (rb, wb, ab, xb, rb+, wb+, ab+, xb+) modda açılmalıdır. Dosya binary modda açılmazsa, bu argümanları kullandığınızda `io.UnsupportedOperation: can't do nonzero end-relative seeks` hatası alırsınız.
 
 ## Dosyaya Ekleme yapma
 Python'da, zaten var olan ve boş olmayan bir dosyanın içeriğine ekleme yapmak istediğimizde, o dosyayı `a` kipiyle açarız.
@@ -703,57 +702,6 @@ print(dosya.readable()) # Output: True
 
 dosya.close()
 ```
-
-
-### `seek(offset, whence = SEEK_SET)` Methodu
-`seek()` methodu, imleci, `offset` parametresinde belirtilen konumdaki byte'a konumlandırmanızı sağlar. Bu konumlandırmayı yaparken kaçış dizilerini de dikkate alır. Örneğin, `offset` parametresine `2` değerini girersek, imleci 2. index'deki byte'a konumlandırır ve sonrasında yapılacak **write** (yazma) ve **read** (okuma) işlemlerini, 2. index'deki byte'ı dahil ederek yapar. Bu konumlandırmayı, index'lerdeki karakterlere göre değil, byte'lara göre yapar. Örneğin `"i"` karakteri, `utf-8` kod çözücüde 1 byte ile temsil edilirken, `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edilir. Bu yüzden aşağıdaki gibi bir durumla karşılaşılabilir:
-
-**Dosya:**
-```
-ilk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Kod:**
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-
-dosya.seek(2)
-print(dosya.read())
-
-dosya.close()
-```
-**Output:**
-```
-k Satır
-İkinci Satır
-Üçüncü Satır.
-```
-Buradaki `"i"` karakteri, `utf-8` kod çözücüde 1 byte ile temsil edildiği için sıfırıncı ve birinci index'lerdeki byte'ları (`"il"`) atlayıp, 2. index'deki byte'dan itibaren (2. index'deki byte dahil) `read()` methodunu çalıştırdı.
-**Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Kod:**
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-
-dosya.seek(2)
-print(dosya.read())
-
-dosya.close()
-```
-**Output:**
-```
-lk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-Buradaki `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edildiği için sıfırıncı ve birinci index'lerdeki byte'ları (`"İ"`) atlayıp, 2. index'deki byte'dan itibaren (2. index'deki byte dahil) `read()` methodunu çalıştırdı.
-
-`whence` parametresinde ise, imleci konumlandırırken kullanacağı ölçütü belirleyebilirsiniz. `whence` parametresine `SEEK_SET` ya da `0` girilirse, dosyanın başına atıfta bulunur (refers) ve `offset` sıfır ya da positif integer'lar olmalıdır; `SEEK_CUR` ya da `1` girilirse, mevcut (current) konuma (reading, writing işlemlerinde ya da `seek()` methoduyla değişen konum) atıfta bulunur (refers) ve `offset` negatif integer'lar olabilir; `SEEK_END` ya da `2` girilirse, dosyanın sonuna atıfta bulunur (refers) ve `offset` genellikle negatif integer'lardır. `whence` parametresine 1 ya da 2 argumanlar kullanılacaksa, dosya binary (`rb`, `wb`, `ab`, `xb`, `rb+`, `wb+`, `ab+`, `xb+`) modda açılmalıdır. Dosya binary modda açılmazsa, bu argumanları kullandığınızda `io.UnsupportedOperation: can't do nonzero end-relative seeks` hatası alırsınız.
 
 ### `seekable()` Methodu
 `seek()` methodundaki gibi, bir dosya, file stream'a erişime (access) izin veriyorsa, o dosya seekable'dir. `seekable()` methodu, bir dosya seekable ise `True`; seekable değilse, yani `seek()`, `tell()` ve `truncate()` methodları `OSError` yükseltiyorsa, `False` döndürür.

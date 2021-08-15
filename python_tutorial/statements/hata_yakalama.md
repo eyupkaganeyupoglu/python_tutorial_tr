@@ -8,40 +8,48 @@ Yazılan kod, dilin söz dizilimine (syntax'ına) uymaması durumunda karşıla�
 Eksik yazılan programlar, istenilenin dışında çalışır ve istenilen outputları vermez. Bu eksiklikle sonucu oluşan hatalara **bug** denir. Bug'lar bazen güvenlik açıkları oluşturabilir (örneğin `eval()` fonksiyonu). Bu oluşan güvenlik açıklarına **security bug** veya **security flaw** denir.
 
 ## İstisnalar (Exception)
-Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasında oluşabilecek hatalara **exceptions** ya da **logical errors** denir. Build-in (gömülü) exception'lar aşağıda gösterilmiştir:
+Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasında oluşabilecek hatalara **exceptions** ya da **logical errors** denir. Bu hatalar `Exception` class'ının subclass'ıdır. Bazı hatalar bu subclass'ların da subclass'ı olabilir. Örnek:
+- **`StandardError`:** `StopIteration` ve `SystemExit` dışındaki tüm built-in exception'lar için base class'dır ama exception’s inheritance chain'de gereksiz bir bağlantı oluşturduğunu kanıtladığı için Python 3'de kaldırıldı.
+- **`ArithmeticError`:** Çeşitli aritmetik (sayısal) exception'lar için oluşturulan built-in exception'lar için base class'dır: `OverflowError`, `ZeroDivisionError`, `FloatingPointError`. base class'dır.
+- **`EnvironmentError`:** Python'un dışından (işletim sistemi, dosya sistemi vb.) gelen exception'lar için base class'dır: `IOError`, `OSError`
+- **`LookupError`:** Bir mapping üzerinden kullanılan key veya bir sequence üzerinden kullanılan index geçersiz (invalid) olduğunda yükseltilen exception'lar için base class'dır: `IndexError`, `KeyError`. Bu, doğrudan `codecs.lookup()` tarafından yükseltilebilir.
+
+Build-in (gömülü) exception'lar aşağıda gösterilmiştir:
 | Exception | Hatanın Nedeni |
 |-----------|----------------|
 | `AssertionError` | Bir `assert` statement başarısız olduğunda yükseltilen hata mesajıdır. |
-| `AttributeError` | Attribute assignment ya da reference fails'de yükseltilen hata mesajıdır. |
-| `EOFError` | `input()` fonksiyonu, end-of-file şartına ulaştığında yükseltilen hata mesajıdır. |
+| `AttributeError` | Attribute assignment ya da reference fails'de (x=10 ; x.append(1) gibi) yükseltilen hata mesajıdır. |
+| `EOFError` | Dosya sonuna (end-of-file) ulaştığında ya da `raw_input()` veya `input()` fonksiyonlarında input olmadığında yükseltilen hata mesajıdır. |
 | `FloatingPointError` | Bir floating point işlemi başarısız olduğunda yükseltilen hata mesajıdır. |
-| `GeneratorExit` | Bir generator'ın `close()` methodu çağırıldığında yükseltilen hata mesajıdır. generator'un ne olduğunu öğrenmek için [tıklayınız](asd). |
-| `ImportError` | Imported module bulunamadığında (not found) yükseltilen hata mesajıdır. |
-| `IndexError` | Bir sequence'ın index'i out of range olduğunda yükseltilen hata mesajıdır. |
+| `GeneratorExit` | Bir generator'ın `close()` methodu çağırıldığında yükseltilen hata mesajıdır. generator'un ne olduğunu öğrenmek için [tıklayınız](ileri_düzey_fonksiyonlar.md'deki yield kısmının link). |
+| `ImportError` | Imported module bulunamadığında (not found) ya da daha genel bir tabirle, import işlemi başarısız olduğunda yükseltilen hata mesajıdır. |
+| `IndexError` | Bir sequence'ın index'i out of range olduğunda (yani sequence'ın index'i bulunamadığında) yükseltilen hata mesajıdır. |
+| `IOError` | Var olmayan bir dosyayı açmaya çalışırken, yazdırma sırasında veya `open()` fonksiyonu gibi bir IO işlemi başarısız olduğunda yükseltilen hata mesajıdır. Bu hata, bir anlamda işletim sistemi ile ilgili sorunlar olarak düşünülebilir. |
 | `KeyError` | Bir dictionary'de `key` bulunamadığında (not found) yükseltilen hata mesajıdır. |
-| `KeyboardInterrupt` | Kullanıcı interrupt key'e (`Ctrl+C` ya da `Delete`) bastığında yükseltilen hata mesajıdır. |
+| `KeyboardInterrupt` | Kullanıcı interrupt key'e (`Ctrl+C` ya da `Delete`) bastığında program yürütülmeyi (execute) sonlandırır ve Python bu hatayı yükseltir. |
 | `MemoryError` | Bir işlem sırasında out of memory olduğunda yükseltilen hata mesajıdır. Out of memory, diyelim ki öyle bir program yazdınız ki, o program bütün RAM'inizi kullanıyor ve RAM'inizde yer kalmadı. RAM'inizde yer kalmamasına rağmen RAM kullanmaya çalışırsanız bu hata yükseltilen. |
-| `NameError` | Bir variable, global veya local scope'da bulunamazsa (not found) yükseltilen hata mesajıdır. |
-| `NotImplementedError` | [Abstract method](https://www.geeksforgeeks.org/abstract-classes-in-python/) tarafından yükseltilen hata mesajıdır. |
+| `NameError` | Bir identifier, global veya local scope'da bulunamazsa (not found) yükseltilen hata mesajıdır. |
+| `NotImplementedError` | Bu hata mesajını anlamak için gerekli kaynaklar: [Kaynak 1](https://www.tutorialspoint.com/How-to-catch-NotImplementedError-Exception-in-Python), [Kaynak 2](https://docs.python.org/3/library/exceptions.html#NotImplementedError), [Kaynak 3](https://qastack.info.tr/programming/372042/difference-between-abstract-class-and-interface-in-python). |
 | `OSError` | Sistem işlemleri, sistemle ilgili hataya neden olduğunda yükseltilen hata mesajıdır. |
-| `OverflowError` | Bir aritmetik işlemin sonucu temsil edilemeyecek kadar büyük olduğunda yükseltilen hata mesajıdır. |
+| `OverflowError` | Bir aritmetik (sayısal) işlemin sonucu temsil edilemeyecek kadar büyük olduğunda yükseltilen hata mesajıdır. |
 | `ReferenceError` | Bir [garbage collection](https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python#:~:text=The%20process%20by%20which%20Python,object%27s%20reference%20count%20reaches%20zero.) referansına erişmek için zayıf bir proxy referansı kullanıldığında yükseltilen hata mesajıdır. |
-| `RuntimeError` | Bir error, herhangi bir kategoriye girmediğinde yükseltilen hata mesajıdır. |
-| `StopIteration` | `next()` fonksiyonu tarafından döndürülecek başka bir öğe kalmadığında yükseltilen hata mesajıdır. |
+| `RuntimeError` | Bir hata mesajı herhangi bir kategoriye girmediğinde yükseltilen hata mesajıdır. |
+| `StopIteration` | Bir iterator'ın `next()` methodu tarafından döndürülecek başka bir öğe kalmadığında yükseltilen hata mesajıdır. |
 | `SyntaxError` | Python'un syntax'ına uymayan bir kodla karşılaşıldığında yükseltilen hata mesajıdır. |
-| `IndentationError` | Indentation'ların hatalı kullanılması sonucu yükseltilen hata mesajıdır. |
+| `IndentationError` | Indentation'ların (girinti) hatalı kullanılması sonucu yükseltilen hata mesajıdır. |
 | `TabError` | Indentation'lar birbiriyle tutarsız olduğunda (örneğin bazıları 2 spaces, bazıları 4 spaces uzunluğunda olduğunda) yükseltilen hata mesajıdır. |
-| `SystemError` | [Internal error](https://www.google.com/search?q=what%20is%20internal%20error&client=opera-gx&hs=O1t&sxsrf=ALeKk003LeQ3bOnBhmUKaD-7ImUm4u-0FA:1621149477103&ei=JcegYKPkBcPgkgWt_IOoDw&oq=what%20is%20internal%20error&gs_lcp=Cgdnd3Mtd2l6EAMyBggjECcQEzIECCMQJzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIECAAQHjIECAAQHjoHCCMQsAMQJzoHCAAQRxCwAzoHCCMQsAIQJzoECAAQEzoICAAQDRAeEBNQvl9Yh2FgvmJoAnACeACAAbcBiAGfA5IBAzAuM5gBAKABAaoBB2d3cy13aXrIAQnAAQE&sclient=gws-wiz&ved=0ahUKEwjjite11M3wAhVDsKQKHS3-APUQ4dUDCAw&uact=5) tespit edildiğinde yükseltilen hata mesajıdır. |
+| `SystemError` | Python interpreter, bir iç sorun ile karşılaştığında ortaya çıkar ([Internal error](https://www.google.com/search?q=what%20is%20internal%20error&client=opera-gx&hs=O1t&sxsrf=ALeKk003LeQ3bOnBhmUKaD-7ImUm4u-0FA:1621149477103&ei=JcegYKPkBcPgkgWt_IOoDw&oq=what%20is%20internal%20error&gs_lcp=Cgdnd3Mtd2l6EAMyBggjECcQEzIECCMQJzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIECAAQHjIECAAQHjoHCCMQsAMQJzoHCAAQRxCwAzoHCCMQsAIQJzoECAAQEzoICAAQDRAeEBNQvl9Yh2FgvmJoAnACeACAAbcBiAGfA5IBAzAuM5gBAKABAaoBB2d3cy13aXrIAQnAAQE&sclient=gws-wiz&ved=0ahUKEwjjite11M3wAhVDsKQKHS3-APUQ4dUDCAw&uact=5)) tespit edildiğinde yükseltilen hata mesajıdır. Python interpreter bu hatayla karşılaşsa bile kodları yorumlamaya devam eder. |
 | `SystemExit` | `sys.exit()` fonksiyonunun yükselttiği hata mesajıdır. |
-| `TypeError` | Bir fonksiyon veya işlem, uygunsuz type'da bir objeye uygulandığında yükseltilen hata mesajıdır. |
-| `UnboundLocalError` | Global variable üzerinde local scope'da işlem yapmaya çalıştığınızda yükseltilen hata mesajıdır. Ayrıntılı bilgi için [tıklayınız](asd). |
+| `TypeError` | Bir fonksiyon veya işleme uygunsuz type'da bir objeye uygulandığında yükseltilen hata mesajıdır. |
+| `UnboundLocalError` | Local namespace'de bulunan bir obje üzerinde işlem yapmaya çalışırken yükseltilebilecek hata mesajıdır. Ayrıntılı bilgi için [tıklayınız](fonksiyonlar.md `nonlocal` keyword). |
 | `UnicodeError` | UNICODE'da `\U` ya da `\u` kullanımında, kod çözücü kodu çözemediğinde oluşan encoding ya da decoding hatasından dolayı yükseltilen hata mesajıdır. |
 | `UnicodeEncodeError` | Stringlerdeki `encode()` methodu, kodu çözemediğinde yükseltilen hata mesajıdır. |
 | `UnicodeDecodeError` | Stringlerdeki `decode()` methodu, kodu çözemediğinde yükseltilen hata mesajıdır. |
 | `UnicodeTranslateError` | `UnicodeError` ile ilgili bir hata mesajıdır. `UnicodeError`'ün subclass'ıdır. |
-| `ValueError` | Bir fonksiyon, doğru type'da ancak uygun olmayan value'de bir arguman aldığında yükseltilen hata mesajıdır. |
+| `ValueError` | Bir fonksiyon ya da işlem (operation), doğru type'a sahip ancak uygun olmayan bir value'ya sahip bir argüman aldığında ve durum `IndexError` gibi daha kesin bir exception tarafından tanımlanmadığında (yani `IndexError` yükseltilmediğinde) yükseltilen hata mesajıdır. |
 | `ZeroDivisionError` | Bir division ya da modulo işleminde, ikinci operand'ın sıfır olmasından dolayı yükseltilen hata mesajıdır. |
-**Not:** Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/exceptions.html).
+
+**Not:** Bütün exception'lar hakkında daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/library/exceptions.html).
 
 # Hata Yakalama Kodları
 Hata yakalama kodlar, bir kod parçasında oluşabilecek hataları yakalayıp, Python'un nasıl davranacağını belirlememizi sağlar.

@@ -25,7 +25,7 @@ def module_imported():
 **Not:** Bir modülü import ettikten sonra, modül dosyasında bir değiliklik yaparsanız (Örneğin yeni bir fonksiyon eklerseniz), modülü import ettiğiniz dosya bu değişiklikleri tanımaz (yani yeni eklediğiniz fonksiyonu kullanamazsınız). Bunun önüne geçmek için, `importlib.reload(modül_adı)` modül methodunu kullanarak modülünüzü **reload** yapabilirsiniz. Modülü tekrardan `import modul` şeklinde import etmek işe yaramaz. `importlib.reload(modül_adı)` kullanın.
 
 ## `as` Keyword'ü
-Bir modülü, programınız içerisinde başka bir isimle kullanmak için `as` keyword'ü kullanılır.
+Genel kullanım olarak, bir şeyi başka bir isimle kullanmak için `as` keyword'ünden yararlanılır. Bir modülü, programınız içerisinde başka bir isimle kullanmak için `as` keyword'ü kullanılır.
 ```py
 import random as sallama # artık 'random' modülünü 'sallama' adıyla kullanabiliriz.
 print(sallama.randint(3, 9)) # Output: 6
