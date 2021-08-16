@@ -2,6 +2,9 @@
 Property kelimesi de attribute kelimesi gibi nitelik/özellik anlamına gelmektedir. Property'lerin en temel işlevi, main class'da tanımlı bir methodu, main class'dan türetilmiş bir instance içinde attribute gibi kullanabilmemizi sağlamasıdır. Property objesi oluşturmak için `@property` decorator'ını ya da `property()` fonksiyonunu kullanabilirsiniz.
 
 ## `@property` Decorator
+
+<hr></hr>
+
 `@property` decorator'ı, kendisinden sonraki fonksiyonla aynı isimde bir `propery` objesi yaratır. Örnek:
 ```py
 class A():
@@ -29,6 +32,9 @@ Bunun sebebi `func2` fonksiyonunun artık `func2` property'sinin read işleminde
 `func2` fonksiyonu `func2` property'sinin bir parçası olduğu için bu fonksiyonu `A.func2(var)` şeklinde çağıramazsınız. Çağırmaya çalışırsanız `TypeError: 'property' object is not callable` hataları yükseltilir çünkü `func2` artık bir property objesinin ismidir ve property objeleri çağırılabilir (callable) değildir. Benzeri `var.func2()` şeklindeki çağırmada da yaşanır çünkü `var` instance'ındaki `func2` attribute'u `None` value'sunu içerdiği için `TypeError: 'NoneType' object is not callable` hatası yükseltilir. `A` class'ını tanımlarken `func2` instance methoduna `return "Falan filan"` statement ekleseydik, `var` instance'ındaki `func2` attribute'u `"Falan filan"` value'suna sahip olacaktı ve `var.func2()` kodu bu sefer `TypeError: 'str' object is not callable` hatası verecekti.
 
 ## Property Methodları
+
+<hr></hr>
+
 Property'lerin üç önemli build-in methodu vardır:
 - Değer döndürmek için kullanılan, read yetkisini temsil eden `getter`
 - Değer atamak için kullanılan, write yetkisini temsil eden `setter`
@@ -63,6 +69,9 @@ deleter, fdel, fget, fset, getter, setter,
 **Not:** Daha önce de anlattığım gibi, `fget`, `fset` ve `fdel` methodlarına atanan methodlar main class'ın `function attributes` kısmında bulunmazlar. Dolayısıyla main class'dan türetilen instance'ların `function attributes` kısmında da bulunmazlar.
 
 ### `getter` Methodu:
+
+<hr></hr>
+
 `getter` build-in methodu kendisinden sonra gelen fonksiyonu, ilgili property'nin **read** (değer döndürme) işleminden sorumlu fonksiyonun atandığı `fget` methoduna atar. Örnek:
 ```py
 class A():
@@ -87,6 +96,9 @@ print(var._A__sayı) # Output: 0
 **Not:** `@property` decorator'ı ile decore edilmiş bir fonksiyon, otomatik olarak o property objesinin `fget` methoduna atanır. Yani `getter` build-in methodunu kullanmak zorunda değilsiniz.
 
 ### `setter` Methodu:
+
+<hr></hr>
+
 `setter` build-in methodu kendisinden sonra gelen fonksiyonu, ilgili property'nin **write** (değer atama) işleminden sorumlu fonksiyonun atandığı `fset` methoduna atar. Örnek:
 ```py
 class A():
@@ -290,6 +302,9 @@ var2.show_all_instance() # Output: All Instances: CCC, BBB
 Bir önceki kodda `change_instance_name` isimli instance methodda tanımlanan işlemlerin aynısı `setter` build-in methodu ile decore edilmiş `instace_name` instance methoduna tanımlanmıştır. Böylece bir önceki koddaki `var1.change_instance_name("CCC")` gibi ekstra methodlarla uğraşmadan `var1.instace_name = "CCC"` işlemiyle `var1.change_instance_name("CCC")` işlemindeki sonucu elde etmiş olduk.
 
 ### `deleter` Methodu:
+
+<hr></hr>
+
 `deleter` build-in methodu kendisinden sonra gelen fonksiyonu, ilgili property'nin **delete** (değer silme) işleminden sorumlu fonksiyonun atandığı `fdel` methoduna atar. Örnek:
 ```py
 class A():
@@ -330,6 +345,9 @@ AttributeError: 'A' object has no attribute '_A__sayı'
 ```
 
 ## Decorator'ların Saçmalığı
+
+<hr></hr>
+
 Şimdiye kadar read, write ve delete işlemlerini gerçekleştirmesi için `fget`, `fset` ve `fdel` methodlarına atadığımız fonksiyonların aynı isme (identifier) sahip olduğunu farketmişsinizdir. Örnek:
 ```py
 class A():
@@ -477,6 +495,9 @@ Gördüğünüz gibi doğru zincirleme (chaining) uygulanan decorator'lar hiçbi
 <img src="https://i.ibb.co/YpQMFCd/image.png" alt="image" border="0">
 
 ## `property(fget=None, fset=None, fdel=None, doc=None)` Fonksiyonu
+
+<hr></hr>
+
 `property()` fonksiyonu, `fget`, `fset` ve `fdel` parametrelerine sırasıyla read, write ve delete işlemlerini gerçekleştirecek fonksiyon objelerini argüman olarak verip bir property oluşturabilmenizi sağlar. Örnek:
 ```py
 class A():
