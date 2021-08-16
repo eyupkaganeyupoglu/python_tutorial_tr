@@ -71,7 +71,7 @@ print(var.__closure__[5], ":", var.__closure__[5].cell_contents) # Output: <cell
 ```
 **Not:** Closure olma şartlarının hepsini sağlayamayan fonksiyonlar closure olamazlar. Closure olmayan fonksiyonların `__closure__` methodu `None` value'suna sahiptir.
 
-Fonksiyonlar ve methodlar çağırılabilir olduklarından **callable** olarak adlandırılırlar. Aslında special `__call__()` methodunun uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable (fonksiyon) döndüren bir callable'dir (fonksiyondur). Basitçe decorator, fonksiyonu alır, bazı işlevsellik (functionality) ekler ve onu döndürür (return). Bir fonksiyonu decore etmek için `@{function_name}` kullanılır. Örnek:
+Fonksiyonlar ve methodlar çağırılabilir olduklarından **callable** olarak adlandırılırlar. Aslında special `__call__()` methodunun uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable döndüren bir callable'dir . Basitçe decorator, callable bir objeyi alır, bazı işlevsellik (functionality) ekler ve onu döndürür (`return`). Bir fonksiyonu decore etmek için `@{function_name}` kullanılır. Örnek:
 ```py
 def decorator_maker(func):
     def inner():
@@ -165,3 +165,62 @@ printer(f"{'|'*11} Python {'|'*11}")
 ******************************
 ```
 Buradaki decorator'lar `printer = star(percent(printer))` kodu ile eşdeğerdir. Yani en alttaki decorator en içe yazılır ve böyle dışa doğru devam eder. Bu sıra önemlidir, dikkat edin!
+
+**Dikkat!** Buradan sonraki kısımları anlayabilmek için giriş seviye class bilginiz olmalıdır!
+
+Callable olan objeler decore edilebilir demiştik. Class'lar da callable bir obje oldukları için decore edilebilirler. Kullanıcının bir function gibi davranan bir obje yaratabilmesi için bir function gibi davranan bir obje döndürmesi gerekir. Bu nedenle `__call__` yararlı olabilir. Bir class'ı decore etmek için `@{class_name}` kullanılır. Mantığını anlamak için basit bir örnek:
+```py
+class Class_Decorator:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self):
+        # `func` çağırmadan önce bazı kodlar ekleyebilirsin
+        self.func()
+        # `func` çağırmadan sonra hala bazı kodlar ekleyebilirsin
+
+@Class_Decorator
+def func_exp():
+    print("Merhaba Python!")
+
+func_exp() #Output: Merhaba Python!
+```
+Buradaki mantık fonksiyon decorator'ları ile benzerdir. `@Class_Decorator` decorator'ı ile `func_exp = Class_Decorator(func_exp)` kodu eşdeğerdir.
+
+`*args` ve `**kwargs` parametrelerini de kullanabiliriz. Örnek:
+```py
+class Class_Decorator:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        # `func` çağırmadan önce bazı kodlar ekleyebilirsin
+        self.func(*args, **kwargs)
+        # `func` çağırmadan sonra hala bazı kodlar ekleyebilirsin
+
+@Class_Decorator
+def func_exp(name, massage = "Merhaba"):
+    print(f"{massage} {name}")
+
+func_exp("Python!") #Output: Merhaba Python!
+```
+
+Eğer decore edilen fonksiyon bir değer döndürüyorsa ve döndürülen bu değeri kullanacaksak, `__call__` methoduna bir `return` statement tanımlayabiliriz. Örnek:
+```py
+class kare_al_decorator:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        # `func` çağırmadan önce bazı kodlar ekleyebilirsin
+        return self.func(*args, **kwargs)
+
+@kare_al_decorator
+def kare_al(n):
+    print(f"{n} sayısının karesi:", end=" ")
+    return n * n
+
+print(kare_al(2)) # Output: 2 sayısının karesi: 4
+print(kare_al(4)) # Output: 4 sayısının karesi: 16
+print(kare_al(8)) # Output: 8 sayısının karesi: 64
+```

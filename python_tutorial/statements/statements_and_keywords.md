@@ -1,5 +1,5 @@
 # Keywords
-Keyword, anahtar kelime anlamına gelmektedir. Python'da özel anlamlara gelen ayrışmış (reserved) bazı kelimeler vardır. Bu kelimeleri identifier olarak kullanamazsınız. Bütün keyword'ler: False, await, else, import, pass, None, break, except, in, raise, True, class, finally, is, return, and, continue, for, lambda, try, as, def, from, nonlocal, while, assert, del, global, not, with, async, elif, if, or, yield.
+Keyword, anahtar kelime anlamına gelmektedir. Python'da özel anlamlara gelen ayrışmış (reserved) bazı kelimeler vardır. Bu kelimeleri identifier olarak kullanamazsınız. Bütün keyword'ler: `False`, `await`, `else`, `import`, `pass`, `None`, `break`, `except`, `in`, `raise`, `True`, `class`, `finally`, `is`, `return`, `and`, `continue`, `for`, `lambda`, `try`, `as`, `def`, `from`, `nonlocal`, `while`, `assert`, `del`, `global`, `not`, `with`, `async`, `elif`, `if`, `or`, `yield`.
 
 Daha fazla bilgi için [tıklayınız](https://www.programiz.com/python-programming/keyword-list)
 

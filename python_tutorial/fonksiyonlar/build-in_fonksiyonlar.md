@@ -250,7 +250,7 @@ print(a) # Output: 5
 bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#exec).
 
 # `filter(function, iterable)`
-`function`, ölçütü belirleyen fonksiyon; `iterable`, bu ölçütün uygulanacağı öğedir. İşlemleri `True` ya da `False` olarak değerlendirir. Bu yüzden `function`'in return değeri boolean olmak zorunda. `function`'e girilen fonksiyon, `fonk()` şeklinde değil `fonk` şeklinde olmalıdır.
+`function`, ölçütü belirleyen fonksiyon; `iterable`, bu ölçütün uygulanacağı öğedir. İşlemleri `True` ya da `False` olarak değerlendirir. Bu yüzden `function`'in döndürdüğü değer boolean olmak zorunda. `function`'e girilen fonksiyon, `fonk()` şeklinde değil `fonk` şeklinde olmalıdır.
 ```py
 def tek(sayı):
     return sayı % 2 == 1
