@@ -281,6 +281,7 @@ Gördüğünüz gibi `B` class'ı `A`'dan miras aldığı için `D` class'ına `
 
 # `super(<subclass>, <subclass object>)` Fonksiyonu
 
+<hr></hr>
 
 **Başlamadan önce oku:** `super()` fonksiyonunu anlayabilmeniz açısından bolca olası senaryo örneği vererek anlattım. Bu yüzden `super()` fonksiyonunu ilk seferde anlayamadıysanız, bu başlığı tekrar tarar okumanızı tavsiye ederim. Hala anlamadıysanız kendiniz farklı kaynaklardan araştırabilirsiniz.
 

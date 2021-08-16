@@ -8,6 +8,9 @@ Yazılan kod, dilin söz dizilimine (syntax'ına) uymaması durumunda karşıla�
 Eksik yazılan programlar, istenilenin dışında çalışır ve istenilen outputları vermez. Bu eksiklikle sonucu oluşan hatalara **bug** denir. Bug'lar bazen güvenlik açıkları oluşturabilir (örneğin `eval()` fonksiyonu). Bu oluşan güvenlik açıklarına **security bug** veya **security flaw** denir.
 
 ## İstisnalar (Exception)
+
+<hr></hr>
+
 Syntax hatası olmayan bir programda, runtime (çalıştığı süre) sırasında oluşabilecek hatalara **exceptions** ya da **logical errors** denir. Bu hatalar `Exception` class'ının subclass'ıdır. Bazı hatalar bu subclass'ların da subclass'ı olabilir. Örnek:
 - **`StandardError`:** `StopIteration` ve `SystemExit` dışındaki tüm built-in exception'lar için base class'dır ama exception’s inheritance chain'de gereksiz bir bağlantı oluşturduğunu kanıtladığı için Python 3'de kaldırıldı.
 - **`ArithmeticError`:** Çeşitli aritmetik (sayısal) exception'lar için oluşturulan built-in exception'lar için base class'dır: `OverflowError`, `ZeroDivisionError`, `FloatingPointError`. base class'dır.
@@ -52,6 +55,9 @@ Build-in (gömülü) exception'lar aşağıda gösterilmiştir:
 **Not:** Bütün exception'lar hakkında daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/library/exceptions.html).
 
 # Hata Yakalama Kodları
+
+<hr></hr>
+
 Hata yakalama kodlar, bir kod parçasında oluşabilecek hataları yakalayıp, Python'un nasıl davranacağını belirlememizi sağlar.
 
 ## `try` - `except <ErrorCode>` Yapısı
@@ -198,6 +204,9 @@ finally:
 ```
 
 ## `raise` Keyword'ü
+
+<hr></hr>
+
 `raise` deyimi *yükseltmek* anlamına gelir. Python'da herhangi bir hataya sebep olacak bir işlemde, hata mesajları *yükseltilir*. Yani bu keyword, düzenleyebildiğimiz hata mesajları *yükseltmemizi* sağlar. Hata mesajı Python'da kayıtlıysa bu deyimi kullanabilirsiniz. Yani bu keyword, `FalanFilanError` tarzı Python'da olmayan hata mesajları üzerinde kullanılamaz. Örnek:
 ```py
 tr_karakter = "şçğüöıİ"
@@ -314,6 +323,9 @@ ValueError: From için
 Yukarıdaki output'da `The above exception was the direct cause of the following exception:`, yani `Yukarıdaki exception, aşağıdaki exception'ın doğrudan nedeniydi:` yazmaktadır. Bunun anlamı: "`ValueError` oluşma nedeni `NameError`'dür." şeklindedir.
 
 ## `assert <condition>, <error message>` Statement
+
+<hr></hr>
+
 `assert` deyimi `raise` deyiminin aksine, özelleştirilebilir Hata kodları yaratmamıza olanak tanır. `assert <condition>,<error message>` syntax'ına sahiptir. Buradaki `<condition>`, logic bir ifadedir ve `False` sonucuna eşit olursa `assert` çalışır. `assert` çalıştığında `AssertionError` hata koduyla birlikte `<error message>`'da belirtilen hata mesajını yükseltir. Örneğin, aşağıdaki iki kod aynı işleve sahiptir:
 ```py
 giriş = input("Merhaba! Adın ne? ")

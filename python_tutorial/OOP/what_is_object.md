@@ -15,6 +15,9 @@ Gördüğünüz gibi içine hiçbir şey tanımlamadığımız bir class bile i�
 **Not:** Python'da `if`, `def`, `and`, `or` gibi keyword, statement ve operator'lar hariç her şey bir objedir.
 
 ## First Class Objects
+
+<hr></hr>
+
 Python'un yaratıcısı Guido van Rossum şöyle bir şey söylemiş: "Python'a ilişkin hedeflerimden bir tanesi de, bu dili, bütün nesneler 'birinci sınıf' olacak şekilde tasarlamaktı. Bununla kastettiğim, dil içinde kendisine bir isim verilebilen bütün nesnelerin (örn. tam sayılar, karakter dizileri, fonksiyonlar, sınıflar, modüller, methodlar, vb.) eşit statüye sahip olmasıdır. Yani, bütün nesnelerin değişkenlere atanabilmesi, listelerin içine yerleştirilebilmesi, sözlükler içinde depolanabilmesi, argüman olarak atanabilmesi vesaire…"
 
 Buradan anlamamız gereken şey, Python'un asıl amacının bütün nesnelerin eşit statüde olması ve bu sayede birbiriyle kolayca etkileşime geçebilmesidir. Örneğin:

@@ -9,12 +9,15 @@ if (koşul):
 yas = int(input("Yaşınızı giriniz: "))
   
 if (yas >= 18):
-print("Girebilirsiniz.")
+	print("Girebilirsiniz.")
 if (0 <= yas < 18):
-print("Yaşınız 18'den küçük olduğu için giriş yapamazsınız.")
+	print("Yaşınız 18'den küçük olduğu için giriş yapamazsınız.")
 if (yas < 0):
-print("Yaşınız negatif bir değer olamaz.")
+	print("Yaşınız negatif bir değer olamaz.")
 ```
+**Not:** eğer birdan fazla koşul aynı anda sağlanırsa sağlanan tüm koşullar çalışır çünkü `if` blokları birbirinden bağımsız çalışırlar.
+
+<h1></h1>
 
 # `elif` Deyimi
 `if` deyimi çalışmazsa çalışan deyimdir. Dolayısıyla `elif` deyimini kullanmak için `elif` deyiminin üstünde bir `if` deyimine ihtiyacın var. Syntax'ı:
@@ -57,6 +60,8 @@ elif (5 < 7): # True, çalışmaz.
 ```
 Yukarıdaki kodda, en sondaki `elif` deyimi `True` olsa bile çalışmaz çünkü `elif` deyiminin özelliği, bir `elif` deyimi çalıştıktan sonra kendinden sonraki `elif` deyimleri `True` olsa bile, kendinden sonraki `elif` deyimleri çalışmaz. `elif` deyimini `if` deyiminden en önemli özelliktir.
 
+<h1></h1>
+
 # `else` Deyimi
 `if` deyiminden ya da `if` - `elif` yapısından oluşan bir yapıda, hiçbir `if` ve `elif` deyiminin çalışmaması durumunda çalışan deyimdir.  Kısaca `else` deyimi, çalışmak için kendinden önce çalışmayan bir duruma ihtiyaç duyar. Çalışma koşulu sadece buna bağlı olduğu için `if (koşul)` ya da `elif (koşul)` deyimlerindeki gibi bir `(koşul)`'a ihtiyaç duymaz. Syntax'ı:
 ```py
@@ -84,13 +89,17 @@ if (5 < 2):
 else:
 	print("Üçüncü else block'u çalıştı.")
 ```
-**Output: **
+
+**Output:**
+
 ```
 Birinci else block'u çalıştı.
 İkinci if block'u çalıştı.
 Üçüncü else block'u çalıştı.
 ```
 Görüldüğü gibi, bir `else` deyimi, kendinden önceki ilk `if` deyimini referans alır ve referans aldığı `if` deyimi çalışmazsa çalışır.
+
+<h1></h1>
 
 # Tek satırda `if` - `else` kullanmak
 Belli bir koşulu tek satırsa basit ve pratik bir şekilde kontrol etmek için `if` - `else` yapısını kullanabilirsiniz. Bu yapı özellikle `lambda` fonksiyonlarında çok kullanışlıdır. `(işlemler) if (koşul) else (işlemler)` syntaxına sahiptir. Parantezler olmadan da kullanılabilir ama kodun anlaşılırlığı açısından parantezlerle beraber kullanılmalıdır. Örnek:
