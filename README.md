@@ -10,56 +10,56 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 
 Şimdi konuları hangi sırayla çalışman gerektiğini listeleyeceğim ama bu `README` dosyasının tamamını okumayı bitirmeden başlama sakın. Aksi halde oluşabilecek maddi ve manevi zarardan müessesemiz sorumlu değildir.
 1. Temel bilgiler
-    1. [temel_kavramlar]()
+    1. [basic_concepts]()
     1. [IO]()
-    1. [operatorler]()
+    1. [operators]()
+    1. [statements_and_keywords]()
     1. [if-elif-else]()
     1. [while-for_loops]()
-    1. [hata_yakalama]()
+    1. [error_catching]()
 1. Veri Türleri (Data Types)
-    1. numeric_types
+    1. Sayısal Türler (Numeric Types)
         1. [numeric_types]()
-    1. boolean_types
+    1. Boole Türler (Boolean Types)
         1. [bool]()
-    1. text_type
+    1. Metin Türleri (Text Types)
         1. [string]()
-        1. [kacis_dizileri]()
-        1. [karakter_kodlama_character_encoding]()
-    1. sequence_types
+        1. [escape_sequences]()
+        1. [character_encoding]()
+    1. Dizi Türleri (Sequence Types)
         1. [list]()
         1. [tuple]()
         1. [range]()
-    1. mapping_type
+    1. Eşleme Türleri (Mapping Types)
         1. [dictionary]()
-    1. set_types
+    1. Küme Türleri (Set Types)
         1. [set]()
         1. [frozenset]()
-    1. binary_types
+    1. İkili Türler (Binary Types)
         1. [bytes]()
         1. [bytearrays]()
         1. [memoryview]()
-1. external resources operations
-    1. [dosya_islemleri]()
+1. Dış Kaynak İşlemleri (External Resources Operations)
+    1. [file_operations]()
     1. [with_ve_context_manager]()
-1. fonksiyonlar
-    1. [fonksiyonlar]()
-    1. [build-in_fonksiyonlar]()
-    1. [ileri_seviye_fonksiyonlar]()
+1. Fonksiyonlar (Functions)
+    1. [functions]()
+    1. [build-in_functions]()
+    1. [advanced_functions]()
     1. [decorators]()
-1. OOP
-    1. [nesne nedir vs]()
-    1. [class ve class item]()
+1. Object Oriented Programming (OOP)
+    1. [what_is_object]()
+    1. [beginning_of_classes]()
     1. [Inheritance]()
     1. [composition]()
-    1. [classmembers]()
+    1. [class_members]()
     1. [property]()
     1. [abstract]()
-1. Diğer konular
-    1. [statements_and_keywords]()
+1. İçe Aktarma Sistemi (Import System)
     1. [modules]()
-    1. [paketler]()
+    1. [packets]()
 
-**!!DİKKAT!!** Bu tutorial hala tamamlanmamıştır. Konu başlıkları ve içerik %99 tamamlanmış olsa da, hala bazı dil bilgisi, markdown syntax hataları ve tanımlanmamış bağlantılar mevcuttur. Bu tutorial'ın release sürümü çıkınca bu kısmın hemen altında bunu belirteceğim. **Takipte kal!**
+**!!DİKKAT!!** Bu tutorial hala tamamlanmamıştır. Konu başlıkları ve içerik %99 tamamlanmış olsa da, hala bazı dil bilgisi, markdown syntax hataları, tanımlanmamış bağlantılar mevcuttur ve konuların içeriklerinin düzenlenmesi, yeri geldiğinde farklı bir dosyalara ayrılması gerekebilir. Bu tutorial'ın release sürümü çıkınca bu kısmın hemen altında bunu belirteceğim. **Takipte kal!**
 
 ***Tutorial Tamamlanıyor...*** **[%0]**
 
