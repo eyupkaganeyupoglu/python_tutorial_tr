@@ -50,6 +50,9 @@ Gördüğünüz gibi `B` class'ının `A` class'ından miras aldığı objeler `
 **Not:** Bir class'ın base class ya da subclass olarak isimlendirilmesi sembolik bir şeydir. Python için bu durumu "`B` class'ı `A` class'ından miras almış." şeklinde yorumlar.
 
 ## Object Class
+
+<hr></hr>
+
 Class'lar, Python'ın' 3.x öncesi sürümlerinde **yeni tip class'lar** ve **eski tip class'lar** olmak üzere ikiye ayrılıyordu. Eski tip class'lara örnek:
 ```py
 class A():
@@ -79,6 +82,9 @@ class A(object):
 ```
 
 ## Types of Inheritance (Miras Alma Türleri)
+
+<hr></hr>
+
 Inheritance (Miras Alma)'nın çeşitleri vardır:
 - Her şeyi miras almak
 - Miras alınan objeyi geçersiz kılmak (override)
@@ -130,6 +136,9 @@ B = A()
 ```
 
 ### Miras alınan objeyi geçersiz kılmak (override)
+
+<hr></hr>
+
 Subclass ile base class'ın objeleri birbiri ile çakışıyorsa (yani iki class'da da aynı isimde (identifier) objeler varsa), subclass'da tanımlı obje, base class'dan miras alınan objeyi geçersiz kılar (override). Örnek:
 ```py
 class A:
@@ -153,6 +162,9 @@ Gördüğünüz gibi `B` class'ının `func` methodu `A` class'ının `func` met
 Base class'dan miras alınan objeler geçersiz kılınmadan (override) içeriği değiştirilmek istenilirse `super()` build-in fonksiyonunu veya eski inheritance yöntemini kullanabilirsiniz.
 
 # Multiple Inheritance (Çoklu Miras Alma)
+
+<hr></hr>
+
 Bir class'ın, birden fazla class'dan miras almasına **Multiple Inheritance (Çoklu Miras Alma)** denir. Örnek:
 ```py
 class A():
@@ -268,6 +280,8 @@ order (MRO) for bases A, B
 Gördüğünüz gibi `B` class'ı `A`'dan miras aldığı için `D` class'ına `A,B` sırasıyla yazamıyorsunuz. Diğer class'ların da miras alma sırasına (MRO'suna) saygı göstermek zorundasınız.
 
 # `super(<subclass>, <subclass object>)` Fonksiyonu
+
+
 **Başlamadan önce oku:** `super()` fonksiyonunu anlayabilmeniz açısından bolca olası senaryo örneği vererek anlattım. Bu yüzden `super()` fonksiyonunu ilk seferde anlayamadıysanız, bu başlığı tekrar tarar okumanızı tavsiye ederim. Hala anlamadıysanız kendiniz farklı kaynaklardan araştırabilirsiniz.
 
 `super()` build-in fonksiyonu, MRO'ya (Method Resolution Order) göre çalışan bir mekanizmaya dayanır. `super()` build-in fonksiyonu, istediğimiz class'ın proxy objesini (geçici (temporary) obje) oluşturmamızı ve bu proxy objeleri üzerinden base class'ın objelerine ulaşmamızı sağlar. Bu sayede base class'ın bütün objelerini miras almadan istediğimiz objeleri miras alabiliriz veya miras aldığımız objeyi geçersiz kılmadan (override) içeriği ile oynayarak ihtiyaca göre işlevselliğini değiştirebiliriz. Örnek:
