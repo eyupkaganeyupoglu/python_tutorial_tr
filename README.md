@@ -75,8 +75,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 ***Release Sürümü Yükleniyor...*** **[%0]**
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
-<p align='center'>  </p>
-![](https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff)![Version](https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green)
+<p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>
 
 Bu Tutorial **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (CC BY-NC-SA 4.0)** tarafından lisanslanmıştır.
 - Lisans tanımı için [tıklayınız](https://creativecommons.org/licenses/by-nc-sa/4.0/).
@@ -93,9 +92,7 @@ Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok
 - [Python Doc](https://docs.python.org/3/)
 - [Yazbel](https://python-istihza.yazbel.com/)
 - [Stack Overflow](https://stackoverflow.com/)
-
-<h3 align='center'> Paylaş </h3>
-
+<br>
 <table align='center'>
 	<tr>
 		<td>
