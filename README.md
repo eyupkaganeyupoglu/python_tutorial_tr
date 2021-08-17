@@ -1,4 +1,7 @@
 # Hoşgeldin!!
+[![Banner](https://github.com/myygunduz/My-Blender-Works/blob/main/assets/specialedition/python-eğitimi-video.gif)](https://github.com/myygunduz)
+
+
 ![](https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff)![Version](https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green)
 
 **Dur kardeşim geçme! Buralar çokomelli, oku buraları!**
