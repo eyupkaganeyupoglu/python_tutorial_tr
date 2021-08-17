@@ -1,6 +1,9 @@
-# Hoşgeldin!!
+
 [![Banner](https://github.com/myygunduz/My-Blender-Works/blob/main/assets/specialedition/python-eğitimi-video.gif)](https://github.com/myygunduz)
 
+<hr>
+
+# Hoşgeldin!!
 
 ![](https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff)![Version](https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green)
 
@@ -9,9 +12,11 @@
 Çeşitli Türkçe ve İngilizce kaynaklardan yararlanarak aylarca süren bir çalışma sonucu oluşturduğum Python Tutorial'dasın. Yani doğru yerdesin. Bu tutorial'da, Python ile ilgili neredeyse her konuya değinmeye, her konunun neredeyse bütün potansiyel alt başlıklarını anlatmaya çalıştım. Örneğin başka bir tutorial, herhangi bir data type'ın max 8-9 tane methoduna değinirken, ben üşenmeyip bütün methodlarını teker teker anlattım. Yani bu tutorial'da, kafanda herhangi bir soru işareti kalmamasına özellikle önem verdim. Çünkü ben Python öğrenirken, kafamdaki soru işaretlerini gidermeye saatlerimi, hatta günlerimi harcadığım gibi, bu soru işaretleri yüzünden senin de zamanının gereksiz gitmesini istemiyorum. Ama bu "Araştırma, sadece benim tutorial'ım sana yeter." demek değildir. Araştırmayacaksan, merak etmeyeceksen hemen buradan uzaklaş ve başka meslek ya da hobilere yönel derim!
 
 ## Bu Tutorial nereden çıktı?
+
 Ben bir şeye çalışırken her zaman not tutarım. Çünkü benim için beyin bir veri depolama aracı değil, veriyi işleme aracıdır. Bu yüzden beynimi veri depolamakla meşgul etmeyip, hazır veriyi işleme konusunda eğittim. Bu yüzden insanların isimlerini çoğunlukla hatırlayamam. Python'ı öğrenirken de not tutuyordum. Bir süre sonra bu notların değerini farkettim ve bunu bir ürüne dönüştürmeye karar verdim. O zamandan bu zaman kadar hem Python öğrenip hem de öğrendiklerimi tutorial formatında not almaya başladım. Bu yüzden bu tutorialin hala sağlam bir bakıma ihtiyacı var çünkü tutorial de benimle birlikte geliştiği için ilk konular acemice yazılmış durumda. Bütün bu kusurları zamanla düzeltip durumu sizinle paylaşacağım.
 
 ## Bu Tutorial'dan Nasıl Yararlanacağım?
+
 Öncelikle şunu belirteyim, bu tutorial hiçbir şey bilmeyenler için değildir. Bu tutorial'a başlamadan önce Python'u yüzeysel olarak anlatan (zaten geneli öyle anlatıyor) herhangi bir videolu kaynaktan çalışarak, Python'ın ve Python programlamanın genel hatlarına hakim ol. Mesela [Udemy'deki bu kurs](https://www.udemy.com/course/sifirdan-ileri-seviyeye-python/) başlangıç için işini görecektir.
 
 Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağıda listeleyeceğim. Bu listedeki her bir tıklanabilir konu başlığı, o konunun anlatıldığı dosyaya atıfta bulunan bir bağlantıya sahiptir. En baştan başlayarak teker teker çalış, acele edip konu atlama ve benim özellikle "ileride anlatılacak" gibi notlar düşmediğim yerleri kendin ayrıyetten çalışmayı ihmal etme. Hatta bazı yerlerde "Bunu kendin araştırın" dediğim konular bile var. O konuları da araştırmayı ihmal etme. Mesela graph konusu Python'ı ilgilendiren ama Python'dan bağımsız bir konudur. Bu konunun bir Python Tutorial'ında anlatılması absürt olacağı için kendin araştırman daha uygun olacaktır. Ama hemen şu an gidip araştırmaya kalkma! Neyi ne zaman araştırman gerektiğini ben tutorial içerisinde zaman zaman söyleyeceğim zaten. Söylemediğim yerlerde de kendin bireysel olarak araştırmayı akıl edebilirsin (ya da üşenmezsin) sanırım.
@@ -72,6 +77,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 ***Release Sürümü Yükleniyor...*** **[%0]**
 
 ## Lisans ve Telif Hakkı Hakkında
+
 Bu Tutorial **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (CC BY-NC-SA 4.0)** tarafından lisanslanmıştır.
 - Lisans tanımı için [tıklayınız](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 - Lisans içeriği için [tıklayınız](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
@@ -79,6 +85,7 @@ Bu Tutorial **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 Internat
 Bu "Herhangi bir lisans veya telif hakkı ihlali yaparsan ve bunu yakalarsam vay haline..." demek. Google çok gelişti. Ne halt ettiğini kolayca bulurum yani. Uyanıklık yapma. Bu kaynaktan yararlanarak içerik üretmek istiyorsan da lisans şartlarına uygun hareket et ki bozuşmayalım. Emeğe saygı gösterdiğin sürece başımın üstünde yerin var.
 
 ## Yararlandığım bazı kaynaklar
+
 Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok kullandıklarımı hatırlıyorum. En çok kullandıklarım dışında farklı platformlardan (Medium makaleleri, Stack Overflow vb.) çeşitli kaynaklardan da yararlandım ama hepsini hatılamadığım için buraya ekleyemeyeceğim, hakkınızı helal edin. Herhangi bir sıkıntı olursa GutHub profilimde gerekli iletişim bilgilerim var. Konuşup anlaşabiliriz.
 
 - [W3Schools](https://www.w3schools.com/python/)
