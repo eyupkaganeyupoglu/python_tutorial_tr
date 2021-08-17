@@ -125,3 +125,6 @@ Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok
 		</td>
 	</tr>
 </table>
+
+
+<img src="https://github.com/myygunduz/My-Blender-Works/blob/main/assets/gifs/python%20logo%20animation.gif"/>
