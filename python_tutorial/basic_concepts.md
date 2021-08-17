@@ -1,4 +1,5 @@
 ﻿# Python'un Çalışma Mantığı
+
 Python, kodları yukarıdan aşağıya okur. İç içe yazılmış fonksiyonları da aşağıdaki örnekteki gibi okur:
 ```py
 print(complex(float(int(str(10)))))
@@ -9,23 +10,26 @@ print(complex(float(int(str(10)))))
 4. `int` var, aha bir parantez daha, `int`'i geç ve parantezin içine bak,
 5. `str` var, aha bir parantez daha, str'yi geç ve parantezin içine bak,
 6. 10 var, tamam,
-7. `str(10) --> "10"`,
-8. `int("10") --> 10`,
-9. `float(10) --> 10.0`,
-10. `complex(10.0) --> 10+0j`,
-11. `print(10+0j)` var, o zaman `10+0j`'yi `sys.stdout`'a bas.
+7. `str(10) == "10"`,
+8. `int("10") == 10`,
+9. `float(10) == 10.0`,
+10. `complex(10.0) == 10+0j`,
+11. `print(10+0j)` var, o zaman `10+0j`'yi `sys.stdout`'a yazdır.
 
 ## Block Mantığı
-Python'da `if`, `elif`, `else`, `while`, `for`, `def`, `class` etc. gibi statementlere yazılacak kodlar, bu statementlerin **blocklarına** yazılır. Bu blockları oluşturmak için **Indentation** dediğimiz girintileme işlemi yapılır. Bu girintilere **Indent** denir. Bu indentler genelde 2 ya da 4 space'den oluşur. Bu indentler, bloğuna tanımlandığı statement'e bağımlıdır. Burada **Global** ve **Local** block kavramları devreye giriyor. Bunlar daha sonra anlatılacak.
+
+Python'da `if`, `elif`, `else`, `while`, `for`, `def`, `class` vb. gibi statement'lara yazılacak kodlar, bu statement'ların blocklarına yazılır. Bu blockları oluşturmak için **Indentation** dediğimiz girintileme işlemi yapılır. Bu girintilere **Indent** denir. Bu indent'ler genelde 2 ya da 4 space'den oluşur.
 ```py
-a = int(input()) # Blok 1'e ait kod (Global block)
-if (a == 2):
-	print("Doğru") # Blok 2'ye ait kod (Local block)
-	
-print("'Doğru' yazdıysa doğru değeri girmişsinizdir.") # Blok 1'e ait kod (Global block)
+var = int(input("Bir sayı girin: "))
+if var % 2 == 0:
+	print(f"{var} çift sayıdır.") # 4 space boyunda bir indent
+else:
+	print(f"{var} tek sayıdır.") # 4 space boyunda bir indent
 ```
+Bu kodları anlamanıza şimdilik gerek yok. Bu, sadece indent'in ne olduğunu anlamanız için bir örnek.
 
 # Variable'lar (Değişkenler)
+
 Variable'lar, en küçük depolama birimleridir. Belli bir data type'dan veri depolar. Bir değişkene bir değer atadıktan sonra aynı değişkene farklı bir değer atayabilirsin. Örnek:
 ```py
 i = 15 # i'nin değeri 15
