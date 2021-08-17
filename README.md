@@ -1,4 +1,7 @@
 # Hoşgeldin!!
+![](https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff)
+![Version](https://img.shields.io/static/v1?label=Version&message=1.0.0&style=flat-square&labelColor=green&color=green)
+
 **Dur kardeşim geçme! Buralar çokomelli, oku buraları!**
 
 Çeşitli Türkçe ve İngilizce kaynaklardan yararlanarak aylarca süren bir çalışma sonucu oluşturduğum Python Tutorial'dasın. Yani doğru yerdesin. Bu tutorial'da, Python ile ilgili neredeyse her konuya değinmeye, her konunun neredeyse bütün potansiyel alt başlıklarını anlatmaya çalıştım. Örneğin başka bir tutorial, herhangi bir data type'ın max 8-9 tane methoduna değinirken, ben üşenmeyip bütün methodlarını teker teker anlattım. Yani bu tutorial'da, kafanda herhangi bir soru işareti kalmamasına özellikle önem verdim. Çünkü ben Python öğrenirken, kafamdaki soru işaretlerini gidermeye saatlerimi, hatta günlerimi harcadığım gibi, bu soru işaretleri yüzünden senin de zamanının gereksiz gitmesini istemiyorum. Ama bu "Araştırma, sadece benim tutorial'ım sana yeter." demek değildir. Araştırmayacaksan, merak etmeyeceksen hemen buradan uzaklaş ve başka meslek ya da hobilere yönel derim!
@@ -81,3 +84,45 @@ Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok
 - [Python Doc](https://docs.python.org/3/)
 - [Yazbel](https://python-istihza.yazbel.com/)
 - [Stack Overflow](https://stackoverflow.com/)
+
+<h3 align='center'> Paylaş </h3>
+
+<table align='center'>
+	<tr>
+		<td>
+			<a href="https://web.facebook.com/sharer.php?t=Güzel%20bir%20Python%20eğitimi%20buldum%20bir%20göz%20at&u=https://github.com/e-k-eyupoglu/python_tutorial&_rdc=1&_rdr">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/raw/master/public/images/icons/facebook.svg" height="48" width="48" alt="Facebook"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://www.facebook.com/dialog/send?link=https://github.com/e-k-eyupoglu/python_tutorial&app_id=291494419107518&redirect_uri=https://github.com/e-k-eyupoglu/python_tutorial">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/raw/master/public/images/icons/facebook_messenger.svg" height="48" width="48" alt="Facebook Messenger"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://twitter.com/intent/tweet?text=Güzel%20bir%20Python%20eğitimi%20buldum%20bir%20göz%20at&url=https://github.com/e-k-eyupoglu/python_tutorial">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/raw/master/public/images/icons/twitter.svg" height="48" width="48" alt="Twitter"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://web.whatsapp.com/send?text=Güzel%20bir%20Python%20eğitimi%20buldum%20bir%20göz%20at https://github.com/e-k-eyupoglu/python_tutorial">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/blob/master/public/images/icons/whatsapp.svg" height="48" width="48" alt="WhatsApp"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://t.me/share/url?url=https://github.com/e-k-eyupoglu/python_tutorial&text=Güzel%20bir%20Python%20eğitimi%20buldum%20bir%20göz%20at">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/blob/master/public/images/icons/telegram.svg" height="48" width="48" alt="Telegram"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://www.linkedin.com/shareArticle?title=Güzel%20bir%20Python%20eğitimi%20buldum%20bir%20göz%20at&url=https://github.com/e-k-eyupoglu/python_tutorial">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/blob/master/public/images/icons/linkedin.svg" height="48" width="48" alt="LinkedIn"/>
+			</a>
+		</td>
+		<td>
+			<a href="https://www.reddit.com/submit?title=Güzel%20bir%20Python%20eğitimi%20buldum%20bir%20göz%20at&url=https://github.com/e-k-eyupoglu/python_tutorial">
+				<img src="https://github.com/gayanvoice/github-active-users-monitor/blob/master/public/images/icons/reddit.svg" height="48" width="48" alt="Reddit"/>
+			</a>
+		</td>
+	</tr>
+</table>
