@@ -5,7 +5,7 @@
 
 <h1 align='center'> Hoşgeldin!! </h1>
 
-**Dur kardeşim geçme! Buralar çokomelli, oku buraları!**
+<p align=center> <b>Dur kardeşim geçme! Buralar çokomelli, oku buraları!</b> </p>
 
 Çeşitli Türkçe ve İngilizce kaynaklardan yararlanarak aylarca süren bir çalışma sonucu oluşturduğum Python Tutorial'dasın. Yani doğru yerdesin. Bu tutorial'da, Python ile ilgili neredeyse her konuya değinmeye, her konunun neredeyse bütün potansiyel alt başlıklarını anlatmaya çalıştım. Örneğin başka bir tutorial, herhangi bir data type'ın max 8-9 tane methoduna değinirken, ben üşenmeyip bütün methodlarını teker teker anlattım. Yani bu tutorial'da, kafanda herhangi bir soru işareti kalmamasına özellikle önem verdim. Çünkü ben Python öğrenirken, kafamdaki soru işaretlerini gidermeye saatlerimi, hatta günlerimi harcadığım gibi, bu soru işaretleri yüzünden senin de zamanının gereksiz gitmesini istemiyorum. Ama bu "Araştırma, sadece benim tutorial'ım sana yeter." demek değildir. Araştırmayacaksan, merak etmeyeceksen hemen buradan uzaklaş ve başka meslek ya da hobilere yönel derim!
 
