@@ -5,8 +5,6 @@
 
 # Hoşgeldin!!
 
-![](https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff)![Version](https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green)
-
 **Dur kardeşim geçme! Buralar çokomelli, oku buraları!**
 
 Çeşitli Türkçe ve İngilizce kaynaklardan yararlanarak aylarca süren bir çalışma sonucu oluşturduğum Python Tutorial'dasın. Yani doğru yerdesin. Bu tutorial'da, Python ile ilgili neredeyse her konuya değinmeye, her konunun neredeyse bütün potansiyel alt başlıklarını anlatmaya çalıştım. Örneğin başka bir tutorial, herhangi bir data type'ın max 8-9 tane methoduna değinirken, ben üşenmeyip bütün methodlarını teker teker anlattım. Yani bu tutorial'da, kafanda herhangi bir soru işareti kalmamasına özellikle önem verdim. Çünkü ben Python öğrenirken, kafamdaki soru işaretlerini gidermeye saatlerimi, hatta günlerimi harcadığım gibi, bu soru işaretleri yüzünden senin de zamanının gereksiz gitmesini istemiyorum. Ama bu "Araştırma, sadece benim tutorial'ım sana yeter." demek değildir. Araştırmayacaksan, merak etmeyeceksen hemen buradan uzaklaş ve başka meslek ya da hobilere yönel derim!
@@ -76,7 +74,9 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 
 ***Release Sürümü Yükleniyor...*** **[%0]**
 
-## Lisans ve Telif Hakkı Hakkında
+## Lisans ve Diğer Bilgiler Hakkında
+
+![](https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff)![Version](https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green)
 
 Bu Tutorial **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (CC BY-NC-SA 4.0)** tarafından lisanslanmıştır.
 - Lisans tanımı için [tıklayınız](https://creativecommons.org/licenses/by-nc-sa/4.0/).
