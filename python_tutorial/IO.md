@@ -1,8 +1,23 @@
-# `print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)`
-`print()` fonksiyonu, bir şeyler yazdırmak için kullanılan bir build-in (gömülü) fonksiyondur.
+# İçindekiler
+- [Input-Output İşlemleri (IO Operations)](#1)
+- [`print()` Fonksiyonu](#2)
+- [`*object` Parametresi](#2.1)
+- [`sep` Parametresi](#2.2)
+- [`end` Parametresi](#2.3)
+- [`file` Parametresi](#2.4)
+- [`flush` Parametresi](#2.5)
+- [`input()` Fonksiyonu](#3)
+
+<h1 id="1">Input-Output İşlemleri (IO Operations)</h1>
+
+"IO Operations" araştırmaya kalkarsanız büyük ihtimal karşınıza dosya işlemleri ile ilgili bilgiler çıkacak. Ama ben bu kısımda program içi input-output işlemlerinden bahsedeceğim. Programınıza girdi (input) almak için `input()`, çıktı (output) almak için `print()` adlı build-in fonksiyonlardan faydalanıyoruz.
+
+<h1 id="2"><code>print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)</code></h1>
+
+`print()` build-in fonksiyonu, `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan, IO Operation'ların output işleminden sorumlu bir build-in (gömülü) fonksiyondur. Örnek:
 ```py
-print(35) # Output 1
-print("Merhaba")  # Output 2
+print(35)
+print("Merhaba")
 print("""
 [H]=========PYTHON========[-][o][x]
 |                                 |
@@ -12,128 +27,202 @@ print("""
 |        bir düğmeye basın.       |
 |                                 |
 |=================================|
-""")  # Output 3
+""")
 ```
-**Output 1:**
+**Output:**
 ```
 35
-```
-**Output 2:**
-```
 Merhaba
-```
-**Output 3:**
-```
+
 [H]=========PYTHON========[-][o][x]
 |                                 |
 |      Programa Hoşgeldiniz!      |
-|            Sürüm 0.8            |
+|           Sürüm 3.9.2           |
 |    Devam etmek için herhangi    |
 |        bir düğmeye basın.       |
 |                                 |
 |=================================|
+
 ```
-Birden fazla değer `print` etmek için:
+
+<h2 id="2.1"><code>*object</code> Parametresi</h2>
+
+`*object` parametresi bir yıldızlı parametredir. Yıldızlı parametrelerin tam olarak ne olduğunu daha sonra [burada](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md#yıldızlı-parametreler "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md#yıldızlı-parametreler") açıklanacak. `print()` fonksiyonu, `*object` parametresine girilen normal ya da yıldızlı argümanları yazdırır. Örnek:
 ```py
-a = 20
-b = 40
-print(15, "Merhaba", 12,45, a+b)
+print("T" , "B" , "M" , "M") # Output: T B M M
+print(*"TBMM") # Output: T B M M
+```
+
+**Not:** Daha sonra göreceğiniz `len()` gibi fonksiyonlar `len(*"Python")` gibi argümanlar kabul etmezler. Bu fonksiyonun nasıl tanımlandığıyla (definition) alakalıdır. Bu notu anlamadıysanız takılmayın, tutorial'a devam edin.
+
+<h2 id="2.2"><code>sep</code> Parametresi</h2>
+
+`sep` parametresi, `*object` parametresine girilen argümanlar arasına gelecek string'i belirlediğimiz parametredir. Default değeri (yani bu parametreye argüman girmediğiniz taktirde kullandığı argüman) bir adet boşluk (space) `" "` karakteridir. Örnek:
+```py
+print(1 , 2 , 3 , 4 , 5 , 6 , sep = "/") # Output: 1/2/3/4/5/6
+print(1 , 2 , 3 , 4 , 5 , 6 , sep = "+") # Output: 1+2+3+4+5+6
+print(1 , 2 , 3 , 4 , 5 , 6 , sep = "Q") # Output: 1Q2Q3Q4Q5Q6
+print(1 , 2 , 3 , 4 , 5 , 6 , sep = "%") # Output: 1%2%3%4%5%6
+```
+`sep` parametresine argüman olarak `\n` ya da `\t` gibi kaçış dizileri de (Escape Sequences) girebilirsiniz.
+```py
+print("Selam" , "Ben" , "Python!" , sep = "\n", end="\n\n")
+print("Selam" , "Ben" , "Python!" , sep = "\t")
 ```
 **Output:**
 ```
-15 Merhaba 12.45 60
+Selam
+Ben
+Python!
+
+Selam   Ben     Python!
 ```
-## `print()` Parametreleri
-
-### `*object` Parametresi
-`print()` fonksiyonuna sınırsız sayıda string argüman girmene olanak tanır.
-
-### `sep` Parametresi
-`print()` fonksiyonundaki `*object` parametresi olarak eklenen her bir argümanın arasına gelecek olan ifadeyi belirlemekte kullanılıyor. `sep = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `" "` değerini alır.
+Bu parametreye sadece string type (karakter dizisi türü) argümanlar girebilirsiniz. Aksi halde `TypeError` hatası yükseltilir. Örnek:
 ```py
-print(1 , 2 , 3 , 4 , 5 , 6 , sep = "/")
-print(1 , 2 , 3 , 4 , 5 , 6 , sep = "+")
-print(1 , 2 , 3 , 4 , 5 , 6 , sep = "Q")
-print(1 , 2 , 3 , 4 , 5 , 6 , sep = "%")
+print(1 , 2 , 3 , 4 , 5 , 6 , sep = 1) # TypeError: sep must be None or a string, not int
 ```
-`sep` parametresine `\n` ya da `\t` gibi kaçış dizileri tanımlayabilirsiniz.
+**Not:** `sep` parametresine argüman olarak `None` verirseniz, default değeri geçerli olur. Örnek:
 ```py
-print("Selam" , "Ben" , "Hiçkimse" , sep = "\n")
-print("Selam" , "Ben" , "Hiçkimse" , sep = "\t")
+print(1 , 2 , 3 , 4 , 5 , 6 , sep = None) # Output: 1 2 3 4 5 6
 ```
 
-### `end` Parametresi
-Default olarak `\n`'e ayarlıdır. `print()` fonksiyonunun, `*object` parametresinin en son argümanından sonra gelecek ifadeyi belirlemekte kullanılır. `end = "Herhangi bir şey"` şeklinde kullanılıyor. Ama bu parametreyi sadece `str` değerlere ve `None` değerine eşitleyebilirsin. Bir `int` veya `float` değere eşitleyemezsin. `None` değerini verdiğinde ise default değer olan boşluk `"\n"` değerini alır.
+<h2 id="2.3"><code>end</code> Parametresi</h2>
+
+`end` parametresi, `*object` parametresine girilen argümanların sonuncusu yazdırıldıktan sonra yazdırılacak string'i belirlediğimiz parametredir. Default değeri `\n` kaçış dizisidir (Escape Sequences).
 ```py
-print("Selam", "ben", "Eyüp", end = ".")
-# Output: Selam ben Eyüp.
+print(1 , 2 , 3 , 4 , 5 , 6 , sep=", ", end = ", 7\n")
+print(1 , 2 , 3 , 4 , 5 , 6,  sep=", ")
+```
+**Output:**
+```
+1, 2, 3, 4, 5, 6, 7
+1, 2, 3, 4, 5, 6
+```
+Bu parametreye sadece string type (karakter dizisi türü) argümanlar girebilirsiniz. Aksi halde `TypeError` hatası yükseltilir. Örnek:
+```py
+print(1 , 2 , 3 , 4 , 5 , 6 , sep=", ", end = 1) # TypeError: end must be None or a string, not int
+```
+**Not:** `end` parametresine argüman olarak `None` verirseniz, default değeri geçerli olur. Örnek:
+```py
+print(1 , 2 , 3 , 4 , 5 , 6 , end = None)
+print(1 , 2 , 3 , 4 , 5 , 6 , end = None)
+```
+**Output:**
+```
+1, 2, 3, 4, 5, 6
+1, 2, 3, 4, 5, 6
+
 ```
 
-### `file` Parametresi
-`print()` fonksiyonu, outputlarını default olarak `sys.stdout` yani *standart çıktı konumu’na* yazar. Bu VSC'de terminalde, başka bir yerde etkileşimli kabukta veya komut satırında görünür. `file` parametresi ile bu outputların nereye yazılacağını seçebiliyorsunuz. Bu yer yukarıda belirtildiği gibi `sys.stdout` olabileceği gibi bir txt dosyası da olabilir. Örneğin:
-```cpp
-dosya1 = open("deneme.txt", "w")
-print("Ben Python, Monty Python!", file = dosya1)
-dosya1.close()
+<h2 id="2.4"><code>file</code> Parametresi</h2>
+
+`print()` fonksiyonu, outputlarını default olarak `sys.stdout`'a yani **standart çıktı konumu**'na yazdırır. `sys.stdout` VSCode'da terminalken, başka bir yerde başka bir şey olarak ayarlı olabilir. `file` parametresine girdiğimiz argüman ile `print()` fonksiyonunun outputlarını nereye yazdıracağını belirleyebiliriz. Örnek:
+```py
+dosya = open("deneme.txt", "w")
+print("Merhaba Ben Python!", file = dosya)
+dosya.close()
 ```
-#### `sys.stdout`’u Kalıcı Olarak Değiştirmek
-`sys.stdout`, kodlarımızın çıktılarının gönderildiği yerdir. Bu yeri kalıcı olarak bir dosyaya eşitlerseniz, bundan sonra programınızın bütün çıktıları o dosyaya aktarılır.
+**deneme.txt:**
+```
+Merhaba Ben Python!
+
+```
+
+`stdout`, kodlarımızın çıktılarının gönderildiği yerdir. Örnek:
 ```py
 import sys
 print(sys.stdout, flush=True)
-dosya3 = open("deneme3.txt", "w")
 ```
-Bu kodun outputu: `<_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>`
-- `name`, standart çıktı konumunun o anki adını verir.
-- `mode`, standart çıktı konumunun hangi kipe sahip olduğunu gösterir. Standart çıktı konumu genellikle yazma kipinde (`w`) bulunur.
-- `encoding` standart çıktı konumunun sahip olduğu kodlama biçimini gösterir. Kodlama bişimleri uyuşmazsa, bazı karakterler hatalı gösterilebilir.
+Bu kod bize `sys.stdout` ile ilgili bilgiler verir: `<_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>`
+- `name`, `sys.stdout`'un o anki adını verir.
+- `mode`, `sys.stdout`'un hangi kipe sahip olduğunu gösterir. `sys.stdout`'u genellikle yazma kipinde (`w`) bulunur.
+- `encoding` `sys.stdout`'un sahip olduğu kodlama biçimini gösterir. Kodlama biçimleri uyuşmazsa, bazı karakterler hatalı gösterilebilir.
+
+`sys.stdout`'a kalıcı olarak bir dosya atarsanız, bundan sonra programınızın bütün çıktıları o dosyaya aktarılır. Örnek:
 ```py
-sys.stdout = dosya3
-print(sys.stdout, flush=True)
+dosya = open("deneme.txt", "w")
+sys.stdout = dosya
+print("Merhaba Ben Python!", flush=True)
+```
+**deneme.txt:**
+```
+Merhaba Ben Python!
+
+```
+Bu şekilde yaparsanız, `sys.stdout` methodunun atıfta bulunduğu değeri tamamen kaybedeceğiniz için (çünkü `sys.stdout` methoduna `dosya` variable'ının value'sunu atıyorsunuz) geri döndürme şansınız kalmıyor. Bunu çözümü:
+```py
+dosya = open("deneme.txt", "w")
+sys.stdout, dosya = dosya, sys.stdout
 print("Kalıcı dosya işlemi başarılı!", flush=True)
 ```
-`sys.stdout`'u ilk değiştirirken `sys.stdout = dosya3` yerine `sys.stdout, dosya3 = dosya3, sys.stdout` kullanırsanız, sonradan eski haline döndürmek istediğinizde tekrardan `sys.stdout, dosya3 = dosya3, sys.stdout` kullanarak bunu başarabilirsiniz. Aksi halde `sys.stdout = dosya3` şeklinde kullanacaksanız, `sys.stdout` değerini kaybetmemek için onu ilk başta bir variable'a eşitlemeniz gerekecek. Bunun mantığını basitçe:
-```py
-a = 10
-b = 20
-
-a = b
-print(a) # Output: 20
+**deneme.txt:**
 ```
-`a`'nın değerini 20'ye eşitledikten sonra `10` değerini kaybediyorsunuz. `sys.stdout = dosya3` şeklinde kullanırken `sys.stdout`'ın değerini de böyle kaybetmemek için herhangi bir variable'a eşitleyin dememin sebebi bu. `sys.stdout, dosya3 = dosya3, sys.stdout` olayının mantığını **temel_kavramlar.md** dosyasındaki [**Variable'lar (Değişkenler)**](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/temel_kavramlar/temel_kavramlar.md#variablelar-değişkenler) başlığı altında anlatıldı.
+Merhaba Ben Python!
 
-### `flush` Parametresi
-`dosya = open("deneme.txt", "w")` şeklinde bir dosya açtığımızda, o dosyaya print fonksiyonundaki bilgileri kaydettikten sonra kaydettiğimiz bilgilerin dosyada gözükmesi için dosyayı `dosya.close()` şeklinde kapatmamız gerekiyor. Çünkü dosyayı kapatmadığımız sürece işlenen bilgiler buffer (tampon) adı verilen bir bölgede bekletiliyor ve dosyayı kapattığımızda da dosyaya işleniyor/yazılıyor. `flush` paremetresinin default değeri `False`'dır. `False` olduğu için açtığımız dosyayı manuel olarak (`dosya.close()` ile) kapatmamız gerekir. Bu değeri `true` yaparsak, açtığımız dosyadaki bilgilerin gözükmesi için dosyayı manuel olarak kapatma komutuna ihtiyacımız kalmaz.
+```
+Bu şekilde yaparsanız, `sys.stdout` methodunun value'su ile `dosya` variable'ının value'sunu birbiriyle değiştirdiğiniz için (swap) tekrar aynı kodu (`sys.stdout, dosya = dosya, sys.stdout`) çalıştırdığınızda `sys.stdout` methodu ile `dosya` variable'ı eski haline geri dönmüş olur. Bunun mantığını daha önce anlattım. Bunu yapmak yerine `sys.stdout` methodunun value'sunu herhangi bir variable'a atayıp da saklayabilirsiniz.
+
+<h2 id="2.5"><code>flush</code> Parametresi</h2>
+
+Python'da `open()` build-in fonksiyonu ile bir dosya açtığımızda, o dosyayı kapatmadığımız sürece `print()` fonksiyonunun dosyaya yazdırdığı şeyler dosyada görünmez (dosyaya işlenmez/yazılmaz). Çünkü dosyayı kapatmadığımız sürece işlenen bilgiler buffer (tampon) adı verilen bir bölgede bekletiliyor ve dosyayı kapattığımızda da dosyaya işleniyor/yazılıyor. `flush` parametresinin default değeri `False`'dır. `flush` parametresi `False` ise bahsettiğim durum geçerlidir. Ama `flush` parametresi `True` ise, `print()` fonksiyonunun dosyaya yazdırdığı şeyler anında dosyaya işlenir/yazılır.
+
+**Not:** `flush` parametresinin `True` olması, `print()` fonksiyonunun dosyaya bir şeyler yazdırdıktan sonra dosyayı kapattığı anlamına gelmiyor. Dosyayı kapatmak için `close()` methodunu kullanmanız gerekiyor. Kanıtı:
 ```py
-dosya2 = open("deneme2.txt", "w")
-print("Bu benim 2. dosyam.", file=dosya2, flush=True)
+dosya = open("deneme.txt", "w")
+print("Merhaba Ben Python!", file=dosya, flush=True)
+print(dosya.closed) # Output: False (Yani dosya açık)
+dosya.close()
+print(dosya.closed) # Output: True (Yani dosya kapalı)
+```
+**deneme.txt:**
+```
+Merhaba Ben Python!
+
 ```
 
-## Yıldızlı Parametreler
-Yıldız işareti (`*`), kendinden sonra gelen argümanı parçalarına ayırır.
-```py
-print("T" , "B" , "M" , "M" , sep = ".") # Output: T.B.M.M.
-print(*"TBMM" , sep = ".") # Output: T.B.M.M.
-```
-`len()` gibi fonksiyonlar tek bir parametre aldıkları için len(*"Python") gibi bir şey söz konusu değildir, hata verir.
-Daha fazla Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#print).
+**Not:** Dosya işlemleri konusunu öğrendikten sonra bu kısımları daha iyi anlayacaksınız.
 
-# `input(prompt)`
-Kullanıcıdan girdi (input) almanı sağlayan bir build-in (gömülü) fonksiyondur. `input()` gibi sade bir şekilde kullanılabileceği gibi `input("Lütfen bir sayı giriniz: ")` şeklinde de kullanılabilir. Kullanıcıdan alınan değerleri bir variable'a atayabilirsiniz. Örneğin:
+`print()` build-in fonksiyonu ile ilgili daha fazla Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#print "https://docs.python.org/3/library/functions.html#print").
+
+<h1 id="3"><code>input(prompt)</code></h1>
+
+Kullanıcıdan girdi (input) almanı sağlayan bir build-in (gömülü) fonksiyondur. `prompt` parametresi, `input()` fonksiyonu çağırıldığında (call) argüman olarak `stdout`'a yazdırılacak string'i alır. Bu fonksiyon ile kullanıcıdan alınan verileri kullanabilmek için bu fonksiyonu bir variable'a atayarak kullanabilirsiniz. Örnek:
 ```py
-inp = input("Bir input giriniz: ") # 15 girersek,
-print("Girdiğiniz input: ", inp)
+var = input("Bir sayı giriniz: ")
+print("Girdiğiniz sayı:", var)
 ```
 **Output:**
 ```
-Bir input giriniz: 15
-Girdiğiniz input: 15
+Bir sayı giriniz: 15
+Girdiğiniz sayı: 15
 ```
-**Not:** `input()` fonksiyonu, kendisine girilen değerleri `str` veri tipinde programa verir. Yani bir `int` değere ihtiyacınız varsa, kullanıcıdan aldığınız değeri kullanmadan önce  `int` data type'a dönüştürmelisiniz.
+`input()` fonksiyonu, kullanıcının girdiği verileri string type olarak programa verir. Örnek:
 ```py
-s1 = int(input("İlk sayı: ")) # 2 girersek,
-s2 = int(input("İkinci sayı: ")) # 3 girersek
-print("Girdiğiniz sayıların toplamı: ", s1 + s2)
-# Output: Girdiğiniz sayıların toplamı: 5
+var = input("Bir veri giriniz: ")
+print("Girdiğiniz verinin türü:", type(var))
 ```
-Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#input).
+**Output:**
+```
+Bir veri giriniz: 15
+Girdiğiniz verinin türü: <class 'str'>
+```
+Gördüğünüz gibi integer bir veri girsek bile `input()` fonksiyonunun programam verdiği verinin string type bir veri olduğunu görüyoruz. Kullanıcıdan aldığınız verinin integer type olmasını istiyorsanız, `input()` fonksiyonunun programa verdiği verinin türünü (type) değiştirmelisiniz. Örnek:
+```py
+var = input("Bir veri giriniz: ")
+var = int(var)
+print("Girdiğiniz verinin türü:", type(var))
+```
+**Output:**
+```
+Bir veri giriniz: 15
+Girdiğiniz verinin türü: <class 'int'>
+```
+Ama şimdi de kullanıcı harflerden oluşan bir veri girerse, harfleri integer'a dönüştüremeyeceğimiz için hata yükseltilecek. Örnek:
+```py
+var = input("Bir veri giriniz: ")
+var = int(var) # ValueError: invalid literal for int() with base 10: 'selam'
+print("Girdiğiniz verinin türü:", type(var))
+```
+Bunun gibi tip dönüşümlerini (type conversions) daha sonra anlatacağım. `var = int(var)` gibi fazladan bir statement tanımlamak yerine `var = int(input("Bir veri giriniz: "))` şeklinde tek statementte de halledebilirsiniz.
+
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#input "https://docs.python.org/3/library/functions.html#input").

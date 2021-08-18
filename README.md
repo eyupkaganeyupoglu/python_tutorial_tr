@@ -55,7 +55,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
     - [`with` Statement ve Context Manager](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/with_ve_context_manager.md)
 - Fonksiyonlar (Functions)
     - [Fonksiyonlar (functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md)
-    - [Yerleşik Fonksiyonlar (Build-in Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/build-in_functions.md)
+    - [Gömülü Fonksiyonlar (Build-in Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/build-in_functions.md)
     - [İleri Seviye Fonksiyonlar (Advanced Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/advanced_functions.md)
     - [decorators](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/decorators.md)
 - Object Oriented Programming (OOP)
