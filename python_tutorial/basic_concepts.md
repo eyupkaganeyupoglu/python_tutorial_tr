@@ -12,7 +12,8 @@
 - [Heap ve Stack Yöntemleri](#11)
 - [Garbage Collector](#12)
 
-# Python Yazmak İçin Ne Kullanmalıyım? {#1}
+
+<h1 id="1"> Python Yazmak İçin Ne Kullanmalıyım? </h1>
 
 Ben VSCode kullanıyorum. VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını anlatmakta fayda var:
 - **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text ediyor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
@@ -20,7 +21,7 @@ Ben VSCode kullanıyorum. VSCode bir text editor'dür. Burada IDE ile text edito
 	![](https://i.ibb.co/thTLgN6/image.png)
 	![](https://i.ibb.co/s9f7rSJ/image.png)
 
-# Python'un Çalışma Mantığı {#2}
+<h1 id="2"> Python'un Çalışma Mantığı </h1>
 
 Python, kodları yukarıdan aşağıya okur. İç içe yazılmış fonksiyonları da aşağıdaki örnekteki gibi okur:
 ```py
@@ -38,7 +39,7 @@ print(complex(float(int(str(10))))) #Output: (10+0j)
 10. `complex(10.0) == 10+0j`,
 11. `print(10+0j)` var, o zaman `10+0j`'yi `sys.stdout`'a yazdır.
 
-# Block Mantığı {#3}
+<h1 id="3"> Block Mantığı </h1>
 
 Python'da `if`, `elif`, `else`, `while`, `for`, `def`, `class` vb. gibi statement'lara yazılacak kodlar, bu statement'ların kod blocklarına yazılır. Bu kod blockları oluşturmak için **Indentation** dediğimiz girintileme işlemi yapılır. Bu girintilere **Indent** denir. Bu indent'ler genelde 2 ya da 4 space'den oluşur.
 ```py
@@ -50,7 +51,7 @@ else:
 ```
 Bu kodları anlamanıza şimdilik gerek yok. Bu, sadece indent'in ne olduğunu anlamanız için bir örnek.
 
-# Variable'lar (Değişkenler) {#4}
+<h1 id="4"> Variable'lar (Değişkenler) </h1>
 
 Variable'lar, en küçük depolama birimleridir. Belli bir data type'dan veri depolar. Bir variable'a bir value atadıktan (assignment) sonra o variable'ı kullanarak o value'ya ulaşabilirsiniz. Variable'a atanan data'ya **value** (değer) denir. Örnek:
 ```py
@@ -77,7 +78,7 @@ del a
 ```
 Bütün bunların ne oldukları ve nasıl kullanıldıkları zamanla daha iyi oturacak. Şu an bunları anlamadıysanız çok takılmayın.
 
-# İsimlendirme (Identifier) Kuralları {#5}
+<h1 id="5"> İsimlendirme (Identifier) Kuralları </h1>
 
 - Bir objeyi temsil eden isme **identifier** denir. Bu identifier'ı kullanarak ilgili objeye atıfta bulunmak (refers to) suretiyle kullanabiliriz.
 - Identifier, variable'lara (daha genel tanımıyla objelere) verdiğimiz isimdir.
@@ -86,7 +87,7 @@ Bütün bunların ne oldukları ve nasıl kullanıldıkları zamanla daha iyi ot
 - Identifier'larda `:`, `'`, `”`, `,`, `<`, `>`, `/`, `?`, `|`, `\`, `(`, `)`, `!`, `@`, `#`, `$`, `%`, `^`, `&`, `*`, `~`, `-`, `+` sembolleri kullanılamaz. Sadece `_` (alt çizgi) kullanılabilir. Aksi durumda `SyntaxError: invalid syntax` hatası yükseltilir (raised).
 - [Keyword'ler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords") identifier olarak kullanılamaz. Örnek: `global = 1`
 
-# Yorum (Comment) Satırları {#6}
+<h1 id="6"> Yorum (Comment) Satırları </h1>
 
 **Tek satır yorum satırı:**
 ```py
@@ -105,15 +106,15 @@ Satırı
 ```
 **Dikkat:** Kod blocklarında (Örneğin bir `if` statement'ın kod bloğu) aralara tırnak işareti kullanarak yorum satırı eklememeye çalış. Mümkün oldukça `#` kullan. Aksi halde istenmeyen hatalarla karşılaşırsınız.
 
-# Hata Mesajlarının Önemi {#7}
+<h1 id="7"> Hata Mesajlarının Önemi </h1>
 
 Python geliştirildikçe, hata mesajlarının çeşidi ve içeriğinin zenginliği de artmaktadır. Hata mesajlarını okumayı bilen ve bilmeyen kişiler arasındaki fark çok fazladır. Hata mesajlarını okumayı ve anlamayı becerebilmenin kişiye en büyük artısı zamandır. Çünkü Python bir hata yükseltince, hatanın hangi satırda ve kodun tam olarak neresinde olduğunu, hatanın neden oluştuğunu, hatta bazen hatanın çözümünü bile içeren bir hata mesajı gösterir kullanıcılara.
 
-# Implementation Nedir? {#8}
+<h1 id="8"> Implementation Nedir? </h1>
 
 "Uygulamak" anlamına gelir. Örneğin kurduğunuz bir algoritmayı koda döktüğünde algoritmayı implemente etmiş olursun. En basit tanımıyla bu. Ayrıntılı bilgi için kendiniz araştırabilirsiniz.
 
-# CMD ile çalışmak {#9}
+<h1 id="9"> CMD ile çalışmak </h1>
 
 CMD ve PowerShell'in ne olduğunu bilmiyorsanız araştırın.
 
@@ -127,7 +128,7 @@ CMD ve PowerShell'in ne olduğunu bilmiyorsanız araştırın.
 
 - cmd'yi çalıştırdıktan sonra herhangi bir adrese gitmek istiyorsanız `cd adres` komutunu kullanabilirsiniz. Örnek: `cd desktop/Files`
 
-# Python sürümleri {#10}
+<h1 id="10"> Python sürümleri </h1>
 
 Python'ın `2.x` serisi ile çalışan bir program Python'ın `3.x` serisi ile çalışmayabilir. Aynı şekilde bunun tersi de geçerli olabilir. Bu gibi durumlarda kullanıcıya bir uyarı mesajı göstermek gerekebilir. Python dosyanızın en başına `#!/usr/bin/env pythonX.X` veya `#! pythonX.X` gibi bir uyarı eklemek bir çözüm olabilir ama yeterli değildir. Bu satırlar programınızın `PythonX.X` sürümünde çalışmadığını belirtmiş oluyorsunuz ama eğer çalıştırılırsa ne olacağını belirtmiyorsunuz. Python sürümünüzü öğrenmek için `sys` modülündeki `versiyon_info` methodundan yararlanabilirsiniz.
 ```py
@@ -189,7 +190,7 @@ micro = sys.version_info[2]
 print(major, minor, micro, sep=".") # Output: 3.9.2
 ```
 
-# Heap ve Stack Yöntemleri {#11}
+<h1 id="11"> Heap ve Stack Yöntemleri </h1>
 
 Python programları sırasında kullanılan her obje bellekte yer kaplar. Bu yerin boyutu kimi zaman belliyken (yani değişmezken), kimi zaman ise kullanıcının program esnasında gireceği verilere göre değişebilecek durumdadır. Bu farkları sağlayan **Stack** ve **Heap** adında iki yöntem vardır. **Stack** ve **Heap**'in her ikisi de RAM bölgesinde bulunur. **Stack**, bellekten statik olarak yer tahsisi için kullanılırken, **Heap**, dinamik olarak yer tahsisi içindir. Bu yüzden program esnasında derleyici (compiler), boyutları bildirilmiş, değişmez bir değer kullanacaksak ve bu değer çok büyük bir veri değilse **stack** (Stack alanı sınırlı olduğundan çok büyük sayıda ve büyük tiplerde veri atanması belleğin dolmasına sebep olabilir); boyutu belli olmayan bir değer kullanıyorsak **Heap**'ten yer tahsisi yapar. **Stack**'da yer alan veriler direk bellek içine yerleştirildiği için erişimi çok hızlıdır. **Heap** ise runtime (çalışma zamanı) anında kullanılırlar ve dağınık bir bellek göz yapısı olduğu için erişimi **stack** kadar kolay olmaz, dolayısıyla yavaş çalışır. Daha fazla bilgi ve örnek için [tıklayınız](http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/ "http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/"). Stack bellekteki veri hemen silinirken Heap bellekteki verinin silinmesi **Garbage Collector**'a (Çöp toplama mekanizmasına) bağlıdır. Swift, Objective-C gibi **Automatic Reference Counting**'e sahip mimarilerde bu konu compiler tarafından otomatik olarak yapılır. **Stack** ve **Heap** bilgisi, dünyanın en vasat bellek yönetimine sahip scripting dillerinden birisi olan Python için çok gerekli bir şey değil. Python, bellekle uğraşmanızı gerektirecek bir dil değildir. Bellekle uğraşmanızı gerektirecek bir dil olan `C` dil ailesiyle işiniz olursa **Stack** ve **Heap** kavramlarına kafa yorunuz.
 
@@ -213,7 +214,7 @@ Python programları sırasında kullanılan her obje bellekte yer kaplar. Bu yer
 - Çalışma zamanında (runtime) oluşturulur.
 - İhtiyacınız olan boyutu tam olarak bilmiyorsanız Heap kullanımı sizin için biçilmiş kaftandır.
 
-# Garbage Collector {#12}
+<h1 id="12"> Garbage Collector </h1>
 
 Bilgisayar programları, runtime sırasında bellek ihtiyacı duyarlar. Bellek sınırsız bir şey olmadığı için artık kullanılmayan bellek alanlarının, işletim sistemine (OS) geri iade edilmesi gerekir. Müsait bellek alanı bulma ve kullanılmayan bellek alanlarını işletim sistemine geri iade etme işlemlerinin programcılar tarafından manuel (el ile) yapılması gerekiyordu. Örneğin bu işlem, `C` dilinde `malloc()` ve `free()` fonksiyonları ile yapılmaktadır. İşletim sistemine iade edilmiş bir alanın program tarafından tekrar kullanılması güvenlik açıklarını beraberinde getirmekteydi. Elle yapılan bu işlemin takibi bir yerden sonra zorlaştığı için bu işi otomatik yapan bir sisteme ihtiyaç vardı. **Garbage Collector**, bu işlemi otomatik yapan bir sistemdir. Bu sistem sayesinde bir programcı, program yazarken hafıza alanını Garbage Collection mekanizmasından talep edip, iade işlemine karışılmamaktadır çünkü kalan tüm işlemler Garbage Collection mekanizması tarafından yapılmaktadır. Garbage Collector, kullanılan hafıza alanlarının izini sürerek, ihtiyaç duyulmayan alanları işletim sistemine iade etmektedir ve yeni bir talep geldiği zamanda bellekte yer bulup programa göndermektedir. Garbage Collection mekanizmasının işlemci kullanımı ile alakalı iki farklı yönetim yaklaşımı bulunmaktadır:
 - **stop-the-world** yaklaşımı herhangi bir t zamanında, Garbage Collection mekanizması devreye girdiği zaman sırasıyla ilgili programdaki tüm işlemler durdurulur, hafıza yönetimi yapılır ve durdurulan işlemeler başlatılır. Bu çalışma yöntemi, kritik uygulamalar için bir dezavantaj oluşturmaktadır. Bu nedenle daha sonra **concurrent** algoritmalar geliştirilmiştir. 
