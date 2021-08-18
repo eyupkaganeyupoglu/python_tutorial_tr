@@ -12,9 +12,9 @@
 
 "IO Operations" araştırmaya kalkarsanız büyük ihtimal karşınıza dosya işlemleri ile ilgili bilgiler çıkacak. Ama ben bu kısımda program içi input-output işlemlerinden bahsedeceğim. Programınıza girdi (input) almak için `input()`, çıktı (output) almak için `print()` adlı build-in fonksiyonlardan faydalanıyoruz.
 
-<h1 id="2"><code>print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)</code></h1>
+<h1 id="2"><code>print()</code></h1>
 
-`print()` build-in fonksiyonu, `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan, IO Operation'ların output işleminden sorumlu bir build-in (gömülü) fonksiyondur. Örnek:
+`print()` build-in fonksiyonu, `print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)` syntax'ına sahiptir. `print()` fonksiyonu `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan, IO Operation'ların output işleminden sorumlu bir build-in (gömülü) fonksiyondur. Örnek:
 ```py
 print(35)
 print("Merhaba")
@@ -184,9 +184,9 @@ Merhaba Ben Python!
 
 `print()` build-in fonksiyonu ile ilgili daha fazla Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#print "https://docs.python.org/3/library/functions.html#print").
 
-<h1 id="3"><code>input(prompt)</code></h1>
+<h1 id="3"><code>input()</code></h1>
 
-Kullanıcıdan girdi (input) almanı sağlayan bir build-in (gömülü) fonksiyondur. `prompt` parametresi, `input()` fonksiyonu çağırıldığında (call) argüman olarak `stdout`'a yazdırılacak string'i alır. Bu fonksiyon ile kullanıcıdan alınan verileri kullanabilmek için bu fonksiyonu bir variable'a atayarak kullanabilirsiniz. Örnek:
+`input()` build-in fonksiyonu, `input(prompt)` syntax'ına sahiptir. Bu fonksiyon, kullanıcıdan girdi (input) almanı sağlayan bir build-in (gömülü) fonksiyondur. `prompt` parametresi, `input()` fonksiyonu çağırıldığında (call) argüman olarak `stdout`'a yazdırılacak string'i alır. Bu fonksiyon ile kullanıcıdan alınan verileri kullanabilmek için bu fonksiyonu bir variable'a atayarak kullanabilirsiniz. Örnek:
 ```py
 var = input("Bir sayı giriniz: ")
 print("Girdiğiniz sayı:", var)
