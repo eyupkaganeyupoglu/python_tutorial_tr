@@ -1,11 +1,11 @@
 # İçindekiler
 - [Input-Output İşlemleri (IO Operations)](#1)
 - [`print()` Fonksiyonu](#2)
-- [`*object` Parametresi](#2.1)
-- [`sep` Parametresi](#2.2)
-- [`end` Parametresi](#2.3)
-- [`file` Parametresi](#2.4)
-- [`flush` Parametresi](#2.5)
+    - [`*object` Parametresi](#2.1)
+    - [`sep` Parametresi](#2.2)
+    - [`end` Parametresi](#2.3)
+    - [`file` Parametresi](#2.4)
+    - [`flush` Parametresi](#2.5)
 - [`input()` Fonksiyonu](#3)
 
 <h1 id="1">Input-Output İşlemleri (IO Operations)</h1>
