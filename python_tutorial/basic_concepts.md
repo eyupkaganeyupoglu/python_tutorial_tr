@@ -1,8 +1,30 @@
-﻿# Python'un Çalışma Mantığı
+﻿# İçindekiler
+- [Python Yazmak İçin Ne Kullanmalıyım?](#1)
+- [Python'un Çalışma Mantığı](#2)
+- [Block Mantığı](#3)
+- [Variable'lar (Değişkenler)](#4)
+- [İsimlendirme (Identifier) Kuralları](#5)
+- [Yorum (Comment) Satırları](#6)
+- [Hata Mesajlarının Önem](#7)
+- [Implementation Nedir?](#8)
+- [CMD ile çalışmak](#9)
+- [Python sürümleri](#10)
+- [Heap ve Stack Yöntemleri](#11)
+- [Garbage Collector](#12)
+
+# Python Yazmak İçin Ne Kullanmalıyım? {#1}
+
+Ben VSCode kullanıyorum. VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını anlatmakta fayda var:
+- **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text ediyor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
+- **Text editor:** Not defterinin gelişmiş versiyonudur diyebiliriz. Çeşitli extension'larla modifiye edilerek harika program geliştirme ortamlarına da dönüştürülebilir. IDE'lere göre daha hızlıdır ama bu hız kurduğunuz extension'lara göre değişebilir. Benim gibi 20 tane extension kullanıyorsanız, kullandığınız text editor, bir IDE kadar yavaş açılabilir. Kullandığım extension listesi:
+	![](https://i.ibb.co/thTLgN6/image.png)
+	![](https://i.ibb.co/s9f7rSJ/image.png)
+
+# Python'un Çalışma Mantığı {#2}
 
 Python, kodları yukarıdan aşağıya okur. İç içe yazılmış fonksiyonları da aşağıdaki örnekteki gibi okur:
 ```py
-print(complex(float(int(str(10)))))
+print(complex(float(int(str(10))))) #Output: (10+0j)
 ```
 1. `print` var, aha parantez, `print`'i geç ve parantezin içine bak,
 2. `complex` var, aha bir parantez daha, `complex`'i geç ve parantezin içine bak,
@@ -16,9 +38,9 @@ print(complex(float(int(str(10)))))
 10. `complex(10.0) == 10+0j`,
 11. `print(10+0j)` var, o zaman `10+0j`'yi `sys.stdout`'a yazdır.
 
-## Block Mantığı
+# Block Mantığı {#3}
 
-Python'da `if`, `elif`, `else`, `while`, `for`, `def`, `class` vb. gibi statement'lara yazılacak kodlar, bu statement'ların blocklarına yazılır. Bu blockları oluşturmak için **Indentation** dediğimiz girintileme işlemi yapılır. Bu girintilere **Indent** denir. Bu indent'ler genelde 2 ya da 4 space'den oluşur.
+Python'da `if`, `elif`, `else`, `while`, `for`, `def`, `class` vb. gibi statement'lara yazılacak kodlar, bu statement'ların kod blocklarına yazılır. Bu kod blockları oluşturmak için **Indentation** dediğimiz girintileme işlemi yapılır. Bu girintilere **Indent** denir. Bu indent'ler genelde 2 ya da 4 space'den oluşur.
 ```py
 var = int(input("Bir sayı girin: "))
 if var % 2 == 0:
@@ -28,9 +50,9 @@ else:
 ```
 Bu kodları anlamanıza şimdilik gerek yok. Bu, sadece indent'in ne olduğunu anlamanız için bir örnek.
 
-# Variable'lar (Değişkenler)
+# Variable'lar (Değişkenler) {#4}
 
-Variable'lar, en küçük depolama birimleridir. Belli bir data type'dan veri depolar. Bir değişkene bir değer atadıktan sonra aynı değişkene farklı bir değer atayabilirsin. Örnek:
+Variable'lar, en küçük depolama birimleridir. Belli bir data type'dan veri depolar. Bir variable'a bir value atadıktan (assignment) sonra o variable'ı kullanarak o value'ya ulaşabilirsiniz. Variable'a atanan data'ya **value** (değer) denir. Örnek:
 ```py
 i = 15 # i'nin değeri 15
 i = 30 # i'nin değeri 30
@@ -53,25 +75,27 @@ Bir variable'yi silmek istiyorsanız:
 a = 1
 del a
 ```
+Bütün bunların ne oldukları ve nasıl kullanıldıkları zamanla daha iyi oturacak. Şu an bunları anlamadıysanız çok takılmayın.
 
-# İsimlendirme kuralları
-- Variable isimleri rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`
-- Variable isimlerinde boşluk karakteri kullanılamaz. Örnek: `vrb exp`
-- `:`, `'`, `”`, `,`, `<`, `>`, `/`, `?`, `|`, `\`, `(`, `)`, `!`, `@`, `#`, `$`, `%`, `^`, `&`, `*`, `~`, `-`, `+` sembolleri kullanılamaz. Sadece `_` (alt çizgi) kullanılabilir. Aksi durumda `SyntaxError: invalid syntax` hatası verir.
-- Keyword'ler identifier olarak kullanılamaz. Örnek: `global = 1`
+# İsimlendirme (Identifier) Kuralları {#5}
 
-# Implementation
-"Uygulamak" anlamına gelir. Örneğin kurduğunuz bir algoritmayı koda döktüğünde algoritmayı implemente etmiş olursun. En basit tanımıyla bu. Ayrıntılı bilgi için kendiniz araştırabilirsiniz.
+- Bir objeyi temsil eden isme **identifier** denir. Bu identifier'ı kullanarak ilgili objeye atıfta bulunmak (refers to) suretiyle kullanabiliriz.
+- Identifier, variable'lara (daha genel tanımıyla objelere) verdiğimiz isimdir.
+- Identifier'larda rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`, `1234`
+- Identifier'larda boşluk karakteri kullanılamaz. Örnek: `var exp`
+- Identifier'larda `:`, `'`, `”`, `,`, `<`, `>`, `/`, `?`, `|`, `\`, `(`, `)`, `!`, `@`, `#`, `$`, `%`, `^`, `&`, `*`, `~`, `-`, `+` sembolleri kullanılamaz. Sadece `_` (alt çizgi) kullanılabilir. Aksi durumda `SyntaxError: invalid syntax` hatası yükseltilir (raised).
+- [Keyword'ler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords") identifier olarak kullanılamaz. Örnek: `global = 1`
 
-# Yorum (Comment) Satırları
-### Tek satır yorum satırı:
+# Yorum (Comment) Satırları {#6}
+
+**Tek satır yorum satırı:**
 ```py
 # Tekli Yorum Satırı
 'Tekli Yorum Satırı'
 "Tekli Yorum Satırı"
 ```
 
-### Çoklu Yorum satırı
+**Çoklu Yorum satırı:**
 ```py
 """
 Çoklu
@@ -79,29 +103,42 @@ Yorum
 Satırı
 """
 ```
-**Dikkat:** Block kodlarda (Örneğin bir `if` bloğu) aralara tırnak içinde açıklama yazmamaya çalış. Mümkün oldukça `#` kullan.
+**Dikkat:** Kod blocklarında (Örneğin bir `if` statement'ın kod bloğu) aralara tırnak işareti kullanarak yorum satırı eklememeye çalış. Mümkün oldukça `#` kullan. Aksi halde istenmeyen hatalarla karşılaşırsınız.
 
-# CMD ile çalışmak
-- Herhangi bir klasör içinde ya da desktop'ta cmd açmak için `shift`'e basılı tutarken ekrana sağ tıklarsanız, karşınıza çıkan arayüzde PowerShell'i açabilirsiniz.
-<img src="https://i.ibb.co/vPjX3nS/resim-2021-05-02-123605.png" alt="resim-2021-05-02-123605" border="0">
+# Hata Mesajlarının Önemi {#7}
 
-- Herhangi bir klasör açıkken arama çubuğuna cmd yazarsanız, o konuma ayarlı bir cmd penceresi açılır. O konumdaki bir Python dosyasını çalıştırmak için `python dosya_ismi.py` komutunu kullanabilirsiniz.
-<img src="https://i.ibb.co/JQczTMn/resim-2021-05-02-124133.png" alt="resim-2021-05-02-124133" border="0">
+Python geliştirildikçe, hata mesajlarının çeşidi ve içeriğinin zenginliği de artmaktadır. Hata mesajlarını okumayı bilen ve bilmeyen kişiler arasındaki fark çok fazladır. Hata mesajlarını okumayı ve anlamayı becerebilmenin kişiye en büyük artısı zamandır. Çünkü Python bir hata yükseltince, hatanın hangi satırda ve kodun tam olarak neresinde olduğunu, hatanın neden oluştuğunu, hatta bazen hatanın çözümünü bile içeren bir hata mesajı gösterir kullanıcılara.
+
+# Implementation Nedir? {#8}
+
+"Uygulamak" anlamına gelir. Örneğin kurduğunuz bir algoritmayı koda döktüğünde algoritmayı implemente etmiş olursun. En basit tanımıyla bu. Ayrıntılı bilgi için kendiniz araştırabilirsiniz.
+
+# CMD ile çalışmak {#9}
+
+CMD ve PowerShell'in ne olduğunu bilmiyorsanız araştırın.
+
+- Herhangi bir klasör içinde ya da desktop'ta PowerShell'i açmak için klavyedeki `shift` tuşuna basılı tutarken ekrana sağ tıklarsanız, karşınıza çıkan arayüzde PowerShell'i açabilirsiniz.
+
+	![](https://i.ibb.co/vPjX3nS/resim-2021-05-02-123605.png)
+
+- Herhangi bir klasör açıkken arama çubuğuna cmd yazarsanız, o konuma (path) ayarlı bir cmd penceresi açılır. O konumdaki bir Python dosyasını çalıştırmak için `python dosya_ismi.py` komutunu kullanabilirsiniz.
+
+	![](https://i.ibb.co/JQczTMn/resim-2021-05-02-124133.png)
 
 - cmd'yi çalıştırdıktan sonra herhangi bir adrese gitmek istiyorsanız `cd adres` komutunu kullanabilirsiniz. Örnek: `cd desktop/Files`
 
-# Python sürümleri
-Python’ın `2.x` serisi ile çalışan bir program Python’ın `3.x` serisi ile muhtemelen çalışmayacaktır. Aynı şekilde bunun tersi de geçerlidir. Bu gibi durumlarda kullanıcıya bir uyarı mesajı göstermek gerekebilir. Kodlarınıza `#!/usr/bin/env pythonX.X veya #! pythonX.X` gibi bir satır eklemek bir çözüm olabilir ama yeterli değildir. Bu satırlar programınızın PythonX.X sürümünde çalışmadığını belirtmiş oluyorsunuz ama eğer çalıştırılırsa ne olacağını belirtmiyorsunuz. Buna çözüm olarak "sys" modülündeki "versiyon_info" değişkeninden yararlanabiliriz.
+# Python sürümleri {#10}
+
+Python'ın `2.x` serisi ile çalışan bir program Python'ın `3.x` serisi ile çalışmayabilir. Aynı şekilde bunun tersi de geçerli olabilir. Bu gibi durumlarda kullanıcıya bir uyarı mesajı göstermek gerekebilir. Python dosyanızın en başına `#!/usr/bin/env pythonX.X` veya `#! pythonX.X` gibi bir uyarı eklemek bir çözüm olabilir ama yeterli değildir. Bu satırlar programınızın `PythonX.X` sürümünde çalışmadığını belirtmiş oluyorsunuz ama eğer çalıştırılırsa ne olacağını belirtmiyorsunuz. Python sürümünüzü öğrenmek için `sys` modülündeki `versiyon_info` methodundan yararlanabilirsiniz.
 ```py
-sys.version_info(major=|major2|, minor=|minor2|, micro=|micro2|, releaselevel='final', serial=0)
+print(sys.version_info) # Output: sys.version_info(major=3, minor=9, micro=2, releaselevel='final', serial=0)
 ```
-Buradaki `major`, kullanılan Python serisinin ana sürüm numarasını; `minor`, alt sürüm numarasını; `micro`, kullanılan Python serisinin en alt sürüm numarasını verir. Bu değerlere:
-```py
-sys.version_info.major
-sys.version_info.minor
-sys.version_info.micro
-```
-komutlarıyla ulaşılabilir.
+Buradaki:
+- `major`, kullanılan Python serisinin ana sürüm numarasını;
+- `minor`, alt sürüm numarasını;
+- `micro`, kullanılan Python serisinin en alt sürüm numarasını verir.
+
+Bu değerlere `sys.version_info.major`, `sys.version_info.minor` ve `sys.version_info.micro` şeklinde de elde edebiliriz. Örnek:
 ```py
 import sys
 _2x_metni = u" Python'ın 2.x sürümlerinden birini kullanıyorsunuz. Programı çalıştırabilmek için sisteminizde Python'ın 3.x sürümlerinden biri kurulu olmalı."
@@ -110,13 +147,24 @@ _3x_metni = "Programa hoşgeldiniz."
 
 if (sys.version_info.major < 3):
 	print(_2x_metni)
+	exit() # Programı sonlandırır.
 else:
 	print(_3x_metni)
-```
-Program py2.x de çalıştırılırsa, `_2x_metni` variable'ına atanmış karakter dizisinin düzgün gösterilmesi için `u` harfini eklememiz gerek. Bu sayede UNICODE olarak çalıştırmış olacak.
 
-**Önemli Not:** Python’ın 2.7 öncesi sürümlerinde `sys` modülünün `version_info()` metodu farklı çıktılar verir. Mesela Python’ın 2.7 öncesi sürümlerinde `version_info()` metodunun `major`, `minor` veya `micro` gibi methodları bulunmaz. Bu methodlar Python programlama diline 2.7 sürümüyle birlikte geldi. Dolayısıyla yukarıdaki programı Python’ın 2.7 öncesi sürümlerinden biriyle çalıştıran kullanıcılarınız istediğiniz çıktıyı alamayacak, Python bu kullanıcılara hata mesajı göstererek programın çökmesine sebep olacaktır.
+# Programınızdaki diğer kodlar...
+```
+Eğer Python sürümünüz 3'den büyük ve 3'e eşitse `else` statement çalışır ve programınız çalışmaya devam eder. Python sürümünüz 3'den küçükse `if` statement çalışır ve ilgili metin yazdırıldıktan sonra `exit()` build-in fonksiyonu ile program sonlandırılır.
+
+**Not:** `_2x_metni` variable'ındaki metinin başındaki `u` harfi, bu metinin UNICODE ile kodlanmış (encoded) olduğunu söylemektedir. Bu sayede aşağıdaki gibi istenmeyen sonuçlarla karşılaşmayız:
 ```py
+_2x_metni = u" Python'ın 2.x sürümlerinden birini kullanıyorsunuz. Programı çalıştırabilmek için sisteminizde Python'ın 3.x sürümlerinden biri kurulu olmalı."
+print(_2x_metni.encode(encoding='ascii', errors='replace'), end="\n\n") # Output: b" Python'?n 2.x s?r?mlerinden birini kullan?yorsunuz. Program? ?al??t?rabilmek i?in sisteminizde Python'?n 3.x s?r?mlerinden biri kurulu olmal?."
+print(_2x_metni.encode(encoding='ascii', errors='xmlcharrefreplace')) # Output: b" Python'&#305;n 2.x s&#252;r&#252;mlerinden birini kullan&#305;yorsunuz. Program&#305; &#231;al&#305;&#351;t&#305;rabilmek i&#231;in sisteminizde Python'&#305;n 3.x s&#252;r&#252;mlerinden biri kurulu olmal&#305;."
+```
+
+**Önemli Not:** Python'ın 2.7 sürümünden önceki sürümlerinde `sys` modülünün `version_info()` methodu farklı output'lar verir. Mesela Python'ın 2.7 sürümünden önceki sürümlerinde `version_info()` metodunun `major`, `minor` veya `micro` gibi methodları bulunmaz. Bu methodlar Python'ın 2.7 sürümüyle birlikte geldi. Dolayısıyla yukarıdaki programı Python'ın 2.7 öncesi sürümlerinden biriyle çalıştırırsanız, büyük ihtimal `AttributeError` hatası yükseltilecek (raised). Alternatif çözümler:
+```py
+# Python X.x < 2.7
 import sys
   
 _2x_metni = """ Python'ın 2.x sürümlerinden birini kullanıyorsunuz. Programı çalıştırabilmek için sisteminizde Python'ın 3.x sürümlerinden biri kurulu olmalı.""" 
@@ -126,11 +174,11 @@ try:
 	if (sys.version_info.major < 3):
 		print(_2x_metni)
 	else:
-		print(_3x_metni)
+		print(_3x_metni) # Output: Programa hoşgeldiniz.
 except  AttributeError:
 	print(_2x_metni)
 ```
-Veya kesin çözüm olarak, Python'un bütün sürümlerinde çalışan aşağıdaki yöntemi kullanabilirsiniz:
+Veya kesin çözüm olarak, Python'ın bütün sürümlerinde çalışan aşağıdaki yöntemi kullanabilirsiniz:
 ```py
 import sys
 
@@ -138,36 +186,35 @@ major = sys.version_info[0]
 minor = sys.version_info[1]
 micro = sys.version_info[2]  
 
-print(major, minor, micro, sep=".") # Python sürümünü gösterir
+print(major, minor, micro, sep=".") # Output: 3.9.2
 ```
 
-## Heap ve Stack Yöntemleri
-Python programları sırasında kullanılan her değer, bellekte yer kaplar. Bu yerin boyutu kimi zaman belli yani değişmezken, kimi zaman ise kullanıcının program esnasında gireceği verilere göre değişebilecek durumdadır. Bu farkları sağlayan **Stack** ve **Heap** adında iki yöntem vardır. **Stack** ve **Heap**'in her ikisi de RAM bölgesinde bulunur. **Stack**, bellekten statik olarak yer tahsisi için kullanılırken, **Heap**, dinamik olarak yer tahsisi içindir. Bu yüzden program esnasında boyutları bildirilmiş, değişmez bir değer kullanacaksak ve bu değer çok büyük bir veri değilse (Stack alanı sınırlı olduğundan çok büyük sayıda ve büyük tiplerde veri atanması belleğin dolmasına sebep olabilir) **stack**, boyutu belli olmayan bir değer kullanıyorsak (ki OOP'de bunlara obje denir) o zaman derleyici otomatik olarak **Heap**’ten yer tahsisi yapar. **Stack**’te yer alan veriler direk bellek içine yerleştirilir, dolayısıyla erişimi çok hızlıdır ve programın derleme aşamasında belleğe yerleşirler. **Heap** ise runtime (çalışma zamanı) anında kullanılırlar ve dağınık bir bellek göz yapısı olduğu için erişimi **stack** kadar kolay olmaz, dolayısıyla yavaş çalışır. Daha fazla bilgi ve örnek için [tıklayınız](http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/). Stack bellekteki veri hemen silinirken Heap bellekteki verinin silinmesi **Garbage Collector**’a (Çöp toplama mekanizmasına) bağlıdır. *Swift*, *Objective-C* gibi **Automatic Reference Counting**’e sahip mimarilerde bu konu derleyici tarafından otomatik olarak yapılır. **Stack** ve **Heap** bilgisi, dünyanın en vasat bellek yönetimine sahip scripting dillerinden birisi olan Python için çok gerekli bir şey değil. Python, bellekle uğraşmanızı gerektirecek bir dil değildir. Bellekle uğraşmanızı gerektirecek bir dil olan **C** dil ailesiyle işiniz olursa **Stack** ve **Heap** kavramlarına kafa yorunuz.
+# Heap ve Stack Yöntemleri {#11}
+
+Python programları sırasında kullanılan her obje bellekte yer kaplar. Bu yerin boyutu kimi zaman belliyken (yani değişmezken), kimi zaman ise kullanıcının program esnasında gireceği verilere göre değişebilecek durumdadır. Bu farkları sağlayan **Stack** ve **Heap** adında iki yöntem vardır. **Stack** ve **Heap**'in her ikisi de RAM bölgesinde bulunur. **Stack**, bellekten statik olarak yer tahsisi için kullanılırken, **Heap**, dinamik olarak yer tahsisi içindir. Bu yüzden program esnasında derleyici (compiler), boyutları bildirilmiş, değişmez bir değer kullanacaksak ve bu değer çok büyük bir veri değilse **stack** (Stack alanı sınırlı olduğundan çok büyük sayıda ve büyük tiplerde veri atanması belleğin dolmasına sebep olabilir); boyutu belli olmayan bir değer kullanıyorsak **Heap**'ten yer tahsisi yapar. **Stack**'da yer alan veriler direk bellek içine yerleştirildiği için erişimi çok hızlıdır. **Heap** ise runtime (çalışma zamanı) anında kullanılırlar ve dağınık bir bellek göz yapısı olduğu için erişimi **stack** kadar kolay olmaz, dolayısıyla yavaş çalışır. Daha fazla bilgi ve örnek için [tıklayınız](http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/ "http://blog.bilgiyazan.com.tr/stack-ve-heap-kavrami/"). Stack bellekteki veri hemen silinirken Heap bellekteki verinin silinmesi **Garbage Collector**'a (Çöp toplama mekanizmasına) bağlıdır. Swift, Objective-C gibi **Automatic Reference Counting**'e sahip mimarilerde bu konu compiler tarafından otomatik olarak yapılır. **Stack** ve **Heap** bilgisi, dünyanın en vasat bellek yönetimine sahip scripting dillerinden birisi olan Python için çok gerekli bir şey değil. Python, bellekle uğraşmanızı gerektirecek bir dil değildir. Bellekle uğraşmanızı gerektirecek bir dil olan `C` dil ailesiyle işiniz olursa **Stack** ve **Heap** kavramlarına kafa yorunuz.
 
 **Stack:**
 - Kullanımı kolaydır.
-- Tıpkı Heap gibi bilgisayarda RAM’de tutulur.
-- Oluşturulan değişkinler stack kapsamından çıkınca otomatik olarak yok edilir.
-- Ulaşılması Heap‘e göre oldukça hızlıdır.
+- Tıpkı Heap gibi bilgisayarın RAM bölgesinde bulunur.
+- Objeler, stack kapsamından çıkınca otomatik olarak yok edilir.
+- Ulaşılması Heap'e göre oldukça hızlıdır.
 - 20 boyutlu bir diziye 21 eleman atamak gibi, Stack üzerinde kullanım fazla olduğunda alan yeterli olmayabilir.
-- Oluşturulan değişkenler pointer olmadan kullanılabilir.
-- Derleme zamanında oluşturulur.
-- Kullanacağınız yerin boyutunu tam olarak biliyorsanız Stack‘i kullanmak sizin için uygun olacaktır.
+- Objeler, pointer (`C` dil ailesini alakadar eden bir şey. Merak ediyorsanız araştırın. Büyük ihtimal ileriki derslerden birinde de ne olduğundan bahsetmişimdir) olmadan kullanılabilir.
+- Derleme (compile) zamanında oluşturulur.
+- Kullanacağınız yerin boyutunu tam olarak biliyorsanız Stack'i kullanmak sizin için uygun olacaktır.
   
 **Heap:**
 - Kullanımı Stack'dan daha zordur.
-- Bilgisayarda RAM’de tutulur.Tıpkı Stack gibi.
-- Bir blok içerisinde oluşturulan heap değişkenler, bloğun dışına çıktığında otomatik olarak yok edilemez, bunun manuel olarak yapılması gerekir.
+- Tıpkı Stack gibi bilgisayarın RAM bölgesinde bulunur.
+- Bir block içerisinde oluşturulan heap objeler, block'un dışına çıktığında otomatik olarak yok edilemez, bunun manuel olarak yapılması gerekir (ya da Garbage Collector ile).
 - Stack ile karşılaştırıldığında oldukça yavaştır.
 - Doğru kullanılmaması durumunda bellek sorunları yaratır.
-- Değişkenler pointer ile kullanılır.
-- Çalışma zamanında oluşturulur.
+- Objeler pointer ile kullanılır.
+- Çalışma zamanında (runtime) oluşturulur.
 - İhtiyacınız olan boyutu tam olarak bilmiyorsanız Heap kullanımı sizin için biçilmiş kaftandır.
 
-### Garbage Collector
-Bilgisayar programları, runtime sırasında bellek ihtiyacı duyarlar. Bellek sınırsız bir şey olmadığı için artık kullanılmayan bellek alanlarının, işletim sistemine geri iade edilmesi gerekir. Müsait bellek alanı bulma ve kullanılmayan bellek alanlarını işletim sistemine geri iade etme işlemleri, programcılar tarafından elle yapılması gerekiyordu. Örneğin bu işlem, **C** dilinde `malloc()` ve `free()` fonksiyonları ile yapılmaktadır. İşletim sistemine iade edilmiş bir alanın program tarafından tekrar kullanılması güvenlik açıklarını beraberinde getirmekteydi ve elle yapılan bu işlemin takibi, bir yerden sonra zorlaştığı için bu işi otomatik yapan bir sisteme ihtiyaç vardı. **Garbage Collector**, bu işlemi otomatik yapan bir sistemdir. Bu sistem sayesinde bir programcı, program yazarken hafıza alanını **Garbage Collection** mekanizmasından talep edip, iade işlemine karışılmamaktadır çünkü kalan tüm işlemler **Garbage Collection** mekanizması tarafından yapılmaktadır. **Garbage Collector**, kullanılan hafıza alanlarının izini sürerek, ihtiyaç duyulmayan alanları işletim sistemine iade etmektedir ve yeni bir talep geldiği zamanda bellekte yer bulup programa göndermektedir. **Garbage Collection** mekanizmasının işlemci kullanımı ile alakalı iki farklı yönetim yaklaşımı bulunmaktadır. 
-- **stop-the-world** yaklaşımı, herhangi bir t zamanında **Garbage Collection** mekanizması devreye girdiği zaman sırasıyla, ilgili programdaki tüm işlemler durdurulur, hafıza yönetimi yapılır ve durdurulan işlemeler başlatılır. Bu çalışma yöntemi, kritik uygulamalar için bir dezavantaj oluşturmaktadır. Bu nedenle daha sonra **concurrent** algoritmalar geliştirilmiştir. 
-- **Concurrent** yaklaşımı, programın çalışması durdurulmadan, programla eşzamanlı olarak  **Garbage Collection** işlemleri yapılır. Bu sayede **stop-the-world** yaklaşımının oluşturduğu dezavantaj ortadan kalkar.
+# Garbage Collector {#12}
 
-# Hata Mesajlarının Önemi:
-Python geliştirildikçe, hata mesajlarının çeşidi ve içeriğinin zenginliği de artmaktadır. Hata mesajlarını okumayı bilen ve bilmeyen kişiler arasındaki fark çok fazladır. Hata mesajlarını okumayı ve anlamayı becerebilmenin kişiye en büyük artısı **zamandır**. Çünkü Python bir hata yükseltince, hatanın hangi satırda ve kodun tam olarak neresinde olduğunu, hatanın neden oluştuğunu, hatta bazen hatanın çözümünü bile içeren bir hata mesajı gösterir kullanıcılara.
+Bilgisayar programları, runtime sırasında bellek ihtiyacı duyarlar. Bellek sınırsız bir şey olmadığı için artık kullanılmayan bellek alanlarının, işletim sistemine (OS) geri iade edilmesi gerekir. Müsait bellek alanı bulma ve kullanılmayan bellek alanlarını işletim sistemine geri iade etme işlemlerinin programcılar tarafından manuel (el ile) yapılması gerekiyordu. Örneğin bu işlem, `C` dilinde `malloc()` ve `free()` fonksiyonları ile yapılmaktadır. İşletim sistemine iade edilmiş bir alanın program tarafından tekrar kullanılması güvenlik açıklarını beraberinde getirmekteydi. Elle yapılan bu işlemin takibi bir yerden sonra zorlaştığı için bu işi otomatik yapan bir sisteme ihtiyaç vardı. **Garbage Collector**, bu işlemi otomatik yapan bir sistemdir. Bu sistem sayesinde bir programcı, program yazarken hafıza alanını Garbage Collection mekanizmasından talep edip, iade işlemine karışılmamaktadır çünkü kalan tüm işlemler Garbage Collection mekanizması tarafından yapılmaktadır. Garbage Collector, kullanılan hafıza alanlarının izini sürerek, ihtiyaç duyulmayan alanları işletim sistemine iade etmektedir ve yeni bir talep geldiği zamanda bellekte yer bulup programa göndermektedir. Garbage Collection mekanizmasının işlemci kullanımı ile alakalı iki farklı yönetim yaklaşımı bulunmaktadır:
+- **stop-the-world** yaklaşımı herhangi bir t zamanında, Garbage Collection mekanizması devreye girdiği zaman sırasıyla ilgili programdaki tüm işlemler durdurulur, hafıza yönetimi yapılır ve durdurulan işlemeler başlatılır. Bu çalışma yöntemi, kritik uygulamalar için bir dezavantaj oluşturmaktadır. Bu nedenle daha sonra **concurrent** algoritmalar geliştirilmiştir. 
+- **Concurrent** yaklaşımı, programın çalışması durdurulmadan programla eşzamanlı olarak Garbage Collection işlemleri yapılır. Bu sayede **stop-the-world** yaklaşımının oluşturduğu dezavantaj ortadan kalkar.
