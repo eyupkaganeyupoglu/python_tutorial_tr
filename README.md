@@ -87,11 +87,12 @@ Bu "Herhangi bir lisans veya telif hakkı ihlali yaparsan ve bunu yakalarsam vay
 
 Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok kullandıklarımı hatırlıyorum. En çok kullandıklarım dışında farklı platformlardan (Medium makaleleri, Stack Overflow vb.) çeşitli kaynaklardan da yararlandım ama hepsini hatılamadığım için buraya ekleyemeyeceğim, hakkınızı helal edin. Herhangi bir sıkıntı olursa GutHub profilimde gerekli iletişim bilgilerim var. Konuşup anlaşabiliriz.
 
-- [W3Schools](https://www.w3schools.com/python/)
-- [Programiz](https://www.programiz.com/python-programming)
-- [Python Doc](https://docs.python.org/3/)
-- [Yazbel](https://python-istihza.yazbel.com/)
-- [Stack Overflow](https://stackoverflow.com/)
+- [W3Schools](https://www.w3schools.com/python/ "https://www.w3schools.com/python/")
+- [Programiz](https://www.programiz.com/python-programming "https://www.programiz.com/python-programming")
+- [Python Doc](https://docs.python.org/3/ "https://docs.python.org/3/")
+- [Yazbel](https://python-istihza.yazbel.com/ "https://python-istihza.yazbel.com/")
+- [Stack Overflow](https://stackoverflow.com/ "https://stackoverflow.com/")
+- [Medium](https://medium.com/ "https://medium.com/")
 <br>
 <table align='center'>
 	<tr>
