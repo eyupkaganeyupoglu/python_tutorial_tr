@@ -1,7 +1,59 @@
-﻿**Ön Bilgi:** Operand, işlenen; operator, işleç/işlemci anlamlarına gelmektedir. `2 + 2` işlemindeki ikiler operand, artı işaret operator'dır.
+﻿# İçindekiler
+- [Operatörler (Operators)](#1)
+    - [`,` Comma Operator](#1.1)
+    - [Arithmetic Operators](#1.2)
+        - [`+` Addition (Toplama) Operator](#1.2.1)
+        - [`-` Subtraction (Çıkarma) Operator](#1.2.2)
+        - [`*` Multiplication (Çarpma) Operator](#1.2.3)
+        - [`/` Division (Bölme) Operator](#1.2.4)
+        - [`**` Exponentiation (Üs Alma) Operator](#1.2.5)
+        - [`//` Floor division (Taban Bölme)) Operator](#1.2.6)
+        - [`%` Modulus (Modül) Operator](#1.2.7)
+    - [Comparison Operators](#1.3)
+        - [`==` Operator](#1.3.1)
+        - [`!=` Operator](#1.3.2)
+        - [`>` Operator](#1.3.3)
+        - [`<` Operator](#1.3.4)
+        - [`>=` Operator](#1.3.5)
+        - [`<=` Operator](#1.3.6)
+    - [Logical Operators](#1.4)
+        - [`and` Operator](#1.4.1)
+        - [`or` Operator](#1.4.2)
+        - [`not` Operator](#1.4.3)
+    - [Bitwise operators](#1.5)
+        - [`&` Bitwise AND Operator](#1.5.1)
+        - [`|` Bitwise OR Operator](#1.5.2)
+        - [`^` Bitwise XOR Operator](#1.5.3)
+        - [`~` Bitwise Complement Operator](#1.5.4)
+        - [`<<` Binary Left Shift Operator](#1.5.5)
+        - [`>>` Binary Right Shift Operator](#1.5.6)
+    - [Assignment Operators](#1.6)
+        - [`=` Assignment Operator](#1.6.1)
+        - [`+=` Operator](#1.6.2)
+        - [`-=` Operator](#1.6.3)
+        - [`*=` Operator](#1.6.4)
+        - [`/=` Operator](#1.6.5)
+        - [`**=` Operator](#1.6.6)
+        - [`//=` Operator](#1.6.7)
+        - [`%=` Operator](#1.6.8)
+        - [`&=` Operator](#1.6.9)
+        - [`|=` Operator](#1.6.10)
+        - [`^=` Operator](#1.6.11)
+        - [`<<=` Operator](#1.6.12)
+        - [`>>=` Operator](#1.6.13)
+    - [`is` Identity Operator](#1.7)
+    - [`in` Membership Operator](#1.8)
+- [`:=` Assignment Expression](#2)
+- [Boolean Type](#3)
+- [Operator Önceliği](#4)
 
-# Comma Operator (`,`)
-Tek başına spesifik bir kullanım alanı çok yoktur. Örnek:
+<h1 id="1">Operatörler (Operators)</h1>
+
+Python'un yapı taşlarından birisidir. Variable'lar, value'lar veya objeler üzerinde işlemler yapmamızı sağlarlar. `2 + 2` işleminde `2`'ler **operand** (işlenen), `+` ise **operator**'dır (işleç/işlemci).
+
+<h2 id="1.1"><code>,</code> Comma Operator</h2>
+
+Tek başına spesifik bir kullanım alanı çok yoktur. Comma (virgül) operator'ı, birden fazla variable'a tek statement'da value atamak veya swap işlemi için kullanılabilir. Örnek:
 ```py
 a, b = 1, 2 # a = 1 ; b = 2
 print(a, b) # Output: 1 2
@@ -26,149 +78,194 @@ print(a,b,c) # Output: 3 1 2
 a, b = 1
 print(a, b) # TypeError: cannot unpack non-iterable int object
 ```
-Gördüğünüz gibi comma (virgül) operator'ı, birden fazla variable'a tek satırda value atamak ve swap işlemi için kullanılabilir. Bunlar dışında list, tuple, set, dict vs. gibi yerlerde, sıralı elemanları ayırmak için kullanılır. Örnek:
+Bunlar dışında `list`, `tuple`, `set`, `dict` vs. gibi type'larda, sıralı elemanları ayırmak için kullanılır. Örnek:
 ```py
 list_exp = [1, 2, 3]
 tuple_exp = (1, 2, 3)
 set_exp = {1, 2, 3}
 dict_exp = {1:"bir", 2:"iki", 3:"üç"}
 ```
+<h2 id="1.2">Arithmetic Operators</h2>
 
-# Arithmetic Operators
+<h3 id="1.2.1"><code>+</code> Addition (Toplama) Operator</h3>
 
-## Addition (Toplama) (`+`) Operatörü
-Addition operatörü, iki operand'ı birbiriyle toplar / birbirine ekler. Numeric type'larda toplama işlemi, text type'larda ekleme işlemi için kullanılır.
+Addition operator'ı, iki operand'ı birbiriyle toplar / birbirine ekler. Örneğn numeric type'larda toplama işlemi, text type'larda ekleme işlemi yapar.
 ```py
-print(5 + 10)
-# Output: 15
+print(5 + 10) # Output: 15
 
-print("Python" + " " + "C++")
-# Output: Python C++
+print("Python" + " " + "C++") # Output: Python C++
+```
+İki objeyi de birbirine ekleyebilir. Örnek:
+```py
+class Vektor:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return 'Vektör ({}, {})'.format(self.x, self.y)
+
+    def __add__(self,other):
+        return Vektor(self.x + other.x, self.y + other.y)
+
+v1 = Vektor(2,10)
+v2 = Vektor(5,-2)
+print(v1 + v2) # Output: Vektör (7, 8)
+```
+Yukarıdaki örnek class'larla ilgili bir konu olduğu için şimdilik anlamak zorunda değilsiniz.
+
+<h3 id="1.2.2"><code>-</code> Subtraction (Çıkarma) Operator</h3>
+
+Subtraction operator'ı, iki operandı birbirinden çıkarır. Örneğin numenic type'larda kullanılır. Örnek:
+```py
+print(10 - 2) # Output: 8
 ```
 
-## Subtraction (Çıkarma) (`-`) Operatörü
-Subtraction operatörü, iki operandı birbirinden çıkarır. Numenic type'larda kullanılır.
+<h3 id="1.2.3"><code>*</code> Multiplication (Çarpma) Operator</h3>
+
+Multiplication operator'ı, iki operandı birbiriyle çarpar. Örneğin numenic type'larda çarpma işlemi, text type'larda ise çoklu yazdırma işlemleri yapar. Örnek:
 ```py
-print(10 - 2)
-# Output: 8
+print(5 * 10) # Output: 50
+print("Beş " * 5) # Output: Beş Beş Beş Beş Beş 
 ```
 
-## Multiplication (Çarpma) (`*`) Operatörü
-Multiplication operatörü, iki operandı birbiriyle çarpar. Numenic type'larda çarpma işlemi, text type'larda ise çoklu yazdırma işlemleri için kullanılır.
-```py
-print(5 * 10)
-# Output: 50
+<h3 id="1.2.4"><code>/</code> Division (Bölme) Operator</h3>
 
-print("Beş " * 5)
-# Output: Beş Beş Beş Beş Beş 
+Division operator'ı, iki operandı birbirine böler. Örneğin numenic type'larda bölme işlemi yapar. Örnek:
+```py
+print(10 / 5) # Output: 2
 ```
 
-## Division (Bölme) (`/`) Operatörü
-Division operatörü, iki operandı birbirinden çıkarır. Numenic type'larda kullanılır.
+<h3 id="1.2.5"><code>**</code> Exponentiation (Üs Alma) Operator</h3>
+Exponentiation operator'ı, solundaki operand'ın, sağındaki operand'a göre üssünü alır. Örneğin numenic type'larda üst alma işlemi yapar. Örnek:
 ```py
-print(5 + 10)
-# Output: 15
+print(2 ** 4) # Output: 8
 ```
 
-## Exponentiation (Üs Alma) (`**`) Operatörü
-Exponentiation operatörü, ilk operand'ın ikince operand'a göre üssünü alır. Numenic type'larda kullanılır.
-```py
-print(5 + 10)
-# Output: 15
-```
+<h3 id="1.2.6"><code>//</code> Floor division (Taban Bölme)) Operator</h3>
 
-## Floor division (Taban Bölme) (`//`) Operatörü
-Floor division operatörü, iki operand'ı birbirine bölüp, bölüm kısmını döndürür. Numenic type'larda kullanılır.
+Floor division operator'ı, iki operandı birbirine kalansız böler. Örneğin numenic type'larda kalansız bölme işlemi yapar. Örnek:
 ```py
-print(5 + 10)
-# Output: 15
+print(5 // 2) # Output: 2
 ```
+`5`'in içinde iki tane `2` vardır. Burada sonucun `2.5` çıkmamasının sebebi budur. Normal division işleminden farkı budur. 
 
-## Modulus (Modül) (`%`) Operatörü
-Modulus operatörü, iki operand'ı birbirine bölüp, kalan kısmını döndürür. Numenic type'larda kullanılır.
+<h3 id="1.2.7"><code>%</code> Modulus (Modül) Operator</h3>
+
+Modulus operator'ı, iki operandın birbirine bölünübden kalanı verir. Örneğin numenic type'larda modulus işlemi yapar. Örnek:
 ```py
-print(5 + 10)
-# Output: 15
+print(5 % 2) # Output: 1
 ```
-# Comparison Operators
+`5`'in içinde iki tane `2` olduğu için `1` kalır. Bu yüzden modulus işlemi `1` sonucunu verir.
 
-## `==` Operatörü
+<h2 id="1.3">Comparison Operators</h2>
+
+<h3 id="1.3.1"><code>==</code> Operator</h3>
+
 İki operand birbirine eşitse `True`, değilse `False` döndürür.
 ```py
 print(1 == 1) # Output: True
 print(1 == 2) # Output: False
 ```
 
-## `!=` Operatörü
-İki operand birbirine eşitse `False`, değilse `True` döndürür.
+<h3 id="1.3.2"><code>!=</code> Operator</h3>
+
+İki operand birbirine eşitse `False`, değilse `True` döndürür. `==` operator'ının tam tersi işlevi yapar.
 ```py
 print(1 != 2) # Output: True
 print(1 != 1) # Output: False
 ```
 
-## `>` Operatörü
-Soldaki operand sağdaki operand'dan büyükse `True`, değilse `False` döndürür.
+<h3 id="1.3.3"><code>></code> Operator</h3>
+
+Soldaki operand sağdaki operand'dan büyükse `True`, aksi durumlarda `False` döndürür.
 ```py
 print(2 > 1) # Output: True
 print(1 > 2) # Output: False
 ```
 
-## `<` Operatörü
-Sağdaki operand soldaki operand'dan büyükse `True`, değilse `False` döndürür.
+<h3 id="1.3.4"><code><</code> Operator</h3>
+
+Sağdaki operand soldaki operand'dan büyükse `True`, aksi durumlarda `False` döndürür.
 ```py
 print(1 < 2) # Output: True
 print(2 < 1) # Output: False
 ```
 
-## `>=` Operatörü
-Soldaki operand sağdaki operan'dan büyükse ya da eşitse `True`, değilse `False` döndürür.
+<h3 id="1.3.5"><code>>=</code> Operator</h3>
+
+Soldaki operand sağdaki operan'dan büyükse ya da eşitse `True`, aksi durumlarda `False` döndürür.
 ```py
 print(2 >= 1) # Output: True
 print(2 >= 2) # Output: True
 print(1 >= 2) # Output: False
 ```
 
-## `<=` Operatörü
-Sağdaki operand soldaki operan'dan büyükse ya da eşitse `True`, değilse `False` döndürür.
+<h3 id="1.3.6"><code><=</code> Operator</h3>
+
+Sağdaki operand soldaki operan'dan büyükse ya da eşitse `True`, aksi durumlarda `False` döndürür.
 ```py
 print(1 <= 2) # Output: True
 print(1 <= 1) # Output: True
 print(2 <= 1) # Output: False
 ```
 
-# Logical Operators
+<h2 id="1.4">Logical Operators</h2>
 
-## `and` Operatörü
-Bu mantıksal bağlaç, bütün karşılaştırma işlemlerinin sonucunun `True` olmasına bakar. Bağlanan karşılaştırma işlemlerinin **hepsinin** kendi içinde sonucu `True` ise genel sonuç `True` , diğer durumlarda ise sonuç `False` çıkar.
+<h3 id="1.4.1"><code>and</code> Operator</h3>
+
+`and` logical operator'ı, bütün karşılaştırma işlemlerinin sonucunun `True` olmasına bakar. Bağlanan karşılaştırma işlemlerinin **hepsinin** kendi içinde sonucu `True` ise genel sonuç `True` , diğer durumlarda ise sonuç `False` çıkar. Örnek:
 ```py
 print(1 == 1 and 2 == 2 and 3 == 3) # Output: True
 print(1 == 1 and 2 == 2 and 3 != 3) # Output: False
 ```
-Python bu işlemi **soldan sağa** okumaya başlar. Bir tane `False`'a denk gelirse sonuç `False` olur.
+Python bu işlemleri **soldan sağa** okumaya başlar. Bir tane bile `False`'a denk gelirse sonuç `False` olur.
 
-## `or` Operatörü
-Bu mantıksal bağlaç, en az bir karşılaştırma işlemlerinin sonucunun `True` olmasına bakar. Bağlanan karşılaştırma işlemlerinin **en az bir tanesinin** kendi içinde sonucu `True` ise genel sonuç `True` , hepsi `False` ise sonuç `False` çıkar.
+<h3 id="1.4.2"><code>or</code> Operator</h3>
+
+`or` logical operator'ı, en az bir karşılaştırma işlemlerinin sonucunun `True` olmasına bakar. Bağlanan karşılaştırma işlemlerinin **en az bir tanesinin** kendi içinde sonucu `True` ise genel sonuç `True` , bütün karşılaştırma işlemlerinin sonucu `False` ise genel sonuç `False` çıkar. Örnek:
 ```py
-print(1 == 1 and 2 != 2 and 3 != 3) # Output: True
-print(1 != 1 and 2 != 2 and 3 != 3) # Output: False
+print(1 == 1 or 2 == 2 or 3 == 3) # Output: True
+print(1 == 1 or 2 == 2 or 3 != 3) # Output: True
+print(1 == 1 or 2 != 2 or 3 != 3) # Output: True
+print(1 != 1 or 2 != 2 or 3 != 3) # Output: False
 ```
 
-## `not` Operatörü
-`not` operatörü mantıksal bir bağlaç değildir. Mantıksal bağlaç veya logic ifadeleri tersine çevirir. Yani `True`'yu `False`, `False`'ı `True` yapar.
+<h3 id="1.4.3"><code>not</code> Operator</h3>
+
+`not` operator'ı logical operator değildir. Operator'ların döndürdüğü veya value'ların ifade ettiği boolean değerleri tersine çeviren bir oparetor'dır. Yani `True`'yu `False`, `False`'ı `True` yapar. Örnek:
 ```py
-print(not (1 != 1)) # Output: True
+# Value'ların sahip olduğu boolean değerlere örnek
+print(bool(1)) # Output: True
+print(not bool(1)) # Output: False
+print(bool(0)) # Output: False
+print(not bool(0)) # Output: True
+
+# Comparison Operator'ların sahip olduğu boolean değerlere örnek
+print((1<2)) # Output: True
+print(not (1<2)) # Output:False
+
+# Logical Operator'ların sahip olduğu boolean değerlere örnek
+print(1 == 1 and 2 == 2 and 3 != 3) # Output: False
+print(not (1 == 1 and 2 == 2 and 3 != 3)) # Output: True
+print(1 == 1 or 2 == 2 or 3 != 3) # Output: True
+print(not (1 == 1 or 2 == 2 or 3 != 3)) # Output: False
 ```
 
-# Bitwise operators
+<h2 id="1.5">Bitwise operators</h2>
 
-## Bitwise AND (`&`) Operator
-Bitsel AND `&` operatörü, her iki işlenen de 1 ise 1 döndürür. Aksi halde, 0 döndürür. Mantıktaki **"ve"** bağlacına benzer.
+<h3 id="1.5.1"><code>&</code> Bitwise AND Operator</h3>
+
+Bitsel AND `&` operator'ı, her iki operand da `1` ise, `1` döndürür. Aksi halde `0` döndürür. Mantıktaki **"ve"** bağlacına benzer. Doğruluk tablosu:
+
 | `A` | `B` | `A & B` |
-|--|--|--|
+| :--: | :--: | :--: |
 | 0 | 0 | 0 |
 | 0 | 1 | 0 |
 | 1 | 0 | 0 |
 | 1 | 1 | 1 |
+
+Örnek:
 ```
 12 = 00001100 (In Binary)
 25 = 00011001 (In Binary)
@@ -179,19 +276,23 @@ Bitsel AND `&` operatörü, her iki işlenen de 1 ise 1 döndürür. Aksi halde,
 ```
 Yukarıdaki işlemin Python'da karşılığı:
 ```py
-bao_1 = 12 # bao_1: bitsel_and_operatoru_1
-bao_2 = 25 # bao_2: bitsel_and_operatoru_2
-print(bao_1, bao_2, bao_1 & bao_2, sep="\n")
+var1 = 12
+var2 = 25
+print(f"{var1} & {var2} = {var1 & var2}") # Output: 12 & 25 = 8
 ```
 
-## Bitwise OR (`|`) Operator
-Bitsel OR `|` işlenenlerden en az biri 1 ise operatör 1 döndürür. Aksi halde 0 döndürür. Mantıktaki **"veya"** bağlacına benzer.
-| `A` | `B` | `A OR B` |
-|--|--|--|
+<h3 id="1.5.2"><code>|</code> Bitwise OR Operator</h3>
+
+Bitsel OR `|` operator'ı, operand'lardan en az biri `1` ise, `1` döndürür. Aksi halde `0` döndürür. Mantıktaki **"veya"** bağlacına benzer. Doğruluk tablosu:
+
+| `A` | `B` | `A \| B` |
+| :--: | :--: | :--: |
 | 0 | 0 | 0 |
 | 0 | 1 | 1 |
 | 1 | 0 | 1 |
 | 1 | 1 | 1 |
+
+Örnek:
 ```
 12 = 00001100 (In Binary)
 25 = 00011001 (In Binary)
@@ -202,19 +303,23 @@ Bitsel OR `|` işlenenlerden en az biri 1 ise operatör 1 döndürür. Aksi hald
 ```
 Yukarıdaki işlemin Python'da karşılığı:
 ```py
-bao_1 = 12 # bao_1: bitsel_and_operatoru_1
-bao_2 = 25 # bao_2: bitsel_and_operatoru_2
-print(bao_1, bao_2, bao_1 | bao_2, sep="\n")
+var1 = 12
+var2 = 25 
+print(f"{var1} | {var2} = {var1 | var2}") # Output: 12 | 25 = 29
 ```
 
-## Bitwise XOR (`^`) Operator:
-Bitsel XOR `^` operatörü, işlenenler birbirinden farklıysa 1, aynıysa 0 döndürür. Mantıktaki **"ya da"** bağlacına benzer.
-| `A` | `B` | `A ^ B` |
-|--|--|--|
+<h3 id="1.5.3"><code>^</code> Bitwise XOR Operator</h3>
+
+Bitsel XOR `^` operator'ı, operand'lar birbirinden farklıysa `1`, aynıysa `0` döndürür. Mantıktaki **"ya da"** bağlacına benzer. Doğruluk tablosu:
+
+| `A` | `B` | `A \^ B` |
+| :--: | :--: | :--: |
 | 0 | 0 | 0 |
 | 0 | 1 | 1 |
 | 1 | 0 | 1 |
 | 1 | 1 | 0 |
+
+Örnek:
 ```
 12 = 00001100 (In Binary)
 25 = 00011001 (In Binary)
@@ -222,31 +327,48 @@ Bitsel XOR `^` operatörü, işlenenler birbirinden farklıysa 1, aynıysa 0 dö
 00001100 ^ 00011001 = 00010101
 
 21 = 00010101 (In Binary)
+
+12 = 0 0 0 0 1 1 0 0 (In Binary)
+     + + + + + + + +
+25 = 0 0 0 1 1 0 0 1 (In Binary)
+     | | | | | | | |
+     V V V V V V V V
+21 = 0 0 0 1 0 1 0 1 (In Binary)
 ```
 Yukarıdaki işlemin Python'da karşılığı:
 ```py
-bao_1 = 12 # bao_1: bitsel_and_operatoru_1
-bao_2 = 25 # bao_2: bitsel_and_operatoru_2
-print(bao_1, bao_2, bao_1 ^ bao_2, sep="\n")
+var1 = 12
+var2 = 25
+print(f"{var1} ^ {var2} = {var1 ^ var2}") # Output: 12 ^ 25 = 21
 ```
 
-## Bitwise Complement (`~`) Operator
-Bu operatör sadece bir operand üzerinde çalışır. `~` tanımlayıcısına sahiptir. 1'i 0'a, 0'ı 1'e dönüştürür. `N` adında bir operant olsun. `N` operantı *bitwise complement operatörü*nden etkilenirse `-(N + 1)` değerine dönüşür Örneğin:
-```
--36 = -(35+1)
+<h3 id="1.5.4"><code>~</code> Bitwise Complement Operator</h3>
 
+Bitsel Complement `~` operator'ı, sadece bir operand'a etki eder. `1`'i `0`'a, `0`'ı `1`'e dönüştürür. Logical NOT operator'ına benzer çalışır. Bir `N` operand'ı düşünün. `N` operand'ı `~` operator'ından etkilenirse `-(N + 1)` değerine dönüşür. Doğruluk tablosu:
+
+| `A` | `~ B` |
+| :--: | :--: |
+| 0 | 1 |
+| 0 | 1 |
+| 1 | 0 |
+| 1 | 0 |
+
+```
 35 = 00100011 (In Binary)
 ~ 00100011 = 11011100
 -36 = 11011100 (In Binary)
+
+-36 = -(35+1)
 ```
 Yukarıdaki işlemin Python'da karşılığı:
 ```py
-bao_1 = 35 # bao_1: bitsel_and_operatoru_1
-print(~ bao_1)
+var1 = 35
+print(~ var1) # Output: -36
 ```
 
-## Binary Left Shift Operator
-Basitçe, bir binary sayıyı sola kaydırır. Kaydırma işlemi sırasında boşluklar `0` ile tamamlanır. Teknik açıklamak gerekirse; 22 decimal sayısının binary versiyonu `00010110`, 88 decimal sayısının binary versiyonu `01011000`'dir. `22 << 2` işleminden sonra 22 (`N`),  88'e (`N` * (2^2^)) dönüşür.
+<h3 id="1.5.5"><code><<</code> Binary Left Shift Operator</h3>
+
+Basitçe, bir binary sayıyı sola kaydırır. Kaydırma işlemi sırasında boşluklar `0` ile tamamlanır. Örnek:
 ```
 22 = 00010110 (In Binary)
 
@@ -256,12 +378,14 @@ Basitçe, bir binary sayıyı sola kaydırır. Kaydırma işlemi sırasında bo�
 ```
 Yukarıdaki işlemin Python'da karşılığı:
 ```py
-bao_1 = 22 # bao_1: bitsel_and_operatoru_1
-print(bao_1 << 2)
+var1 = 22
+print(var1 << 2) # Output: 88
 ```
+Teknik açıklamak gerekirse; 22 decimal sayısının binary versiyonu `00010110`, 88 decimal sayısının binary versiyonu `01011000`'dir. `22 << 2` işleminden sonra 22 (`N`),  88'e (`N * (2**2)`) dönüşür.
 
-## Binary Right Shift Operator
-Basitçe, bir binary sayıyı sağa kaydırır. Kaydırma işlemi sırasında boşluklar `0` ile tamamlanır. Teknik açıklamak gerekirse; 32 decimal sayısının binary versiyonu `00100000`, 8 decimal sayısının binary versiyonu `00001000`'dir. `32 >> 2` işleminden sonra 32 (`N`),  8'e (`N` / (2^2^)) dönüşür.
+<h3 id="1.5.6"><code>>></code> Binary Right Shift Operator</h3>
+
+Basitçe, bir binary sayıyı sağa kaydırır. Kaydırma işlemi sırasında boşluklar `0` ile tamamlanır. Örnek:
 ```
 32 = 00100000 (In Binary)
 
@@ -271,25 +395,28 @@ Basitçe, bir binary sayıyı sağa kaydırır. Kaydırma işlemi sırasında bo
 ```
 Yukarıdaki işlemin Python'da karşılığı:
 ```py
-bao_1 = 32 # bao_1: bitsel_and_operatoru_1
-print(bao_1 >> 2)
+var1 = 32
+print(var1 >> 2) # Output: 8
 ```
+Teknik açıklamak gerekirse; 32 decimal sayısının binary versiyonu `00100000`, 8 decimal sayısının binary versiyonu `00001000`'dir. `32 >> 2` işleminden sonra 32 (`N`),  8'e (`N / (2**2)`) dönüşür.
 
-**Not:** Bir decimal sayı üzerinde binary shift operatör kullanırsanız, işlemler binary form'da yapılsa bile output decimal formda verilir.
+**Not:** Bir decimal sayı üzerinde binary shift operator kullanırsanız, işlemler binary form'da yapılsa bile output decimal formda verilir.
 
 **Not:** C++ gibi low level dillerde shift operator'ları kullanırken negatif sayılarla ve data type'ın tutabileceği data boyutundan daha büyük sayılarla işlemler yapılması sıkıntıydı. Bu kısıtlama, gözlemlediğim kadarıyla Python'da yok.
 
-# Assignment Operators
+<h2 id="1.6">Assignment Operators</h2>
 
-## Assignment `=` Operatörü
-Sağdaki operand'ı soldaki opranda **atamak** için kullanılır. Örneğin bir value'yu bir variable'a atamanızı sağlar. Ornek:
+<h3 id="1.6.1"><code>=</code> Assignment Operator</h3>
+
+Sağdaki operand'ı soldaki opranda **atamak** (assignment) için kullanılır. Örneğin bir value'yu bir variable'a atamanızı sağlar. Örnek:
 ```py
 a = 15
 b = 30
 # etc.
 ```
 
-## `+=` Operatörü
+<h3 id="1.6.2"><code>+=</code> Operator</h3>
+
 `a += 5` işlemi `a = a + 5` anlamına gelmektedir.
 ```py
 a = 5
@@ -298,7 +425,8 @@ a += 5
 print(a) # Output: 10
 ```
 
-## `-=` Operatörü
+<h3 id="1.6.3"><code>-=</code> Operator</h3>
+
 `a -= 5` işlemi `a = a - 5` anlamına gelmektedir.
 ```py
 a = 5
@@ -307,7 +435,8 @@ a -= 5
 print(a) # Output: 0
 ```
 
-## `*=` Operatörü
+<h3 id="1.6.4"><code>*=</code> Operator</h3>
+
 `a *= 5` işlemi `a = a * 5` anlamına gelmektedir.
 ```py
 a = 5
@@ -316,8 +445,9 @@ a *= 5
 print(a) # Output: 25
 ```
 
-## `/=` Operatörü
-`a +/= 5` işlemi `a = a / 5` anlamına gelmektedir.
+<h3 id="1.6.5"><code>/=</code> Operator</h3>
+
+`a /= 5` işlemi `a = a / 5` anlamına gelmektedir.
 ```py
 a = 5
 print(a) # Output: 5
@@ -325,7 +455,8 @@ a /= 5
 print(a) # Output: 1
 ```
 
-## `**=` Operatörü
+<h3 id="1.6.6"><code>**=</code> Operator</h3>
+
 `a **= 5` işlemi `a = a ** 5` anlamına gelmektedir.
 ```py
 a = 5
@@ -334,7 +465,8 @@ a **= 5
 print(a) # Output: 3125
 ```
 
-## `//=` Operatörü
+<h3 id="1.6.7"><code>//=</code> Operator</h3>
+
 `a //= 5` işlemi `a = a // 5` anlamına gelmektedir.
 ```py
 a = 5
@@ -343,7 +475,8 @@ a //= 2
 print(a) # Output: 2
 ```
 
-## `%=` Operatörü
+<h3 id="1.6.8"><code>%=</code> Operator</h3>
+
 `a %= 5` işlemi `a = a % 5` anlamına gelmektedir.
 ```py
 a = 5
@@ -352,7 +485,8 @@ a %= 2
 print(a) # Output: 1
 ```
 
-## `&=` Operatörü
+<h3 id="1.6.9"><code>&=</code> Operator</h3>
+
 `a &= 25` işlemi `a = a & 25` anlamına gelmektedir.
 ```py
 a = 12
@@ -361,7 +495,8 @@ a &= 25
 print(a) # Output: 8
 ```
 
-## `|=` Operatörü
+<h3 id="1.6.10"><code>|=</code> Operator</h3>
+
 `a |= 5` işlemi `a = a | 25` anlamına gelmektedir.
 ```py
 a = 12
@@ -370,7 +505,8 @@ a |= 25
 print(a) # Output: 29
 ```
 
-## `^=` Operatörü
+<h3 id="1.6.11"><code>^=</code> Operator</h3>
+
 `a ^= 5` işlemi `a = a ^ 25` anlamına gelmektedir.
 ```py
 a = 12
@@ -379,7 +515,8 @@ a ^= 25
 print(a) # Output: 21
 ```
 
-## `<<=` Operatörü
+<h3 id="1.6.12"><code><<=</code> Operator</h3>
+
 `a <<= 5` işlemi `a = a << 2` anlamına gelmektedir.
 ```py
 a = 22
@@ -388,7 +525,8 @@ a <<= 2
 print(a) # Output: 88
 ```
 
-## `>>=` Operatörü
+<h3 id="1.6.13"><code>>>=</code> Operator</h3>
+
 `a >>= 5` işlemi `a = a >> 2` anlamına gelmektedir.
 ```py
 a = 32
@@ -397,55 +535,28 @@ a >>= 2
 print(a) # Output: 8
 ```
 
-# Identity operators
-Python’da her nesnenin, o nesneyi işaret eden geçici bir kimlik numarası ***(identity)*** vardır. Identity'e kısaca **ID** denilir.
+<h2 id="1.7"><code>is</code> Identity Operator</h2>
+
+Python'da her objenin geçici bir **identity**'si (kimlik numarası) vardır. Identity'e kısaca **ID** denilir. Bir objenin ID'sini öğrenebilmek için `id()` build-in fonksiyonu kullanılır. Örnek:
 ```py
-a = "Benim id'm ne?"
+a = "Benim ID'm ne?"
 print(id(a)) # Output: 2048499024880
 ```
 
-**`is` operatörü**, kıyaslanan iki objenin id'lerinin aynı olma durumunu kontrol eder. **`is not` operatörü** ise,kıyaslanan iki objenin id'lerinin aynı olmama durumunu kontrol eder. Örnek:
-```py
-a="Python"
-print("Önceki a: ", id(a))   # Output: Önceki a:  1747376761776
-b="Pytho"
-print("Önceki  b: ", id(b))  # Output: Önceki b:  1747376833520
-b+="n"
-print("Sonraki b: ", id(b))  # Output: Sonraki b:  1747377137584
+**ID** ile **bellek adresi** kavramlarını açıklayalım.
 
-print(a,b, sep=", ")         # Output: Python, Python
-print(a is b)                # Output: False
-print(a is not b)            # Output: True
-print("Önceki a: ", id(a))   # Output: Önceki a:  1747376761776
-print("Sonraki b: ", id(b))  # Output: Sonraki b:  1747377137584
-```
-Buradaki olaya **String Concatenation** denir. Daha fazla bilgi için [tıklayınız](https://medium.datadriveninvestor.com/how-does-memory-allocation-work-in-python-and-other-languages-d2d8a9398543#:~:text=Each%20string%20in%20python%20needs,and%20needs%20to%20be%20reallocated.&text=Instead%20of%20“%2B”%20for%20string%20concatenation%2C%20USE%20%27%27.).
-Buradaki olayı açıklamadan önce **id** ile **bellek adresi** kavramlarını açıklayalım.
+Bellek adresi kavramını anlamak için **pointer** kavramını anlamak gerekiyor. Pointer kavramı, `C` dil ailesini alakadar eden bir kavram. Kısaca bellek adresi, bir variable veya objenin bellekte depolandığı alanın adresidir.
 
-**Bellek adresi** kavramını anlamak için **pointer** kavramını anlamak gerekiyor. **Pointer** kavramı, **C** dil ailesini alakadar eden bir kavram. Kısaca bellek adresi, bir variable veya objenin bellekte depolandığı alanın adresidir.
-
-**ID** kavramı, bellek adresinden farklı bir kavramdır. Bellek adresi fiziksel bir belleği işaret ettiği için eşsizdir. Ama id eşsiz değildir. Farklı objeler aynı id'ye sahip olabilirler. Örneğin iki liste objesini birbirine `liste1 = liste2` şeklinde eşitlerseniz, `print(id(liste1))` ve `print(id(liste2))` şeklinde sorguladığınızda, ID'lerinin aynı olduğunu görürsünüz. Çünkü Python'da, aynı value için farklı id'ler **oluşturulmaz.** Aynı value'yi barındıran objeler aynı id'de atanır. Örnek:
+ID kavramı bellek adresinden farklı bir kavramdır. Bellek adresi fiziksel bir belleği işaret ettiği için eşsizdir. Ama ID eşsiz değildir. Farklı variable'lar aynı ID'ye sahip olabilirler çünkü Python'da aynı value ya da obje için farklı ID'ler oluşturulmaz, aynı value'yu barındıran variable'lar aynı ID'ye sahiptir. Örnek:
 ```py
 b1 = 1000
 b2 = 1000
-  
+
 print(id(b1))   # Output: 2254419109904
 print(id(b2))   # Output: 2254419109904
 print(id(1000)) # Output: 2254419109904
 ```
-`liste1` ve `liste2` artık aynı value'ya sahip oldukları için ID'leri aynıdır. Bu yüzden id'yi, Python'un bir obje veya value'yu işaret etmek için oluşturduğu geçici kimlik gibi düşünebilirsiniz. Program sonlandığında bu id'ler silinir ve tekrar çalıştırıldığında, her obje'ye yeni id'ler atanır.
-
-`a` ve `b` son durumda `Python`'a eşit olmasına rağmen farklı id'lere sahiptirler. Bunun nedeni basitçe, `a` variable'ı `1747376761776` id'sinde `Python` olarak saklanırken, `b` variable'ı `1747376833520` id'sinde  `Pytho` olarak saklanır ve yapılan ekleme işleminin ardından `1747377137584`  id'sinde `Python` olarak saklanır. Sonuç olarak value'lar aynı olsa bile en başta farklı value'lara sahip iki variable söz konusu olduğu için bellek adresleri farklıdır. Bunu şöyle kanıtlayabilirim:
-```py
-a="Python"
-print(id(a))         # Output: 2578477444016
-b="Python"
-print(id(b))         # Output: 2578477444016
-  
-print(a,b, sep=", ") # Output: Python, Python
-print(a is b) 		 # Output: True
-```
-Görüldüğü gibi `a` ve `b` variable'ları en başta aynı value'ya sahip oldukları için bellek adresleri aynıdır. Bu farklılık büyük alan kaplayan her value'de görülür. Yani Python, küçük değerli önbellekte saklarken, büyük değerler için her defasında yeni bir depolama işlemi yapar. Bu nedenle:
+ID'yi, Python'un bir obje veya value'ya atıfta bulunmak (refers to) için oluşturduğu geçici kimlik gibi düşünebilirsiniz. Python, az yer kaplayan değerleri önbellekte saklarken, büyük çok yer kaplayan değerler için her defasında yeni bir depolama işlemi yapar. Örnek:
 ```py
 a=10
 b=9
@@ -456,21 +567,49 @@ print(a is b) # Output: True
 print(id(a)) # Output: 1491813100112
 print(id(b)) # Output: 1491813100112
 ```
-Yukarıdaki gibi küçük value'lerle işlem yaparken son durumda `a` ve `b`'nin id'leri aynı olur ama,
+Gördüğünüz gibi ilk başta `a` ve `b` farklı value'lara sahip olsa bile son durumda sahip oldukları value'lar az yer kapladığı için aynı id'ye sahip oldu. Tam tersinin örneği:
 ```py
 a=36893488147419103232
-print("Önceki a: ", id(a)) # Output: Önceki a: 2152492817552
 b=36893488147419103231
-print("Önceki b: ", id(b)) # Output: Önceki b: 2152492905648
+print(id(a)) # Output: 2236630293648
+print(id(b)) # Output: 2236630294320
+
 b+=1
-print("Sonraki b: ", id(b)) # Output: Sonraki b: 2152492908432
-  
-print(a,b, sep=", ") # Output: Python, Python
-print(a is b) # Output: False
-print("Önceki a: ", id(a)) # Output: Önceki a: 2152492817552
-print("Sonraki b: ", id(b)) # Output: Sonraki b: 2152492908432
+print(a == b) # Output: True (value'lar birbirine eşit)
+print(a is b) # Output: False (value'lar farklı alanlarda saklanıyor)
+print(id(a)) # Output: 2236630293648
+print(id(b)) # Output: 2236630294464
 ```
-Yukarıdaki gibi Büyük value'lerle işlem yaparken son durumda `a` ve `b`'nin id'leri farklı olur.
+
+**`is` operator'ı**, kıyaslanan iki objenin id'lerinin aynı olma durumunu kontrol eder. **`is not` operator'ı** ise, kıyaslanan iki objenin id'lerinin aynı olmama durumunu kontrol eder. Örnek:
+```py
+a = "Örnek 1"
+b = a
+print(a is b) # Output: True
+print(a is not b) # Output: False
+
+b = "Örnek 2"
+print(a is b) # Output: False
+print(a is not b) # Output: True
+```
+`b = a` statement'ına `a`'nın değeri `b`'ye atandığı için, `a` ve `b` aynı id'ye sahip oluyor çünkü aynı bellek adresindeki objeye atıfta bulunuyorlar. Başka bir örnek:
+```py
+a="Python"
+print(id(a)) # Output: a: 2941676186544
+b="Pytho"
+print(id(b)) # Output: b: 2941676183728
+b+="n"
+print(id(b)) # Output: b: 2941676564656
+
+print(a,b, sep=" | ") # Output: Python | Python
+print(a is b)         # Output: False
+print(a is not b)     # Output: True
+print(id(a))          # Output: 2941676186544
+print(id(b))          # Output: 2941676564656
+```
+Buradaki olaya **String Concatenation** denir. Daha fazla bilgi için [bu sitedeki String Concatenation başlığına](https://medium.datadriveninvestor.com/how-does-memory-allocation-work-in-python-and-other-languages-d2d8a9398543 "https://medium.datadriveninvestor.com/how-does-memory-allocation-work-in-python-and-other-languages-d2d8a9398543") bakabilirsiniz.
+
+`a` ve `b` son durumda `Python` string'ine sahip olmasına rağmen farklı ID'lere sahiptirler. Çünkü `a` ilk başta `Python`, `b` ilk başta `Pytho` stringine sahip olduğu ve bu iki string birbirinden farklı value'lar oldukları için ilk başta farklı bellek adreslerine atandılar. Bu yüzden aynı string olsalar bile farklı ID'lere sahiptirler.
 
 **Not:** `is` operator'ı, iki operand'ın aynı obje olup olmadığını kontrol eder. `==` operator'ı, iki operand'ın value'larının aynı olup olmadığını kontrol eder. Örnek:
 ```py
@@ -482,8 +621,9 @@ print(a is b) # Output: False
 print(a == b) # Output: True
 ```
 
-# Membership (`in`) operators
-Sağdaki operand, soldaki operandı içeriyorsa (Yani soldaki operand, sağdaki operand'ın içinde varsa) `True`, içermiyorsa `False` döndürür. `not in` kullanarak bunun tam tersi durumları sorgulayabilirsiniz. Örnek:
+<h2 id="1.8"><code>in</code> Membership Operator</h2>
+
+Sağdaki operand, soldaki operand'ı içeriyorsa (yani soldaki operand, sağdaki operand'ın içinde varsa) `True`, aksi durumlarda `False` döndürür. `not in` kullanarak bunun tam tersi durumları sorgulayabilirsiniz. Örnek:
 ```py
 isim="Python"
 harf="P"
@@ -492,10 +632,10 @@ print(harf in isim) # Output: True
 print(harf not in isim) # Output: False
 ```
 
-## Assignment expressions (`:=`)
-Bir değişkene değer atama işlemini bir koşul durumunun içinde yapmamıza olanak sağlayarak fazladan bir satır kod yazmaktan bizi kurtarır.
+<h1 id="2"><code>:=</code> Assignment Expression</h1>
+Assignment expression, bir variable'a değer atama işlemini bir koşul durumunun içinde yapmamıza olanak sağlayarak fazladan bir statement kod yazmaktan bizi kurtarır.
 
-**`:=` kullanmadan:**
+**Assignment expression Kullanmadan:**
 ```py
 giriş = len(input("Adın ne? "))
   
@@ -506,7 +646,8 @@ elif giriş < 6:
 else:
 	print("Çok uzun bir adın var.")
 ```
-**`:=` kullanarak:**
+
+**Assignment expression Kullanarak:**
 ```py
 if ( giriş := len(input("Adın ne? ")) ) < 4:
 	print("Adın kısaymış.")
@@ -515,60 +656,35 @@ elif giriş < 6:
 else:
 	print("Çok uzun bir adın var.")
 ```
-**Not:**  `giriş := len(input("Adın ne? "))` kodunu parantez içinde (Yani `(giriş := len(input("Adın ne? ")))` şeklinde) yazmazsan, hata ile karşılaşabilirsin ya da `if` yanlış çalışır ve istenilen sonucu vermez. Bu yüzden bu operatörü kullanırken kodu parantez içine yazmalısın.
 
-## Operatörleri Beraber Kullanmak
-```py
-print( not( ((1 == 1)  and  (2 == 2)) or ((3 == 3) and (4 == 4)) ) )
-# Output: False
-```
-## Boolean Type'ın Diğer Type'larla ilişkisi
+**Not:**  `giriş := len(input("Adın ne? "))` kodunu parantez içinde (yani `(giriş := len(input("Adın ne? ")))` şeklinde) yazmazsanız, ya hata yükseltilecek ya da `if` istenilen şekilde çalışmayacak. Bu yüzden bu operator'ı kullanırken kodu parantez içine yazmalısın.
+
+<h1 id="3">Boolean Type</h1>
+
 Data type'ların duruma göre boolean değerleri `True` ya da `False` olabilir. Örnek:
 ```py
-a1 = ""
-a2 = 0
-a3 = 0.0
-a4 = 0 + 0j
-a5 = False
-a6 = None
+print(bool("")) # Output: False
+print(bool(0)) # Output: False
+print(bool(0.0)) # Output: False
+print(bool(0 + 0j)) # Output: False
+print(bool(False)) # Output: False
+print(bool(None)) # Output: False
 
-b1 = " " # Boşluk karakteri
-b2 = 1
-b3 = 1.1
-b4 = 1 + 1j
-b5 = True
+print(bool(" ")) # Output: True (Boşluk karakteri)
+print(bool(1)) # Output: True
+print(bool(1.1)) # Output: True
+print(bool(1 + 1j)) # Output: True
+print(bool(True)) # Output: True
+```
+**Not:** Boşluk karakteri de bir varlığı ifade eder. İlla bir şeyler yazmak zorunda değilsiniz.
 
-print(bool(a1), bool(a2), bool(a3), bool(a4), bool(a5), bool(a6), sep=", ")
-# Output: False, False, False, False, False, False
+**Not:** `None` değeri, "boş, yok" anlamlarına gelmektedir. Yani bir variable'a `None` atarsanız, Python bunu "Bu variable herhangi bir data içermiyor, boş bir variable." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve Python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte bu variable'a 16 byte yer açar. `None`, genellikle bir variable'ın içeriğini daha sonra belirlemek istediğinizde kullanılır.
 
-print(bool(b1), bool(b2), bool(b3), bool(b4), bool(b5), sep=", ") # Output: True, True, True, True, True
-```
-**Not: ** `b1 = " "` kodundaki boşluk karakteri de bir varlığı ifade eder. İlla bir şeyler yazmak zorunda değilsiniz.
+<h1 id="4">Operator Önceliği</h1>
 
-**Not: ** `a1 = ""` kodundaki `False` değerini, kullanıcı register veya login olurken, kullanıcının doldurması gereken yerleri boş bırakmaması için yapılmış bir kontrol mekanizmasında kullanılabilir. Örnek:
-```py
-kullanıcı = input("Kullanıcı adınız: ")
-  
-if bool(kullanıcı) == True:
-	print("Kullanıcı adınızı:", kullanıcı, "olarak seçtiniz.")
-else:
-	print("Kullanıcı adı alanı boş bırakılamaz!")
-```
-**Output:**
-```
-Kullanıcı adınız: 
-Kullanıcı adı alanı boş bırakılamaz!
-```
-```
-Kullanıcı adınız: Eyüp
-Kullanıcı adınızı Eyüp olarak seçtiniz.
-```
-**Not:** `None` değeri, boş value anlamına gelir. Yani bir variable'ı `None` değerine eşitlerseniz, Python bunu "Bu variable herhangi bir data type'ı içermiyor, boş bir value." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve Python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte 16 byte yer açar. `None`, genellikle bir variable'ın data type'ını daha sonra belirlemek istediğinizde kullanılır.
-
-# Operatör Önceliği
-Bir operatörün önceliğini arttırmak için o operatörün bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operatörünün önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz. Aşağıdaki operatörler, en öncelikliden son öncelikliye doğru olmak üzere yukarıdan aşağıya sıralanmıştır.
+Bir operator'ın önceliğini arttırmak için o operator'ın bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operator'ının önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz. Aşağıdaki operator'lar, en öncelikliden son öncelikliye doğru olmak üzere yukarıdan aşağıya sıralanmıştır.
 | Operator | Description |
-|----------|-------------|
+| :----------: |-------------|
 | `()` | Parentheses |
 | `**` | Exponent |
 | `+x`, `-x`, `~x` | Unary plus, Unary minus, Bitwise NOT |
@@ -576,13 +692,13 @@ Bir operatörün önceliğini arttırmak için o operatörün bulunduğu işlemi
 | `+`, `-` | Addition, Subtraction |
 | `<<`, `>>` | Bitwise shift operators |
 | `&` | Bitwise AND |
-| `^` | Bitwise XOR |
-| `|` | Bitwise OR |
+| `\^` | Bitwise XOR |
+| `\|` | Bitwise OR |
 |  `==`, `!=`, `>`, `>=`, `<`, `<=`, `is`, `is not`, `in`, `not in` | Comparisons, Identity, Membership operators |
 | `not` | Logical NOT |
 | `and` | Logical AND |
 | `or` | Logical OR |
 
-Daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/reference/expressions.html#operator-precedence).
+Daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/reference/expressions.html#operator-precedence "https://docs.python.org/3/reference/expressions.html#operator-precedence").
 
-**Not:** Yukarıdaki linkte ilk sırada olan Binding'in ne olduğunu öğrenmek için [tıklayınız](https://mathieularose.com/python-variables).
+**Not:** Yukarıdaki linkte ilk sırada olan Binding'in ne olduğunu öğrenmek için [tıklayınız](https://mathieularose.com/python-variables "https://mathieularose.com/python-variables").
