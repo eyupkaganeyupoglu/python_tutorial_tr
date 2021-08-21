@@ -1,143 +1,230 @@
-# `if` Deyimi
-*'eğer'* anlamına gelmektir. Kendisine tanımlanan koşul doğruysa (`True`) çalışır, yanlışsa (`False`) çalışmaz. Syntax'ı:
+# İçindekiler
+-[`if` Statement](#1)
+-[`elif` Statement](#2)
+-[`else` Statement](#3)
+-[Tek satırda `if` - `else` tanımlamak](#4)
+
+<h1 id="1"><code>if</code> Statement</h1>
+
+"Eğer ..." anlamına gelmektedir. Syntax'ı:
 ```py
-if (koşul):
-	# Kodlar
+if (condition):
+	# Expression
 ``` 
-**Bazı örnekler:**
+`condition`'a girilen koşul sağlanıyorsa (`True`) Python, `if` statement kod block'unu okur ve çalıştırır; sağlanmıyorsa (`False`) okunmaz ve bir sonraki statement'a geçer. Örnek:
 ```py
-yas = int(input("Yaşınızı giriniz: "))
-  
-if (yas >= 18):
-	print("Girebilirsiniz.")
-if (0 <= yas < 18):
-	print("Yaşınız 18'den küçük olduğu için giriş yapamazsınız.")
-if (yas < 0):
-	print("Yaşınız negatif bir değer olamaz.")
+sayı = int(input("Sayı gir: "))
+if sayı == 0:
+    print("Girdiğiniz sayı 0'dır.")
+if sayı < 0:
+    print("Girdiğiniz sayı 0'dan küçüktür.")
+if sayı > 0:
+    print("Girdiğiniz sayı 0'dan büyüktür.")
 ```
-**Not:** eğer birdan fazla koşul aynı anda sağlanırsa sağlanan tüm koşullar çalışır çünkü `if` blokları birbirinden bağımsız çalışırlar.
+**Outputs:**
+```
+Sayı gir: 0
+Girdiğiniz sayı 0'dır.
+```
+```
+Sayı gir: 1
+Girdiğiniz sayı 0'dan büyüktür.
+```
+```
+Sayı gir: -1
+Girdiğiniz sayı 0'dan küçüktür.
+```
 
-<h1></h1>
- 
-# `elif` Deyimi
-`if` deyimi çalışmazsa çalışan deyimdir. Dolayısıyla `elif` deyimini kullanmak için `elif` deyiminin üstünde bir `if` deyimine ihtiyacın var. Syntax'ı:
+**Not:** Bir `if` statement'ın çalışması diğer `if` statement'ları etkilemez. Yani her `if` statement bağımsızdır. Örnek:
 ```py
-if (koşul):
-	# Kodlar
-elif (koşul):
-	# Kodlar
-```
-`if` ile `elif` deyimi arasındaki mantıksal fark şudur:
-```py
-if (5 < 4): # False, çalışmaz
-	print("Birinci if block'u çalıştı.")
-if (5 < 3): # False, çalışmaz
-	print("İkinci if block'u çalıştı.")
-if (5 < 6): # True, çalışır.
-	print("Üçüncü if block'u çalıştı.")
-if (5 < 7): # True, çalışır.
-	print("Dördüncü if block'u çalıştı.")
+sayı = int(input("Sayı gir: "))
+if sayı == 0:
+    print("Girdiğiniz sayı 0'dır.")
+if sayı < 10:
+    print("Girdiğiniz sayı 10'dan küçüktür.")
+if sayı > -10:
+    print("Girdiğiniz sayı -10'dan büyüktür.")
 ```
 **Output:**
 ```
-Üçüncü if block'u çalıştı.
-Dördüncü if block'u çalıştı.
+Sayı gir: 0
+Girdiğiniz sayı sıfırdır.
+Girdiğiniz sayı 10'dan küçüktür.
+Girdiğiniz sayı -10'dan büyüktür.
 ```
-Yukarıdaki kodda, bütün `if` deyimleri değerlendirilir ve `True` olanlar çalışır.
+Gördüğünüz gibi `condition`'a girilen koşulu sağlayan bütün `if` statement'lar çalıştı.
+
+<h1 id="2"><code>elif</code> Statement</h1>
+
+`else if`'den türemiştir. "... değilse, eğer ..." anlamına gelmektedir. Syntax:
 ```py
-if (5 < 4): # False, çalışmaz
-	print("if block'u çalıştı.")
-elif (5 < 3): # False, çalışmaz
-	print("Birinci elif block'u çalıştı.")
-elif (5 < 6): # True, çalışır.
-	print("İkinci elif block'u çalıştı.")
-elif (5 < 7): # True, çalışmaz.
-	print("Üçüncü elif block'u çalıştı.")
+# else if syntax:
+else: # daha sonra anlatılacak
+	if (condition):
+		# Expression
+```
+```py
+# elif statement
+elif (condition):
+	# Expression
+```
+`if` statement gibi tak başına kullanılamaz, `if` statement'a bağımlıdır. Sadece kendinden önceki `if` ya da `elif` statement çalışmazsa ve `condition`'a girilen koşul sağlanıyorsa çalışır. Örnek:
+```py
+sayı = int(input("Sayı gir: "))
+if sayı == 0:
+    print("Girdiğiniz sayı 0'dır.")
+elif sayı < 0:
+    print("Girdiğiniz sayı 0'dan küçüktür.")
+elif sayı > 0:
+    print("Girdiğiniz sayı 0'dan Büyüktür.")
+```
+**Outputs:**
+```
+Sayı gir: 0
+Girdiğiniz sayı 0'dır.
+```
+```
+Sayı gir: 1
+Girdiğiniz sayı 0'dan Büyüktür.
+```
+```
+Sayı gir: -1
+Girdiğiniz sayı 0'dan küçüktür.
+```
+Bu kısmın, `elif` yerine `if` statement kullandığımız seferkinden output olarak farkı yok gibi gözüküyor. Başka bir örnek:
+```py
+sayı = int(input("Sayı gir: "))
+if sayı == 0:
+    print("Girdiğiniz sayı 0'dır.")
+elif sayı < 10:
+    print("Girdiğiniz sayı 10'dan küçüktür.")
+elif sayı > -10:
+    print("Girdiğiniz sayı -10'dan büyüktür.")
+```
+**Outputs:**
+```
+Sayı gir: 0
+Girdiğiniz sayı 0'dır.
+```
+```
+Sayı gir: 9
+Girdiğiniz sayı 10'dan küçüktür.
+```
+```
+Sayı gir: 11
+Girdiğiniz sayı -10'dan büyüktür.
+```
+`sayı` variable'ına input olarak `0` value'sunu girdiğimizde, `0` sayısı `10`'dan küçük ve `-10`'dan büyük olmasına rağmen sadece `if` statement çalıştı. Benzer şey `9` value'sunda da oldu. `9` sayısı `10`'dan küçük ve `-10`'dan büyük olmasına rağmen sadece ilk `elif` statement çalıştı. Çünkü `elif` statement sadece kendinden önceki `if` ya da `elif` statement çalışmazsa ve `condition`'a girilen koşul sağlanıyorsa çalışır.
+
+**Not:** `if` ve `elif` statement'ların `condition` kısmına yazacağınız koşulları parantez içine almakla almamak arasında bir fark yoktur. örnek:
+```py
+if True:
+    print("Hello")
+
+if (False):
+    pass
+elif (True):
+    print("World")
 ```
 **Output:**
 ```
-İkinci elif block'u çalıştı.
+Hello
+World
 ```
-Yukarıdaki kodda, en sondaki `elif` deyimi `True` olsa bile çalışmaz çünkü `elif` deyiminin özelliği, bir `elif` deyimi çalıştıktan sonra kendinden sonraki `elif` deyimleri `True` olsa bile, kendinden sonraki `elif` deyimleri çalışmaz. `elif` deyimini `if` deyiminden en önemli özelliktir.
 
-<h1></h1>
+<h1 id="3"><code>else</code> Statement</h1>
 
-# `else` Deyimi
-`if` deyiminden ya da `if` - `elif` yapısından oluşan bir yapıda, hiçbir `if` ve `elif` deyiminin çalışmaması durumunda çalışan deyimdir.  Kısaca `else` deyimi, çalışmak için kendinden önce çalışmayan bir duruma ihtiyaç duyar. Çalışma koşulu sadece buna bağlı olduğu için `if (koşul)` ya da `elif (koşul)` deyimlerindeki gibi bir `(koşul)`'a ihtiyaç duymaz. Syntax'ı:
+"... değilse ..." anlamına gelmektedir. Syntax:
 ```py
-if (koşul):
-	# Kodlar
-elif (koşul):
-	# Kodlar
 else:
-	# Kodlar
+	# Expression
 ```
-**Not:** Herhangi bir `if` deyimi ya da `if` - `elif` yapısı, `else` deyimi olmadan da çalışabilir çünkü `else` deyiminin tek amacı, `if` deyiminden ya da `if` - `elif` yapısından oluşan bir yapıda, hiçbir `if` deyiminin ya da `if` - `elif` yapısının çalışmaması durumunda çalışmasıdır. Kısaca ihtiyaca göre kullanımı tercih edilebilir.
 
-**Not:** `else` deyimi, kendinden önceki `if` deyimini referans alır. Yani:
+`if` statement gibi tak başına kullanılamaz, `if` statement'a bağımlıdır. `else` statement sadece kendinden önceki `if` ya da `elif` statement çalışmazsa çalışır. Örnek:
 ```py
-if (5 < 4):
-	print("Birinci if block'u çalıştı.")
+sayı = int(input("Sayı gir: "))
+if sayı == 0:
+	print("Girdiğiniz sayı 0'dır.")
 else:
-	print("Birinci else block'u çalıştı.")
-if (5 < 6):
-	print("İkinci if block'u çalıştı.")
-else:
-	print("İkinci else block'u çalıştı.")
-if (5 < 2):
-	print("Üçüncü if block'u çalıştı.")
-else:
-	print("Üçüncü else block'u çalıştı.")
+	print("Girdiğiniz sayı 0 değildir.")
+```
+**Outputs:**
+```
+Sayı gir: 0
+Girdiğiniz sayı 0'dır.
+```
+```
+Sayı gir: 1
+Girdiğiniz sayı 0 değildir.
 ```
 
+Başka bir örnek:
+```py
+sayı = int(input("Sayı gir: "))
+if sayı == 0:
+	print("Girdiğiniz sayı 0'dır.")
+elif sayı == 1:
+	print("Girdiğiniz sayı 1'dir.")
+else:
+	print("Girdiğiniz sayı 0 ya da 1 değildir.")
+```
+**Outputs:**
+```
+Sayı gir: 0
+Girdiğiniz sayı 0'dır.
+```
+```
+Sayı gir: 1
+Girdiğiniz sayı 1'dir.
+```
+```
+Sayı gir: 2
+Girdiğiniz sayı 0 ya da 1 değildir.
+```
+
+**Not:** [`elif` Statement](#2) başlığında da gördüğünüz gibi herhangi bir `if` veya `if` - `elif` statement, `else` statement olmadan da çalışabilir ama `else` statement'ın tek çalışma koşulu kendinden önceki `if` ya da `elif` statement çalışmaması olduğu için kendinden önce çalışmayan bir `if` ya da `elif` statement'a ihtiyaç duyuyor.
+
+**Not:** Her `else` statement, kendinden önceki `if` ya da `elif` statement'ı dikkate alır. Örnek:
+```py
+if False: # 1. `if` statement
+    pass
+else:
+    print("1. `else` çalıştı.")
+
+if False: # 2. `if` statement
+    pass
+else:
+    print("2. `else` çalıştı.")
+
+if False:
+    pass
+elif False:
+    pass
+else:
+    print("3. `else` çalıştı.")
+```
 **Output:**
-
 ```
-Birinci else block'u çalıştı.
-İkinci if block'u çalıştı.
-Üçüncü else block'u çalıştı.
+1. `else` çalıştı.
+2. `else` çalıştı.
+3. `else` çalıştı.
 ```
-Görüldüğü gibi, bir `else` deyimi, kendinden önceki ilk `if` deyimini referans alır ve referans aldığı `if` deyimi çalışmazsa çalışır.
+Gördüğünüz gibi her `else` statement, kendinden hemen önceki ilk `if` ya da `elif` statement'ı dikkate alır. Yukarıdaki kodda tanımlanmış 2. `else` statement'ın 1. `if` statement'ı değil 2. `if` statement'ı dikkate alması bunun kanıtıdır.
 
-<h1></h1>
+<h1 id="4">Tek satırda <code>if</code> - <code>else</code> tanımlamak</h1>
 
-# Tek satırda `if` - `else` kullanmak
-Belli bir koşulu tek satırsa basit ve pratik bir şekilde kontrol etmek için `if` - `else` yapısını kullanabilirsiniz. Bu yapı özellikle `lambda` fonksiyonlarında çok kullanışlıdır. `(işlemler) if (koşul) else (işlemler)` syntaxına sahiptir. Parantezler olmadan da kullanılabilir ama kodun anlaşılırlığı açısından parantezlerle beraber kullanılmalıdır. Örnek:
+`(Expression) if (condition) else (Expression)` yapısını kullanarak tek satırda `if` - `else` yapısı oluşturabilirsiniz. Örnek:
 ```py
 (print(1)) if True else (print(2)) # Output: 1
 print(1) if True else print(2) # Output: 1
-```
-Çalışma mantığını anlamak için basit bir örnek:
-```py
-(print(1)) if True else (print(2)) 
+
 (print(1)) if False else (print(2)) # Output: 2
+print(1) if False else print(2) # Output: 2
 ```
-Aşağıdaki örneklerde, `if` ve `else` statementleri soldan sağa olarak birinici, ikinci ve üçüncü olarak numalandırıldığını düşünün:
+`Expression` kısımlarını parantez içine almakla almamak arasında işlevsel olarak bir fark yoktur. Parantezler sadece, kullanıcının kodu anlamasını kolaylaştırır. Daha karmaşık bir örnek:
 ```py
 ((print(1)) if True else (print(2))) if True else ((print(3)) if True else print(4)) # Output: 1
+((print(1)) if False else (print(2))) if True else ((print(3)) if True else print(4)) # Output: 2
+((print(1)) if False else (print(2))) if False else ((print(3)) if True else print(4)) # Output: 3
+((print(1)) if False else (print(2))) if False else ((print(3)) if False else print(4)) # Output: 4
 ```
-Yukarıda,
-- İkinci `if` çalışır,
-- Birinci `if` çalışır,
-- `print(1)` çalışır.
-```py
-((print(1)) if False else (print(2))) if True else ((print(3)) if True else print(4))# Output: 2
-```
-Yukarıda,
-- İkinci `if` çalışır,
-- Birinci `if` çalışmadığı için birinci `else` çalışır,
-- `print(2)` çalışır.
-```py
-((print(1)) if True else (print(2))) if False else ((print(3)) if True else print(4))# Output: 3
-```
-Yukarıda,
-- İkinci `if` çalışmadığı için ikinci `else` çalışır,
-- Birinci `if` çalışır,
-- `print(3)` çalışır.
-```py
-((print(1)) if True else (print(2))) if False else ((print(3)) if False else print(4))# Output: 4
-```
-Yukarıda,
-- İkinci `if` çalışmadığı için ikinci `else` çalışır,
-- Birinci `if` çalışmadığı için üçüncü `else` çalışır,
-- `print(4)` çalışır.

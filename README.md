@@ -72,7 +72,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 
 **!!DİKKAT!!** Bu tutorial hala tamamlanmamıştır. Konu başlıkları ve içerik %99 tamamlanmış olsa da hala bazı dil bilgisi ve markdown syntax hataları, bazı terimlerin yanlış kullanımı (örneğin atama (assignment) ve tanımlama (definition) terimlerini karıştırdığım yerler olabilir), tanımlanmamış bağlantılar mevcut olabilir ve konuların içeriklerinin düzenlenmesi, yeri geldiğinde bazı konu başlıkları farklı dosyalara ayrılması gerekebilir. Bu tutorial'ın release sürümü çıkınca bu kısmın hemen altında bunu belirteceğim. **Takipte kal!**
 
-<p align=center> <b><i>Release Sürümü Yükleniyor...</b></i> <b>[%9.197235513024987]</b> </p>
+<p align=center> <b><i>Release Sürümü Yükleniyor...</b></i> <b>[%12.502215133794081]</b> </p>
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>
@@ -93,6 +93,7 @@ Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok
 - [Yazbel](https://python-istihza.yazbel.com/ "https://python-istihza.yazbel.com/")
 - [Stack Overflow](https://stackoverflow.com/ "https://stackoverflow.com/")
 - [Medium](https://medium.com/ "https://medium.com/")
+- [Think Python](https://greenteapress.com/thinkpython/html/index.html "https://greenteapress.com/thinkpython/html/index.html")
 <br>
 <table align='center'>
 	<tr>

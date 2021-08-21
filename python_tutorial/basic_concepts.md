@@ -53,11 +53,20 @@ Bu kodları anlamanıza şimdilik gerek yok. Bu, sadece indent'in ne olduğunu a
 
 <h1 id="4">Variable'lar (Değişkenler)</h1>
 
-Variable'lar, en küçük depolama birimleridir. Belli bir data type'dan veri depolar. Bir variable'a bir value atadıktan (assignment) sonra o variable'ı kullanarak o value'ya ulaşabilirsiniz. Variable'a atanan data'ya **value** (değer) denir. Örnek:
+Variable'lar, en küçük depolama birimleridir. Variable, bir value'ya atıfta bulunan (refers to) bir addır. Variable'a atanan data'ya **value** (değer) denir. Assignment statement ile variable'lar yaratılabilir (create). Örnek:
 ```py
 i = 15 # i'nin değeri 15
 i = 30 # i'nin değeri 30
 ```
+
+Değişkenleri kağıt üzerinde göstermek için **state diagram** kullanmak yaygın bir yöntemdir. Örnek:
+```py
+massage = "What's up, Doc?"
+n = 17
+pi = 3.14159
+```
+![](https://i.ibb.co/558VDsV/image.png)
+
 Variable'ları kullanarak işlem yapabilirsiniz. Örneğin:
 ```py
 i = 15
