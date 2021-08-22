@@ -1,5 +1,6 @@
 ﻿# İçindekiler
-- [Python Yazmak İçin Ne Kullanmalıyım?](#1)
+- [Python Yazmak İçin Ne Kullanmalıyım?](#0)
+- [Python Sözlüğü (Python Glossary)](#1)
 - [Python'un Çalışma Mantığı](#2)
 - [Block Mantığı](#3)
 - [Variable'lar (Değişkenler)](#4)
@@ -13,13 +14,17 @@
 - [Garbage Collector](#12)
 
 
-<h1 id="1">Python Yazmak İçin Ne Kullanmalıyım?</h1>
+<h1 id="0">Python Yazmak İçin Ne Kullanmalıyım?</h1>
 
 Ben VSCode kullanıyorum. VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını anlatmakta fayda var:
 - **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text ediyor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
 - **Text editor:** Not defterinin gelişmiş versiyonudur diyebiliriz. Çeşitli extension'larla modifiye edilerek harika program geliştirme ortamlarına da dönüştürülebilir. IDE'lere göre daha hızlıdır ama bu hız kurduğunuz extension'lara göre değişebilir. Benim gibi 20 tane extension kullanıyorsanız, kullandığınız text editor, bir IDE kadar yavaş açılabilir. Kullandığım extension listesi:
 	![](https://i.ibb.co/thTLgN6/image.png)
 	![](https://i.ibb.co/s9f7rSJ/image.png)
+
+<h1 id="1">Python Sözlüğü (Python Glossary)</h1>
+
+Python'da kullanılan terimlerin tamamına [bu sözlükten ulaşabilirsiniz](https://docs.python.org/3/glossary.html ""https://docs.python.org/3/glossary.html").
 
 <h1 id="2">Python'un Çalışma Mantığı</h1>
 

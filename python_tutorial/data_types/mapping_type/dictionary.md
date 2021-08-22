@@ -41,6 +41,18 @@ sözlük_düzeni = {1                  : "int",
 									   "k3" : "v3"}}
 ```
 
+**Not:** Aşağıdaki `s1` variable'ına atanan yapı direkt olarak dictionary'e dönüştürülebilir:
+```py
+s1 = {"a":1, "b":2, "c":3}
+s2 = dict([("a",1),("b",2),("c",3)])
+print(s1,s2,sep="\n")
+```
+**Output:**
+```
+{'a': 1, 'b': 2, 'c': 3}
+{'a': 1, 'b': 2, 'c': 3}
+```
+
 ## Sözlük Üreteçleri (Dictionary Comprehensions)
 Sözlük tanımlamak için üreteçlerden yararlanılabilir. Listelerde de gösterildiği gibi, tek satırda sözlük tanımlamamıza yarar. Örnek:
 ```py
@@ -149,6 +161,19 @@ Gördüğünüz gibi `"bir"` key'ine en son `5` değeri atandığı için Python
 **Not:** Belli değerleri bir liste içinde (örneğin `[20, 175, "eyüp"]` gibi) depolayıp, sonradan bu değerlere ihtiyacınız olduğunda listeden çekip kullanmak yerine, bu değerleri, ne olduklarıyla birlikte (`["yaş":20, "boy":175, "isim":"eyüp"]` gibi) bir dictionary'de depolarsanız, daha pratik ve kullanışlı olur.
 
 - Belli bir yapıda sıralanmış bilgileri bir listede [20, 175, "eyüp"] gibi tutup sonradan bu listeden çekip kullanmak yerine, ["yaş":20, "boy":175, "isim":"eyüp"] gibi dict'lerde depolayın. Böylece daha kolay çekip kullanabilirsiniz.
+
+**Not:** Dictionary, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Örnek:
+```py
+dict_exp1 = {"a":1, "b":2, "c":3}
+dict_exp2 = {"c":3, "a":1, "b":2}
+print(dict_exp1, dict_exp2, sep="\n")
+```
+**Output:**
+```
+{'a': 1, 'b': 2, 'c': 3}
+{'c': 3, 'a': 1, 'b': 2}
+```
+Gördüğünüz gibi item'ları dictionary'e hangi sırayla tanımladıysanız, o sırayla dictionary'de bulunur.
 
 # Dictionary Methodları
 
