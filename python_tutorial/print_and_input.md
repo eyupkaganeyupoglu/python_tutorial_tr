@@ -1,5 +1,5 @@
 # İçindekiler
-- [Input-Output İşlemleri (IO Operations)](#1)
+- [Print-Input İşlemleri](#1)
 - [`print()` Fonksiyonu](#2)
     - [`*object` Parametresi](#2.1)
     - [`sep` Parametresi](#2.2)
@@ -8,13 +8,13 @@
     - [`flush` Parametresi](#2.5)
 - [`input()` Fonksiyonu](#3)
 
-<h1 id="1">Input-Output İşlemleri (IO Operations)</h1>
+<h1 id="1">Print-Input İşlemleri</h1>
 
-"IO Operations" araştırmaya kalkarsanız büyük ihtimal karşınıza dosya işlemleri ile ilgili bilgiler çıkacak. Ama ben bu kısımda program içi input-output işlemlerinden bahsedeceğim. Programınıza girdi (input) almak için `input()`, çıktı (output) almak için `print()` adlı build-in fonksiyonlardan faydalanıyoruz.
+Programınıza girdi (input) almak için `input()`, çıktı (output) almak için `print()` adlı build-in fonksiyonlardan faydalanılır.
 
 <h1 id="2"><code>print()</code> Fonksiyonu</h1>
 
-`print()` build-in fonksiyonu, `print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)` syntax'ına sahiptir. `print()` fonksiyonu `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan, IO Operation'ların output işleminden sorumlu bir build-in (gömülü) fonksiyondur. Örnek:
+`print()` build-in fonksiyonu, `print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)` syntax'ına sahiptir. `print()` fonksiyonu `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan bir build-in (gömülü) fonksiyondur. Örnek:
 ```py
 print(35)
 print("Merhaba")

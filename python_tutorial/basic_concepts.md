@@ -56,6 +56,8 @@ else:
 ```
 Bu kodları anlamanıza şimdilik gerek yok. Bu, sadece indent'in ne olduğunu anlamanız için bir örnek.
 
+Indent'ler hatalı kullanıldığında `IndentationError` ya da `TabError` hataları yükseltilebilir. Programınızı yazarken kullandığınız indent sayısı her yerde aynı olmalıdır. Örneğin bir block'u belirlerken 2 indent kullanırken başka birinde 4 kullanırsanız hata alırsınız. 
+
 <h1 id="4">Variable'lar (Değişkenler)</h1>
 
 Variable'lar, en küçük depolama birimleridir. Variable, bir value'ya atıfta bulunan (refers to) bir addır. Variable'a atanan data'ya **value** (değer) denir. Assignment statement ile variable'lar yaratılabilir (create). Örnek:
@@ -234,3 +236,5 @@ Python programları sırasında kullanılan her obje bellekte yer kaplar. Bu yer
 Bilgisayar programları, runtime sırasında bellek ihtiyacı duyarlar. Bellek sınırsız bir şey olmadığı için artık kullanılmayan bellek alanlarının, işletim sistemine (OS) geri iade edilmesi gerekir. Müsait bellek alanı bulma ve kullanılmayan bellek alanlarını işletim sistemine geri iade etme işlemlerinin programcılar tarafından manuel (el ile) yapılması gerekiyordu. Örneğin bu işlem, `C` dilinde `malloc()` ve `free()` fonksiyonları ile yapılmaktadır. İşletim sistemine iade edilmiş bir alanın program tarafından tekrar kullanılması güvenlik açıklarını beraberinde getirmekteydi. Elle yapılan bu işlemin takibi bir yerden sonra zorlaştığı için bu işi otomatik yapan bir sisteme ihtiyaç vardı. **Garbage Collector**, bu işlemi otomatik yapan bir sistemdir. Bu sistem sayesinde bir programcı, program yazarken hafıza alanını Garbage Collection mekanizmasından talep edip, iade işlemine karışılmamaktadır çünkü kalan tüm işlemler Garbage Collection mekanizması tarafından yapılmaktadır. Garbage Collector, kullanılan hafıza alanlarının izini sürerek, ihtiyaç duyulmayan alanları işletim sistemine iade etmektedir ve yeni bir talep geldiği zamanda bellekte yer bulup programa göndermektedir. Garbage Collection mekanizmasının işlemci kullanımı ile alakalı iki farklı yönetim yaklaşımı bulunmaktadır:
 - **stop-the-world** yaklaşımı herhangi bir t zamanında, Garbage Collection mekanizması devreye girdiği zaman sırasıyla ilgili programdaki tüm işlemler durdurulur, hafıza yönetimi yapılır ve durdurulan işlemeler başlatılır. Bu çalışma yöntemi, kritik uygulamalar için bir dezavantaj oluşturmaktadır. Bu nedenle daha sonra **concurrent** algoritmalar geliştirilmiştir. 
 - **Concurrent** yaklaşımı, programın çalışması durdurulmadan programla eşzamanlı olarak Garbage Collection işlemleri yapılır. Bu sayede **stop-the-world** yaklaşımının oluşturduğu dezavantaj ortadan kalkar.
+
+Daha fazla bilgi için [tıklayınız](https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python "https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python").
