@@ -1,74 +1,119 @@
-# Sayı Kümeleri
+# İçindekiler
+- [Sayı Kümeleri](#1)
+    - [Tam Sayılar (Integers)](#1.1)
+    - [Ondalıklı Sayılar (Float)](#1.2)
+    - [Komplex Sayılar (Complex)](#1.3)
+- [Sayı Sistemleri](#2)
+    - [İkili (Binary) sayma sistemi](#2.1)
+    - [Sekizli (Octal) sayma sistemi](#2.2)
+    - [Onlu (Desimal) sayma sistemi](#2.3)
+    - [On altılı (Heksadesimal) sayma sistemi](#2.4)
+- [Numeric Data Types](#3)
+    - [`int(x, base=10)` Fonksiyonu](#3.1)
+        - [`bit_length()` Methodu](#3.1.1)
+    - [`float(x)` Fonksiyonu](#3.2)
+        - [`as_integer_ratio()` Methodu](#3.2.1)
+        - [`is_integer()` Methodu](#3.2.2)
+    - [`complex(real, imag)` Fonksiyonu](#3.3)
+        - [`real` Methodu](#3.3.1)
+        - [`imag` Methodu](#3.3.2)
+- [Numeric Fonksiyonlar](#4)
+    - [`bin(x)` Fonksiyonu](#4.1)
+    - [`oct(x)` Fonksiyonu](#4.2)
+    - [`hex(x)` Fonksiyonu](#4.3)
+    - [`pow(base, exp, mod)` Fonksiyonu](#4.4)
+    - [`abs(x)` Fonksiyonu](#4.5)
+    - [`round(number, ndigits)` Fonksiyonu](#4.6)
+    - [`divmod(a, b)` Fonksiyonu](#4.7)
+    - [`max(item, *items, key, default)` Fonksiyonu](#4.8)
+    - [`min(item, *items, key, default)` Fonksiyonu](#4.9)
+    - [`sum(iterable, start=0)` Fonksiyonu](#4.10)
 
-## Tamsayılar (Integer)
-Türkçe'deki **tam sayının** İngilizce karşılığı **Integer**'dır. Negatif ve pozitif tam sayıların tamamını temsil eder. Matematikte **Z** harfi, Integer sayıları temsil eder.
+<h1 id="1">Sayı Kümeleri</h1>
 
-## Ondalıklı Sayılar (Float)
-Türkçe'deki **kesirli sayılar** İngilizce karşılığı **floating point**, kısaca **float**'dır. Negatif ve pozitif kesirli sayıların tamamını temsil eder. Matematikte **Q** harfi, floating point sayıları temsil eder.
+<h2 id="1.1">Tam Sayılar (Integers)</h2>
 
-## Komplex Sayılar (Complex)
-Türkçe'deki **komplex sayının** İngilizce karşılığı **Complex**'dır. Komplex sayıların tamamını temsil eder. Matematikte **C** harfi, Komplex sayıları temsil eder.
+Türkçe'deki **"Tam Sayılar"** kavramının İngilizce karşılığı **Integer**'dır. Negatif ve pozitif tam sayıların tamamını temsil eder. Matematikte **Z** harfi integer'ları temsil eder.
 
-# Sayı Sistemleri
+<h2 id="1.2">Ondalıklı Sayılar (Float)</h2>
 
-## İkili (Binary) sayma sistemi
-`0, 1` olmak üzere toplam iki simgeden oluşur.
+Türkçe'deki **"Kesirli Sayılar"**, **"Kayan Noktalı Sayılar"**, **"Ondalıklı Sayılar"** kavramlarının İngilizce karşılığı **Floating Point Numbers**, kısaca **Float**'dır. Negatif ve pozitif kesirli sayıların tamamını temsil eder. Matematikte **Q** harfi, floating point sayıları temsil eder.
 
-## Sekizli (Octal) sayma sistemi
-`0, 1, 2, 3, 4, 5, 6, 7` olmak üzere toplam sekiz simgeden oluşur.  
+<h2 id="1.3">Komplex Sayılar (Complex)</h2>
 
-## Onlu (Desimal) sayma sistemi
-`0, 1, 2, 3, 4, 5, 6, 7, 8, 9` olmak üzere toplam on rakamdan/simgeden oluşur.
+Türkçe'deki **Komplex Sayılar**, **"Karmaşık Sayılar"** kavramlarının İngilizce karşılığı **Complex Numbers**, kısaca **Complex**'dır. Komplex sayıların tamamını temsil eder. Matematikte **C** harfi, komplex sayıları temsil eder.
 
-## On altılı (Heksadesimal) sayma sistemi
-`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f` olmak üzere toplam on altı simgeden oluşur. `a, b, c, d, e, f` yerine `A, B, C, D, E, F` de kullanılabilir.
+<h1 id="2">Sayı Sistemleri</h1>
 
-# Numeric Data Types
+<h2 id="2.1">İkili (Binary) sayma sistemi</h2>
 
-## `int(x, base=10)`
-Tam sayı anlamına gelen integer sayıları temsil eder. `int()` build-in fonksiyonu, `x`parametresine girilen argümanı **uygunsa** `int` class'ında belirtilen integer data type'a dönüştürmekte kullanılabilir. `base` parametresine, bu çevirme işleminin hangı sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur. Örneğin 8'li sayı sistemindeki `1010` sayısı, 10'lu sayı sistemindeki `520` sayısına eşit olduğu için `int("1010", base=8)` işleminin sonucu `520`'dir.
+`0, 1` olmak üzere toplam iki sayısal simgeden oluşur.
+
+<h2 id="2.2">Sekizli (Octal) sayma sistemi</h2>
+
+`0, 1, 2, 3, 4, 5, 6, 7` olmak üzere toplam sekiz sayısal simgeden oluşur.  
+
+<h2 id="2.3">Onlu (Desimal) sayma sistemi</h2>
+
+`0, 1, 2, 3, 4, 5, 6, 7, 8, 9` olmak üzere toplam on sayısal simgeden (rakamlar) oluşur.
+
+<h2 id="2.4">On altılı (Heksadesimal) sayma sistemi</h2>
+
+`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f` olmak üzere toplam on altı sayısal ve harfsel simgeden oluşur. `a, b, c, d, e, f` yerine `A, B, C, D, E, F` de kullanılabilir.
+
+<h1 id="3">Numeric Data Types</h1>
+
+<h2 id="3.1">`int(x, base=10)` Fonksiyonu</h2>
+
+`int()` build-in fonksiyonu, `x` parametresine girilen argümanı **uygunsa** `int` class'ında belirtilen integer data type'a dönüştürmekte kullanılır. `base` parametresine, bu çevirme işleminin hangi sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur.
 ```py
 print(int(0b1010)) # Output: 10
-print(int("10")) # Output: 10
+print(int("1010")) # Output: 1010
 print(int("1010", base=2)) # Output: 10
 print(int("1010", base=8)) # Output: 520
 print(int("1010", base=10)) # Output: 1010
-print(int("1010", base=16))) # Output: 4112
+print(int("1010", base=16)) # Output: 4112
 ```
-**Not:** floating point formattaki `str` data type bir value'yi direkt `int` type'a çeviremezsin. Önce `str`'den `float`'a, sonra `float`'dan `int`'e çevirmelisin. Örnek:
+**Not:** Float formatta yazılmış string data type bir value'yu direkt integer type'a çeviremezsiniz. Önce string'den float'a, sonra float'dan integer'e çevirmelisiniz. Örnek:
 ```py
 a = "12.55"
 a = float(int(a))
 print(a) # Output: 12
 ```
-**Not:** `int()` tek başına `0` value'sine sahiptir.
+**Not:** `int()` fonksiyonunun `x` parametresine herhangi bir argüman girmezseniz, `int()` fonksiyonu `0` değerini döndürür.
 ```py
 print(int()) # Output: 0
 ```
-### Integer Class Methodları
 
-#### `bit_length()`
-Uygulandığı integer sayının kaç bit yer kapladığını söyler. `bin()` fonksiyonu, herhangi bir integer sayıyı binary'e dönüştürüp döndürür. Örneğin `10` integer sayısının binary karşılığı `0b1010`'dır. Bu binary sayının ilk iki index'inden sonrası, bu integer sayının bir uzunluğu (bit length) oluyor. `len(bin())` komutunu `len(bin()[2:])` şeklinde kullanırsak istediğimiz sonucu elde ederiz. `len(bin()[2:])` komutuyla `bit_length()` methodunun yaptığı iş aynıdır. Örnek:
-```py
-print((10).bit_length()) # Output: 4
-print(len(bin(10)[2:])) # Output: 4
-``` 
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#int "https://docs.python.org/3/library/functions.html#int").
 
-## `float(x)`
-Kesirli/Ondalıklı sayıları ifade eder. *Kayan noktalı sayılar* anlamına gelmektedir. `int` data type'ı `float` data type'a çevirebilir. `str` data type'ı `float` data type'a çevirebilmesi için string değerin floating point number formatına uygun olması gerekiyor. Yani:
+<h3 id="3.1.1">`bit_length()` Methodu</h3>
+
+`bit_length()` methodu, uygulandığı integer'ın bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(10))`: `0b1010`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş aynıdır. Örnek:
 ```py
-float_number = float(str("12.50")
+print((10).bit_length()) # Output: 4 (`1010` 4 birim uzunluğundadır)
+print(len(bin(10)[2:])) # Output: 4 (`1010` 4 birim uzunluğundadır)
+```
+
+<h2 id="3.2">`float(x)` Fonksiyonu</h2>
+
+`float()` build-in fonksiyonu, `x` parametresine girilen argümanı **uygunsa** `float` class'ında belirtilen float data type'a dönüştürmekte kullanılır.
+```py
+float_number = float(str("12.50"))
 print(float_number) # Output: 12.50
 print(type(float_number)) # Output: <class 'float'>
 ```
-**Not:** `float()` tek başına `0.0` value'sine sahiptir.
+
+**Not:** `float()` fonksiyonunun `x` parametresine herhangi bir argüman girmezseniz, `float()` fonksiyonu `0.0` değerini döndürür.
 ```py
 print(float()) # Output: 0.0
 ```
-### Float Class Methodları
 
-#### `as_integer_ratio()`
-Birbirine bölündüğünde uygulandığı `float` sayıyı veren en küçük iki tane integer sayı döndürür. Döndürdüğü output'u `tuple` içindedir.
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#float "https://docs.python.org/3/library/functions.html#float").
+
+<h3 id="3.2.1">`as_integer_ratio()` Methodu</h3>
+
+Birbirine bölündüğünde uygulandığı `float` sayıyı veren en küçük iki integer'ı döndürür. Bu iki sayı `tuple` içinde döndürülür. Örnek:
 ```py
 print((4.5).as_integer_ratio()) # Output: (9, 2)
 print((4.1).as_integer_ratio()) # Output: (2308094809027379, 562949953421312)
@@ -78,86 +123,107 @@ print((6.125).as_integer_ratio()) # Output: (49, 8)
 print((9.337).as_integer_ratio()) # Output: (2628131857547395, 281474976710656)
 ```
 
-#### `is_integer()`
-Bir `float` sayının, tam olmayan kısmında (noktanın sağındaki, ondalık olmayan) sıfır harici bir sayı olup olmadığını kontrol eder. Yani bu methodla, bir sayının integer'mı floating point'mi olduğunu sorgulayabilirsiniz.
+<h3 id="3.2.2">`is_integer()` Methodu</h3>
 
-## `complex(real, imag)`
-Kompleks sayıları ifade etmek için kullanılır. `15 + 3j` gibi sayılar complex data type'ına sahip sayılardır.
+Bir `float`'ın tam olmayan kısmında (noktanın sağındaki, ondalık olmayan) sıfır harici bir sayı olup olmadığını kontrol eder. Yani bu methodla, bir sayının integer'mı floating'mı olduğunu sorgulayabilirsiniz. Bu method, uygulandığı `float` integer ise `True`, değilse (yani integer ise) `False` döndürür. Örnek:
+```py
+print((10.00).is_integer()) # Output: True
+print((10.01).is_integer()) # Output: False
+```
+
+<h2 id="3.3">`complex(real, imag)` Fonksiyonu</h2>
+
+`complex()` build-in fonksiyonu, kendisine girilen argümanı **uygunsa** `complex` class'ında belirtilen complex data type'a dönüştürmekte kullanılır. Bir complex sayı real ve imag olmak üzere 2 parçadan oluşur:
 - `real`, gerçek kısmı ifade eder.
 - `imag`, sanal kısmı ifade eder.
 
-**Not:** `complex` bir sayıyı sadece `str` data type'ına dönüştürebilirsin. `int` ya da `float` data type'a dönüştüremezsin, `TypeError` hatası alırsın.
+**Not:** `complex` bir sayıyı sadece `str` data type'ına dönüştürebilirsin (tam tersi de geçerli). `int` ya da `float` data type'a dönüştüremezsin, `TypeError` hatası alırsın.
 
-**Not:** `complex()` tek başına `0j` value'sine sahiptir.
+**Not:** `complex()` fonksiyonunun `x` parametresine herhangi bir argüman girmezseniz, `complex()` fonksiyonu `0j` değerini döndürür.
 ```py
 print(complex()) # Output: 0j
 ```
-### Complex Class Methodları
-#### `imag`
-Bir complex number'ın **imag** kısmını döndürür.
+
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#complex "https://docs.python.org/3/library/functions.html#complex").
+
+<h3 id="3.3.1">`real` Methodu</h3>
+
+Bir complex sayının real kısmını döndüren property objesidir.
+```py
+print((12+5j).imag) # Output: 12.0
+```
+
+<h3 id="3.3.2">`imag` Methodu</h3>
+
+Bir complex sayının imag kısmını döndüren property objesidir.
 ```py
 print((12+5j).imag) # Output: 5.0
 ```
 
-#### `real`
-Bir complex number'ın **real** kısmını döndürür.
-```py
-print((12+5j).real) # Output: 12.0
-```
-Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#complex).
+<h1 id="4">Numeric Fonksiyonlar</h1>
 
-# Numeric Fonksiyonlar
+<h2 id="4.1">`bin(x)` Fonksiyonu</h2>
 
-## `bin(x)`
-`x` parametresine girilen integer sayının binary karşılığını döndürür. Output'u **string** type'dır ve her output `0b` ile başlar çünkü binary sayılar Python'da `0b` ya da `0B` ile temsil edilir. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#bin).
+`x` parametresine girilen integer'ın binary karşılığını döndürür. Döndürdüğü değer string formattadır. Binary sayılar `0b`/`0B` ile temsil edilir (örnek `0b1010`). Bu yüzden `bin(10)[2:]` şeklinde bir kullanımla `0b`/`0B` kısımlarından sonraki kısmı alabilirsiniz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#bin "https://docs.python.org/3/library/functions.html#bin"). Örnek:
 ```py
 print(bin(10)) # Output: 0b1010
-print(bin(10[2:])) # Output: 1010
+print(bin(10)[2:]) # Output: 1010
+print(type(bin(10))) # Output: <class 'str'>
 ```
 
-## `oct(x)`
-`x` parametresine girilen integer sayının octal karşılığını döndürür. Output'u **string** type'dır ve her output `0o` ile başlar çünkü binary sayılar Python'da `0o` ile temsil edilir. Bu sayede index işlemleri yapabiliriz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#oct).
+<h2 id="4.2">`oct(x)` Fonksiyonu</h2>
+
+`x` parametresine girilen integer'ın octal karşılığını döndürür. Döndürdüğü değer string formattadır. Octal sayılar `0o`/`0O` ile temsil edilir (örnek `0o1010`). Bu yüzden `oct(10)[2:]` şeklinde bir kullanımla `0o`/`0O` kısımlarından sonraki kısmı alabilirsiniz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#oct "https://docs.python.org/3/library/functions.html#oct"). Örnek:
 ```py
 print(oct(10)) # Output: 0o12
-print(oct(10[2:])) # Output: 12
+print(oct(10)[2:]) # Output: 12
+print(type(oct(10))) # Output: <class 'str'>
 ```
 
-## `hex(x)`
-`x` parametresine girilen integer sayının hexadecimal karşılığını döndürür. Output'u **string** type'dır ve her output `0x` ile başlar çünkü binary sayılar Python'da `0x` ile temsil edilir. Bu sayede index işlemleri yapabiliriz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hex).
+<h2 id="4.3">`hex(x)` Fonksiyonu</h2>
+
+`x` parametresine girilen integer'ın hexadecimal karşılığını döndürür. Döndürdüğü değer string formattadır. Hexadecimal sayılar `0x`/`0X` ile temsil edilir (örnek `0o1010`). Bu yüzden `hex(10)[2:]` şeklinde bir kullanımla `0x`/`0X` kısımlarından sonraki kısmı alabilirsiniz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hex "https://docs.python.org/3/library/functions.html#hex"). Örnek:
 ```py
 print(hex(10)) # Output: 0xa
-print(hex(10[2:])) # Output: a
+print(hex(10)[2:]) # Output: a
+print(type(hex(10))) # Output: <class 'str'>
 ```
 
-## `pow(base, exp, mod)`
-`mod` girilmemişse `(base**exp)`, `mod` girilmişse `(base**exp) % mod)` işlemini yapar. `pow(base, exp, mod)` yerine `pow(base, exp) % mod` şeklindi kullanım daha verimlidir. `base`, `exp` ve `mod` parametrelerine girilen argümanlar numeric type olmak zorundadır. `int` type `base` ve `exp` için `mod` mevcutsa, `mod` integer ve nonzero olmalıdır. Eğer `mod` mevcut ve `exp` negatifse, `base`, `mod` için nispet asal (relatively prime) olmalıdır. Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#pow).
+<h2 id="4.4">`pow(base, exp, mod)` Fonksiyonu</h2>
+
+`mod` parametresine argüman girilmemişse `(base**exp)` işlemini, girilmişse `(base**exp) % mod` işlemini yapar. `pow(base, exp, mod)` yerine `pow(base, exp) % mod` şeklindeki kullanım daha verimlidir. `base`, `exp` ve `mod` parametrelerine girilen argümanlar numeric type olmak zorundadır. Aksi halde `TypeError` hatası yükseltilir. Örnek:
 ```py
-print(pow(2,3,2)) # (2 ** 3) % 2
-# Output: 0
+print(pow(2,3,2)) # ((2 ** 3) % 2) == 0
 ```
+- Integer type olan `base` ve `exp` için `mod` mevcutsa, `mod` integer ve nonzero (sıfır olmayan) olmalıdır.
+- `mod` mevcut ve `exp` negatif bir integer ise, `base`, `mod` için nispeten asal (relatively prime) olmalıdır.
 
-## `abs(x)`
-abs, **mutlak** anlamına gelen **absolute** kelimesinden gelmektedir. Bu fonksiyon, `x` parametresine girilen değerin mutlak değerini döndürür. `x` parametresine girilen argümanlar integer, floating point ya da `__abs__()` uygulanabilen bir obje olabilir. Bu argüman bir complex sayı olursa, magnitude (büyüklüğü) döndürülür. Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#abs).
+Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#pow "https://docs.python.org/3/library/functions.html#pow").
+
+<h2 id="4.5">`abs(x)` Fonksiyonu</h2>
+
+"abs",*mutlak anlamına gelen absolute kelimesinden gelmektedir. Bu fonksiyon, `x` parametresine girilen değerin mutlak değerini döndürür. `x` parametresine girilen argümanlar integer, floating point ya da `__abs__()` uygulanabilen bir class objesi (instance) olabilir. Bu argüman bir complex sayı olursa, magnitude (büyüklüğü) döndürülür. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#abs "https://docs.python.org/3/library/functions.html#abs").
 ```py
 print(abs(-15)) ; print(abs(15)) # Output: 15
 print(abs(-15.18)) ; print(abs(15.18)) # Output: 15.18
 print(abs(-15+3j)) ; print(abs(15+3j)) # Output: 15.297058540778355
 ```
 
-## `round(number, ndigits)`
-`number` parametresine girilen değeri, `10^(ndigits - 1)`'inci basamağını referans alarak `10^(ndigits)`'inci basamağı yuvarlar:
+<h2 id="4.6">`round(number, ndigits)` Fonksiyonu</h2>
+
+`number` parametresine girilen integer'ın `10**(ndigits)`'inci basamağını, `10**(ndigits - 1)`'inci basamağını referans alarak yuvarlar:
 ```py
 print(round(2.6, 0)) # Output: 3.0 (10^(0-1) = 10^(-1))
-print(round(2.66, 1)) # Output: 2.7 (10^(0-2) = 10^(-2))
-print(round(2.666, 2)) # Output: 2.67 (10^(0-2) = 10^(-3))
+print(round(2.66, 1)) # Output: 2.7 (10^(-1-1) = 10^(-2))
+print(round(2.666, 2)) # Output: 2.67 (10^(-2-1) = 10^(-3))
 ```
-`ndigits` parametresine `0`, `None` değerleri girilirse ya da hiçbir değer girilmezse aşağıdaki gibi davranır. `round()` fonksiyonuna `None` değeri girildiğinde ya da hiçbir değer girilmediğinde, aynı davranışı sergiler:
+`ndigits` parametresine `0`, `None` değerleri girilirse ya da hiçbir değer girilmezse aşağıdaki gibi davranır:
 ```py
 print(round(2.6, 0)) # Output: 3.0
 print(round(2.6, None)) # Output: 3
 print(round(2.6)) # Output: 3
 ```
-`round()` fonksiyonuna tam ortada kalan değerler (`2.5`, `9.5`) girerseniz, en yakın çift sayıya yuvarlar. Yani:
+Tam ortada kalan değerler (`2.5`, `9.5` vs.), en yakın çift sayıya yuvarlanır:
 ```py
 print(round(2.5)) # Output: 2
 print(round(1.5)) # Output: 2
@@ -174,65 +240,67 @@ print(round(-0.5)) # Output: 0
 ```py
 print(0.1 + 0.2) # Output: 0.30000000000000004
 ```
-Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#round).
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#round "https://docs.python.org/3/library/functions.html#round").
 
-## `divmod(a, b)`
-`complex` olmayan iki sayıyı alır ve matematikteki `a/b` işlemindeki bölüm ve kalanı verir. Integer sayılar için output `((a // b), (a % b))` işlemiyle aynıdır. Bu output `tuple` şeklindedir.
+<h2 id="4.7">`divmod(a, b)` Fonksiyonu</h2>
+
+`complex` olmayan iki sayıyı alır ve matematikteki `a/b` işlemindeki bölüm ve kalanı döndürür. Yani aşağıdaki bölme işleminde C ve D kısımlarını döndürür.
+```
+ A | B 
+   |----
+---| C
+ D
+```
+Integer'lar için output `((a // b), (a % b))` işlemiyle aynıdır. Bu output `tuple` formatındadır.
 ```py
-divmod(10, 2)
-# Output: (5, 0)
-# Bölüm: 5
-# Kalan: 0
+print(divmod(10, 2)) # Output: (5, 0)
 ```
 
-## `max(item, *items, key, default)`
+<h2 id="4.8">`max(item, *items, key, default)` Fonksiyonu</h2>
+
 `item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en büyük öğeyi ya da bir `dict` objesinin içerdiği en büyük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Örnek:
 ```py
 # 1. Kod
-print(max([1,2],"sel",(1,2,3,4)))
-# Output: TypeError: '>' not supported between instances of 'str' and 'list'
+print(max([1,2],"sel",(1,2,3,4))) # TypeError: '>' not supported between instances of 'str' and 'list'
 ```
 Ama aynı kodu şöyle yazarsak sorun çıkmaz:
 ```py
 # 2. Kod
-print(max([1,2],"sel",(1,2,3,4), key=len))
-# Output: (1, 2, 3, 4)
+print(max([1,2],"sel",(1,2,3,4), key=len)) # Output: (1, 2, 3, 4)
 ```
-`key` parametresi, kendisine verilen ölçüte göre `item` ya da `*items` parametresine girilen itemleri sıralar. Yukarıdaki kodlarda, `1. kod`'da sıkıntı çıkmasının sebebi: `1. kod`'da sıralama ölçütü belirtilmediği için `>` operatörüyle itemleri birbiriyle karşılaştırması ve farklı data type'lar arasında bu operatörle karşılaştırma işlemi yapılamamasıdır.  `2. kod`'da çıkmamasının sebebi: Sıralama ölçütünü `key` parametresinde belirttikten sonra bütün itemlerin `key`'de belirtilen sıralama ölçütünü desteklemesidir. Örnek:
-```py
-print(max([1,2],"sel", 12, key=len))
-# Output: TypeError: object of type 'int' has no len()
-```
-Gördüğünüz gibi bu kodda `key` parametresinde `len` belirtilen sıralama ölçütünü `int` data type'ı desteklemediği için kod hata verdi.
-
-## `min(item, *items, key, default)`
-`item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en küçük öğeyi ya da bir `dict` objesinin içerdiği en küçük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Örnek:
-```py
-# 1. Kod
-print(min([1,2],"sel",(1,2,3,4)))
-# Output: TypeError: '>' not supported between instances of 'str' and 'list'
-```
-Ama aynı kodu şöyle yazarsak sorun çıkmaz:
-```py
-# 2. Kod
-print(max([1,2],"sel",(1,2,3,4), key=len))
-# Output: [1,2]
-```
-`key` parametresi, kendisine verilen ölçüte göre `item` ya da `*items` parametresine girilen itemleri sıralar. Yukarıdaki kodlarda, `1. kod`'da sıkıntı çıkmasının sebebi: `1. kod`'da sıralama ölçütü belirtilmediği için `<` operatörüyle itemleri birbiriyle karşılaştırması ve farklı data type'lar arasında bu operatörle karşılaştırma işlemi yapılamamasıdır.  `2. kod`'da çıkmamasının sebebi: Sıralama ölçütünü `key` parametresinde belirttikten sonra bütün itemlerin `key`'de belirtilen sıralama ölçütünü desteklemesidir. Örnek:
+`key` parametresine argüman olarak girilen ölçüte göre `item` ya da `*items` parametresine girilen argümanlar sıralanır. Bu parametreye argüman girilmediğinde Python, bütün item'ları `>` operator'ını kullanarak sıralamaya çalıştığı ve farklı data type'lar arasında bu operator kullanılamadığı için hata yükseltir. Ama `key` parametresine argüman olarak hangi sıralama ölçütü ile sıralama işlemi yapılacağı belirtilirse ve bu ölçüt bütün `item`'larda uygulanabilirse (örneğin `len`, yukarıdaki bütün `item`'lara uygulanabilir) sorun çıkmaz. Örnek:
 ```py
 print(min([1,2],"sel", 12, key=len))
 # Output: TypeError: object of type 'int' has no len()
 ```
-Gördüğünüz gibi bu kodda `key` parametresinde `len` belirtilen sıralama ölçütünü `int` data type'ı desteklemediği için kod hata verdi.
+Gördüğünüz gibi integer bir değere `len` uygulanamadığı için hata yükseltildi.
 
-## `sum(iterable, start=0)`
+<h2 id="4.9">`min(item, *items, key, default)` Fonksiyonu</h2>
+
+`item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en küçük öğeyi ya da bir `dict` objesinin içerdiği en küçük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Örnek:
+```py
+# 1. Kod
+print(min([1,2],"sel",(1,2,3,4))) # TypeError: '>' not supported between instances of 'str' and 'list'
+```
+Ama aynı kodu şöyle yazarsak sorun çıkmaz:
+```py
+# 2. Kod
+print(min([1,2],"sel",(1,2,3,4), key=len)) # Output: [1,2]
+```
+`key` parametresine argüman olarak girilen ölçüte göre `item` ya da `*items` parametresine girilen argümanlar sıralanır. Bu parametreye argüman girilmediğinde Python, bütün item'ları `>` operator'ını kullanarak sıralamaya çalıştığı ve farklı data type'lar arasında bu operator kullanılamadığı için hata yükseltir. Ama `key` parametresine argüman olarak hangi sıralama ölçütü ile sıralama işlemi yapılacağı belirtilirse ve bu ölçüt bütün `item`'larda uygulanabilirse (örneğin `len`, yukarıdaki bütün `item`'lara uygulanabilir) sorun çıkmaz. Örnek:
+```py
+print(min([1,2],"sel", 12, key=len))
+# Output: TypeError: object of type 'int' has no len()
+```
+Gördüğünüz gibi integer bir değere `len` uygulanamadığı için hata yükseltildi.
+
+<h2 id="4.10">`sum(iterable, start=0)` Fonksiyonu</h2>
+
 `iterable` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği öğelerin ya da bir `dict` objesinin içerdiği `key`'lerin toplamını döndürür.  Bu toplama işlemi matematiksel düzeydedir. Yani sadece numeric type'ları kabul eder. Örnek:
 ```py
-print(sum([1, 2.6, 3+4j]))
-# Output: (6.6+4j)
+print(sum([1, 2.6, 3+4j])) # Output: (6.6+4j)
 ```
-`sum()` fonksiyonunun `start` parametresine bir numeric type girilirse, bu fonksiyon, `iterable` parametresinin sonucu, `start` parametresiyle toplar ve sonucu döndürür. Örnek:
+`sum()` fonksiyonunun `start` parametresine argüman olarak bir numeric type girilirse, bu fonksiyon, `iterable` parametresine girilen argümanlar üzerinde işlem yaptıktan sonra sonucu `start` parametresiyle toplar ve döndürür. Örnek:
 ```py
-print(sum([1, 2.6, 3+4j], 5))
-# Output: (11.6+4j)
+print(sum([1, 2.6, 3+4j], 5)) # Output: (11.6+4j)
 ```
