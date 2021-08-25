@@ -63,7 +63,7 @@ Türkçe'deki **Komplex Sayılar**, **"Karmaşık Sayılar"** kavramlarının İ
 
 <h1 id="3">Numeric Data Types</h1>
 
-<h2 id="3.1">`int(x, base=10)` Fonksiyonu</h2>
+<h2 id="3.1"><code>int(x, base=10)</code> Fonksiyonu</h2>
 
 `int()` build-in fonksiyonu, `x` parametresine girilen argümanı **uygunsa** `int` class'ında belirtilen integer data type'a dönüştürmekte kullanılır. `base` parametresine, bu çevirme işleminin hangi sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur.
 ```py
@@ -87,7 +87,7 @@ print(int()) # Output: 0
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#int "https://docs.python.org/3/library/functions.html#int").
 
-<h3 id="3.1.1">`bit_length()` Methodu</h3>
+<h3 id="3.1.1"><code>bit_length()</code> Methodu</h3>
 
 `bit_length()` methodu, uygulandığı integer'ın bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(10))`: `0b1010`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş aynıdır. Örnek:
 ```py
@@ -95,7 +95,7 @@ print((10).bit_length()) # Output: 4 (`1010` 4 birim uzunluğundadır)
 print(len(bin(10)[2:])) # Output: 4 (`1010` 4 birim uzunluğundadır)
 ```
 
-<h2 id="3.2">`float(x)` Fonksiyonu</h2>
+<h2 id="3.2"><code>float(x)</code> Fonksiyonu</h2>
 
 `float()` build-in fonksiyonu, `x` parametresine girilen argümanı **uygunsa** `float` class'ında belirtilen float data type'a dönüştürmekte kullanılır.
 ```py
@@ -111,7 +111,7 @@ print(float()) # Output: 0.0
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#float "https://docs.python.org/3/library/functions.html#float").
 
-<h3 id="3.2.1">`as_integer_ratio()` Methodu</h3>
+<h3 id="3.2.1"><code>as_integer_ratio()</code> Methodu</h3>
 
 Birbirine bölündüğünde uygulandığı `float` sayıyı veren en küçük iki integer'ı döndürür. Bu iki sayı `tuple` içinde döndürülür. Örnek:
 ```py
@@ -123,7 +123,7 @@ print((6.125).as_integer_ratio()) # Output: (49, 8)
 print((9.337).as_integer_ratio()) # Output: (2628131857547395, 281474976710656)
 ```
 
-<h3 id="3.2.2">`is_integer()` Methodu</h3>
+<h3 id="3.2.2"><code>is_integer()</code> Methodu</h3>
 
 Bir `float`'ın tam olmayan kısmında (noktanın sağındaki, ondalık olmayan) sıfır harici bir sayı olup olmadığını kontrol eder. Yani bu methodla, bir sayının integer'mı floating'mı olduğunu sorgulayabilirsiniz. Bu method, uygulandığı `float` integer ise `True`, değilse (yani integer ise) `False` döndürür. Örnek:
 ```py
@@ -131,7 +131,7 @@ print((10.00).is_integer()) # Output: True
 print((10.01).is_integer()) # Output: False
 ```
 
-<h2 id="3.3">`complex(real, imag)` Fonksiyonu</h2>
+<h2 id="3.3"><code>complex(real, imag)</code> Fonksiyonu</h2>
 
 `complex()` build-in fonksiyonu, kendisine girilen argümanı **uygunsa** `complex` class'ında belirtilen complex data type'a dönüştürmekte kullanılır. Bir complex sayı real ve imag olmak üzere 2 parçadan oluşur:
 - `real`, gerçek kısmı ifade eder.
@@ -146,14 +146,14 @@ print(complex()) # Output: 0j
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#complex "https://docs.python.org/3/library/functions.html#complex").
 
-<h3 id="3.3.1">`real` Methodu</h3>
+<h3 id="3.3.1"><code>real</code> Methodu</h3>
 
 Bir complex sayının real kısmını döndüren property objesidir.
 ```py
 print((12+5j).imag) # Output: 12.0
 ```
 
-<h3 id="3.3.2">`imag` Methodu</h3>
+<h3 id="3.3.2"><code>imag</code> Methodu</h3>
 
 Bir complex sayının imag kısmını döndüren property objesidir.
 ```py
@@ -162,7 +162,7 @@ print((12+5j).imag) # Output: 5.0
 
 <h1 id="4">Numeric Fonksiyonlar</h1>
 
-<h2 id="4.1">`bin(x)` Fonksiyonu</h2>
+<h2 id="4.1"><code>bin(x)</code> Fonksiyonu</h2>
 
 `x` parametresine girilen integer'ın binary karşılığını döndürür. Döndürdüğü değer string formattadır. Binary sayılar `0b`/`0B` ile temsil edilir (örnek `0b1010`). Bu yüzden `bin(10)[2:]` şeklinde bir kullanımla `0b`/`0B` kısımlarından sonraki kısmı alabilirsiniz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#bin "https://docs.python.org/3/library/functions.html#bin"). Örnek:
 ```py
@@ -171,7 +171,7 @@ print(bin(10)[2:]) # Output: 1010
 print(type(bin(10))) # Output: <class 'str'>
 ```
 
-<h2 id="4.2">`oct(x)` Fonksiyonu</h2>
+<h2 id="4.2"><code>oct(x)</code> Fonksiyonu</h2>
 
 `x` parametresine girilen integer'ın octal karşılığını döndürür. Döndürdüğü değer string formattadır. Octal sayılar `0o`/`0O` ile temsil edilir (örnek `0o1010`). Bu yüzden `oct(10)[2:]` şeklinde bir kullanımla `0o`/`0O` kısımlarından sonraki kısmı alabilirsiniz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#oct "https://docs.python.org/3/library/functions.html#oct"). Örnek:
 ```py
@@ -180,7 +180,7 @@ print(oct(10)[2:]) # Output: 12
 print(type(oct(10))) # Output: <class 'str'>
 ```
 
-<h2 id="4.3">`hex(x)` Fonksiyonu</h2>
+<h2 id="4.3"><code>hex(x)</code> Fonksiyonu</h2>
 
 `x` parametresine girilen integer'ın hexadecimal karşılığını döndürür. Döndürdüğü değer string formattadır. Hexadecimal sayılar `0x`/`0X` ile temsil edilir (örnek `0o1010`). Bu yüzden `hex(10)[2:]` şeklinde bir kullanımla `0x`/`0X` kısımlarından sonraki kısmı alabilirsiniz. `x` parametresinde bir integer belirtilmemişse `TypeError` hatası yükseltir. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hex "https://docs.python.org/3/library/functions.html#hex"). Örnek:
 ```py
@@ -189,7 +189,7 @@ print(hex(10)[2:]) # Output: a
 print(type(hex(10))) # Output: <class 'str'>
 ```
 
-<h2 id="4.4">`pow(base, exp, mod)` Fonksiyonu</h2>
+<h2 id="4.4"><code>pow(base, exp, mod)</code> Fonksiyonu</h2>
 
 `mod` parametresine argüman girilmemişse `(base**exp)` işlemini, girilmişse `(base**exp) % mod` işlemini yapar. `pow(base, exp, mod)` yerine `pow(base, exp) % mod` şeklindeki kullanım daha verimlidir. `base`, `exp` ve `mod` parametrelerine girilen argümanlar numeric type olmak zorundadır. Aksi halde `TypeError` hatası yükseltilir. Örnek:
 ```py
@@ -200,7 +200,7 @@ print(pow(2,3,2)) # ((2 ** 3) % 2) == 0
 
 Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#pow "https://docs.python.org/3/library/functions.html#pow").
 
-<h2 id="4.5">`abs(x)` Fonksiyonu</h2>
+<h2 id="4.5"><code>abs(x)</code> Fonksiyonu</h2>
 
 "abs",*mutlak anlamına gelen absolute kelimesinden gelmektedir. Bu fonksiyon, `x` parametresine girilen değerin mutlak değerini döndürür. `x` parametresine girilen argümanlar integer, floating point ya da `__abs__()` uygulanabilen bir class objesi (instance) olabilir. Bu argüman bir complex sayı olursa, magnitude (büyüklüğü) döndürülür. Daha Fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#abs "https://docs.python.org/3/library/functions.html#abs").
 ```py
@@ -209,7 +209,7 @@ print(abs(-15.18)) ; print(abs(15.18)) # Output: 15.18
 print(abs(-15+3j)) ; print(abs(15+3j)) # Output: 15.297058540778355
 ```
 
-<h2 id="4.6">`round(number, ndigits)` Fonksiyonu</h2>
+<h2 id="4.6"><code>round(number, ndigits)</code> Fonksiyonu</h2>
 
 `number` parametresine girilen integer'ın `10**(ndigits)`'inci basamağını, `10**(ndigits - 1)`'inci basamağını referans alarak yuvarlar:
 ```py
@@ -242,7 +242,7 @@ print(0.1 + 0.2) # Output: 0.30000000000000004
 ```
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#round "https://docs.python.org/3/library/functions.html#round").
 
-<h2 id="4.7">`divmod(a, b)` Fonksiyonu</h2>
+<h2 id="4.7"><code>divmod(a, b)</code> Fonksiyonu</h2>
 
 `complex` olmayan iki sayıyı alır ve matematikteki `a/b` işlemindeki bölüm ve kalanı döndürür. Yani aşağıdaki bölme işleminde C ve D kısımlarını döndürür.
 ```
@@ -256,7 +256,7 @@ Integer'lar için output `((a // b), (a % b))` işlemiyle aynıdır. Bu output `
 print(divmod(10, 2)) # Output: (5, 0)
 ```
 
-<h2 id="4.8">`max(item, *items, key, default)` Fonksiyonu</h2>
+<h2 id="4.8"><code>max(item, *items, key, default)</code> Fonksiyonu</h2>
 
 `item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en büyük öğeyi ya da bir `dict` objesinin içerdiği en büyük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Örnek:
 ```py
@@ -275,7 +275,7 @@ print(min([1,2],"sel", 12, key=len))
 ```
 Gördüğünüz gibi integer bir değere `len` uygulanamadığı için hata yükseltildi.
 
-<h2 id="4.9">`min(item, *items, key, default)` Fonksiyonu</h2>
+<h2 id="4.9"><code>min(item, *items, key, default)</code> Fonksiyonu</h2>
 
 `item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en küçük öğeyi ya da bir `dict` objesinin içerdiği en küçük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Örnek:
 ```py
@@ -294,7 +294,7 @@ print(min([1,2],"sel", 12, key=len))
 ```
 Gördüğünüz gibi integer bir değere `len` uygulanamadığı için hata yükseltildi.
 
-<h2 id="4.10">`sum(iterable, start=0)` Fonksiyonu</h2>
+<h2 id="4.10"><code>sum(iterable, start=0)</code> Fonksiyonu</h2>
 
 `iterable` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği öğelerin ya da bir `dict` objesinin içerdiği `key`'lerin toplamını döndürür.  Bu toplama işlemi matematiksel düzeydedir. Yani sadece numeric type'ları kabul eder. Örnek:
 ```py
