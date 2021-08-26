@@ -685,19 +685,19 @@ print(bool(True)) # Output: True
 Bir operator'ın önceliğini arttırmak için o operator'ın bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operator'ının önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz. Aşağıdaki operator'lar, en öncelikliden son öncelikliye doğru olmak üzere yukarıdan aşağıya sıralanmıştır.
 | Operator | Description |
 | :----------: |-------------|
-| `()` | Parentheses |
-| `**` | Exponent |
-| `+x`, `-x`, `~x` | Unary plus, Unary minus, Bitwise NOT |
-| `*`, `/`, `//`, `%` | Multiplication, Division, Floor division, Modulus |
-| `+`, `-` | Addition, Subtraction |
-| `<<`, `>>` | Bitwise shift operators |
-| `&` | Bitwise AND |
-| `\^` | Bitwise XOR |
-| `\|` | Bitwise OR |
-|  `==`, `!=`, `>`, `>=`, `<`, `<=`, `is`, `is not`, `in`, `not in` | Comparisons, Identity, Membership operators |
-| `not` | Logical NOT |
-| `and` | Logical AND |
-| `or` | Logical OR |
+| `()` | Parentheses (Parantez) |
+| `**` | Exponent (Üs)|
+| `+x`, `-x`, `~x` | Unary plus (Daha fazla), Unary minus (Tekli eksi), Bitwise NOT (Bitsel değil)|
+| `*`, `/`, `//`, `%` | Multiplication (Çarpma), Division (Bölme), Floor division (Kat Bölümü), Modulus (Mod)|
+| `+`, `-` | Addition (Toplama), Subtraction (Çıkarma) |
+| `<<`, `>>` | Bitwise shift operators (Bitsel kaydırma operatörleri) |
+| `&` | Bitwise AND (Bitsel Ve)|
+| `\^` | Bitwise XOR (Bitsel Özel Veya)|
+| `\|` | Bitwise OR (Bitsel Veya)|
+|  `==`, `!=`, `>`, `>=`, `<`, `<=`, `is`, `is not`, `in`, `not in` | Comparisons (Karşılaştırma), Identity (Özdeşlik), Membership (Üyelik) operators |
+| `not` | Logical NOT (Mantıksal Değil)|
+| `and` | Logical AND (Mantıksal Ve)|
+| `or` | Logical OR (Mantıksal Veya)|
 
 Daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/reference/expressions.html#operator-precedence "https://docs.python.org/3/reference/expressions.html#operator-precedence").
 
