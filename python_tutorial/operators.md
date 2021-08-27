@@ -702,3 +702,5 @@ Bir operator'ın önceliğini arttırmak için o operator'ın bulunduğu işlemi
 Daha ayrıntılı bilgi için [tıklayınız](https://docs.python.org/3/reference/expressions.html#operator-precedence "https://docs.python.org/3/reference/expressions.html#operator-precedence").
 
 **Not:** Yukarıdaki linkte ilk sırada olan Binding'in ne olduğunu öğrenmek için [tıklayınız](https://mathieularose.com/python-variables "https://mathieularose.com/python-variables").
+
+[Sonraki Ders](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md)
