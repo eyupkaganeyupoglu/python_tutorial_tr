@@ -238,3 +238,5 @@ Bilgisayar programları, runtime sırasında bellek ihtiyacı duyarlar. Bellek s
 - **Concurrent** yaklaşımı, programın çalışması durdurulmadan programla eşzamanlı olarak Garbage Collection işlemleri yapılır. Bu sayede **stop-the-world** yaklaşımının oluşturduğu dezavantaj ortadan kalkar.
 
 Daha fazla bilgi için [tıklayınız](https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python "https://www.tutorialspoint.com/How-does-garbage-collection-work-in-Python").
+
+[Sonraki ders](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/IO.md)
