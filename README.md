@@ -22,7 +22,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 Şimdi konuları hangi sırayla çalışman gerektiğini listeleyeceğim ama bu `README` dosyasının tamamını okumayı bitirmeden başlama sakın. Aksi halde oluşabilecek maddi ve manevi zarardan müessesemiz sorumlu değildir.
 - Temel bilgiler
     - [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/basic_concepts.md)
-    - [Print-Input İşlemleri](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/IO.md)
+    - [Print-Input İşlemleri](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/print_and_input.md)
     - [Operatörler (Operators)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/operators.md)
     - [Deyimler, İfadeler ve Anahtar Kelimeler (Statements, Expressions and Keywords)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md)
     - [`if`-`elif`-`else` Deyimleri (Statements)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/if-elif-else.md)
