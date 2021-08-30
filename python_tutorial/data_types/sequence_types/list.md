@@ -89,7 +89,7 @@ Bir listeye öğe eklemek için addition (toplama `+`) operator'ını kullanarak
 ```py
 l1 = ["item 1", "item 2"]
 id_1 = id(l1)
-l1.append("item 2")
+l1 += ["item 3"]
 id_2 = id(l1)
 print((id_1 == id_2)) # Output: True
 ```
@@ -116,6 +116,7 @@ print(l1) # Output: [1, 2, 3, 4]
 l1[1] = 0
 print(l1) # Output: [1, 0, 3, 4]
 ```
+
 Bir listenin bütün öğelerini değiştirmek:
 ```py
 l1 = [1,2,3,4]
@@ -123,18 +124,21 @@ print(l1) # Output: [1, 2, 3, 4]
 l1[:] = 5,6,7,8
 print(l1) # Output: [5, 6, 7, 8]
 ```
+
 Listede belli bir index'deki öğeyi tamamen silmek:
 ```py
 l1 = [1,2,3,4]
 del l1[0]
 print(l1) # Output: [2, 3, 4]
 ```
+
 Liste objesini tamamen silmek:
 ```py
 l1 = [1,2,3,4]
 del l1
-print(l1) # Output: NameError: name 'l1' is not defined
+print(l1) # NameError: name 'l1' is not defined
 ```
+
 Bir listeyi kopyalamak ve sonuçları:
 ```py
 l1 = [1,2,3,4]
