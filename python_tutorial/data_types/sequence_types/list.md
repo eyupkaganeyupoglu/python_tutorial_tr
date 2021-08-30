@@ -1,273 +1,221 @@
-﻿# Liste (`list(iterable)`) İşlemleri ve Özellikleri
+﻿# İçindekiler
 
-## Liste tanımlamak
-Köşeli parantez `[]` listeyi temsil eder.
+- [Listeler (Lists)](#1)
+    - [Listeler'de İşlemler](#1.1)
+    - [Liste Üreteçleri (List Comprehensions)](#1.2)
+    - [Liste Methodları](#1.3)
+        - [`append(object)` Methodu](#1.3.1)
+        - [`extend(iterable)` Methodu](#1.3.2)
+        - [`insert(index, object)` Methodu](#1.3.3)
+        - [`remove(value)` Methodu](#1.3.4)
+        - [`reverse()` Methodu](#1.3.5)
+        - [`pop(index)` Methodu](#1.3.6)
+        - [`sort(key=None, reverse=False)` Methodu](#1.3.7)
+        - [`sorted(iterable, key=None, reverse=False)` Fonksiyonu](#1.3.8)
+        - [`index(value, start, stop)` Methodu](#1.3.9)
+        - [`count(value)` Methodu](#1.3.10)
+        - [`copy()` Methodu](#1.3.11)
+        - [`clear()` Methodu](#1.3.12)
+
+<h1 id="1">Listeler (Lists)</h1>
+
+Listeler, içinde objeleri depolayabilen, sıralı, değiştirilebilir data type'lardır. `list(iterable)` build'in fonksiyonu ile liste oluşturabilirsiniz veya uygun objeleri liste'ye dönüştürebilirsiniz. Listeler köşeli parantez (`[]`) ile ifade edilir. Örnek:
 ```py
 # Boş Liste Tanımlamak
 l1 = []
 l2 = list()
-```
-Listelere her türlü data type'ı eleman olarak ekleyebilirsiniz. Örnek:
-```py
-l1 = ["string",
+l3 = ["string",
 	  1, 1.5, 15+5j,
 	  ("tuple", "Tuple"),
 	  ["liste", "Liste"],
 	  {"set", "Set"},
 	  {"Sözlük": "dictionary"}]
+      
+print(l1,l2,l3,sep="\n")
 ```
-Bir liste içine tekrardan `list`, `tuple`, `dictionary` ve `set` tanımayabilir ve bunların içine erişim sağlayabilirsiniz.  Tanımlama ile ilgili örnek:
-```py
-l1 = ["string",
-	  1, 1.5, 15+5j,
-	  ("tuple", "Tuple"),
-	  ["liste", "Liste"],
-	  {"set", "Set"},
-	  {"Sözlük": "dictionary"}]
+**Output:**
+```
+[]
+[]
+['string', 1, 1.5, (15+5j), ('tuple', 'Tuple'), ['liste', 'Liste'], {'set', 'Set'}, {'Sözlük': 'dictionary'}]
 ```
 
-## Listelerde İşlemler
-Listelerin eleman sayısına `len()` fonksiyonuyla ulaşılabilir.
+<h2 id="1.1">Listeler'de İşlemler</h2>
+
+Bir listeyi dilimlerken `list_exp[Başlama index'i : bitiş index'i : atlama değeri]` syntax'ı kullanılır. Örnekler:
+```py
+a = [0,1,2,3,4,5,6,7,8,9]
+
+# 4. index'ten başlar, (9. index'i dahil etmeden) 9. index'e kadar list'i yazdırır.
+print(a[4:9]) # Output: [4, 5, 6, 7, 8]
+
+# Başlangıç index'i belirtilmediği için en baştan (0. index'ten) başlar, (9. index'i dahil etmeden) 9. index'e kadar list'i yazdırır.
+print(a[:9]) # Output: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+# Bitiş index'i belirtilmediği için 4. indexten başlar, en son index'e kadar list'i yazdırır.
+print(a[4:]) # Output: [4, 5, 6, 7, 8, 9]
+
+# Başlangıç ve bitiş intex'i belirtilmediği için tüm list'i yazdırır.
+print(a[:]) # Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Başlangıç index'i belirtilmediği için en baştan (0. index'ten) başlar, (-1. index'i dahil etmeden) -1. index'e kadar (sonran bir önceki index) list'i yazdırır.
+print(a[:-1])# Output: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+# Baştan sona index atlamadan list'i yazdırır.
+print(a[::1]) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Baştan sona 1 index atlaya atlaya list'i yazdırır.
+print(a[::2]) # Output: [0, 2, 4, 6, 8]
+
+# 4. index'ten başlar, (9. index'i dahil etmeden) 9. index'e kadar 2 index atlaya atlaya list'i yazdırır.
+print(a[0:9:3]) # Output: [0, 3, 6]
+
+# Sondan başa index atlamadan list'i yazdırır. (list'i ters çevirme)
+print(a[::-1]) # Output: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+```
+
+Listelerin öğe sayısına `len()` fonksiyonuyla ulaşılabilir. Örnek:
 ```py
 l1 = [1,2,3,4,5]
 print(len(l1)) # Output: 5
 ```
-Listelerde toplama ve çarpma işlemi yapabilirsin.
-```py
-d1 = [1,2,3]
-d2 = [4,5,6]
-l2 = d1 + d2
-l3 = d1 * 2
-print(l2, l3, sep="\n")
-```
-**Output:**
-```
-[1, 2, 3, 4, 5, 6]
-[1, 2, 3, 1, 2, 3]
-```
-Toplama işlemini kullanarak listeye eleman da ekleyebilirsiniz:
-```py
-d1 = [1,2,3]
-d1 = d1 + [4]
-print(d1) # Output: [1, 2, 3, 4]
-```
-Uygun olan herhangi bir değeri `list()` fonksiyonu ile liste türüne dönüştürebilirsiniz. Örneğin:
-```py
-print(list(range(0,10)))
-print(list((0,1,2,3,4,5,6,7,8,9)))
-print(list({0,1,2,3,4,5,6,7,8,9}))
-print(list("0123456789"))
-```
-**Output:**
-```
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-```
-Bir listenin son öğresine ulamak için:
-```py
-c = [0,1,2,3,4]
-print(c[len(c)-1]) # Output: 4
-```
-Bir listenin herhangi bir öğesindeki değiştirmek için:
-```py
-c = [1,2,3,4]
-c[1] = 0
-print(c) # Output: [1, 0, 3, 4]
-```
-Bir listenin bütün öğelerini değiştirmek için:
-```py
-c = [1,2,3,4]
-c[:len(c)] = 5,6,7,8
-print(c) # Output: [5, 6, 7, 8]
-```
-Listeden bir öğe silmek için:
-```py
-c = [1,2,3,4]
-del c[0]
-print(c) # Output: [2, 3, 4]
-```
-Direkt listeyi silmek için:
-```py
-c = [1,2,3,4]
-del c
-print(c) # Output: NameError: name 'c' is not defined
-```
-Bir listeyi kopyalamak için basitçe o listeyi bir variableye eşitleyebilirsiniz:
-```py
-c = [1,2,3,4]
-c_copy = c
-print(c) # Output: [1, 2, 3, 4]
-```
-**Not:** Normal şartlarda bir variable'yi başka bir variable'ye eşitlerlerseniz, farklı ID'lere sahip olurlar. Ama aynı durum listeler için geçerli değildir. Bir listeyi başka bir listeye eşitlerseniz, aynı ID'lere sahip olurlar. Çünkü ikinci liste, ilk listenin pointer'ı olur. Bu yüzden birbiriyle eşitlenmiş iki listeyle çalışırken, birinide yaptığınız değişiklik diğerini de etkiler. Örnek:
-```py
-c = [1,2,3,4]
-c_copy = c
-print(id(c) == id(c_copy)) # Output: True
-c.append(2)
-print(c, c_copy, sep="\n")
-```
-**Output:**
-```
-True
-[1, 2, 3, 4, 2]
-[1, 2, 3, 4, 2]
-```
-Bunu önlemek için şöyle bir eşitleme yöntemi uygulayabilirsiniz:
-```py
-c = [1,2,3,4]
-c_copy = c[:]
-print(id(c) == id(c_copy)) # Output: True
-c.append(2)
-print(c, c_copy, sep="\n")
-```
-**Output:**
-```
-False
-[1, 2, 3, 4, 2]
-[1, 2, 3, 4]
-```
-Gördüğünüz gibi bu yöntemle listeler hem farklı id'lere sahip oldu, hem de farklı id'lere sahip oldukları için birinde yapılan değişiklik diğerini etkilemedi.
 
-## Listeleri Indeksleme
-Listelerin elemanlarına ulaşabilmek için index'ler kullanılır. Daha önce [string dilimleme](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/karakter_dizileri/karakter_dizileri.md#string-dilimleme) kısmından aşına olabilirsiniz.
-
-
-Dördüncü indeksten başlar 10. indeksi dahil etmeden 10. indekse kadar alır.
+Listelerde aritmetik (sayısal) işlemler yapılabilir. Örnek:
 ```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[4:10])
-
-# Output: [5, 6, 7, 8, 9]
+print([1,2,3] + [4,5,6]) # Output: [1, 2, 3, 4, 5, 6]
+print([1,2,3] * 2) # Output: [1, 2, 3, 1, 2, 3]
 ```
-Başlangıç değeri belirtilmemişse en baştan başlayarak alır.
+Bir listeye öğe eklemek için addition (toplama `+`) operator'ını kullanarak öğe ekleyebilirsiniz. Bu durum yeniden tanımlama (redefinition) işlemi olsa bile list, değiştirilebilir (mutable) bir type olduğu için ID'si değişmez, yani farklı bir obje olmaz. Örnek:
 ```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[:10])
-
-# Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-```
-Bitiş değeri belirtilmemişse en sonuna kadar alır.
-```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[4:])
-
-# Output: [5, 6, 7, 8, 9, 10]
-```
-İki değer de belirtilmemişse tüm listeyi alır.
-```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[:])
-
-# Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-```
-Son liste elemanına kadar alır.
-```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[:-1])
-
-# Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-```
-Baştan sona 2 değer atlaya atlaya listeyi alır.
-```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[::2])
-
-# Output: [1, 3, 5, 7, 9]
-```
-Dördüncü indeksten 12'nci indekse 3'er atlayarak listeyi alır.
-```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[4:12:3])
-
-# Output: [5, 8]
-```
-Baştan sona -1 atlayarak listeyi alır. (listeyi ters çevirme)
-```py
-c = [1,2,3,4,5,6,7,8,9,10]
-print(c[::-1])
-
-# Output: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+l1 = ["item 1", "item 2"]
+id_1 = id(l1)
+l1.append("item 2")
+id_2 = id(l1)
+print((id_1 == id_2)) # Output: True
 ```
 
-Bir liste içinde tanımlanmış `string`, `list`, `tuple`, `dictionary` gibi farklı data type'ların indexlerine ulaşabilirsiniz. Örnek:
+Diğer iterable objeleri `list()` fonksiyonu ile list type'a dönüştürebilirsiniz. Örnek:
+```py
+print(list(range(0,4))) # Output: [0, 1, 2, 3]
+print(list((0,1,2,3))) # Output: [0, 1, 2, 3]
+print(list({0,1,2,3})) # Output: [0, 1, 2, 3]
+print(list("0123")) # Output: ['0', '1', '2', '3']
+```
+
+Öğe sayısını bilmediğiniz listelerin son öğesine ulaşmak için iki yöntem:
+```py
+l1 = [0,1,2,3,4]
+print(l1[len(l1)-1]) # Output: 4
+print(l1[-1]) # Output: 4
+```
+
+Bir listenin herhangi bir index'indeki öğesini başka bir şeyler değiştirmek:
+```py
+l1 = [1,2,3,4]
+print(l1) # Output: [1, 2, 3, 4]
+l1[1] = 0
+print(l1) # Output: [1, 0, 3, 4]
+```
+Bir listenin bütün öğelerini değiştirmek:
+```py
+l1 = [1,2,3,4]
+print(l1) # Output: [1, 2, 3, 4]
+l1[:] = 5,6,7,8
+print(l1) # Output: [5, 6, 7, 8]
+```
+Listede belli bir index'deki öğeyi tamamen silmek:
+```py
+l1 = [1,2,3,4]
+del l1[0]
+print(l1) # Output: [2, 3, 4]
+```
+Liste objesini tamamen silmek:
+```py
+l1 = [1,2,3,4]
+del l1
+print(l1) # Output: NameError: name 'l1' is not defined
+```
+Bir listeyi kopyalamak ve sonuçları:
+```py
+l1 = [1,2,3,4]
+l2 = l1
+print(l1) # Output: [1, 2, 3, 4]
+print(l2) # Output: [1, 2, 3, 4]
+print(id(l1) == id(l2)) # Output: True
+
+l1[0] = 5
+print(l1) # Output: [5, 2, 3, 4]
+print(l2) # Output: [5, 2, 3, 4]
+```
+List, değiştirilebilir (mutable) bir data type olduğu için assignment operator (`=`) kullanılarak bir liste objesini yukarıdaki gibi farklı bir variable'a atarsanız, son durumda oluşan objeler aynı liste objesine atıfta bulunacağı (refers to) için birinde yapılan değişiklikler diğerini de etkiler. Bu durum değiştirilemez (immutable) data type'lar için geçerli değildir çünkü değiştirilemez (immutable) data type'ları değiştirmek için yeniden tanımlama (redefinition) işlemi yapmak zorundayız. Yeniden tanımlama (redefinition) işlemi sonucunda da mevcut obje farklı bir objeye dönüştüğü için birbirine atıfta bulunma durumu ortadan kalkacak ve bu objeler birbirini etkilemeyecek.
+
+Bir listeyi yukarıda anlattığım sorunu yaşamadan kopyalamak istiyorsanız aşağıdaki yöntemi kullanabilirsiniz:
+```py
+l1 = [1,2,3,4]
+l2 = l1[:]
+print(id(l1) == id(l2)) # Output: False
+print(l1) # Output: [1, 2, 3, 4]
+print(l2) # Output: [1, 2, 3, 4]
+```
+Gördüğünüz gibi bu yöntemle içerikleri aynı ama iki farklı obje olan liste objeleri elde ettik.
+
+Bir liste içine tanımlanmış diğer index'lenebilir iterable objelerin index'lerine de erişebiliriz. Örnek:
 ```py
 l1 = ["string",
-	  1, 1.5, 15+5j,
 	  ("tuple", "Tuple"),
 	  ["liste", "Liste"],
-	  {"set", "Set"},
 	  {"Sözlük": "dictionary"}]
 print(l1[0][3])        # Output: i
-print(l1[4][0])        # Output: tuple
-print(l1[5][1])        # Output: Liste
-print(l1[6][0])        # Output: TypeError: 'set' object is not subscriptable
-print(l1[7]["Sözlük"]) # Output: dictionary
+print(l1[1][0])        # Output: tuple
+print(l1[2][1])        # Output: Liste
+print(l1[3]["Sözlük"]) # Output: dictionary
 ```
-`set` data type'ının neden `TypeError` verdiğini [şuradan](set) öğrenebilirsiniz. Dictionary'nin indeksine nasıl ulaşmak ilgili daha ayrıntılı bilgi için [tıklayınız](asdasd).
+`obje[index][index]` yapısını çalışma mantığı:
+- Python `a[b][c]` yapısını soldan sağa okumaya başladığı için önce `a[b]` kısmını okur ve `a` objesinin `b` index'ine gider ve böylece `a[b]` kodu, `a` objesinin `b` index'indeki objeye atıfta bulunmuş olur. Bu objeye `x` diyelim.
+- Bu işlemden sonra `a[b][c]` kodu Python'un gözünde `x[c]` koduna dönüşür. Python `x[c]` kodu içinde aynı işlemleri yapar.
+- Python'u LEGO gibi düşünün. Kodları bütün olarak değil, parça parça yorumlayın. Böylelikle Python'un çalışma mantığını anlarsınız. Örneğin aşağıdaki iki kod tamamen aynı işi yapmaktadır:
+    ```py
+    l1 = [[[[1,2], [3,4]], [[5,6], [7,8]]], [[[9,10], [11,12]], [[13,14], [15,16]]]]
 
-# Liste Üreteçleri (List Comprehensions)
-Kısa yoldan liste üretmek için kullanılır. Küçük çaplı programlarda tercih edilir. Örnek:
+    a1 = l1[0]
+    a2 = a1[0]
+    a3 = a2[0]
+    a4 = a3[0]
+    print(a4) # Output: 1
+
+    print(l1[0][0][0][0]) # Output: 1
+    ```
+
+<h2 id="1.2">Liste Üreteçleri (List Comprehensions)</h2>
+
+**Comprehension**, tek satırda oluşturduğumuz **Generator** (daha sonra anlatılacak) yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Bu generator yapısı (**Generator Comprehension**) bir generator objesi oluşturmakta kullanılır. Daha sonra bu generator objesini list type'a çevirerek List Comprehension oluşturabiliriz. Örnek:
 ```py
-# 1. Yöntem
-c1 = list()
-for i in range(10):
-	c1 += [i]
-print(c1)
-# Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-# 2. Yöntem (Üreteç)
-c2 = [i for i in range(10)]
-print(c2)
-# Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-# 3. Yöntem
-c3 = list(range(10))
-print(c3)
-# Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+list_exp = [i for i in range(1,4)]
+print(list_exp) # Output: [1, 2, 3]
 ```
-Başka bir örnek:
-```py
-# 1. Yöntem
-liste1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
-tümü1 = []
-for i in liste1:
-	for z in i:
-		tümü1 += [z]
-print(tümü1)
-# Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+Bu konu daha sonra comprehension başlığı altında daha detaylı anlatılacak.
 
-# 2. Yöntem (Üreteç)
-liste2 = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
-tümü2 = [z for i in liste2 for z in i]
+<h2 id="1.3">Liste Methodları</h2>
 
-print(tümü2)
-# Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-```
+<h3 id="1.3.1"><code>append(object)</code> Methodu</h3>
 
-# Liste Methodları
-
-## `append(item)` Methodu
-Bir listeye öğe eklemek için kullanılır. Öğeyi, listenin en sonuna (yani en sağına) ekler.
-```py
-liste = ["Elma", "Armut", "Kiraz"]
-liste.append("Çilek")
-print(liste) # Output: ['Elma', 'Armut', 'Kiraz', 'Çilek']
-```
-Eklenen type string ile sınırlı değildir. `list`, `tuple`, `set`, `dict` de eklenebilir.
+`object` parametresinde argüman olarak girdiğiniz objeyi, uygulandığı listeye eklemek için kullanılır. Objeyi listenin en sonuna (yani en sağına) ekler. Örnek:
 ```py
 liste = []
+liste.append("Elma, Armut")     # string
+liste.append(1)                 # integer
+liste.append(1.1)               # float
+liste.append(1+1j)              # complex
 liste.append(["Elma", "Armut"]) # list
 liste.append(("Elma", "Armut")) # tuple
 liste.append({"Elma", "Armut"}) # set
 liste.append({"Elma": "Armut"}) # dict
-print(liste)
-# Output: [['Elma', 'Armut'], ('Elma', 'Armut'), {'Armut', 'Elma'}, {'Elma': 'Armut'}]
+print(liste) # Output: ['Elma, Armut', 1, 1.1, (1+1j), ['Elma', 'Armut'], ('Elma', 'Armut'), {'Armut', 'Elma'}, {'Elma': 'Armut'}]
 ```
 
-## `extend(item)` Methodu
-Bir listenin elemanlarını başka bir listeye ekler. `append()`'den farkı budur. Örnek:
+<h3 id="1.3.2"><code>extend(iterable)</code> Methodu</h3>
+
+`iterable` parametresinde argüman olarak girdiğiniz iterable objenin öğelerini, uygulandığı listeye eklemek için kullanılır. `append` methodundan bu yönüyle farklıdır. Öğeyi listenin en sonuna (yani en sağına) ekler. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 liste.append(["Çilek", "Şeftali"])
@@ -276,52 +224,60 @@ print(liste) # Output: ['Elma', 'Armut', 'Kiraz', ['Çilek', 'Şeftali']]
 liste = ["Elma", "Armut", "Kiraz"]
 liste.extend(["Çilek", "Şeftali"])
 print(liste) # Output: ['Elma', 'Armut', 'Kiraz', 'Çilek', 'Şeftali']
-
 ```
 
-## `insert(index, item)` Methodu
-Bir öğeyi, listenin istenilen yerine yerleştirir. Yeni öğe, yerini aldığı öğenin bir sağa kaymasına neden olur.
+<h3 id="1.3.3"><code>insert(index, object)</code> Methodu</h3>
+
+`object` parametresinde argüman olarak girdiğiniz objeyi, uygulandığı listede, `index` parametresinde belirtilen index'e yerleştirir. Yeni object, yerini aldığı öğenin bir sağa kaymasına neden olur. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
+print(liste) # Output: ['Elma', 'Armut', 'Kiraz']
 liste.insert(1, "Çilek")
 print(liste) # Output: ['Elma', 'Çilek', 'Armut', 'Kiraz']
 ```
 
-## `remove(item)` Methodu
-Listeden öğe silmek için kullanılır. `item` parametresine, silmek istediğiniz öğeyi yazmalısınız.
+<h3 id="1.3.4"><code>remove(value)</code> Methodu</h3>
+
+`value` parametresinde argüman olarak girdiğiniz value'yu, uygulandığı listeden siler. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 liste.remove("Elma")
 print(liste) # Output: ['Armut', 'Kiraz']
+
+l1 = ['a', 'b', ['c', 'd']]
+l1.remove(['c', 'd'])
+print(l1) # Output: ['a', 'b']
 ```
 
-## `reverse()` Methodu
-Listeleri ters çevirmek için kullanılır.
+<h3 id="1.3.5"><code>reverse()</code> Methodu</h3>
+
+Uygulandığı listeyi ters çevirmek için kullanılır.
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 liste.reverse()
 print(liste) # Output: ['Kiraz', 'Armut', 'Elma']
 ```
 
-## `pop(index)` Methodu
-`remove()` gibi, bir listeden bir öğeyi silmek için kullanılır. `index` parametresine silmek istediğiniz öğeyi değil, o öğenin bulunduğu index'i yazmalısınız. `remove()`'dan farklı, sildiği öğeyi yazdırmak için kullanılabilir.
+<h3 id="1.3.6"><code>pop(index)</code> Methodu</h3>
+
+`index` parametresinde belirtilen index'deki öğreyi, uygulandığı listeden siler. Sildiği döndürür. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 print(liste.pop(0)) # Output: Elma
 print(liste) # Output: ['Armut', 'Kiraz']
 ```
 
-## `sort(key = ..., reverse = False)` Methodu
+<h3 id="1.3.7"><code>sort(key=None, reverse=False)</code> Methodu</h3>
+
 Listenin öğelerini UNICODE'a göre küçükten büyüğe sıralar. `key` parametresi, sıralama ölçütü için referansın girildiği parametredir. `reverse` parametresi, öğelerin küçükten büyüğe mi, büyükten küçüğe mi sıralanacağını belirlediğimiz parametredir ve default değeri `False`'dır.
 ```py
 liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
 liste.sort()
-print(liste)
-# Output: ['Ahmet', 'Ceylan', 'Mahmut', 'Mehmet', 'Seyhan', 'Zeynep', 'İsmail', 'Şule']
+print(liste) # Output: ['Ahmet', 'Ceylan', 'Mahmut', 'Mehmet', 'Seyhan', 'Zeynep', 'İsmail', 'Şule']
 
+liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
 liste.sort(reverse = True)
-print(liste)
-# Output: ['Şule', 'İsmail', 'Zeynep', 'Seyhan', 'Mehmet', 'Mahmut', 'Ceylan', 'Ahmet']
+print(liste) # Output: ['Şule', 'İsmail', 'Zeynep', 'Seyhan', 'Mehmet', 'Mahmut', 'Ceylan', 'Ahmet']
 ```
 Türkçe karakterlerde sıkıntı çıkabiliyor. Buna alternatif çözüm:
 ```py
@@ -330,18 +286,16 @@ locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
 liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
 liste.sort(key=locale.strxfrm)
-print(liste)
+print(liste) # Output: ['Ahmet', 'Ceylan', 'İsmail', 'Mahmut', 'Mehmet', 'Seyhan', 'Şule', 'Zeynep']
 ```
 
-## `sorted(list, key = ..., reverse = False)` Fonksiyonu
-Liste methodu olan `sort()` ile aynı mantıkta çalışır. `sort()` methodu, uygulandığı listeyi değiştirirken, `sorted()` methodu uygulandığı listeyi değiştirmez.
+<h3 id="1.3.8"><code>sorted(iterable, key=None, reverse=False)</code> Fonksiyonu</h3>
+
+`iterable` parametresine argüman olarak girilen iterable objeyi `key` parametresinde belirtilen ölçüte göre sıralar. `reverse` parametresine bağlı olarak da bu sıralamanın normal mi yoksa ters mi olacağına karar verebilirsiniz. Bu fonksiyon, output'u `list` type'dır. Örnek:
 ```py
 liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
-print(sorted(liste))
-# Output: ['Ahmet', 'Ceylan', 'Mahmut', 'Mehmet', 'Seyhan', 'Zeynep', 'İsmail', 'Şule']
-
-print(sorted(liste, reverse = True))
-# Output: ['Şule', 'İsmail', 'Zeynep', 'Seyhan', 'Mehmet', 'Mahmut', 'Ceylan', 'Ahmet']
+print(sorted(liste)) # Output: ['Ahmet', 'Ceylan', 'Mahmut', 'Mehmet', 'Seyhan', 'Zeynep', 'İsmail', 'Şule']
+print(sorted(liste, reverse = True)) # Output: ['Şule', 'İsmail', 'Zeynep', 'Seyhan', 'Mehmet', 'Mahmut', 'Ceylan', 'Ahmet']
 ```
 Türkçe karakterlerde sıkıntı çıkabiliyor. Buna alternatif çözüm:
 ```py
@@ -349,35 +303,40 @@ import locale
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254') 
 
 liste = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
-sorted(liste, key=locale.strxfrm)
-print(liste)
+print(sorted(liste, key=locale.strxfrm)) # Output: ['Ahmet', 'Ceylan', 'İsmail', 'Mahmut', 'Mehmet', 'Seyhan', 'Şule', 'Zeynep']
 ```
 
-## `index(item)` Methodu
-`item` parametresine tanımlanan değerin, liste içinde kaçıncı index'te olduğunu söyler. İç içe listelerde çalışmaz ve `ValueError: 'item' is not in list` hatası verir.
+<h3 id="1.3.9"><code>index(value, start, stop)</code> Methodu</h3>
+
+`value` parametresine argüman olarak girdiğiniz value'nun, uygulandığı liste içinde ilk kaçıncı index'de bulunduğunu söyler. `start` ve `stop` parametrelerine gireceğiniz integer argümanlarla, `index` methodunun hangi index'ler arasında arama yaparcağını belirleyebilirsiniz. Örnek:
 ```py
-liste_index = ['Ahmet', 'Mehmet', 'Ceylan', 'Seyhan', 'Mahmut', 'Zeynep', 'Şule', 'İsmail']
-print(liste_index.index("Ahmet")) # Output: 0
+l1 = ["a", ["b", "c"], "a"]
+print(l1) # Output: ['a', ['b', 'c'], 'a']
+print(l1.index("a")) # Output: 0
+print(l1.index("a", 2)) # Output: 2
+print(l1.index(["b", "c"])) # Output: 1
 ```
 
-## `count(item)` Methodu
-`item` parametresine tanımlanan değerin, liste içinde kaç kez geçtiğini söyler. İç içe listelerde, iç listedeki değerleri görmez ve eksik sonuç verebilir.
+<h3 id="1.3.10"><code>count(value)</code> Methodu</h3>
+
+`value` parametresine argüman olarak girdiğiniz value'nun, uygulandığı liste içinde kaç kere geçtiğini söyler. Nested listelerde eksik sonuç verebilir çünkü nested listeyi görmez. Örnek:
 ```py
 liste = ["a","b",["a"],"c"]
 print(liste.count("a")) # Output: 1
 ```
 
-## `copy()` Methodu
-Uygulandığı listenin farklı ID'ye sahip bir kopyasını oluşturur. Bu sayede yeni liste ile eski liste birbirinden bağımsız olur. Liste kopyalama işlemi `liste1 = liste2` şeklinde yapılırsa, `liste1` ve `liste2` objelerinin ID'leri aynı olacağı için listelerde olduğu gibi, birinde yapılan işlem diğerini de etkiler. Bu yüzden `copy()` methodu kullanılır.
+<h3 id="1.3.11"><code>copy()</code> Methodu</h3>
+
+Uygulandığı listenin bir kopyasını oluşturur. `liste1 = liste2` gibi assignment operator kullanarak liste kopyalama yönteminden farkı, yeni liste ile eski liste birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Örnek:
 ```py
 liste1 = ['Ahmet', 'Mehmet', 'Ceylan']
 liste2 = liste1.copy()
-print(id(liste1), id(liste2), sep="\n")
-# Output: 
+print(id(liste1) == id(liste2)) # Output: False
 ```
 
-## `clear()` Methodu
-Uygulandığı listenin içeriğini siler. Listenin içini boşaltmak için kullanılabilir.
+<h3 id="1.3.12"><code>clear()</code> Methodu</h3>
+
+Uygulandığı listenin içeriğini siler. `del` statement ile liste objesini tamamen silmeden sadece listenin içini boşaltmak isteyenler için uygun bir tercihtir.
 ```py
 liste = ['Ahmet', 'Mehmet', 'Ceylan']
 liste.clear()
