@@ -46,7 +46,7 @@ harfler = "abcçdefgğhıijklmnoöprsştuüvyz"
 for s in harfler:
 	print("{:<5}{:<15}{:<15}".format(s, str(s.encode("utf-8")), len(s.encode("utf-8"))))
 ```
-Burada `harfler` variable'ına atanmış string'in her bir karakterinin UNICODE'da kaç byte yer kapladığını döndüren bir kod var. Buradaki `s.encode("utf-8")` komutları, `s` string'ini `encode()` methodu ile `utf-8`'e göre `bytes` data type'ına çeviriyor. `bytes` data type'ı, `string`'ler gibi `format()` methoduna sahip olmadığı için `s.encode("utf-8")` kodunu `str()` fonksiyonu ile string'e çevirip kullanmalıyız. Bunu yapmak istemeyenler için alternatif:
+Burada `harfler` variable'ına atanmış string'in her bir karakterinin UNICODE'da kaç byte yer kapladığını döndüren bir kod var. Buradaki `s.encode("utf-8")` komutları, `s` string'ini `encode()` methodu ile `utf-8`'e göre `bytes` data type'ına çeviriyor. `bytes` data type'ı, `string`'ler gibi `format()` methoduna sahip olmadığı için `s.encode("utf-8")` kodunu `str()` fonksiyonu ile string'e dönüştürüp kullanmalıyız. Bunu yapmak istemeyenler için alternatif:
 ```py
 harfler = "abcçdefgğhıijklmnoöprsştuüvyz"
 for s in harfler:

@@ -15,7 +15,7 @@ Alıcı ile verici arasında paylaşılan veriler herhangi bir nedenden dolayı 
 
 ### Örnek Protokol
 Bir sistemde, bütün sayıların tek sayı olarak iletilmesini istiyorsak kullanılacak protokolü şöyle düzenleyebiliriz:
-- Eğer karşı tarafa iletilen bir sayı zaten tekse, o sayının başına `0` ekleyeceğiz. Böylece sayının teklik-çiftlik durumu değişmemiş olacak. Ama eğer iletilecek sayı çiftse, o sayının başına `1` ekleyeceğiz. Böylece çift sayıyı, sistemimizin gerektirdiği şekilde, tek sayıya çevirmiş olacağız. Bu kontrol türüne **eşlik denetimi (parity check)** denir. Bu yapmamızı sağlayan bit'e de **eşlik bit'i (parity bit)** denir. `Tek eşlik denetimi (odd parity check)` ve **Çift eşlik denetimi (even parity check)** adlı iki tür eşlik denetimi bulunur.
+- Eğer karşı tarafa iletilen bir sayı zaten tekse, o sayının başına `0` ekleyeceğiz. Böylece sayının teklik-çiftlik durumu değişmemiş olacak. Ama eğer iletilecek sayı çiftse, o sayının başına `1` ekleyeceğiz. Böylece çift sayıyı, sistemimizin gerektirdiği şekilde, tek sayıya dönüştürmüş olacağız. Bu kontrol türüne **eşlik denetimi (parity check)** denir. Bu yapmamızı sağlayan bit'e de **eşlik bit'i (parity bit)** denir. `Tek eşlik denetimi (odd parity check)` ve **Çift eşlik denetimi (even parity check)** adlı iki tür eşlik denetimi bulunur.
 
 ## Karakterlerin Temsili
 `1` ve `0` sinyallerini bir ara getirerek farklı karakterleri temsil etmesini sağlayabiliriz. Örneğin:
@@ -64,7 +64,7 @@ print(b"\xc4\xb0".decode("utf-8")) # Output: İ
 ```
 
 ### `fromhex("string")` Methodu
-hexadecimal sayı sistemindeki bir sayıyı temsil eden string değerini bytes'a çevirir.
+hexadecimal sayı sistemindeki bir sayıyı temsil eden string değerini bytes'a dönüştürür.
 ```py
 print(bytes.fromhex("c4b0"))
 # Output: b'\xc4\xb0'

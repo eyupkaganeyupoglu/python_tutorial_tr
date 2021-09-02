@@ -481,7 +481,7 @@ Bu üçüncü satır.
 ```
 1. `readlines()` methodu ile dosyanın bütün satırlarını okuyup her satırın bir liste elemanı olduğu obje'yi `veri1` variable'ına eşitliyoruz.
 
-2. Stringlerdeki `partition()` methodu, `veri[0]` index'indeki liste elemanının içerdiği string'i `"birinci"` kelimesini referans alarak 3'e bölüyor ve bize, bu öğeleri içeren bir tuple objesi veriyor. Bu obje, `('Bu ', 'birinci', ' paragraf.\n')` içeriğine sahiptir. En son bu objeyi `list()` ile listeye çeviriyoruz ki üzerinde değişiklik yapabilelim. Daha sonra bu listenin 1. indexine `veri2.insert(1, "en ")` koduyla `"en"` stringini ekleyip `['Bu ', 'en ', 'birinci', ' paragraf.\n']` listesini elde ediyoruz.
+2. Stringlerdeki `partition()` methodu, `veri[0]` index'indeki liste elemanının içerdiği string'i `"birinci"` kelimesini referans alarak 3'e bölüyor ve bize, bu öğeleri içeren bir tuple objesi veriyor. Bu obje, `('Bu ', 'birinci', ' paragraf.\n')` içeriğine sahiptir. En son bu objeyi `list()` ile listeye dönüştürüyoruz ki üzerinde değişiklik yapabilelim. Daha sonra bu listenin 1. indexine `veri2.insert(1, "en ")` koduyla `"en"` stringini ekleyip `['Bu ', 'en ', 'birinci', ' paragraf.\n']` listesini elde ediyoruz.
 
 3. `veri2` variable'ının içindeki `['Bu ', 'en ', 'birinci', ' paragraf.\n']` listesinin öğelerini teker teker `for` loop ile alarak `string_temp` variable'sine ekliyoruz ve bu sayede elimizde `"Bu en birinci paragraf.\n"` şeklinde bir string oluyor. Bu stringi `veri1[0]` koduyla, eski index'in yerine atamış oluyoruz ve böylece istediğimiz sonucu elde etmiş oluyoruz.
 
@@ -833,7 +833,7 @@ PDF belgelerinde, o belge hakkında bazı önemli bilgiler veren birtakım özel
 | Etiket | Anlamı |
 |--------|--------|
 | `/Creator` | Belgeyi oluşturan yazılım |
-| `/Producer` | Belgeyi PDF’e çeviren yazılım |
+| `/Producer` | Belgeyi PDF’e dönüştüren yazılım |
 | `/Title` | Belgenin başlığı |
 | `/Author` | Belgenin yazarı |
 | `/Subject` | Belgenin konusu |

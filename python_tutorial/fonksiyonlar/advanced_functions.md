@@ -404,7 +404,7 @@ print(list_exp) # Output: [1, 4, 9]
 for i in list_exp:
     print(i, end=" ") # Output: 1 4 9
 ```
-`[expression for item in list]` syntax'ını kullanmak zorunda değilsiniz. Bir **Generator** objesi oluşturup sonradan bu objeyi listeye de çevirebilirsiniz ama `[expression for item in list]` syntax'ını kullanmak daha uygundur.
+`[expression for item in list]` syntax'ını kullanmak zorunda değilsiniz. Bir **Generator** objesi oluşturup sonradan bu objeyi listeye de dönüştürebilirsiniz ama `[expression for item in list]` syntax'ını kullanmak daha uygundur.
 ```py
 generator_exp = ((i**2) for i in range(1,4))
 print(generator_exp) # Output: <generator object <genexpr> at 0x0000016A87522120>
@@ -599,7 +599,7 @@ print(dict_exp) # Output: {1: 1, 2: 4, 3: 9}
 for i in dict_exp:
     print(i, end=" ") # Output: 1 2 3
 ```
-`{item_1:item_1 for item_1 in iterable}` syntax'ını kullanmak zorunda değilsiniz. Bir **Generator** objesi oluşturup sonradan bu objeyi dictionary'e de çevirebilirsiniz ama `{item_1:item_1 for item_1 in iterable}` syntax'ını kullanmak daha uygundur.
+`{item_1:item_1 for item_1 in iterable}` syntax'ını kullanmak zorunda değilsiniz. Bir **Generator** objesi oluşturup sonradan bu objeyi dictionary'e de dönüştürebilirsiniz ama `{item_1:item_1 for item_1 in iterable}` syntax'ını kullanmak daha uygundur.
 ```py
 generator_exp = ((i,i**2) for i in range(5))
 print(generator_exp) # Output: <generator object <genexpr> at 0x0000016A87522120>

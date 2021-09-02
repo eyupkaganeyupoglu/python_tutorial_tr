@@ -1,29 +1,40 @@
-﻿# Dictionary Tanımlamak
-Dictionary (sözlük), `key` ve `value` ile çalışan bir data type'dır. Her key'in bir value'si, her value'nin de bir ya da birden fazla key'i vardır. Örnek:
+﻿# İçindekiler
+
+- [Sözlükler (Dictionaries)](#1)
+    - [Sözlük'de İşlemler](#1.1)
+    - [Sözlük Üreteçleri (Dictionary Comprehensions)](#1.2)
+    - [Sözlük Methodları](#1.3)
+        - [<code>keys()</code> Methodu](#1.3.1)
+        - [<code>values()</code> Methodu](#1.3.2)
+        - [<code>items()</code> Methodu](#1.3.3)
+        - [<code>get(key, default)</code> Methodu](#1.3.4)
+        - [<code>clear()</code> Methodu](#1.3.5)
+        - [<code>copy()</code> Methodu](#1.3.6)
+        - [<code>fromkeys(iterable, value = "None")</code> Methodu](#1.3.7)
+        - [<code>pop(key, default)</code> Methodu](#1.3.8)
+        - [<code>popitem()</code> Methodu](#1.3.9)
+        - [<code>setdefault(key, default = "None")</code> Methodu](#1.3.10)
+        - [<code>update(m)</code> Methodu](#1.3.11)
+
+<h1 id="1">Sözlükler (Dictionaries)</h1>
+
+Dictionary'ler, içinde objeleri depolayabilen, sıralı, değiştirilebilir data type'lardır. `dict(object)` build'in fonksiyonu ile liste oluşturabilirsiniz veya uygun objeleri liste'ye dönüştürebilirsiniz. Listeler köşeli parantez (`{}`) ve mapping (`key:value`) ile ifade edilir. Örnek:
 ```py
-s1 = {}
-s2 = dict()
-s3 = {"key": "value"}
-s4 = {"key1": "value", "key2": "value"}
-s5 = dict(key1="value", key2 = "value")
-print(s1, s2, s3, s4, s5, sep="\n", end="\n\n")
-print(type(s1), type(s2), type(s3), type(s4), type(s5), sep="\n")
+print({}, type({}))
+print(dict(), type(dict()))
+print({"key": "value"}, type({"key": "value"}))
+print({"key1": "value", "key2": "value"}, type({"key1": "value", "key2": "value"}))
+print(dict(key1="value", key2 = "value"), type(dict(key1="value", key2 = "value")))
 ```
 **Output:**
 ```
-{}
-{}
-{'key': 'value'}
-{'key1': 'value', 'key2': 'value'}
-{'key1': 'value', 'key2': 'value'}
-
-<class 'dict'>
-<class 'dict'>
-<class 'dict'>
-<class 'dict'>
-<class 'dict'>
+{} <class 'dict'>
+{} <class 'dict'>
+{'key': 'value'} <class 'dict'>
+{'key1': 'value', 'key2': 'value'} <class 'dict'>
+{'key1': 'value', 'key2': 'value'} <class 'dict'>
 ```
-Dictionary'lere `string`, `int`, `float`, `complex`, `list`, `dict`, `tuple`, `set` gibi bir çok data type'ı `value` olarak ekleyebilirsiniz. `tuple`, `str`, ve *numeric* (`int`, `float`, `complex`) data type değiştirilemez (immutable) data type'lar olduğu için sözlüklere `key` olara eklenebilir. `list` ve `dict` değiştirilebilir (mutable) veri tipi olduğu için sözlüklere `key` olarak girilemez. Girilmeye çalışılırsa `TypeError: unhashable type: 'list'` ve `TypeError: unhashable type: 'dict'` hatalarından birisini alırsınız. Sözlüklere girilebilecek veri tiplerine örnek:
+Dictionary'lere `string`, `int`, `float`, `complex`, `list`, `dict`, `tuple`, `set` gibi birçok data type'ı `value` olarak ekleyebilirken; `tuple`, `str`, ve numeric (`int`, `float`, `complex`) gibi değiştirilemez (immutable) data type'ları `key` olara ekleyebilirsiniz. `list` ve `dict` değiştirilebilir (mutable) veri tipi olduğu için sözlüklere `key` olarak girilemez. Bunlar dışındaki data type'lar `key` olarak kullanılmaya çalışırsanız `TypeError: unhashable type: 'data type'ın ismi'` gibi hatalar yükseltilir. Sözlüklere girilebilecek veri tiplerine örnek:
 ```py
 sözlük_düzeni = {1                  : "int",
 				 2.5                : "float",
@@ -33,140 +44,137 @@ sözlük_düzeni = {1                  : "int",
 				 "float"            : 2.5,
 				 "complex"          : 3 + 6j,
 				 "liste"            : ["l1", "l2", "l3"],
-				 "tuple"            : ("l1", "l2", "l3"),
+				 "tuple"            : ("t1", "t2", "t3"),
 				 ("Tuple",)         : "tuple",
-				 "set"              : {"l1", "l2", "l3"},
+				 "set"              : {"s1", "s2", "s3"},
 				 "dict"             : {"k1" : "v1",
 									   "k2" : "v2",
 									   "k3" : "v3"}}
-```
 
-**Not:** Aşağıdaki `s1` variable'ına atanan yapı direkt olarak dictionary'e dönüştürülebilir:
+print(sözlük_düzeni) # Output: {1: 'int', 2.5: 'float', (3+6j): 'complex', 'string': 'str', 'int': 1, 'float': 2.5, 'complex': (3+6j), 'liste': ['l1', 'l2', 'l3'], 'tuple': ('l1', 'l2', 'l3'), ('Tuple',): 'tuple', 'set': {'l2', 'l3', 'l1'}, 'dict': {'k1': 'v1', 'k2': 'v2', 'k3': 'v3'}}
+print(sözlük_düzeni["string"][1]) # Output: t
+print(sözlük_düzeni["liste"][1]) # Output: l2
+print(sözlük_düzeni["tuple"][1]) # Output: t2
+print(sözlük_düzeni["dict"]["k1"]) # Output: v1
+```
+Gördüğünüz gibi dictionary içine tanımlanmış `list`, `tuple`, `string` gibi type'ların index'lerine ve nested dictionary'lerin içeriğine erişebiliyoruz.
+
+**Not:** Aşağıdaki variable'lara atanan yapıdaki objeler direkt olarak dictionary'e dönüştürülebilir:
 ```py
-s1 = {"a":1, "b":2, "c":3}
-s2 = dict([("a",1),("b",2),("c",3)])
-print(s1,s2,sep="\n")
+s1 = {"a":1, "b":2, "c":3}     # Dictionary
+s2 = [("a",1),("b",2),("c",3)] # List
+s3 = (("a",1),("b",2),("c",3)) # Tuple
+s4 = {("a",1),("b",2),("c",3)} # Set
+print(dict(s1), dict(s2), dict(s3), dict(s4),sep="\n")
 ```
 **Output:**
 ```
 {'a': 1, 'b': 2, 'c': 3}
 {'a': 1, 'b': 2, 'c': 3}
+{'a': 1, 'b': 2, 'c': 3}
+{'a': 1, 'c': 3, 'b': 2}
 ```
+**Not:** Set sırasız bir type olduğu için set to dict (kümeden sözlüğe) işlemi diğer işlemlerden farklı bir output verdi (nedenini set type'ı öğrendiğinizde anlayacaksınız).
 
-## Sözlük Üreteçleri (Dictionary Comprehensions)
-Sözlük tanımlamak için üreteçlerden yararlanılabilir. Listelerde de gösterildiği gibi, tek satırda sözlük tanımlamamıza yarar. Örnek:
-```py
-# Harflere numara vermek
-harfler = 'abcçdefgğhıijklmnoöprsştuüvyz'
-  
-harfli_sözlük = dict()
-for i in harfler:
-	harfli_sözlük[i] = harfler.index(i)
-print(harfli_sözlük)
+<h2 id="1.1">Sözlük'de İşlemler</h2>
 
-           ### YA DA ###
-  
-harfli_sözlük = dict()
-for i in  range(len(harfler)):
-	harfli_sözlük[harfler[i]] = i
-print(harfli_sözlük)
+Dictionary, index kavramını desteklemediği için `str`, `list` ve `tuple` type'larda olduğu gibi index'leme işlemi yapamazsınız. Bunun yerine `key`'den `value` elde ettiğiniz mapping adlı bir yöntem kullanılır. Örnek:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(d1["İki"]) # Output: 2
 ```
-**Output:**
-```
-{'a': 0, 'b': 1, 'c': 2, 'ç': 3, 'd': 4, 'e': 5,
- 'f': 6, 'g': 7, 'ğ': 8, 'h': 9, 'ı': 10, 'i': 11,
- 'j': 12, 'k': 13, 'l': 14, 'm': 15, 'n': 16,
- 'o': 17, 'ö': 18, 'p': 19, 'r': 20, 's': 21,
- 'ş': 22, 't': 23, 'u': 24, 'ü': 25, 'v': 26,
- 'y': 27, 'z': 28}
+İç içe  (nested) dictionary'lerde:
+```py
+d1 = {"Bir Basamaklı": {'Bir': 1, 'İki': 2, 'Üç': 3},
+      "İki Basamaklı": {'On': 10, 'Yirmi': 20, 'Otuz': 30},
+      "Üç Basamaklı": {'Yüz': 100, 'İki Yüz': 200, 'Üç Yüz': 300},}
 
-{'a': 0, 'b': 1, 'c': 2, 'ç': 3, 'd': 4, 'e': 5,
- 'f': 6, 'g': 7, 'ğ': 8, 'h': 9, 'ı': 10, 'i': 11,
- 'j': 12, 'k': 13, 'l': 14, 'm': 15, 'n': 16,
- 'o': 17, 'ö': 18, 'p': 19, 'r': 20, 's': 21,
- 'ş': 22, 't': 23, 'u': 24, 'ü': 25, 'v': 26,
- 'y': 27, 'z': 28}
+print(d1["İki Basamaklı"]["Otuz"]) # Output: 30
 ```
-Üreteç versiyonu:
-```py
-harfler = 'abcçdefgğhıijklmnoöprsştuüvyz'
-harfli_sözlük = {i: harfler.index(i) for i in harfler}
-print(harfli_sözlük)
-```
-**Output:**
-```
-{'a': 0, 'b': 1, 'c': 2, 'ç': 3, 'd': 4, 'e': 5,
- 'f': 6, 'g': 7, 'ğ': 8, 'h': 9, 'ı': 10, 'i': 11,
- 'j': 12, 'k': 13, 'l': 14, 'm': 15, 'n': 16,
- 'o': 17, 'ö': 18, 'p': 19, 'r': 20, 's': 21,
- 'ş': 22, 't': 23, 'u': 24, 'ü': 25, 'v': 26,
- 'y': 27, 'z': 28}
-```
+`dictionary[key1][key2]` yapısını çalışma mantığı:
+- Python `dictionary[key1][key2]` yapısını soldan sağa okumaya başladığı için önce `dictionary[key1]` kısmını okur ve `dictionary` dictionary'sinin `key1` `key`'ine gider ve böylece `dictionary[key1]` kodu, `dictionary` dictionary'sinin `key1` `key`'indeki dictionary'ye atıfta bulunmuş olur. Bu dictionary'ye `x` diyelim.
+- Bu işlemden sonra `dictionary[key1][key2]` kodu Python'un gözünde `x[key2]` koduna dönüşür. Python `x[key2]` kodu içinde aynı işlemleri yapar.
+- Python'u LEGO gibi düşünün. Kodları bütün olarak değil, parça parça yorumlayın. Böylelikle Python'un çalışma mantığını anlarsınız. Örneğin aşağıdaki iki kod tamamen aynı işi yapmaktadır:
+    ```py
+    dictionary = {"0-7":{"0-3":{"0-1":{'sıfır': 0,
+                                    'bir': 1},
+                                "2-3":{'iki': 2,
+                                    'üç': 3}},
+                        "4-7":{"4-5":{'dört': 4,
+                                    'beş': 5},
+                                "6-7":{'altı': 6,
+                                    'yedi': 7}}},
+                "8-15":{"8-11":{"8-9":{'sekiz': 8,
+                                        'dokuz': 9},
+                                "10-11":{'on': 10,
+                                        'on bir': 11}},
+                        "12-15":{"12-13":{'on iki': 12,
+                                            'on üç': 13},
+                                "14-15":{'on dört': 14,
+                                            'on beş': 15}}}}
 
-**Not:** `[(0, 0), (1, 1), (2, 4), (3, 9), (4, 16)]` bunun gibi bir yapıyı `{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}` bunun gibi bir sözlüğe doğrudan dönüştürülerbilir. Örnek:
-```py
-a = [(0, 0), (1, 1), (2, 4), (3, 9), (4, 16)]
-b = {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
-c = dict(a)
+    a1 = dictionary["0-7"]
+    a2 = a1["0-3"]
+    a3 = a2["0-1"]
+    a4 = a3["bir"]
+    print(a4) # Output: 1
 
-print(b, c, sep="\n")
-```
-**Output:**
-```
-{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
-{0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
-```
+    print(dictionary["0-7"]["0-3"]["0-1"]["bir"]) # Output: 1
+    ```
 
-# Dictionary'lerde İşlemler
-Bir diçtionary'nin bir öğesine erişmek için index kullanamazsınız çünkü dictionary'lerde *sıra* denen kavram yoktur. Bir diçtionary'nin bir öğesine erişmek için aşağıdaki syntax'ı kullanabilirsiniz:
+`for` loop ile bir dictionary'nin içinde gezinirseniz, loop control variable o dictionary'nin `key`'leri üzerinde gezinir. Örnek:
 ```py
-d1 = {'ahmet': 5, 'mehmet': 6, 'fırat': 5}
-print(d1["ahmet"]) # Output: 5
-```
-İç içe sözlüklerde de aşağıdaki syntax kullanılır:
-```py
-d1 = {'ahmet': {"yas": 30, "boy": 180}, 'mehmet': {"yas": 40, "boy": 140}}
-print(d1["ahmet"]["yas"]) # Output: 30
-```
-Bir sözlük üzerinde `for` loop kullandığınızda, `for` loop, sözlüğün `key` kısmını alır. Örnek:
-```py
-d1 = {'ahmet': 5, 'mehmet': 6}
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+
 for i in d1:
-	print(f"key: {i}", f"value: {d1[i]}", sep="\n", end="\n\n")
+    print(i,end=", ")
 ```
 **Output:**
-```
-key: ahmet
-value: 5
-
-key: mehmet
-value: 6
-```
-**Not: ** Sözlük içinde bulunmayan bir öğreye erişmek istediğinizde, Python, `KeyError` hatası verir.
-
-Bir dictionary'ye öğe eklemek için aşağıdaki işlemi kullanabilirsiniz:
 ```py
-sözlük = {"bir": 1, "iki": 2}
-sözlük["üç"] = 3
-print(sözlük)
-# Output: {'bir': 1, 'iki': 2, 'üç': 3}
+Bir, İki, Üç, 
 ```
-**Not:** Bu yöntemle bir sözlüğe yeni bir öğe eklemek istediğinizde, eğer o öğe zaten sözlükte mevcutsa, o öğenin value'sini değiştirir, yeni bir öğe olarak eklemez. Benzer şekilde, bir sözlük oluştururken aynı key'i iki kere tanımlarsanız, en son tanımladığınız değer dikkate alınır. Yani:
+
+**Not:** Bir sözlükte, o sözlükte bulunmayan bir `key`'e edişmek istediğinizde Python `KeyError` hatası verir. Örnek:
 ```py
-sözlük = {"bir":"1", "bir":5, "iki":"2", "üç": "3"}
-print(sözlük) # Output: {'bir': 5, 'iki': '2', 'üç': '3'}
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(d1["Dört"]) # KeyError: 'Dört'
 ```
-Gördüğünüz gibi `"bir"` key'ine en son `5` değeri atandığı için Python bu değeri dikkate aldı.
 
-**Not:** Belli değerleri bir liste içinde (örneğin `[20, 175, "eyüp"]` gibi) depolayıp, sonradan bu değerlere ihtiyacınız olduğunda listeden çekip kullanmak yerine, bu değerleri, ne olduklarıyla birlikte (`["yaş":20, "boy":175, "isim":"eyüp"]` gibi) bir dictionary'de depolarsanız, daha pratik ve kullanışlı olur.
-
-- Belli bir yapıda sıralanmış bilgileri bir listede [20, 175, "eyüp"] gibi tutup sonradan bu listeden çekip kullanmak yerine, ["yaş":20, "boy":175, "isim":"eyüp"] gibi dict'lerde depolayın. Böylece daha kolay çekip kullanabilirsiniz.
-
-**Not:** Dictionary, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Örnek:
+Bir diçtionary'e öğe eklemek için mapping yöntemini kullanabilirsiniz. Örnek:
 ```py
-dict_exp1 = {"a":1, "b":2, "c":3}
-dict_exp2 = {"c":3, "a":1, "b":2}
-print(dict_exp1, dict_exp2, sep="\n")
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+id1 = id(d1)
+d1["Dört"] = 4
+id2 = id(d1)
+print(d1["Dört"]) # Output: 4
+print(id1 == id2) # Output: True
+```
+Bu işlem sonucunda oluşan yeni dictionary ile eski dictionary aynı objedir (id'leri aynıdır).
+
+Bir dictionary'de her `key`'den en fazla 1 tane olabilir. Bir dictionary'e bir `key` eklemek istediğinizde o `key` zaten mevcutsa, mevcut `key`'in value'su yeni `key`'in value'suna göre değiştirilir. Örnek:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(d1) # Output: {'Bir': 1, 'İki': 2, 'Üç': 3}
+
+id1 = id(d1)
+d1["Bir"] = 4
+id2 = id(d1)
+
+print(d1) # Output: {'Bir': 4, 'İki': 2, 'Üç': 3}
+print(id1 == id2) # Output: True
+```
+Aynı durum dictionary sıfırdan oluşturularken de geçerlidir. Örnek:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3, 'Bir': 4}
+print(d1) # Output: {'Bir': 4, 'İki': 2, 'Üç': 3}
+```
+Buradan, bir dictionary oluşturulurken o dictionary'e tanımladığınız `key`'lerden aynı olanların arasından, en son tanımlanan geçerli olur sonucunu çıkarabiliriz. Çünkü Python kodları soldan sağa doğru okuyor. Bu yüzden en son tanımlanan `key` en sağda, dolayısıyla en sağdaki en son okunan olacağı için Python bunu geçerli sayacak. Bu durum birbiri ardına tanımlanan aynı isimdeki variable'lar arasından en son tanımlananın value'sunun geçerli olmasına benziyor.
+
+**Not:** Dictionary, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.7'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Örnek:
+```py
+d1 = {"a":1, "b":2, "c":3}
+d2 = {"c":3, "a":1, "b":2}
+print(d1, d2, sep="\n")
 ```
 **Output:**
 ```
@@ -175,178 +183,225 @@ print(dict_exp1, dict_exp2, sep="\n")
 ```
 Gördüğünüz gibi item'ları dictionary'e hangi sırayla tanımladıysanız, o sırayla dictionary'de bulunur.
 
-# Dictionary Methodları
+**Not:** Dictionary'ler, belli bir yapıda sıralanmış verileri saklamak konusunda çok yararlıdır. Örneğin `"yaş":20, "boy":175, "isim":"Eyüp"` bilgilerini bir listede `[20, 175, "eyüp"]` şeklinde tutarsanız, bu listeden bu bilgileri çekip kullanmakta sıkıntı yaşarsınız çünkü listeye yapılan herhangi bir müdahalede bu bilgilerin index'leri değişebilir ya da silinebilir veya hangi bilginin hangi index'de tutulduğunu hatırlamak zor olabilir. Ama, value'ları anlamlandırmak için o value'ları atadığınız variable'ların identifier'larını özenle belirlediğiniz gibi `20, 175, "eyüp"` verilerini de özenle belirlenmiş `key`'lere atarsanız, hem ulaşmanız kolay olur hem de listelerdeki index'lerin yaratabileceği sorunlarla uğraşmanız gerekmez.
 
-## `keys()` Methodu
-Sözlüklerde `{key: value}` syntax'ındaki `key` kısmını temsil eder. Bir sözlüğün sadece `key` kısmını almak istenildiğinde kullanılan bir methoddur. Bu method kullanıldığında bir `dict_keys` nesnesi verir. Bu nesneyi kullanabilmek için `list`, `tuple` veya `join()` methoduyla `str`'ye dönüştürüp bir değişkene atayabilirsiniz. Ama `join()` methodunu kullanırken, bütün `key`'lerin aynı string data type'ına sahip olduğundan emin olun.
-
-**Not:** `str()` fonksiyonu, `list()` veya `tuple()` fonksiyonlarının aksine sözlükteki key'lerin nasıl bir ölçüte göre karakter dizisine çevrileceğine dair bir kural içermez. Bu yüzden direkt `str()` fonksiyonunu değil, `join()` methodunu kullanmaya özen gösterin. Eğer `str()` fonksiyonunu kullanırsanız, `print(sözlük.keys())` ile aynı outputu alırsınız.
+Dictionary'lerin `key` sayısına `len()` fonksiyonuyla ulaşılabilir. Örnek:
 ```py
-harfler = "abcde"
-sözlük = {i: harfler.index(i) for i in harfler}
-print("native keys: ", sözlük.keys())
-print("str: ", str(sözlük.keys()))
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(len(d1)) # Output: 3
+```
 
-print("list: ", list(sözlük.keys()))
-print("tuple: ", tuple(sözlük.keys()))
+**Not:** Dictionary type aritmetik (sayısal) işlemleri desteklemez. Örnek:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+d2 = {'Dört': 4, 'Beş': 5, 'Altı': 6}
+print(d1+d2) # TypeError: unsupported operand type(s) for +: 'dict' and 'dict'
+print(d1*2) # TypeError: unsupported operand type(s) for *: 'dict' and 'int'
+```
+
+Dictionary'de belli bir `key`'i tamamen silmek:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(d1) # Output: {'Bir': 1, 'İki': 2, 'Üç': 3}
+del d1["Bir"]
+print(d1) # Output: {'İki': 2, 'Üç': 3}
+```
+
+Dictionary objesini tamamen silmek:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(d1) # Output: {'Bir': 1, 'İki': 2, 'Üç': 3}
+del d1
+print(d1) # NameError: name 'd1' is not defined
+```
+
+Bir Dictionary'i kopyalamak ve sonuçları:
+```py
+d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
+d2 = d1
+print(d1) # Output: {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(d2) # Output: {'Bir': 1, 'İki': 2, 'Üç': 3}
+print(id(d1) == id(d2)) # Output: True
+
+d1["Bir"] = 4
+print(d1) # Output: {'Bir': 4, 'İki': 2, 'Üç': 
+print(d2) # Output: {'Bir': 4, 'İki': 2, 'Üç': 
+```
+Dictionary, değiştirilebilir (mutable) bir data type olduğu için assignment operator (`=`) kullanılarak bir dictionary objesini yukarıdaki gibi farklı bir variable'a atarsanız, son durumda oluşan objeler aynı dictionary objesine atıfta bulunacağı (refers to) için birinde yapılan değişiklikler diğerini de etkiler. Bu durum değiştirilemez (immutable) data type'lar için geçerli değildir çünkü değiştirilemez (immutable) data type'ları değiştirmek için yeniden tanımlama (redefinition) işlemi yapmak zorundayız. Yeniden tanımlama (redefinition) işlemi sonucunda da mevcut obje farklı bir objeye dönüştüğü için birbirine atıfta bulunma durumu ortadan kalkacak ve bu objeler birbirini etkilemeyecek.
+
+<h2 id="1.2">Sözlük Üreteçleri (Dictionary Comprehensions)</h2>
+
+**Comprehension**, tek satırda oluşturduğumuz **Generator** (daha sonra anlatılacak) yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Bu generator yapısı (**Generator Comprehension**) bir generator objesi oluşturmakta kullanılır. Daha sonra bu generator objesini dictionary type'a dönüştürerek Dictionary Comprehension oluşturabiliriz. Örnek:
+```py
+dict_exp = {i:i**2 for i in range(1,4)}
+print(dict_exp) # Output: {1: 1, 2: 4, 3: 9}
+```
+Bu konu daha sonra comprehension başlığı altında daha detaylı anlatılacak. Türkçe alfabe yapmak:
+```py
+harfler = 'abcçdefgğhıijklmnoöprsştuüvyz'
+harfli_sözlük = {i: harfler.index(i) for i in harfler}
+print(harfli_sözlük)
 ```
 **Output:**
 ```
-native keys :  dict_keys(['a', 'b', 'c', 'd', 'e'])
-str         :  dict_keys(['a', 'b', 'c', 'd', 'e'])
-list        :  ['a', 'b', 'c', 'd', 'e']
-tuple       :  ('a', 'b', 'c', 'd', 'e')
+{'a': 0, 'b': 1, 'c': 2, 'ç': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'ğ': 8, 'h': 9, 'ı': 10, 'i': 11, 'j': 12, 'k': 13, 'l': 14, 'm': 15, 'n': 16, 'o': 17, 'ö': 18, 'p': 19, 'r': 20, 's': 21, 'ş': 22, 't': 23, 'u': 24, 'ü': 25, 'v': 26, 'y': 27, 'z': 28}
 ```
 
-## `values()` Methodu
-Sözlüklerde `{key: value}` syntax'ındaki `value` kısmını temsil eder. Bir sözlüğün sadece `value` kısmını almak istenildiğinde kullanılan bir methoddur. Bu method kullanıldığında bir `dict_values` nesnesi verir. Bu nesneyi kullanabilmek için `list`, `tuple` veya `join()` methoduyla `str`'ye dönüştürüp bir değişkene atayabilirsiniz. Ama `join()` methodunu kullanırken, bütün `key`'lerin aynı string data type'ına sahip olduğundan emin olun.
+<h2 id="1.3">Sözlük Methodları</h2>
 
-**Not:** `str()` fonksiyonu, `list()` veya `tuple()` fonksiyonlarının aksine sözlükteki value'larin nasıl bir ölçüte göre karakter dizisine çevrileceğine dair bir kural içermez. Bu yüzden direkt `str()` fonksiyonunu değil, `join()` methodunu kullanmaya özen gösterin. Eğer `str()` fonksiyonunu kullanırsanız, `print(sözlük.values())` ile aynı outputu alırsınız.
+<h3 id="1.3.1"><code>keys()</code> Methodu</h3>
+
+Bir dictionary'nin sadece `key` kısmını içeren `dict_keys` objesi döndürür. `dict_keys` objesini diğer iterable objelere dönüştürebilirsiniz. Örnek:
 ```py
-harfler = "abcde"
-sözlük = {i: harfler.index(i) for i in harfler}
-print("native values: ", sözlük.value())
-print("str: ", str(sözlük.value()))
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+print("native keys: ", sözlük.keys()) # Output: native keys: dict_keys(['a', 'b', 'c', 'ç', 'd'])
+print("str:", str(sözlük.keys())) # Output: str: dict_keys(['a', 'b', 'c', 'ç', 'd'])
+print("str:", str().join(sözlük.keys())) # Output: str: abcçd
+print("list:", list(sözlük.keys())) # Output: list: ['a', 'b', 'c', 'ç', 'd']
+print("tuple:", tuple(sözlük.keys())) # Output: tuple: ('a', 'b', 'c', 'ç', 'd')
+print("set:", set(sözlük.keys())) # Output: tuple: {'d', 'a', 'b', 'ç', 'c'}
+```
+Bu dönüşümü string'lerde yaparken `join` methodunun kullanmanız gerekmektedir. Aksi halde yukarıda gördüğünüz gibi dönüşüm gerçekleşmez, `sözlük.keys()` ile aynı output'u alırsınız.
 
-print("list: ", list(sözlük.value()))
-print("tuple: ", tuple(sözlük.value()))
-```
-**Output:**
-```
-native values :  dict_values(['0', '1', '2', '3', '4'])
-str			  :  dict_values(['0', '1', '2', '3', '4'])
-list		  :  ['0', '1', '2', '3', '4']
-tuple		  :  ('0', '1', '2', '3', '4')
-```
+<h3 id="1.3.2"><code>values()</code> Methodu</h3>
 
-## `items()` Methodu
-Sözlüklerde `{key: value}` syntax'ındaki `key` ve `value` kısmını temsil eder. Bir sözlüğün sadece hem `key` hem `value` kısmını almak istenildiğinde kullanılan bir methoddur. Bu method kullanıldığında bir `dict_items` nesnesi verir. Bu nesneyi kullanabilmek için `list` ya da `tuple` fonksiyonlarını kullanabilirsiniz. Her bir item bir tuple içinde saklanır. Örnek:
+Bir dictionary'nin sadece `value` kısmını içeren `dict_values` objesi döndürür. `dict_values` objesini diğer iterable objelere dönüştürebilirsiniz. Örnek:
 ```py
-harfler = "abc"
-sözlük = {i: harfler.index(i) for i in harfler}
-print("native values: ", sözlük.values())
-print("str: ", str(sözlük.values()))
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+print("native keys:", sözlük.values()) # Output: native keys: dict_values(['0', '1', '2', '3', '4'])
+print("str:", str(sözlük.values())) # Output: str: dict_values(['0', '1', '2', '3', '4'])
+print("str:", str().join(sözlük.values())) # Output: str: 01234
+print("list:", list(sözlük.values())) # Output: list: ['0', '1', '2', '3', '4']
+print("tuple:", tuple(sözlük.values())) # Output: tuple: ('0', '1', '2', '3', '4')
+print("set:", set(sözlük.values())) # Output: set: {'4', '0', '3', '1', '2'}
+```
+`str` type, `list`, `tuple` ve `set` type'ın aksine dictionary'deki `key`'lerin hangi ölçüte göre string'e dönüştürüleceğine dair bir kural içermez. Bu yüzden direkt `str()` fonksiyonunu değil, `join()` methodu ile birlikte kullanmalısınız. Aksi halde yukarıda gördüğünüz gibi dönüşüm gerçekleşmez, `sözlük.values()` ile aynı output'u alırsınız. `key`'ler üzerinde `join` methodunu kullanabilmek için `key`'lerin string type olması gerekmektedir. Aksi halde `TypeError` hatası alırsınız.
 
-print("list: ", list(sözlük.values()))
-print("tuple: ", tuple(sözlük.values()))
-```
-**Output:**
-```
-native values :  dict_items([('a', 0), ('b', 1), ('c', 2)])
-str			  :  dict_items([('a', 0), ('b', 1), ('c', 2)])
-list		  :  [('a', 0), ('b', 1), ('c', 2)]
-tuple		  :  (('a', 0), ('b', 1), ('c', 2))
-```
+<h3 id="1.3.3"><code>items()</code> Methodu</h3>
 
-## `get(key, "string")` Methodu
-Bir sözlükte `key` parametresine girilen değerin sözlük içinde bulunan `key`'lerden biri olup olmadığını sorgular. `key`'e girilen değer dözlükte varsa, o `key`'e karşılık gelen `value`'yi döndürür, yoksa `"string"`'i döndürür.
+Bir dictionary'nin hem `key` hem de `value` kısmını içeren `dict_items` objesi döndürür. `dict_items` objesini diğer iterable objelere dönüştürebilirsiniz. Örnek:
 ```py
-sözlük = {'a': 0, 'b': 1, 'c': 2}
-print(sözlük.get("a", "yok")) # Output: 0
-print(sözlük.get("d", "yok")) # Output: yok
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+print("native keys:", sözlük.items()) # Output: native keys: dict_items([('a', '0'), ('b', '1'), ('c', '2'), ('ç', '3'), ('d', '4')])
+print("list:", list(sözlük.items())) # Output: list: [('a', '0'), ('b', '1'), ('c', '2'), ('ç', '3'), ('d', '4')]
+print("tuple:", tuple(sözlük.items())) # Output: tuple: (('a', '0'), ('b', '1'), ('c', '2'), ('ç', '3'), ('d', '4'))
+print("set:", set(sözlük.items())) # Output: set: {('ç', '3'), ('a', '0'), ('b', '1'), ('c', '2'), ('d', '4')}
+```
+`str` type `tuple` type'ı desteklemediği için `dict_items` objesini string type'a dönüştüremezsiniz.
+
+<h3 id="1.3.4"><code>get(key, default)</code> Methodu</h3>
+
+Uygulandığı dictionary'nin içeriğinde,`key` parametresine argüman olarak girilen objenin bulunup bulunmadığını kontrol eder. Bulursa, o `key`'e karşılık gelen `value`'yu; bulamazsa, `default` parametresinde belirtilen işlemleri yapar. Örnek:
+```py
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+print(sözlük.get("a", "'a' yok")) # Output: 0
+print(sözlük.get("z", "'z' yok")) # Output: 'z' yok
 ```
 
-## `clear()` Methodu
-Kullanıldığı sözlüğün içini boşaltır. `del` kullanarak da silinebilir ama `del` kullanılırsa sözlük objesi de silinir ama `clear()` methodu kullanılırsa sözlük objesi silinmeden içi boşaltılır.
+<h3 id="1.3.5"><code>clear()</code> Methodu</h3>
+
+Uygulandığı dictionary'nin içeriğini tamamen siler. `del` statement'dan farkı, dictionary objesini silmemesi. Örnek:
 ```py
-sözlük = {'a': 0, 'b': 1, 'c': 2}
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
 sözlük.clear()
 print(sözlük) # Output: {}
+
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+del sözlük
+print(sözlük) # Output: NameError: name 'sözlük' is not defined
 ```
 
-## `copy()` Methodu
-Uygulandığı sözlüğün farklı ID'ye sahip bir kopyasını oluşturur. Bu sayede yeni sözlük ile eski sözlük birbirinden bağımsız olur. Sözlük kopyalama işlemi `sözlük1 = sözlük2` şeklinde yapılırsa, `sözlük1` ve `sözlük2` objelerinin ID'leri aynı olacağı için listelerde olduğu gibi, birinde yapılan işlem diğerini de etkiler. Bu yüzden `copy()` methodu kullanılır.
+<h3 id="1.3.6"><code>copy()</code> Methodu</h3>
+
+Uygulandığı sözlüğün farklı ID'ye sahip bir kopyasını oluşturur. Bu sayede yeni sözlük ile eski sözlük birbirinden bağımsız olur. Assignment operator'dan (`=`) farkı budur. Örnek:
 ```py
-sözlük1 = {'a': 0, 'b': 1, 'c': 2}
-sözlük2.copy(sözlük1)
-print(f"sözlük2: {sözlük2}", f"sözlük1 ID: {id(sözlük1)}", f"sözlük2 ID: {id(sözlük2)}", sep="\n")
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+sözlük_copy1 = sözlük
+print(sözlük) # Output: {'a': '0', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+print(sözlük_copy1) # Output: {'a': '0', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+
+sözlük_copy1["a"] = "Sıfır"
+print(sözlük) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+print(sözlük_copy1) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+
+sözlük_copy2 = sözlük.copy()
+print(sözlük) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+print(sözlük_copy2) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+
+sözlük_copy2["b"] = "Bir"
+print(sözlük) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+print(sözlük_copy2) # Output: {'a': 'Sıfır', 'b': 'Bir', 'c': '2', 'ç': '3', 'd': '4'}
 ```
-**Output:**
-```
-sözlük2: {'a': 0, 'b': 1, 'c': 2}
-sözlük1 ID: 2271871328320
-sözlük2 ID: 2271871311296
-```
-## `fromkeys(key, value = "None")` Methodu
-Yeni bir sözlük oluşturmak için kullanılır. `key` parametresine aldığı `list`, `tuple`, `set`, `string` ya da `dictionary` kullanarak, oluşturacağı listenin `keys` kısmını belirler. `string` değer kullanılırsa, string'in her bir index'i bir key'e dönüştürülür. `value` kısmı isteğe bağlıdır (optional). Default değeri `None`'dır. Buraya girilen herhangi bir data type' bütün key'lerin value'si olur.
+
+<h3 id="1.3.7"><code>fromkeys(iterable, value = "None")</code> Methodu</h3>
+
+Yeni bir sözlük oluşturmak için kullanılır. `iterable` parametresine argüman olarak girilen iterable objenin öğelerini `key` olarak kullanır ve bütün bu `key`'lere `value` parametresinde argüman olarak belirtilen objeyi `value` olarak atar. Örnek:
 ```py
-sözlük = dict()
+string_key = "abc"
+list_key = ["a","b","c"]
+tuple_key = ("a","b","c")
+set_key = {"a","b","c"}
+dictionary_key = {"a": None,"b": None,"c": None}
 
-key1 = "abc"
-key2 = ["a","b","c"]
-key3 = ("a","b","c")
-key4 = {"a","b","c"}
-key5 = {"a": None,"b": None,"c": None}
-
-value1 = "abc"
-value2 = ["a","b","c"]
-value3 = ("a","b","c")
-value4 = {"a","b","c"}
-value5 = {"a": None,"b": None,"c": None}
-print(sözlük.fromkeys(key1,value1),
-	  sözlük.fromkeys(key2,value2),
-	  sözlük.fromkeys(key3,value3),
-	  sözlük.fromkeys(key4,value4),
-	  sözlük.fromkeys(key5,value5),
+string_value = "abc"
+list_value = ["a","b","c"]
+tuple_value = ("a","b","c")
+set_value = {"a","b","c"}
+dictionary_value = {"a": None,"b": None,"c": None}
+print({}.fromkeys(string_key,string_value), # Output: {'a': 'abc', 'b': 'abc', 'c': 'abc'}
+	  {}.fromkeys(list_key,list_value), # Output: {'a': ['a', 'b', 'c'], 'b': ['a', 'b', 'c'], 'c': ['a', 'b', 'c']}
+	  {}.fromkeys(tuple_key,tuple_value), # Output: {'a': ('a', 'b', 'c'), 'b': ('a', 'b', 'c'), 'c': ('a', 'b', 'c')}
+	  {}.fromkeys(set_key,set_value), # Output: {'a': {'a', 'c', 'b'}, 'c': {'a', 'c', 'b'}, 'b': {'a', 'c', 'b'}}
+	  {}.fromkeys(dictionary_key,dictionary_value), # Output: {'a': {'a': None, 'b': None, 'c': None}, 'b': {'a': None, 'b': None, 'c': None}, 'c': {'a': None, 'b': None, 'c': None}}
 	  sep="\n")
 ```
-**Output:**
-```
-{'a': 'abc', 'b': 'abc', 'c': 'abc'}
-{'a': ['a', 'b', 'c'], 'b': ['a', 'b', 'c'], 'c': ['a', 'b', 'c']}
-{'a': ('a', 'b', 'c'), 'b': ('a', 'b', 'c'), 'c': ('a', 'b', 'c')}
-{'b': {'b', 'a', 'c'}, 'a': {'b', 'a', 'c'}, 'c': {'b', 'a', 'c'}}
-{'a': {'a': None, 'b': None, 'c': None}, 'b': {'a': None, 'b': None, 'c': None}, 'c': {'a': None, 'b': None, 'c': None}}
+
+**Not:** `fromkeys` methodunu yaptığı iş bakımından değerlendirdiğinizde aslında bu method'un bir build-in fonksiyon olması gerektiği aklınıza gelmiş olabilir. Çünkü tek işlevi, parametrelerine girilen argümanları kullanarak yeni bir sözlük yaratmak. String'lerdeki `join` methodu da buna benzerdir ama en azından `join` methodu, uygulandığı string'i de işleme katıyor (`print("--".join(m1)) # Output: 1--2--3`). Adamlar böyle yapmış, yapacak bir şey yok. İster kullanın ister kullanmayın.
+
+<h3 id="1.3.8"><code>pop(key, default)</code> Methodu</h3>
+
+`key` parametresine argüman olarak girilen obje, `pop` methodunun uygulandığı dictionary içinde varsa, o `key`'i siler ve `value`'sunu döndürür. Yoksa `default` parametresinde belirtilen işlemi yapar. `default` parametresi tanımlanmazsa `KeyError` hatası yükseltir. Örnek:
+```py
+sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
+print(sözlük.pop("a", "'a' yok")) # Output: 0
+print(sözlük) # Output: {'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
+print(sözlük.pop("a", "'a' yok")) # Output: 'a' yok
+print(sözlük.pop("a")) # Output: KeyError: 'a'
 ```
 
-## `pop(key, "string")` Methodu
-Sözlükten eleman silmek için kullanılır. Silinen key'in value'sini döndürür. Silmek istenilen eleman, `key` parametresine girilir.
+<h3 id="1.3.9"><code>popitem()</code> Methodu</h3>
+
+`pop()` methodunun benzer çalışır. Parametresiz kullanılır. **Last In, First Out (LIFO)** mantığıyla çalışır. Bu mantığa dayanarak, sözlüğe en son eklenen (mantıken en son sıradaki, yani en sağdaki) `item`'i döndürür ve döndürülen `item`'i dictionary'den kaldırır. Eğer dictionary boşsa, `KeyError` hatası yükseltir. `popitem` methodu bu işlemi Python 3.7'den önce rastgele yapardı çünkü dictionary'ler daha önce de anlattığım gibi 3.7 sürümünden sonra sıralı bir data type oldu. Örnek:
 ```py
 sözlük = {'a': 0, 'b': 1, 'c': 2}
-print(sözlük.pop("a")) # Output: 0
-```
-`key`'e girilen eleman sözlükte yoksa ve `"string"` parametresi tanımlanmamışsa, `KeyError: 'key'` hatası yükseltir.
-```py
-sözlük = {'a': 0, 'b': 1, 'c': 2}
-print(sözlük.pop("d")) # Output: KeyError: 'd'
-```
-`key`'e girilen eleman sözlükte yoksa ve `"string"` parametresi tanımlanmışsa, `"string"` parametresine tanımlanan değer döndürülür.
-```py
-sözlük = {'a': 0, 'b': 1, 'c': 2}
-print(sözlük.pop("d", "yok")) # Output: yok
+print(sözlük.popitem()) # Output: ('c', 2)
+print(sözlük) # Output: {'a': 0, 'b': 1}
 ```
 
-## `popitem()` Methodu
-`pop()` methodunun benzer çalışır. Parametresiz kullanılır. **Last In, First Out** (LIFO) mantığıyla çalışır. Bu mantığa dayanarak, sözlüğe en son eklenen `item`'i döndürür ve döndürülen `item`'i sözlükten kaldırır. Eğer sözlük boşsa, `KeyError` hatası verir. Python 3.7'den önce bu döndürme ve kaldırma işlemini rastgele yapardı.
+<h3 id="1.3.10"><code>setdefault(key, default = "None")</code> Methodu</h3>
+
+`key` parametresinde belirtilen `key`'i dictionary içinde arar. Varsa `key`'e ait `value`'yu döndürür, yoksa o `key`'i sözlüğe ekler ve `value`'sunu `default` parametresine argüman olarak girilen değer olarak ayarlar, en son olarak da `value`'sunu döndürür. `default` parametresi default olarak `None` değerine ayarlıdır. Örnek:
 ```py
 sözlük = {'a': 0, 'b': 1, 'c': 2}
-print(sözlük.popitem(), sözlük, sep="\n")
-```
-**Output:**
-```
-('b', 1)
-{'a': 0, 'c': 2}
+print(sözlük.setdefault("a","'a' harfi")) # Output: 0
+print(sözlük) # Output: {'a': 0, 'b': 1, 'c': 2}
+print(sözlük.setdefault("d","'d' harfi")) # Output: 'd' harfi
+print(sözlük) # Output: {'a': 0, 'b': 1, 'c': 2, 'd': "'d' harfi"}
 ```
 
-## `setdefault(key, value = "None")` Methodu
-Sözlük içinde arama yapar. `key` parametresinde belirtilen `key` sözlükte varsa, o `key`'e aite value'yi döndürür. `key` parametresinde belirtilen `key` sözlükte yoksa, o `key`'i sözlüğe ekler. Eklediği key'in value'si default `None` olarak ayarlıdır. `value` parametresi girilirse, değer `None` yerine bu parametreye girilen değer olur.
-```py
-sözlük = {'a': 0, 'b': 1, 'c': 2}
-print(sözlük.setdefault("a"))
-print(sözlük.setdefault("d", 3), sözlük, sep="\n")
-```
-**Output:**
-```
-0
-3
-{'a': 0, 'b': 1, 'c': 2, 'd': 3}
-```
+<h3 id="1.3.11"><code>update(m)</code> Methodu</h3>
 
-## `update(dict)` Methodu
-`dict1.update(dict2)` syntax'ına sahiptir. Bu syntax'a göre, `dict1`'i, `dict2`'ye göre günceller.
+`dict1.update(dict2)` formatında kullanılır. `dict1`'i, `dict2`'ye göre günceller. Örnek:
 ```py
-sözlük = {'a': 0, 'b': 1, 'c': 2}
-sözlük2 = {'a': 10, 'b': 11, 'c': 12}
-sözlük.update(sözlük2)
-print(sözlük) # Output: {'a': 10, 'b': 11, 'c': 12}
+sözlük1 = {'a': 0, 'b': 1, 'c': 2}
+sözlük2 = {'a': 9, 'b': 4, 'c': 2}
+sözlük3 = {'d': 13, 'e': 15}
+
+print(sözlük1) # Output: {'a': 0, 'b': 1, 'c': 2}
+sözlük1.update(sözlük2)
+print(sözlük1) # Output: {'a': 9, 'b': 4, 'c': 2}
+
+print(sözlük1) # Output: {'a': 9, 'b': 4, 'c': 2}
+sözlük1.update(sözlük3)
+print(sözlük1) # Output: {'a': 9, 'b': 4, 'c': 2, 'd': 13, 'e': 15}
 ```

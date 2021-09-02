@@ -226,7 +226,7 @@ print(k1) # Output: {2, 3}
 ```
 
 ## `pop()` Methodu
-Kümenin rastgele bir elemanını siler ve sildiği elemanı döndürür.
+Kümenin rastgele bir elemanını önce döndürür sonra siler.
 ```py
 k1 = {1, 2, 3, 4, 5}
 print(k1.pop()) # Output: 1

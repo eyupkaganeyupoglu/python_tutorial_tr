@@ -144,15 +144,15 @@ print(t1[3]["Sözlük"]) # Output: dictionary
 - Bu işlemden sonra `a[b][c]` kodu Python'un gözünde `x[c]` koduna dönüşür. Python `x[c]` kodu içinde aynı işlemleri yapar.
 - Python'u LEGO gibi düşünün. Kodları bütün olarak değil, parça parça yorumlayın. Böylelikle Python'un çalışma mantığını anlarsınız. Örneğin aşağıdaki iki kod tamamen aynı işi yapmaktadır:
     ```py
-    l1 = [[[[1,2], [3,4]], [[5,6], [7,8]]], [[[9,10], [11,12]], [[13,14], [15,16]]]]
+    t1 = ((((1,2), (3,4)), ((5,6), (7,8))), (((9,10), (11,12)), ((13,14), (15,16))))
 
-    a1 = l1[0]
+    a1 = t1[0]
     a2 = a1[0]
     a3 = a2[0]
     a4 = a3[0]
     print(a4) # Output: 1
 
-    print(l1[0][0][0][0]) # Output: 1
+    print(t1[0][0][0][0]) # Output: 1
     ```
 
 **Tuple'ların listelerden bazı farkları:** Bir tuple'ın herhangi bir index'indeki öğesini başka bir şeyler değiştiremezsin veya silemezsin çünkü tuple'lar değiştirilemez (immutable) bir data type olduğu için listelerdeki gibi parça ekleme/çıkarma/silme işlemlerini desteklemez. Aşağıdaki örneklerdeki hata mesajlarında bu duruma vurgu yapılmış zaten:
@@ -175,7 +175,7 @@ print(t1)
 
 <h2 id="1.2">Tuple Üreteçleri (Tuple Comprehensions)</h2>
 
-**Comprehension**, tek satırda oluşturduğumuz **Generator** (daha sonra anlatılacak) yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Bu generator yapısı (**Generator Comprehension**) bir generator objesi oluşturmakta kullanılır. Daha sonra bu generator objesini tuple type'a çevirerek Tuple Comprehension oluşturabiliriz. Örnek:
+**Comprehension**, tek satırda oluşturduğumuz **Generator** (daha sonra anlatılacak) yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Bu generator yapısı (**Generator Comprehension**) bir generator objesi oluşturmakta kullanılır. Daha sonra bu generator objesini tuple type'a dönüştürerek Tuple Comprehension oluşturabiliriz. Örnek:
 ```py
 tuple_exp = tuple(i for i in range(1,4))
 print(tuple_exp) # Output: (1, 2, 3)

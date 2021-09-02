@@ -192,7 +192,7 @@ print(l1[3]["Sözlük"]) # Output: dictionary
 
 <h2 id="1.2">Liste Üreteçleri (List Comprehensions)</h2>
 
-**Comprehension**, tek satırda oluşturduğumuz **Generator** (daha sonra anlatılacak) yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Bu generator yapısı (**Generator Comprehension**) bir generator objesi oluşturmakta kullanılır. Daha sonra bu generator objesini list type'a çevirerek List Comprehension oluşturabiliriz. Örnek:
+**Comprehension**, tek satırda oluşturduğumuz **Generator** (daha sonra anlatılacak) yapısına verilen isimdir. `(expression for item in iterable)` syntax'ına sahiptir (parantezler dahil). Bu generator yapısı (**Generator Comprehension**) bir generator objesi oluşturmakta kullanılır. Daha sonra bu generator objesini list type'a dönüştürerek List Comprehension oluşturabiliriz. Örnek:
 ```py
 list_exp = [i for i in range(1,4)]
 print(list_exp) # Output: [1, 2, 3]
@@ -264,7 +264,7 @@ print(liste) # Output: ['Kiraz', 'Armut', 'Elma']
 
 <h3 id="1.3.6"><code>pop(index)</code> Methodu</h3>
 
-`index` parametresinde belirtilen index'deki öğreyi, uygulandığı listeden siler. Sildiği döndürür. Örnek:
+`index` parametresinde belirtilen index'deki öğreyi, uygulandığı önce döndürür sonra listeden siler. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 print(liste.pop(0)) # Output: Elma

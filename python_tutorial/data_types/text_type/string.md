@@ -453,7 +453,7 @@ print("%s" %("Bu bir String")) # Output: Bu bir String
 
 <h4 id="2.1.1.2"><code>d</code> Harfi</h4>
 
-Integer (`int`) type'ı temsil eder. Float type değer girilirse, bu değeri integer type'a çevirip kullanır. Örnek:
+Integer (`int`) type'ı temsil eder. Float type değer girilirse, bu değeri integer type'a dönüştürüp kullanır. Örnek:
 ```py
 print("%d" %(1)) # Output: 1
 ```
@@ -476,7 +476,7 @@ print("'%-5.2i'" %(1)) # Output: '01   '
 
 <h4 id="2.1.1.4"><code>o</code> Harfi</h4>
 
-Octal sayıları temsil eder. Decimal sayıları octal sayıya çevirir. Örnek:
+Octal sayıları temsil eder. Decimal sayıları octal sayıya dönüştürür. Örnek:
 ```py
 print("%i decimal == %o octal" %(10, 10)) # Output: 10 decimal == 12 octal
 ```
@@ -831,7 +831,7 @@ True
 
 <h2 id="3.11"><code>capitalize()</code> Methodu</h2>
 
-Bir karakter dizisinin 0. index'indeki harf karakterini büyük harf karakterine çevirir. 0. index'indeki harf karakterinin üstünde `upper()` methodu uygulanmış gibi düşünebilirsiniz. Türkçe karakterlerde sıkıntı çıkarabilir. Örnekler:
+Bir karakter dizisinin 0. index'indeki harf karakterini büyük harf karakterine dönüştürür. 0. index'indeki harf karakterinin üstünde `upper()` methodu uygulanmış gibi düşünebilirsiniz. Türkçe karakterlerde sıkıntı çıkarabilir. Örnekler:
 ```py
 metin = "istisnalar kaideyi bozmaz."
 print(metin.capitalize()) # Output: Istisnalar kaideyi bozmaz.
@@ -861,7 +861,7 @@ On İki Ada
 
 <h2 id="3.12"><code>swapcase()</code> Methodu</h2>
 
-Karakter dizisi içindeki büyük harfleri küçük harfe, küçük harfleri de büyük harfe çevirir. Türkçe karakterlerde sıkıntı çıkabilir.
+Karakter dizisi içindeki büyük harfleri küçük harfe, küçük harfleri de büyük harfe dönüştürür. Türkçe karakterlerde sıkıntı çıkabilir.
 ```py
 metin = "SelaMLar"
 print(metin.swapcase()) # Output: sELAmlAR

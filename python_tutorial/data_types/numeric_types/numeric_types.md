@@ -65,7 +65,7 @@ Türkçe'deki **Komplex Sayılar**, **"Karmaşık Sayılar"** kavramlarının İ
 
 <h2 id="3.1"><code>int(x, base=10)</code> Fonksiyonu</h2>
 
-`int()` build-in fonksiyonu, `x` parametresine girilen argümanı **uygunsa** `int` class'ında belirtilen integer data type'a dönüştürmekte kullanılır. `base` parametresine, bu çevirme işleminin hangi sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur.
+`int()` build-in fonksiyonu, `x` parametresine girilen argümanı **uygunsa** `int` class'ında belirtilen integer data type'a dönüştürmekte kullanılır. `base` parametresine, bu dönüştürme işleminin hangi sayı sistemine göre yapılacağını belirleyebilirsiniz. `base` parametresinin default değeri `10`'dur.
 ```py
 print(int(0b1010)) # Output: 10
 print(int("1010")) # Output: 1010
@@ -74,7 +74,7 @@ print(int("1010", base=8)) # Output: 520
 print(int("1010", base=10)) # Output: 1010
 print(int("1010", base=16)) # Output: 4112
 ```
-**Not:** Float formatta yazılmış string data type bir value'yu direkt integer type'a çeviremezsiniz. Önce string'den float'a, sonra float'dan integer'e çevirmelisiniz. Örnek:
+**Not:** Float formatta yazılmış string data type bir value'yu direkt integer type'a dönüştüremezsiniz. Önce string'den float'a, sonra float'dan integer'e dönüştürmelisiniz. Örnek:
 ```py
 a = "12.55"
 a = float(int(a))
