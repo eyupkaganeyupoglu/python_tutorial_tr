@@ -331,11 +331,25 @@ print(liste.count("a")) # Output: 1
 
 <h3 id="1.3.11"><code>copy()</code> Methodu</h3>
 
-Uygulandığı listenin bir kopyasını oluşturur. `liste1 = liste2` gibi assignment operator kullanarak liste kopyalama yönteminden farkı, yeni liste ile eski liste birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Örnek:
+Uygulandığı listenin bir kopyasını oluşturur. `liste1 = liste2` gibi assignment operator kullanarak liste kopyalama yönteminden farkı, yeni liste ile eski liste birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Böylece birinde yapılan değişikli diğerini etkilemez. Örnek:
 ```py
-liste1 = ['Ahmet', 'Mehmet', 'Ceylan']
-liste2 = liste1.copy()
-print(id(liste1) == id(liste2)) # Output: False
+liste = [1,2,3,4,5]
+liste_copy1 = liste
+print(liste) # Output: [1, 2, 3, 4, 5]
+print(liste_copy1) # Output: [1, 2, 3, 4, 5]
+
+liste_copy1[0] = "Bir"
+print(liste) # Output: ['Bir', 2, 3, 4, 5]
+print(liste_copy1) # Output: ['Bir', 2, 3, 4, 5]
+
+liste_copy2 = liste.copy()
+print(id(liste) == id(liste_copy2)) # Output: False
+print(liste) # Output: ['Bir', 2, 3, 4, 5]
+print(liste_copy2) # Output: ['Bir', 2, 3, 4, 5]
+
+liste_copy2[1] = "İki"
+print(liste) # Output: ['Bir', 2, 3, 4, 5]
+print(liste_copy2) # Output: ['Bir', 'İki', 3, 4, 5]
 ```
 
 <h3 id="1.3.12"><code>clear()</code> Methodu</h3>

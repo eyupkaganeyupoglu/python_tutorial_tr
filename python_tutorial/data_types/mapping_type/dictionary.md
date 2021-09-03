@@ -18,7 +18,7 @@
 
 <h1 id="1">Sözlükler (Dictionaries)</h1>
 
-Dictionary'ler, içinde objeleri depolayabilen, sıralı, değiştirilebilir data type'lardır. `dict(object)` build'in fonksiyonu ile liste oluşturabilirsiniz veya uygun objeleri liste'ye dönüştürebilirsiniz. Listeler köşeli parantez (`{}`) ve mapping (`key:value`) ile ifade edilir. Örnek:
+Dictionary'ler, içinde objeleri depolayabilen, sıralı, değiştirilebilir data type'lardır. `dict(object)` build'in fonksiyonu ile liste oluşturabilirsiniz veya uygun objeleri liste'ye dönüştürebilirsiniz. Listeler süslü parantez (`{}`) ve mapping (`key:value`) ile ifade edilir. Örnek:
 ```py
 print({}, type({}))
 print(dict(), type(dict()))
@@ -191,7 +191,7 @@ d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
 print(len(d1)) # Output: 3
 ```
 
-**Not:** Dictionary type aritmetik (sayısal) işlemleri desteklemez. Örnek:
+Dictionary type, aritmetik (sayısal) işlemleri desteklemez. Örnek:
 ```py
 d1 = {'Bir': 1, 'İki': 2, 'Üç': 3}
 d2 = {'Dört': 4, 'Beş': 5, 'Altı': 6}
@@ -313,7 +313,7 @@ print(sözlük) # Output: NameError: name 'sözlük' is not defined
 
 <h3 id="1.3.6"><code>copy()</code> Methodu</h3>
 
-Uygulandığı sözlüğün farklı ID'ye sahip bir kopyasını oluşturur. Bu sayede yeni sözlük ile eski sözlük birbirinden bağımsız olur. Assignment operator'dan (`=`) farkı budur. Örnek:
+Uygulandığı dictionary'nin bir kopyasını oluşturur. `sözlük1 = sözlük2` gibi assignment operator kullanarak dictionary kopyalama yönteminden farkı, yeni dictionary ile eski dictionary'nin birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Böylece birinde yapılan değişikli diğerini etkilemez. Örnek:
 ```py
 sözlük = {'a': "0", 'b': "1", 'c': "2", 'ç': "3", 'd': "4"}
 sözlük_copy1 = sözlük
@@ -325,6 +325,7 @@ print(sözlük) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '
 print(sözlük_copy1) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
 
 sözlük_copy2 = sözlük.copy()
+print(id(sözlük) == id(sözlük_copy2)) # Output: False
 print(sözlük) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
 print(sözlük_copy2) # Output: {'a': 'Sıfır', 'b': '1', 'c': '2', 'ç': '3', 'd': '4'}
 
