@@ -108,7 +108,7 @@ print(var.__dict__) #Output: {'class_attribute': 'Instance attribute'}
 
 **Not:** Class attribute'lar, instance'larda `__class__` adında bir method'da depolanırlar (`__class__` methodunun ne olduğu daha sonra anlatılacak).
 
-Üzerinde yeniden tanımlama (redefinition) işlemi yapılan her class attribute farklı bir objeye dönüşür (ID'leri değişir). Sahip olduğu value'yu değiştirmek için yeniden tanımlama (redefinition) işleminin zorunlu olduğu değiştirilemez (immutable (`bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `range` vb.)) data type'larda bu durumun önüne geçemeyiz ama değiştirilebilir (mutable (`list`, `set`, `dict` vb.)) data type'larda geçebiliriz. Örnek:
+Üzerinde yeniden tanımlama (redefinition) işlemi yapılan her class attribute farklı bir objeye dönüşür (ID'leri değişir). Sahip olduğu value'yu değiştirmek için yeniden tanımlama (redefinition) işleminin zorunlu olduğu değiştirilemez (immutable (`bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `bytes`, `str`, `range` vb.)) data type'larda bu durumun önüne geçemeyiz ama değiştirilebilir (mutable (`list`, `set`, `dict`, `bytearray` vb.)) data type'larda geçebiliriz. Örnek:
 ```py
 class A:
     class_attribute_1 = "String"

@@ -24,18 +24,21 @@
 
 <h1 id="1">Kümeler (Sets)</h1>
 
-`set`, bildiğimiz matematikteki kümeler gibidir. Her öğeden bir tane bulundurur. Set'ler sırasız (indexlenemezler) ve değiştirilebilir (mutable) data type'lardır. `set(iterable)` build'in fonksiyonu ile set oluşturabilirsiniz veya uygun objeleri set'e dönüştürebilirsiniz. Set'ler süslü parantez (`{}`) ile ifade edilir. Örnek:
+`set`, bildiğimiz matematikteki kümeler gibidir. Her öğeden bir tane bulundurur. Set'ler sırasız (indexlenemezler) ve değiştirilebilir (mutable) data type'lardır. `set(iterable)` build'in fonksiyonu ile set oluşturabilirsiniz veya uygun objeleri set'e dönüştürebilirsiniz. Set'ler süslü parantez (`{}`) ile ifade edilir. Süslü parantezleri (`{}`) sade bir şekilde kullanırsak bir dictionary objesi elde etmiş oluruz. Çünkü `set` type'ın `list`, `tuple` ve `dict` gibi spesifik bir işareti yoktur. Bu yüzden boş `set` objesi elde etmek istiyorsanız `set()` build-in fonksiyonunu kullanmalısınız. Örnek:
 ```py
 s1 = set()
 s2 = {"string",
 	  1, 1.5, 15+5j,
 	  ("tuple", "Tuple"),
-	  range(10)}
+	  range(10),
+      frozenset({1,2,3,4}),
+      True,
+      bytes(3)}
 
 print(s1) # Output: set()
-print(s2) # Output: {'string', 1, 1.5, ('tuple', 'Tuple'), (15+5j), range(0, 10)}
+print(s2) # Output: {'string', 1, 1.5, range(0, 10), b'\x00\x00\x00', frozenset({1, 2, 3, 4}), ('tuple', 'Tuple'), (15+5j)}
 ```
-`bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `bytes` ve `range` değiştirilemez (immutable) type'lar oldukları için set'e öğe olarak girilebilirler. `list`, `set`, `dict`, `bytearray` ve user-defined class'lar değiştirilebilir (mutable) data type'lar oldukları için set'e öğe olarak girilemezler.
+`bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `bytes`, `str`, `range` değiştirilemez (immutable) type'lar oldukları için set'e öğe olarak girilebilirler. `list`, `set`, `dict`, `bytearray` ve user-defined class'lar değiştirilebilir (mutable) data type'lar oldukları için set'e öğe olarak girilemezler.
 
 Set data type'ı sırasız olduğu için örneğin `print()` fonksiyonu ile yazdırılmak istense, program her çalıştırıldığında öğeler farklı sırada yazdırılabilir. Bu durum öğelerin **hashlenmesi** ile ilgilidir. Hash dediğimiz şey, veriyi daha az kaynak kullanarak ifade etmek için ilgili hashing algoritmasının ürettiği değerdir. Örneğin 1024 bitlik bir mesajı bir hashing algoritması 128 bitlik yapıya indirgeyebilir. Python'da da böyledir. Bir Python programı çalıştırıldığında, o programdaki değerler bir hash'e sahip olur. Çok kaynak kullanılarak ifade edilebilen değerlerin hash'leri, program her çalıştırıldığında değişir. Ama az kaynak kullanılarak ifade edilebilen değerlerin hash'leri her zaman aynıdır. Örnek:
 ```py
@@ -83,7 +86,7 @@ print(hash(123.123))                       # Output: 283618690133295227
 print(hash(123+123j))                      # Output: 123000492
 print(hash(range(10)))                     # Output: -7546101314042312252
 ```
-boolean, integer, float, complex ve range type'ların hash'leri hiçbir zaman değişmez çünkü bu type'lar az kaynak harcarlar. Ama bytes ve string type'ların hash'leri, program her baştan çalıştırıldığında değişir çünkü bu type'lar çok kaynak harcarlar. Tuple ve Frozenset type'ları da içerdiği değerlere göre çok ya da az kaynak harcayabilir. Örneğin öğeleri çok kaynak harcayan string veya bytes type olan bir tuple veya frozenset objelerinin hash'i, program her çalıştırıldığında değişirken; öğeleri az kaynak harcayan type'lar olan tuple veya frozenset objelerinin hash'i hep aynıdır. Yukarıda örneği var.
+`bool`, `int`, `float`, `complex` ve `range` type'ların hash'leri hiçbir zaman değişmez çünkü bu type'lar az kaynak harcarlar. Ama `bytes` ve `str` type'ların hash'leri, program her baştan çalıştırıldığında değişir çünkü bu type'lar çok kaynak harcarlar. `tuple` ve `frozenset` type'ları da içerdiği değerlere göre çok ya da az kaynak harcayabilir. Örneğin öğeleri çok kaynak harcayan string veya bytes type olan bir tuple veya frozenset objelerinin hash'i, program her çalıştırıldığında değişirken; öğeleri az kaynak harcayan type'lar olan tuple veya frozenset objelerinin hash'i hep aynıdır. Yukarıda örneği var.
 
 **Not:** `list`, `set`, `dict`, `bytearray` gibi değiştirilebilir (mutable) type'lar hash'lenemez. Hash'lenmeye çalışılırsa `TypeError: unhashable type: 'list'`, `TypeError: unhashable type: 'set'`, `TypeError: unhashable type: 'dict'`, `TypeError: unhashable type: 'bytearray'` gibi hatalar yükseltilir. **Hash** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hash "https://docs.python.org/3/library/functions.html#hash"). **Hashable** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/glossary.html#term-hashable "https://docs.python.org/3/glossary.html#term-hashable").
 
@@ -105,24 +108,21 @@ print(set_exp)
 ```
 Burada `'2'` string'ini hash'inin sayısal değeri diğerlerinden küçük olmasına rağmen ilk sırada. Bu da hash'lerin sıralanışının sayısal büyüklükleriyle alakalı olmadığını kanıtlıyor. Bu kadar ayrıntı bilmenize gerek yok. Diğer kısımlara geçin.
 
-**Not:** Süslü parantezleri (`{}`) sade bir şekilde kullanırsak bir dictionary objesi elde etmiş oluruz. Çünkü `set` type'ın `list`, `tuple` ve `dict` gibi spesifik bir işareti yoktur. Bu yüzden boş `set` objesi elde etmek istiyorsanız `set()` build-in fonksiyonunu kullanmalısınız. Örnek:
-```py
-var1 = {}
-var2 = set()
-print(type(var1)) # Output: <class 'dict'>
-print(type(var2)) # Output: <class 'set'>
-```
-
 <h2 id="1.1">Set'de İşlemler</h2>
 
 Iterable bütün type'ları set'e dönüştürebilirsin. Örnek:
 ```py
-print("set  ", {"A", "B", "C"})                     # Output: set   {'C', 'B', 'A'}
-print("list ", set(["A", "B", "C"]))                # Output: list  {'C', 'B', 'A'}
-print("tuple", set(("A", "B", "C")))                # Output: tuple {'C', 'B', 'A'}
-print("str  ", set("ABC"))                          # Output: str   {'C', 'B', 'A'}
-print("dict ", set({"A": "a", "B": "b", "C": "c"})) # Output: dict  {'C', 'B', 'A'}
+print("set:", {"A", "B", "C"})                       # Output: set: {'A', 'C', 'B'}
+print("frozenset:", set(frozenset({"A", "B", "C"}))) # Output: frozenset: {'A', 'C', 'B'}
+print("list:", set(["A", "B", "C"]))                 # Output: lis:t {'A', 'C', 'B'}
+print("tuple:", set(("A", "B", "C")))                # Output: tuple: {'A', 'C', 'B'}
+print("str:", set("ABC"))                            # Output: str: {'A', 'C', 'B'}
+print("dict:", set({"A": "a", "B": "b", "C": "c"}))  # Output: dict: {'A', 'C', 'B'}
+print("bytearray:", set(bytearray('ABC', 'utf-8')))  # Output: bytearray: {65, 66, 67}
+print("range:", set(range(3)))                       # Output: range: {0, 1, 2}
 ```
+
+**Not:** `__iter__()` methoduna sahip bütün class'lardan türetilen objeler (instance) iterable'dır. Bazı iterable obje örnekleri: `frozenset`, `set`, `list`, `tuple`, `str`, `dict`, `bytearray`, `range`, `memoryview`, `enumerate`, `filter`, `map`, `reversed`, `zip`
 
 Set'lerin öğe sayısına `len()` fonksiyonuyla ulaşılabilir. Örnek:
 ```py
@@ -181,22 +181,23 @@ print(set_exp) # Output: set()
 
 Uygulandığı set'in bir kopyasını oluşturur. `set_exp1 = set_exp2` gibi assignment operator kullanarak set kopyalama yönteminden farkı, yeni set ile eski set'in birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Böylece birinde yapılan değişikli diğerini etkilemez. Örnek:
 ```py
-set = {1,2,3,4,5}
-set_copy1 = set
-print(set) # Output: {1, 2, 3, 4, 5}
+set_exp = {1,2,3,4,5}
+set_copy1 = set_exp
+print(id(set_exp) == id(set_copy1)) # Output: True
+print(set_exp) # Output: {1, 2, 3, 4, 5}
 print(set_copy1) # Output: {1, 2, 3, 4, 5}
 
 set_copy1.add("Bir")
-print(set) # Output: {'Bir', 1, 2, 3, 4, 5}
+print(set_exp) # Output: {'Bir', 1, 2, 3, 4, 5}
 print(set_copy1) # Output: {'Bir', 1, 2, 3, 4, 5}
 
-set_copy2 = set.copy()
-print(id(set) == id(set_copy2)) # Output: False
-print(set) # Output: {'Bir', 1, 2, 3, 4, 5}
+set_copy2 = set_exp.copy()
+print(id(set_exp) == id(set_copy2)) # Output: False
+print(set_exp) # Output: {'Bir', 1, 2, 3, 4, 5}
 print(set_copy2) # Output: {'Bir', 1, 2, 3, 4, 5}
 
 set_copy2.add("İki")
-print(set) # Output: {'Bir', 1, 2, 3, 4, 5}
+print(set_exp) # Output: {'Bir', 1, 2, 3, 4, 5}
 print(set_copy2) # Output:{'Bir', 1, 2, 3, 4, 5, 'İki'}
 ```
 
@@ -213,7 +214,7 @@ print(set_exp) # Output: {"bir", "iki", "üç", "dört"}
 
 <h3 id="1.3.4"><code>difference(*s)</code> Methodu</h3>
 
-Uygulandığı küme ile `*s` parametresine girilen kümelerin farkını alır ve sonucu döndürür. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
+Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ve sonucu döndürür. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
 ![](https://i.ibb.co/1Rx3z20/a-fark-b.png)
 
@@ -229,7 +230,7 @@ print({1,2,3,4,5}.difference({1,2,3},{1,4})) # Output: {5}
 
 <h3 id="1.3.5"><code>difference_update(*s)</code> Methodu</h3>
 
-Uygulandığı küme ile `*s` parametresine girilen kümelerin farkını alır ama `difference` methodundaki gibi sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
+Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ama `difference` methodundaki gibi sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
 ![](https://i.ibb.co/P4rYJcy/a-fark-b.png)
 
@@ -273,7 +274,7 @@ A.remove(6) # KeyError: 6
 
 <h3 id="1.3.8"><code>intersection(*s)</code> Methodu</h3>
 
-Uygulandığı küme ile `*s` parametresine girilen kümelerin kesişimini alır ve sonucu döndürür. İki set'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A & B` işleminin şematik gösterimi:
+Uygulandığı set ile `*s` parametresine girilen set'lerin kesişimini alır ve sonucu döndürür. İki set'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A & B` işleminin şematik gösterimi:
 
 ![](https://i.ibb.co/LdKstBY/a-kesi-im-b.png)
 
@@ -317,7 +318,7 @@ print(A & B & C) # Output: {1}
 
 <h3 id="1.3.9"><code>intersection_update(*s)</code> Methodu</h3>
 
-Uygulandığı küme ile `*s` parametresine girilen kümelerin farkını alır ama `intersection` methodundaki gibi sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. İki set'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A & B` işleminin şematik gösterimi:
+Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ama `intersection` methodundaki gibi sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. İki set'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A & B` işleminin şematik gösterimi:
 
 ![](https://i.ibb.co/LdKstBY/a-kesi-im-b.png)
 
@@ -427,7 +428,7 @@ print(A.issuperset(B)) # Output: False (B kümesi A kümesini kapsamaz)
 
 <h3 id="1.3.13"><code>union(*s)</code> Methodu</h3>
 
-Uygulandığı küme ile `*s` parametresine girilen kümelerin birleşimini alır ve sonucu döndürür. İki set'i birleşimini almak için `|` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A | B` işleminin şematik gösterimi:
+Uygulandığı set ile `*s` parametresine girilen set'lerin birleşimini alır ve sonucu döndürür. İki set'i birleşimini almak için `|` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A | B` işleminin şematik gösterimi:
 
 ![](https://i.ibb.co/CvjTRYs/a-birle-im-b.png)
 
@@ -517,7 +518,7 @@ print(F) # Output: {1, 2, 3, 4, 5, 6, 7, 8, '0', '9'}
 
 <h3 id="1.3.15"><code>symmetric_difference(s)</code> Methodu</h3>
 
-`A` ve `B` iki set objesi olmak üzere, `A.difference(k2) | B.difference(k1)` (yani `(A - B) | (B - A)`) işleminin sonucunu döndürür. Bu işlemin şematik gösterimi:
+`A` ve `B` iki set objesi olmak üzere, `A.difference(B) | B.difference(A)` (yani `(A - B) | (B - A)`) işleminin sonucunu döndürür. Bu işlemin şematik gösterimi:
 
 ![](https://i.ibb.co/3y5bxKY/symmetric-difference.png)
 
@@ -534,7 +535,7 @@ print(A.symmetric_difference(B)) # Output: {3, 4, 5, 6, 7, 8}
 
 <h3 id="1.3.16"><code>symmetric_difference_update(s)</code> Methodu</h3>
 
-`A` ve `B` iki set objesi olmak üzere, `A.difference(k2) | B.difference(k1)` (yani `(A - B) | (B - A)`) işleminin sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. Bu işlemin şematik gösterimi:
+`A` ve `B` iki set objesi olmak üzere, `A.difference(B) | B.difference(A)` (yani `(A - B) | (B - A)`) işleminin sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. Bu işlemin şematik gösterimi:
 
 ![](https://i.ibb.co/3y5bxKY/symmetric-difference.png)
 
