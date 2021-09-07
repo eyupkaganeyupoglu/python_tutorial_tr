@@ -17,9 +17,11 @@
 <h1 id="0">Python Yazmak İçin Ne Kullanmalıyım?</h1>
 
 Ben VSCode kullanıyorum. VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını anlatmakta fayda var:
-- **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text ediyor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
+- **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text editor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
 - **Text editor:** Not defterinin gelişmiş versiyonudur diyebiliriz. Çeşitli extension'larla modifiye edilerek harika program geliştirme ortamlarına da dönüştürülebilir. IDE'lere göre daha hızlıdır ama bu hız kurduğunuz extension'lara göre değişebilir. Benim gibi 20 tane extension kullanıyorsanız, kullandığınız text editor, bir IDE kadar yavaş açılabilir. Kullandığım extension listesi:
+	
 	![](https://i.ibb.co/thTLgN6/image.png)
+	
 	![](https://i.ibb.co/s9f7rSJ/image.png)
 
 <h1 id="1">Python Sözlüğü (Python Glossary)</h1>
@@ -98,7 +100,7 @@ Bütün bunların ne oldukları ve nasıl kullanıldıkları zamanla daha iyi ot
 
 - Bir objeyi temsil eden isme **identifier** denir. Bu identifier'ı kullanarak ilgili objeye atıfta bulunmak (refers to) suretiyle kullanabiliriz.
 - Identifier, variable'lara (daha genel tanımıyla objelere) verdiğimiz isimdir.
-- Identifier'larda rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`, `1234`
+- Identifier'lar rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`, `1234`
 - Identifier'larda boşluk karakteri kullanılamaz. Örnek: `var exp`
 - Identifier'larda `:`, `'`, `”`, `,`, `<`, `>`, `/`, `?`, `|`, `\`, `(`, `)`, `!`, `@`, `#`, `$`, `%`, `^`, `&`, `*`, `~`, `-`, `+` sembolleri kullanılamaz. Sadece `_` (alt çizgi) kullanılabilir. Aksi durumda `SyntaxError: invalid syntax` hatası yükseltilir (raised).
 - [Keyword'ler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords") identifier olarak kullanılamaz. Örnek: `global = 1`. Build-in namespace'de tanımlanmış `str`, `int`, `float`... vb. build-in class ve fonksiyonları da identifier olarak kullanmamalısınız. Python'un keyword'lerin identifier olarak kullanılmaması için bir savunma mekanizması vardır ama bu mekanizma build-in namespace'deki class'ları ve fonksiyonları kapsamamaktadır. Bu yüzden bunları identifier olarak kullanmayın, işlevselliklerini yokedersiniz ve dolayısıyla programınızı bozarsınız.
