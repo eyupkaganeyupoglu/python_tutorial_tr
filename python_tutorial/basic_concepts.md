@@ -98,7 +98,7 @@ Bütün bunların ne oldukları ve nasıl kullanıldıkları zamanla daha iyi ot
 
 - Bir objeyi temsil eden isme **identifier** denir. Bu identifier'ı kullanarak ilgili objeye atıfta bulunmak (refers to) suretiyle kullanabiliriz.
 - Identifier, variable'lara (daha genel tanımıyla objelere) verdiğimiz isimdir.
-- Identifier'larda rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`, `1234`
+- Identifier'lar rakam (digit) ile başlayamaz ve sadece rakamlardan oluşamaz. Örnek: `1vrb`, `1234`
 - Identifier'larda boşluk karakteri kullanılamaz. Örnek: `var exp`
 - Identifier'larda `:`, `'`, `”`, `,`, `<`, `>`, `/`, `?`, `|`, `\`, `(`, `)`, `!`, `@`, `#`, `$`, `%`, `^`, `&`, `*`, `~`, `-`, `+` sembolleri kullanılamaz. Sadece `_` (alt çizgi) kullanılabilir. Aksi durumda `SyntaxError: invalid syntax` hatası yükseltilir (raised).
 - [Keyword'ler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords") identifier olarak kullanılamaz. Örnek: `global = 1`
