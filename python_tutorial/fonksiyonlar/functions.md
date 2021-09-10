@@ -414,9 +414,7 @@ Yukarıdaki kodda:
 - `boolean:bool` kodu, kullanıcıya, `boolean` isimli variable'ın `bool` type bir argüman alması gerektiğini (ayrıca `boolean` parametresinin default değeri `True`'dur),
 - `-> str` kodu, kullanıcıya, `func` isimli fonksiyonun `str` type bir değer döndürmesi gerektiğini döylemektedir.
 
-**Not:** Sık sık gördüğümüz "`Any`" kelimesi de `str`, `int` vs. gibi bir type hint'dir.
-
-Bu işaretlerin kendi başlarına, kullanıcıyı bilgilendirmek dışında bir işlevi olmasa bile, **mypy** modülü etkisiyle anlam kazanır.
+**Not:** Python'un kaynak dosyalarında sık sık gördüğümüz "`Any`" kelimesi de `str`, `int` vs. gibi bir type hint'dir. Bu işaretlerin kendi başlarına, kullanıcıyı bilgilendirmek dışında bir işlevi olmasa bile, **mypy** modülü etkisiyle anlam kazanır. Ama yine de type hint deyip geçmemek lazım. `Any`, `typing.pyi` dosyasında `Any = object()` şeklinde tanımlanmıştır. Bu yüzden bazı yerlerde `... -> Any` şeklinde type hint olarak kullanılırken, bazı yerlerde `__iter1: Iterable[Any]` şeklinde kullanılabilir. Teorik olarak bu kullanımda bir type hint'dir ama `mypy` modülü ile anlam kazanırsa çık şey fark eder.
 
 `mypy` sayesinde:
 - **Type Hint** (`:`) ve **Function Annotation** (`->`) ile belirtilen durumlara aykırı durumlar oluşunca `mypy` harekete geçer. Örneğin `name:str` şeklinde tanımladığınız `name` parametresine string type dışında bir argüman girerseni veya `func` fonksiyonu string type dışında bir değer döndürürse `mypy` bir hata raporu oluşturur.

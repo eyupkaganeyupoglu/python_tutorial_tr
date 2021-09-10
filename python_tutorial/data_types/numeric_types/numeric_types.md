@@ -10,13 +10,27 @@
     - [On altılı (Heksadesimal) sayma sistemi](#2.4)
 - [Numeric Data Types](#3)
     - [`int(x, base=10)` Fonksiyonu](#3.1)
-        - [`bit_length()` Methodu](#3.1.1)
+        - [`as_integer_ratio()` Methodu](#3.1.1)
+        - [`bit_length()` Methodu](#3.1.2)
+        - [`to_bytes(length, byteorder, signed=False)` Methodu](#3.1.3)
+        - [`from_bytes(bytes, byteorder, signed=False)` Methodu](#3.1.4)
+        - [`conjugate()` Methodu](#3.1.5)
+        - [`denominator` Methodu](#3.1.6)
+        - [`numerator` Methodu](#3.1.7)
+        - [`imag` Methodu](#3.1.8)
+        - [`real` Methodu](#3.1.9)
     - [`float(x)` Fonksiyonu](#3.2)
         - [`as_integer_ratio()` Methodu](#3.2.1)
         - [`is_integer()` Methodu](#3.2.2)
+        - [`conjugate()` Methodu](#3.2.3)
+        - [`hex()` Methodu](#3.2.4)
+        - [`fromhex(s)` Methodu](#3.2.5)
+        - [`imag` Methodu](#3.2.6)
+        - [`real` Methodu](#3.2.7)
     - [`complex(real, imag)` Fonksiyonu](#3.3)
         - [`real` Methodu](#3.3.1)
         - [`imag` Methodu](#3.3.2)
+        - [`conjugate()` Methodu](#3.3.3)
 - [Numeric Fonksiyonlar](#4)
     - [`bin(x)` Fonksiyonu](#4.1)
     - [`oct(x)` Fonksiyonu](#4.2)
@@ -87,12 +101,114 @@ print(int()) # Output: 0
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#int "https://docs.python.org/3/library/functions.html#int").
 
-<h3 id="3.1.1"><code>bit_length()</code> Methodu</h3>
+<h3 id="3.1.1"><code>as_integer_ratio()</code> Methodu</h3>
 
-`bit_length()` methodu, uygulandığı integer'ın bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(10))`: `0b1010`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş aynıdır. Örnek:
+Birbirine bölündüğünde uygulandığı integer veren iki sayıyı döndürür. Bu iki sayı `tuple` içinde döndürülür ve integer'lar için her zaman `(asıl_sayı, 1)` formatındadır. Örnek:
+```py
+print((2).as_integer_ratio()) # Output: (2, 1)
+print((4).as_integer_ratio()) # Output: (4, 1)
+print((5).as_integer_ratio()) # Output: (5, 1)
+print((9).as_integer_ratio()) # Output: (9, 1)
+print((125).as_integer_ratio()) # Output: (125, 1)
+print((9999).as_integer_ratio()) # Output: (9999, 1)
+```
+
+<h3 id="3.1.2"><code>bit_length()</code> Methodu</h3>
+
+`bit_length()` methodu, uygulandığı integer'ın bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(10))`: `0b1010`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş benzerdir. Örnek:
 ```py
 print((10).bit_length()) # Output: 4 (`1010` 4 birim uzunluğundadır)
 print(len(bin(10)[2:])) # Output: 4 (`1010` 4 birim uzunluğundadır)
+```
+
+<h3 id="3.1.3"><code>to_bytes(length, byteorder, signed=False)</code> Methodu</h3>
+
+Uygulandığı integer'ı temsil eden byte array'ı döndürür. Örnek:
+```py
+print((1024).to_bytes(2, byteorder='big')) # Output: b'\x04\x00'
+```
+Integer'lar length bytes kullanılarak temsil edilir. `to_bytes` methodunun uygulandığı integer, en az `length` parametresinde argüman olarak girilen integer'ın belirttiği uzunluk kadar olmalı. `length` parametresinde argüman olarak girilen integer'dan daha uzun olursa, fazlalıklar null (`b'\x00'`) ile doldurur; kısa olursa, `OverflowError: int too big to convert` hatası yükseltilir. Örnek:
+```py
+print((1024).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
+print((1024).to_bytes(1, byteorder='big')) # OverflowError: int too big to convert
+```
+`byteorder` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ı temsil etmek için kullanılan bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. Örnek:
+```py
+print((1024).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
+print((1024).to_bytes(10, byteorder='little')) # Output: b'\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00'
+```
+`signed` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ın negatif mi pozitif mi olduğunu belirtirsiniz. Default değeri `False`'dır ve pozitif sayıları ifade eder. `True` ise negatif sayıları temsil eder. `signed` parametresine argüman olarak `True` verip, bu methodu pozitif bir sayıya uygularsınız `OverflowError` hatası alırsınız. Örnek:
+```py
+print((1024).to_bytes(2, byteorder='big', signed=False)) # Output: b'\x04\x00'
+print((-1024).to_bytes(2, byteorder='big', signed=True)) # Output: b'\xfc\x00'
+print((-1024).to_bytes(2, byteorder='big', signed=False)) # OverflowError: can't convert negative int to unsigned
+```
+
+<h3 id="3.1.4"><code>from_bytes(bytes, byteorder, signed=False)</code> Methodu</h3>
+
+`bytes` parametresine argüman olarak girilen byte array'ı temsil eden integer'ı döndürür. `from_bytes` methodu bir class method olduğu için direkt `int` class'ına veya integer type bir objeye uygulanabilir. Örnek:
+```py
+print(int.from_bytes(b'\x04\x00', byteorder='big')) # Output: 1024
+```
+`bytes` parametresine girilen argüman [bytes-like object](https://docs.python.org/3/glossary.html#term-bytes-like-object "https://docs.python.org/3/glossary.html#term-bytes-like-object") veya bir iterable producing bytes olabilir. Örnek:
+```py
+print(int.from_bytes(b'\x04\x00', byteorder='big')) # Output: 1024
+print(int.from_bytes([255, 0, 0], byteorder='big')) # Output: 16711680
+```
+`byteorder` parametresine girilen argüman ile, `bytes` parametresine argüman olarak girilen bytes objesinin bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. Örnek:
+```py
+print(int.from_bytes(b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00', byteorder='big')) # Output: 1024
+print(int.from_bytes(b'\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00', byteorder='little')) # Output: 1024
+```
+`signed` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ın negatif mi pozitif mi olduğunu belirtirsiniz. Default değeri `False`'dır ve pozitif sayıları ifade eder. `True` ise negatif sayıları temsil eder. Örnek:
+```py
+print(int.from_bytes(b'\x04\x00', byteorder='big', signed=False)) # Output: 1024
+print(int.from_bytes(b'\xfc\x00', byteorder='big', signed=True)) # Output: -1024
+print(int.from_bytes(b'\xfc\x00', byteorder='big', signed=False)) # Output: 64512
+```
+
+<h3 id="3.1.5"><code>conjugate()</code> Methodu</h3>
+
+Herhangi bir float'ın complex eşleniği (conjugate) olan `self`'i (yani uygulandığı integer'ı) döndürür. Örnek:
+```py
+print((2).conjugate()) # Output: 2
+print((5).conjugate()) # Output: 5
+print((-9).conjugate()) # Output: -9
+print((-11).conjugate()) # Output: -11
+```
+
+<h3 id="3.1.6"><code>denominator</code> Methodu</h3>
+
+Uygulandığı integer'ın en küçük terimli paydasını içeren property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Integer paydası 1 olduğu için her zaman 1 döndürür. Örnek:
+```py
+print((9).denominator) # Output: 1
+print((934).denominator) # Output: 1
+print((9124613461).denominator) # Output: 1
+```
+
+<h3 id="3.1.7"><code>numerator</code> Methodu</h3>
+
+Uygulandığı integer'ın en küçük terimli payını içeren property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı integer'ın paydası kendisi olduğu için uygulandığı integer'ı döndürür. Örnek:
+```py
+print((9).numerator) # Output: 9
+print((934).numerator) # Output: 934
+print((9124613461).numerator) # Output: 9124613461
+```
+
+<h3 id="3.1.8"><code>imag</code> Methodu</h3>
+
+Uygulandığı integer `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+```py
+print(complex(9)) # Output: (9+0j)
+print((9).imag) # Output: 0
+```
+
+<h3 id="3.1.9"><code>real</code> Methodu</h3>
+
+Uygulandığı integer `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+```py
+print(complex(9)) # Output: (9+0j)
+print((9).real) # Output: 9
 ```
 
 <h2 id="3.2"><code>float(x)</code> Fonksiyonu</h2>
@@ -113,7 +229,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 
 <h3 id="3.2.1"><code>as_integer_ratio()</code> Methodu</h3>
 
-Birbirine bölündüğünde uygulandığı `float` sayıyı veren en küçük iki integer'ı döndürür. Bu iki sayı `tuple` içinde döndürülür. Örnek:
+Birbirine bölündüğünde uygulandığı `float` sayıyı veren en küçük iki sayıyı döndürür. Bu iki sayı `tuple` içinde döndürülür. Örnek:
 ```py
 print((4.5).as_integer_ratio()) # Output: (9, 2)
 print((4.1).as_integer_ratio()) # Output: (2308094809027379, 562949953421312)
@@ -129,6 +245,52 @@ Bir `float`'ın tam olmayan kısmında (noktanın sağındaki, ondalık olmayan)
 ```py
 print((10.00).is_integer()) # Output: True
 print((10.01).is_integer()) # Output: False
+```
+
+<h3 id="3.2.3"><code>conjugate()</code> Methodu</h3>
+
+Herhangi bir float'ın complex eşleniği (conjugate) olan `self`'i (yani uygulandığı float'ı) döndürür. Örnek:
+```py
+print((2.2).conjugate()) # Output: 2.2
+print((5.9).conjugate()) # Output: 5.9
+print((-9.7).conjugate()) # Output: -9.7
+print((-11.5).conjugate()) # Output: -11.5
+```
+
+<h3 id="3.2.4"><code>hex()</code> Methodu</h3>
+
+Uygulandığı float'ın hexadecimal temsilini (representation) döndürür. Bu gösterim her zaman başında bir `0x` ve sonunda `p+{üs}` içerir. Örnek:
+```py
+print((-0.1).hex()) # Output: -0x1.999999999999ap-4
+print((3.14159).hex()) # Output: 0x1.921f9f01b866ep+1
+print((-2.333).hex()) # Output: -0x1.2a9fbe76c8b44p+1
+print((5/3).hex()) # Output: 0x1.aaaaaaaaaaaabp+0
+```
+
+<h3 id="3.2.5"><code>fromhex(s)</code> Methodu</h3>
+
+`s` parametresine argüman olarak girilen float type'ın `hex` methodunun ürettiği değerlerin float karşılıklarını döndürür. `fromhex` methodu bir class method olduğu için direkt `float` class'ına veya float type bir objeye uygulanabilir. `s` parametresine argüman olarak girilen değerler string type olamak zorundadır. Örnek:
+```py
+print(float.fromhex("-0x1.999999999999ap-4"))
+print(float.fromhex("0x1.921f9f01b866ep+1"))
+print(float.fromhex("-0x1.2a9fbe76c8b44p+1"))
+print(float.fromhex(" 0x1.aaaaaaaaaaaabp+0"))
+```
+
+<h3 id="3.2.6"><code>imag</code> Methodu</h3>
+
+Uygulandığı float sayının `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+```py
+print(complex(9.7)) # Output: (9.7+0j)
+print((9.7).imag) # Output: 0.0
+```
+
+<h3 id="3.2.7"><code>real</code> Methodu</h3>
+
+Uygulandığı float sayının `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+```py
+print(complex(9.7)) # Output: (9.7+0j)
+print((9.7).real) # Output: 9.7
 ```
 
 <h2 id="3.3"><code>complex(real, imag)</code> Fonksiyonu</h2>
@@ -148,16 +310,26 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 
 <h3 id="3.3.1"><code>real</code> Methodu</h3>
 
-Bir complex sayının real kısmını döndüren property objesidir.
+Uygulandığı complex sayının `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
 ```py
-print((12+5j).imag) # Output: 12.0
+print((9+3j).real) # Output: 9.0
 ```
 
 <h3 id="3.3.2"><code>imag</code> Methodu</h3>
 
-Bir complex sayının imag kısmını döndüren property objesidir.
+Uygulandığı complex sayının `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
 ```py
-print((12+5j).imag) # Output: 5.0
+print((9+3j).imag) # Output: 3.0
+```
+
+<h3 id="3.3.3"><code>conjugate()</code> Methodu</h3>
+
+Herhangi bir complex'ın complex eşleniği (conjugate) döndürür. Örnek:
+```py
+print((3+3j).conjugate()) # Output: (3-3j)
+print((3-3j).conjugate()) # Output: (3+3j)
+print((-3+3j).conjugate()) # Output: (-3-3j)
+print((-3-3j).conjugate()) # Output: (-3+3j)
 ```
 
 <h1 id="4">Numeric Fonksiyonlar</h1>

@@ -132,6 +132,13 @@ del l1[0]
 print(l1) # Output: [2, 3, 4]
 ```
 
+Listede bütün öğeleri silmek:
+```py
+l1 = [1,2,3,4]
+del l1[:]
+print(l1) # Output: []
+```
+
 Liste objesini tamamen silmek:
 ```py
 l1 = [1,2,3,4]

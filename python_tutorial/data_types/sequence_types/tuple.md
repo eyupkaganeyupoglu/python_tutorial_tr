@@ -168,6 +168,10 @@ t1[:] = 5,6,7,8 # TypeError: 'tuple' object does not support item assignment
 print(t1)
 
 t1 = (1,2,3,4)
+del t1[:]
+print(t1) # TypeError: 'tuple' object does not support item deletion
+
+t1 = (1,2,3,4)
 del t1[0] # TypeError: 'tuple' object doesn't support item deletion
 print(t1)
 ```

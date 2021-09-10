@@ -55,7 +55,7 @@
     - [`ljust(width, fillchar)` Methodu](#3.25)
     - [`zfill(width)` Methodu](#3.26)
     - [`partition(sep)` Methodu](#3.27)
-    - [`partition(sep)` Methodu](#3.28)
+    - [`rpartition(sep)` Methodu](#3.28)
     - [`encode(encoding='UTF-8',errors='strict')` Methodu](#3.29)
     - [`expandtabs(tabsize)` Methodu](#3.30)
     - [`maketrans(x, y, z)` Methodu](#3.31)
@@ -68,6 +68,13 @@
     - [`isidentifier()` Methodu](#3.38)
     - [`isspace()` Methodu](#3.39)
     - [`isprintable()` Methodu](#3.40)
+    - [`format(*args, **kwargs)` Methodu](#3.41)
+    - [`format_map(map)` Methodu](#3.42)
+    - [`title()` Methodu](#3.43)
+    - [`istitle()` Methodu](#3.44)
+    - [`isascii()` Methodu](#3.45)
+    - [`removeprefix(prefix)` Methodu](#3.46)
+    - [`removesuffix(suffix)` Methodu](#3.47)
 
 <h1 id="1">Karakter dizileri (Strings)</h1>
 
@@ -506,7 +513,7 @@ print("%c" %(666)) # Output: ʚ
 print("%c" %("String")) # TypeError: %c requires int or char
 ```
 
-<h2 id="2.2">Yeni Yöntem (<code>format()</code> methodu)</h2>
+<h2 id="2.2">Yeni Yöntem (<code>format(*args, **kwargs)</code> methodu)</h2>
 
 `format()` methodu, Python'un 2.6 sürümünden sonra eklendi ve aktif olarak kullanılmaya başlandı. String'in içinde belirtilen süslü parantezleri (`"{}"`) kullanarak karakter dizisi biçimlendirmeye yarar. Eski yöntemden farklı olarak, String'de data type belirtmenize gerek yoktur. Örnek:
 ```py
@@ -675,7 +682,7 @@ print(f"Selam ben {isim}, {yaş} yaşındayım.") # Output: Selam ben Python, 27
 
 <h2 id="3.1"><code>replace(old, new, count)</code> Methodu</h2>
 
-`old` parametresinde argüman olarak girilen string'i `new` parametresine argüman olarak girilen string ile değiştirir. `count` parametresine argüman girilmezse, o string'deki uyuşan bütün değerleri değiştirir. `count` parametresine argüman olarak integer bir değer girilirse, Python soldan sağa doğru `count` kadar ilgili değeri değiştirir. Örnek:
+`old` parametresinde argüman olarak girilen string'i `new` parametresine argüman olarak girilen string ile değiştirir ve döndürür. `count` parametresine argüman girilmezse, o string'deki uyuşan bütün değerleri değiştirir. `count` parametresine argüman olarak integer bir değer girilirse, Python soldan sağa doğru `count` kadar ilgili değeri değiştirir. Örnek:
 ```py
 var1 = "a a a a b b b b"
 print(var1) # Output: a a a a b b b b
@@ -686,15 +693,16 @@ print(var1) # Output: A A A A b b b b
 var1 = var1.replace("b", "B", 2)
 print(var1) # Output: A A A A B B b b
 ```
-Gördüğünüz gibi `replace` methodu ile ilgili string'de yaptığımız değişikliklerin kalıcı olmasını istiyorsanız, ilgili variable'ı yukarıdaki gibi yeniden tanımlamadın (redefinition) gerekmektedir.
+Gördüğünüz gibi `replace` methodunu kullanarak string'de yaptığımız değişikliklerin kalıcı olmasını istiyorsanız, ilgili variable'ı yukarıdaki gibi yeniden tanımlamanız (redefinition) gerekmektedir.
 
-<h2 id="3.2"><code>split(sep=" ", maxsplit)</code> Methodu</h2>
+<h2 id="3.2"><code>split(sep = None, maxsplit = -1)</code> Methodu</h2>
 
-String'leri parçalarına ayırıp bir liste içinde döndürür. `sep` parametresine argüman olarak girilen string'i referans alarak soldan sağa doğru parçalama işlemini gerçekleştirir. `sep` parametresine argüman girilmezse default değeri olan boşluk karakterini (`" "`) referans alarak parçalama işlemi yapar. `maxsplit` parametresine argüman girilmezse, `sep` parametresine argüman olarak girilen string'i referans alarak bütün string'i parçalar. `maxsplit` parametresine argüman olarak integer bir değer girilirse, o değerde belirtilen kadar parçalama işlemi yapar. Örnek:
+String'leri parçalarına ayırıp bir liste içinde döndürür. `sep` parametresine argüman olarak girilen string'i referans alarak soldan sağa doğru parçalama işlemini gerçekleştirir. `sep` parametresine argüman girilmezse boşluk karakterini (`" "`) referans alarak parçalama işlemi yapar. `maxsplit` parametresine argüman girilmezse, default değeri olan `-1` geçerli olur ve `sep` parametresine argüman olarak girilen string'i referans alarak uygulandığı bütün string'i parçalar. Bu durum argüman olarak girilen diğer negatif sayılar için de geçerlidir. `maxsplit` parametresine argüman olarak `0` girilirse, parçalama işlemi yapmaz. `maxsplit` parametresine argüman olarak integer bir değer girilirse, o değerde belirtilen kadar parçalama işlemi yapar. Örnek:
 ```py
 metin = "abc abc abc abc"
 
 print(metin.split()) # Output: ['abc', 'abc', 'abc', 'abc']
+print(metin.split(maxsplit=0)) # Output: ['abc abc abc abc']
 print(metin.split(maxsplit=2)) # Output: ['abc', 'abc', 'abc abc']
 print(metin.split("b")) # Output: ['a', 'c a', 'c a', 'c a', 'c']
 print(metin.split("b", 2)) # Output: ['a', 'c a', 'c abc abc']
@@ -706,22 +714,23 @@ metin = "abc abc abc abc"
 print(metin.split("d")) # Output: ['abc abc abc abc']
 ```
 
-<h2 id="3.3"><code>rsplit(sep=" ", maxsplit)</code> Methodu</h2>
+<h2 id="3.3"><code>rsplit(sep = None, maxsplit = -1)</code> Methodu</h2>
 
 `split()` methodunun yaptığı işi sağdan sola doğru yapar. Örnek:
 ```py
 metin = "abc abc abc abc"
 
 print(metin.rsplit()) # Output: ['abc', 'abc', 'abc', 'abc']
+print(metin.rsplit(maxsplit=0)) # Output: ['abc abc abc abc']
 print(metin.rsplit(maxsplit=2)) # Output: ['abc abc', 'abc', 'abc']
 print(metin.rsplit("b")) # Output: ['a', 'c a', 'c a', 'c a', 'c']
 print(metin.rsplit("b", 2)) # Output: ['abc abc a', 'c a', 'c']
 print(metin.rsplit("d")) # Output: ['abc abc abc abc']
 ```
 
-<h2 id="3.4"><code>splitlines(keepends)</code> Methodu</h2>
+<h2 id="3.4"><code>splitlines(keepends = False)</code> Methodu</h2>
 
-Karakter dizilerini satır satır (line) olarak parçalar. `keepends` parametresi boolean type değerleri kabul eder. `keepends` parametresine girilen argüman `True` boolean değerine sahipse `splitlines` methodu `\n` kaçış dizilerini de dahil eder, `False` ise etmez. Örnek:
+Karakter dizilerini satır satır (line) olarak parçalar. `keepends` parametresi boolean type değerleri kabul eder. `keepends` parametresine girilen argüman `True` boolean değerine sahipse `splitlines` methodu `\n` kaçış dizilerini de dahil eder, `False` ise etmez. `keepends` parametresinin default değeri `False`'dır. Örnek:
 ```py
 a = """Line1
 Line2
@@ -840,10 +849,6 @@ print(metin.replace("i", "İ").capitalize()) # Output: İsti̇snalar kai̇deyi̇
 metin = " istisnalar kaideyi bozmaz."
 print(metin.capitalize()) # Output:  istisnalar kaideyi bozmaz.
 ```
-```py
-metin = "selam ben python."
-print(metin.title()) # Output: Selam Ben Python.
-```
 Türkçe karakter sorununu çözmek için alternatif kod:
 ```py
 metin = "on iki ada"
@@ -897,7 +902,7 @@ print(metin) # Output: iLLİMÜNATİ
 
 <h2 id="3.14"><code>strip(chars)</code> Methodu</h2>
 
-Bir string'deki her line'ın başındaki ve sonundaki `chars` parametresine argğman olarak girilen string'i kırpmaya yarar. Default değer olarak boşluk karakteri `" "` alır. Bu method'un nasıl davranacağını kestirmek zordur. Bu yüzden kullanıldığında nasıl bir output vereceğini test etmek önem arz ediyor.
+Bir string'deki her line'ın başındaki ve sonundaki `chars` parametresine argüman olarak girilen string'i kırpmaya yarar. Default değer olarak boşluk karakteri `" "` alır. Bu method'un nasıl davranacağını kestirmek zordur. Bu yüzden kullanıldığında nasıl bir output vereceğini test etmek önem arz ediyor.
 ```py
 metin = "   salamlar salamlar salamlar    " 
 print(metin.strip(" "), end="\n\n")
@@ -927,13 +932,69 @@ salamlar ..
 .. salamlar
 ```
 
-<h2 id="3.15"><code>lstrip("string")</code> Methodu</h2>
+<h2 id="3.15"><code>lstrip(chars)</code> Methodu</h2>
 
-`strip("string")`'den tek farkı, sadece soldaki kısmı kırpar.
+`strip(chars)`'den tek farkı, sadece soldaki kısmı kırpar.
+```py
+metin = "   salamlar salamlar salamlar    " 
+print(metin.lstrip(" "), end="\n\n")
 
-<h2 id="3.16"><code>rstrip("string")</code> Methodu</h2>
+metin = ".. salamlar .."
+print(metin.lstrip(".. "), end="\n\n")
+print(metin.lstrip(" .."), end="\n\n")
 
-`strip("string")`'den tek farkı, sadece sağdaki kısmı kırpar
+metin = ".. salamlar ..\n.. salamlar ..\n.. salamlar .."
+print(metin.lstrip(".. "), end="\n\n")
+print(metin.lstrip(" .."), end="\n\n")
+```
+**Output:**
+```
+salamlar salamlar salamlar    
+
+salamlar ..
+
+salamlar ..
+
+salamlar ..
+.. salamlar ..
+.. salamlar ..
+
+salamlar ..
+.. salamlar ..
+.. salamlar ..
+```
+
+<h2 id="3.16"><code>rstrip(chars)</code> Methodu</h2>
+
+`strip(chars)`'den tek farkı, sadece sağdaki kısmı kırpar
+```py
+metin = "   salamlar salamlar salamlar    " 
+print(metin.rstrip(" "), end="\n\n")
+
+metin = ".. salamlar .."
+print(metin.rstrip(".. "), end="\n\n")
+print(metin.rstrip(" .."), end="\n\n")
+
+metin = ".. salamlar ..\n.. salamlar ..\n.. salamlar .."
+print(metin.rstrip(".. "), end="\n\n")
+print(metin.rstrip(" .."), end="\n\n")
+```
+**Output:**
+```
+   salamlar salamlar salamlar
+
+.. salamlar
+
+.. salamlar
+
+.. salamlar ..
+.. salamlar ..
+.. salamlar
+
+.. salamlar ..
+.. salamlar ..
+.. salamlar
+```
 
 <h2 id="3.17"><code>join(iterable)</code> Methodu</h2>
 
@@ -957,7 +1018,7 @@ print(metin.count("a")) # Output: 5
 
 <h2 id="3.19"><code>index(sub, start, end)</code> Methodu</h2>
 
-`sub` parametresine argüman olarak girilen string'in, uygulandığı string'in içinde soldan sağa doğru arar ve ilk kaçıncı index'de olduğunu söyler. `sub` parametresine argüman olarak birden fazla karakterden oluşan string girilirse, soldan sağa doğru arar ve o string'in ilk karakterinin geçtiği index'i söyler. `start` ve `end` parametrelerine başlama ve bitiş index'lerini girerek string içerisinde belli bir bölümü kontrol edebilirsiniz. Örnek:
+`sub` parametresine argüman olarak girilen string'i, uygulandığı string'in içinde soldan sağa doğru arar ve ilk kaçıncı index'de olduğunu söyler. `sub` parametresine argüman olarak birden fazla karakterden oluşan string girilirse, soldan sağa doğru arar ve o string'de ilk karakterinin geçtiği index'i söyler. `start` ve `end` parametrelerine başlama ve bitiş index'lerini girerek string içerisinde belli bir bölümü kontrol edebilirsiniz. Örnek:
 ```py
 metin = "abc abc abcd abc abc abcd abc abc"
 print(metin.index("d")) # Output: 11
@@ -981,12 +1042,12 @@ print(metin.rindex("x")) # ValueError: substring not found
 
 <h2 id="3.21"><code>find(sub, start, end)</code> Methodu</h2>
 
-`index()` methodunun yaptığı işi yapar. Tek farkı, istenilen string bulunamazsa `ValueError` hatası yükseltmek yerine yerine `-1` output'unu döndürür. Örnek:
+`index()` methodunun yaptığı işi yapar. Tek farkı, istenilen string bulunamazsa `ValueError` hatası yükseltmek yerine yerine `-1` değerini döndürür. Örnek:
 ```py
-metin = "abc abc abcd abc abc abcd abc abc"
-print(metin.find("d")) # Output: 11
-print(metin.find("abcd")) # Output: 8 (a karakteri ilk 8. index'te bulunmuş)
-print(metin.find("x")) # Output: -1
+bytes1 = b"abc abc abcd abc abc abcd abc abc"
+print(bytes1.find(b"d")) # Output: 11
+print(bytes1.find(b"abcd")) # Output: 8 (a karakteri ilk 8. index'te bulunmuş)
+print(bytes1.find(b"x")) # Output: -1
 ```
 
 <h2 id="3.22"><code>rfind(sub, start, end)</code> Methodu</h2>
@@ -1142,12 +1203,12 @@ print("İstanbul".partition("an")) # Output: ('ist', 'an', 'bul')
 print("İstanbul".partition("fil")) # Output: ('İstanbul', '', '')
 ```
 
-<h2 id="3.28"><code>partition(sep)</code> Methodu</h2>
+<h2 id="3.28"><code>rpartition(sep)</code> Methodu</h2>
 
 `partition()` methodunun yaptığı işi sağdan sola yapar. Örnek:
 ```py
-print("İstanbul".partition("an")) # Output: ('ist', 'an', 'bul')
-print("İstanbul".partition("fil")) # Output: ('İstanbul', '', '')
+print("İstanbul".rpartition("an")) # Output: ('ist', 'an', 'bul')
+print("İstanbul".rpartition("fil")) # Output: ('', '', 'İstanbul')
 ```
 
 <h2 id="3.29"><code>encode(encoding='UTF-8',errors='strict')</code> Methodu</h2>
@@ -1167,7 +1228,7 @@ print("elma\tbir\tmeyvedir.".expandtabs(10)) # Output: elma      bir       meyve
 
 <h2 id="3.31"><code>maketrans(x, y, z)</code> Methodu</h2>
 
-Dictionary oluşturmak için kullanılır. Sadece `x` parametresini kullanacaksanız, bu parametreye bir dictionary tanımlamak zorundasınız. Bu dictionary'nin key'leri 1 uzunluğunda olmak zorudadır. Aksi halde `ValueError: string keys in translate table must be of length 1` hatası yükseltilir. Value'larında böyle bir kısıtlama yoktur. Örnek:
+Dictionary oluşturmak için kullanılır. Sadece `x` parametresini kullanacaksanız, bu parametreye bir dictionary tanımlamak zorundasınız. Bu dictionary'nin key'leri 1 uzunluğunda olmak zorudadır. Aksi halde `ValueError: string keys in translate table must be of length 1` hatası yükseltilir. Value'larında böyle bir kısıtlama yoktur. `maketrans` methodu bir static method olduğu için direkt `str` class'ına veya `str` objesine uygulanabilir. Örnek:
 ```py
 dict_exp = {"a": 1, "b": 2, "c": 3}
 print(str.maketrans(dict_exp)) # Output: {97: 1, 98: 2, 99: 3}
@@ -1203,7 +1264,7 @@ print(str.maketrans("abc", "123", "dfe")) # Output: {97: 49, 98: 50, 99: 51, 100
 
 <h2 id="3.32"><code>translate(table)</code> Methodu</h2>
 
-Uygulandığı string'i, `table` parametresinde belirtilen dictionary'e göre düzenler. `table` parametresinde argüman olarak girilen dictionary, `maketrans()` methodu ile oluşturulan dictionary'lerin formatında olmalıdır. Yani UNICODE karakterlerin decimal karşılıklarından oluşmalıdır. Örnek:
+Uygulandığı string'i, `table` parametresinde belirtilen dictionary'e göre düzenler. `table` parametresine argüman olarak girilen dictionary, `maketrans()` methodu ile oluşturulan dictionary'lerin formatında olmalıdır. Yani UNICODE karakterlerin decimal karşılıklarından oluşmalıdır. Örnek:
 ```py
 büyük_harfler = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ"
 küçük_harfler = "abcçdefgğhıijklmnoöprsştuüvyz"
@@ -1221,8 +1282,8 @@ küçük_harfler = "abc"
 bk= str.maketrans(büyük_harfler,küçük_harfler)
 kb= str.maketrans(küçük_harfler,büyük_harfler)
 
-print("aBCd".translate(bk)) # Output: abcd
-print("aBCD".translate(kb)) # Output: ABCD
+print("aBCD".translate(bk)) # Output: abcD
+print("aBCd".translate(kb)) # Output: ABCd
 ```
 
 <h2 id="3.33"><code>isalpha()</code> Methodu</h2>
@@ -1240,11 +1301,11 @@ print("abcd?".isalpha()) # Output: False
 ```py
 print("abcd".isnumeric()) # Output: False
 print("1234!".isnumeric()) # Output: False
-print("1234".isnumeric()) # Output: True 
-print("½".isnumeric()) # Output: True 
-print("½".isnumeric()) # Output: True 
-print("½".isnumeric()) # Output: True 
-print("2²".isnumeric()) # Output: True 
+print("1234".isnumeric()) # Output: True
+print("½".isnumeric()) # Output: True
+print("½".isnumeric()) # Output: True
+print("½".isnumeric()) # Output: True
+print("2²".isnumeric()) # Output: True
 ```
 
 <h2 id="3.35"><code>isalnum()</code> Methodu</h2>
@@ -1307,4 +1368,72 @@ Python'da `\n`, `\t`, `\r` gibi karakterlere **non-printing characters** (basıl
 ```py
 print("\n".isprintable()) # Output: False
 print("  ".isprintable()) # Output: True
+```
+
+<h2 id="3.41"><code>format(*args, **kwargs)</code> Methodu</h2>
+
+Ne olduğunu [burada](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#2.2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#2.2") anlattım.
+
+<h2 id="3.42"><code>format_map(map)</code> Methodu</h2>
+
+Uygulandığı string'in süslü parantez (`{}`) ile belirtilen bölümlerine, `map` parametresine argüman olarak girilen dictionary'nin key'lerinin value'larını ekler. Bu işlem, mapping'in doğrudan kullanılması ve bir `dict`'e kopyalanmaması dışında `str.format(**map)` ile benzerdir. Örnek:
+```py
+a = {'x':'John', 'y':'Wick'}
+print("{x}'s last name is {y}".format_map(a)) # Output: John's last name is Wick
+print("{x}'s last name is {y}".format(**a)) # Output: John's last name is Wick
+```
+Gördüğünüz gibi mapping (haritalama) yöntemini kullanabilmek için kullanılan dictionary'nin key'lerini ilgili süslü parantezlere girmelisiniz.
+
+<h2 id="3.43"><code>title()</code> Methodu</h2>
+
+Uygulandığı string'deki her kelimenin (her kelime space karakteri ile birbirinden ayrılıyor) büyük harfle başlayıp küçük harflerle devam ettiği başlıklı (titlecased) versiyonunu döndürür. Örnek:
+```py
+print(" falan filan".title()) # Output:  Falan Filan
+print("falan filan".title()) # Output: Falan Filan
+```
+Bu algoritma, kelime grupları için dilden bağımsız (language-independent) basit bir tanımlama kullanır. Bu algoritma çoğu zaman işe yarasa bile, kısaltmalarda ve kesme işaretlerinin kullanıldığı yerlerde istenmeyen sonuçlara neden olabilir. Örnek:
+```py
+print("they're bill's friends from the USA.".title()) # Output: They'Re Bill'S Friends From The Usa.
+```
+Kesme işareti için geçici çözüm:
+```py
+import re
+def titlecase(s):
+    return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+                  lambda mo: mo.group(0).capitalize(),
+                  s)
+
+print(titlecase("they're bill's friends from the USA.")) # Output: They're Bill's Friends From The Usa.
+```
+
+<h2 id="3.44"><code>istitle()</code> Methodu</h2>
+
+Uygulandığı string `title()` methodunun algoritmasına uygunsa `True`, diğer durumlarda `False` döndürür. Örnek:
+```py
+print(("they're bill's friends from the USA.".title()).istitle()) # Output: True
+```
+
+<h2 id="3.45"><code>isascii()</code> Methodu</h2>
+
+Uygulandığı string boşsa veya bütün karakterleri ASCII karakterlerinden oluşuyorsa `True`, diğer durumlarda `False` döndürür. Örnek:
+```py
+print("".isascii()) # Output: True
+print("abc".isascii()) # Output: True
+print("abç".isascii()) # Output: False
+```
+
+<h2 id="3.46"><code>removeprefix(prefix)</code> Methodu</h2>
+
+Eğer uygulandığı string `prefix` parametresinde argüman olarak belirtilen string ile başlıyorsa, `string[len(prefix):]` işleminin sonucunu döndürür. `removeprefix` methodunun uygulandığı string `prefix` parametresinde belirtilen string ile başlamıyorsa, `removeprefix` methodunun uygulandığı string aynen döndürülür. Örnek:
+```py
+print("TestHook".removeprefix("Test")) # Output: Hook
+print("ATestHook".removeprefix("Test")) # Output: ATestHook
+```
+
+<h2 id="3.47"><code>removesuffix(suffix)</code> Methodu</h2>
+
+Eğer uygulandığı string `suffix` parametresinde argüman olarak belirtilen string ile bitiyorsa, `string[:-len(suffix)]` işleminin sonucunu döndürür. `removesuffix` methodunun uygulandığı string `suffix` parametresinde belirtilen string ile bitmiyorsa, `removesuffix` methodunun uygulandığı string aynen döndürülür. Örnek:
+```py
+print("TestHook".removesuffix("Hook")) # Output: Test
+print("TestHookA".removesuffix("Hook")) # Output: TestHookA
 ```
