@@ -271,7 +271,7 @@ print(liste) # Output: ['Kiraz', 'Armut', 'Elma']
 
 <h3 id="1.3.6"><code>pop(index)</code> Methodu</h3>
 
-`index` parametresinde belirtilen index'deki öğreyi, uygulandığı önce döndürür sonra listeden siler. Örnek:
+`index` parametresinde belirtilen index'deki öğreyi önce döndürür sonra uygulandığı listeden siler. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 print(liste.pop(0)) # Output: Elma

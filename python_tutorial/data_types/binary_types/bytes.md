@@ -148,6 +148,8 @@ Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablos
 
 <h2 id="2.2">Bytes Methodları</h2>
 
+**Not:** Aşağıdaki methodlardan bazıları uygulandığı `bytes` objesini değiştirirken, bazıları işlevini gerçekleştikten sonra o `bytes` objesinin kopyasını döndürür. Bu yüzden kimi zaman ilgili methodu uyguladığınız `bytes` objesi değişikliğe uğramaz. Bu gibi durumları aşağıdaki methodları anlatırken belirtmeyi unutmuş olabilirim. Bu yüzden methodu kullanmadan önce o method uygulandığı `bytes` objesini mi değiştiriyor yoksa kopyasını mı döndürüyor, kontrol etmeyi ihmal etmeyin.
+
 <h3 id="2.2.1"><code>fromhex(s)</code> Methodu</h3>
 
 Bu method bir class method olduğu için direkt `bytes` class'ına veya bu class'dan türetilen objelere uygulanabilir. `s` parametresine argüman olarak girilen, hexadecimal digit'ler belirten bir string'i `bytes` type'a dönüştürür. Bu dönüşümün ancak her bytes için en az 2 hexadecimal digit tanımlandığında yapılabilir. Aksi halde `ValueError: non-hexadecimal number found in fromhex() arg at position n` hatası yükseltilir. Bu dönüşüm hexadecimal digit'lerin kapsamında (`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f`) gerçekleşebilir. Aksi halde yine `ValueError` hatası yükseltilir. Boşluk (space) karakterlerini görmezden gelir. Python 3.7'den sonra ASCII whitespaces karakterini de (`20`) görmezden gelir. Örnek:
@@ -162,7 +164,11 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtype
 
 <h3 id="2.2.2"><code>hex(sep, bytes_per_sep)</code> Methodu</h3>
 
-Uygulandığı bytes objesinin içerdiği string objesi olarak döndürür. Bir nevi `fromhex()` methodunun yaptığı işin tersini yapar diyebiliriz. `fromhex()` methodunun space karakterlerini görmezden gelmesi gibi `hex()` methodu da hexadecimal anlamına gelen `\x` kaçış dizisini (escape character) görmezden gelir. `sep` parametresine girilen string'i, her ikili hexadecimal digit'in arasına uygular ve bu sayede kullanıcı tarafından output'un okunması kolaylaşır.
+Uygulandığı `bytes` objesinin içerdiği string objesi olarak döndürür. Bir nevi `fromhex()` methodunun yaptığı işin tersini yapar diyebiliriz. `fromhex()` methodunun space karakterlerini görmezden gelmesi gibi `hex()` methodu da hexadecimal anlamına gelen `\x` kaçış dizisini (escape character) görmezden gelir. `sep` parametresine girilen string'i, her ikili hexadecimal digit'in arasına uygular ve bu sayede kullanıcı tarafından output'un okunması kolaylaşır. Örnek:
+```py
+print((bytes.fromhex("f9 c8")).hex("-")) # Output: f9-c8
+print((bytes.fromhex("f920c8")).hex("-")) # Output: f9-20-c8
+```
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytes.hex "https://docs.python.org/3/library/stdtypes.html#bytes.hex").
 
@@ -198,7 +204,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtype
 
 <h3 id="2.2.5"><code>split(sep = None, maxsplit)</code> Methodu</h3>
 
-Bytes'ları parçalarına ayırıp bir liste içinde döndürür. `sep` parametresine argüman olarak girilen `bytes`'ı referans alarak soldan sağa doğru parçalama işlemini gerçekleştirir. `sep` parametresine argüman girilmezse boşluk bytes karakterini (`b" "`) veya ASCII boşluk (whitespaces) karakterini referans alarak parçalama işlemi yapar. Bu boşluk karakteri ve ASCII boşluk (whitespaces) karakteri birbiri ardına geliyorsa, bunlar tek bir space karakteri olarak kabul edilir. Örnek:
+Bytes'ları parçalarına ayırıp bir liste içinde döndürür. `sep` parametresine argüman olarak girilen `bytes`'ı referans alarak soldan sağa doğru parçalama işlemini gerçekleştirir. `sep` parametresine argüman girilmezse boşluk karakterini (`b" "`) veya ASCII boşluk (whitespaces) karakterini referans alarak parçalama işlemi yapar. Bu boşluk karakteri ve ASCII boşluk (whitespaces) karakteri birbiri ardına geliyorsa, bunlar tek bir space karakteri olarak kabul edilir. Örnek:
 ```py
 bytes_exp = b"            abc             abc   abc          abc       "
 print(bytes_exp.split()) # Output: [b'abc', b'abc', b'abc', b'abc']
@@ -362,7 +368,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtype
 
 <h3 id="2.2.15"><code>swapcase()</code> Methodu</h3>
 
-`bytes`'ın içindeki büyük ASCII harflerini küçük ASCII harferine, küçük ASCII harferini de büyük ASCII harferine dönüştürür.
+`bytes`'ın içindeki büyük ASCII harflerini küçük ASCII harferine, küçük ASCII harferini de büyük ASCII harferine dönüştürür. Yani `b'abcdefghijklmnopqrstuvwxyz'` ve `b'ABCDEFGHIJKLMNOPQRSTUVWXYZ'` verilerini kullanarak dönüşüm işlemi yapar. Örnek:
 ```py
 bytes1 = b"SelaMLar"
 print(bytes1.swapcase()) # Output: b'sELAmlAR'
@@ -580,7 +586,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtype
 ```py
 bytes1 = b"abc abc abcd abc abc abcd abc abc"
 print(bytes1.index(b"d")) # Output: 11
-print(bytes1.index(b"abcd")) # Output: 8 (a     karakteri ilk 8. index'te bulunmuş)
+print(bytes1.index(b"abcd")) # Output: 8 (a ASCII karakteri ilk 8. index'te bulunmuş)
 ```
 İstenilen `bytes`'ı bulunamazsa `ValueError` hatası yükseltilir. Örnek:
 ```py
@@ -606,10 +612,10 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtype
 
 `index()` methodunun yaptığı işi yapar. Tek farkı, istenilen `bytes`'ı bulunamazsa `ValueError` hatası yükseltmek yerine yerine `-1` değerini döndürür. Örnek:
 ```py
-metin = "abc abc abcd abc abc abcd abc abc"
-print(metin.find("d")) # Output: 11
-print(metin.find("abcd")) # Output: 8 (a ASCII karakteri ilk 8. index'te bulunmuş)
-print(metin.find("x")) # Output: -1
+bytes1 = b"abc abc abcd abc abc abcd abc abc"
+print(bytes1.find(b"d")) # Output: 11
+print(bytes1.find(b"abcd")) # Output: 8 (a ASCII karakteri ilk 8. index'te bulunmuş)
+print(bytes1.find(b"x")) # Output: -1
 ```
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytes.find "https://docs.python.org/3/library/stdtypes.html#bytes.find").
