@@ -265,7 +265,7 @@ print(bytearray.fromhex("c")) # ValueError: non-hexadecimal number found in from
 print(bytearray.fromhex("ÇŞ")) # ValueError: non-hexadecimal number found in fromhex() arg at position 0
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.fromhex "https://docs.python.org/3/library/stdtypes.html#bytearray.fromhex").
 
 <h3 id="1.3.2"><code>hex(sep, bytes_per_sep)</code> Methodu</h3>
 
@@ -275,7 +275,7 @@ print((bytearray.fromhex("f9 c8")).hex("-")) # Output: f9-c8
 print((bytearray.fromhex("f920c8")).hex("-")) # Output: f9-20-c8
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.hex "https://docs.python.org/3/library/stdtypes.html#bytearray.hex").
 
 <h3 id="1.3.3"><code>decode(encoding="utf-8", errors="strict")</code> Methodu</h3>
 
@@ -291,7 +291,7 @@ print(bytearray(b'abcd\xe7').decode("ascii", "ignore")) # Output: abcd
 print(bytearray(b'abcd\xe7').decode("ascii", "replace")) # Output: abcd�
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.decode "https://docs.python.org/3/library/stdtypes.html#bytearray.decode").
 
 <h3 id="1.3.4"><code>replace(old, new, count)</code> Methodu</h3>
 
@@ -313,7 +313,7 @@ print(a2) #Output: bytearray(b'\xf0\xf5\xf2\xf1\xf3')
 ```
 `replace` methodunu kullanarak `bytearray`'de yaptığımız değişikliklerin kalıcı olmasını istiyorsanız, ilgili variable'ı yukarıdaki gibi yeniden tanımlamanız (redefinition) gerekmektedir.
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.replace "https://docs.python.org/3/library/stdtypes.html#bytearray.replace").
 
 <h3 id="1.3.5"><code>split(sep = None, maxsplit)</code> Methodu</h3>
 
@@ -342,7 +342,7 @@ print(bytearray_exp.split(b"d")) # Output: [bytearray(b'abc abc abc abc')]
 print(bytearray_exp.split(bytearray(b"d"))) # Output: [bytearray(b'abc abc abc abc')]
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.split "https://docs.python.org/3/library/stdtypes.html#bytearray.split").
 
 <h3 id="1.3.6"><code>rsplit(sep = None, maxsplit = -1)</code> Methodu</h3>
 
@@ -361,7 +361,7 @@ print(bytearray_exp.rsplit(bytearray(b"b"), 2)) # Output: [bytearray(b'abc abc a
 print(bytearray_exp.rsplit(bytearray(b"d"))) # Output: [bytearray(b'abc abc abc abc')]
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.rsplit "https://docs.python.org/3/library/stdtypes.html#bytearray.rsplit").
 
 <h3 id="1.3.7"><code>splitlines()</code> Methodu</h3>
 
@@ -372,7 +372,7 @@ print(a.splitlines(False)) # Output: [bytearray(b'abc'), bytearray(b'abc'), byte
 print(a.splitlines(True))  # Output: [bytearray(b'abc\n'), bytearray(b'abc\n'), bytearray(b'abc\n'), bytearray(b'abc\n'), bytearray(b'abc')]
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.splitlines "https://docs.python.org/3/library/stdtypes.html#bytearray.splitlines").
 
 <h3 id="1.3.8"><code>lower()</code> Methodu</h3>
 
@@ -382,7 +382,7 @@ bytearray_exp = bytearray(b"SeLaMlArRrR")
 print(bytearray_exp.lower()) # Output: bytearray(b'selamlarrrr')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.lower "https://docs.python.org/3/library/stdtypes.html#bytearray.lower").
 
 <h3 id="1.3.9"><code>islower()</code> Methodu</h3>
 
@@ -394,7 +394,7 @@ print(bytearray1.islower()) # Output: True
 print(bytearray2.islower()) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.islower "https://docs.python.org/3/library/stdtypes.html#bytearray.islower").
 
 <h3 id="1.3.10"><code>upper()</code> Methodu</h3>
 
@@ -404,7 +404,7 @@ bytearray_exp = bytearray(b"SeLaMlArRrR")
 print(bytearray_exp.upper()) # Output: bytearray(b'SELAMLARRRR')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.upper "https://docs.python.org/3/library/stdtypes.html#bytearray.upper").
 
 <h3 id="1.3.11"><code>isupper()</code> Methodu</h3>
 
@@ -416,7 +416,7 @@ print(bytearray1.isupper()) # Output: True
 print(bytearray2.isupper()) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.isupper "https://docs.python.org/3/library/stdtypes.html#bytearray.isupper").
 
 <h3 id="1.3.12"><code>endswith(suffix, start, end)</code> Methodu</h3>
 
@@ -442,7 +442,7 @@ True
 ```
 Gördüğünüz gibi `suffix` parametresine argüman olarak girilen tuple içinde belirtilen `bytes`'lardan herhangi birisi `endswith` methodunun uygulandığı `bytes`'ın sonunda varsa `True` output'u verilir.
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.endswith "https://docs.python.org/3/library/stdtypes.html#bytearray.endswith").
 
 <h3 id="1.3.13"><code>startswith(prefix, start, end)</code> Methodu</h3>
 
@@ -467,7 +467,7 @@ True
 True
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.startswith "https://docs.python.org/3/library/stdtypes.html#bytearray.startswith").
 
 <h3 id="1.3.14"><code>capitalize()</code> Methodu</h3>
 
@@ -483,7 +483,7 @@ bytearray3 = bytearray(b'\xc3\xa7al\xc4\xb1\xc5\x9fkan \xc3\xa7ocuk')
 print(bytearray3.capitalize()) # Output: bytearray(b'\xc3\xa7al\xc4\xb1\xc5\x9fkan \xc3\xa7ocuk')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.capitalize "https://docs.python.org/3/library/stdtypes.html#bytearray.capitalize").
 
 <h3 id="1.3.15"><code>swapcase()</code> Methodu</h3>
 
@@ -496,7 +496,7 @@ bytearray2 = bytearray(b"iRiTe")
 print(bytearray2.swapcase()) # Output: bytearray(b'IrItE')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.swapcase "https://docs.python.org/3/library/stdtypes.html#bytearray.swapcase").
 
 <h3 id="1.3.16"><code>strip(chars)</code> Methodu</h3>
 
@@ -514,7 +514,7 @@ print(bytearray1.strip(b".. "), end="\n\n") # Output: bytearray(b'salamlar ..\n.
 print(bytearray1.strip(b" .."), end="\n\n") # Output: bytearray(b'salamlar ..\n.. salamlar ..\n.. salamlar')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.strip "https://docs.python.org/3/library/stdtypes.html#bytearray.strip").
 
 <h3 id="1.3.17"><code>rstrip(chars)</code> Methodu</h3>
 
@@ -532,7 +532,7 @@ print(bytearray1.rstrip(b".. "), end="\n\n") # Output: bytearray(b'.. salamlar .
 print(bytearray1.rstrip(b" .."), end="\n\n") # Output: bytearray(b'.. salamlar ..\n.. salamlar ..\n.. salamlar')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.rstrip "https://docs.python.org/3/library/stdtypes.html#bytearray.rstrip").
 
 <h3 id="1.3.18"><code>lstrip(chars)</code> Methodu</h3>
 
@@ -550,7 +550,7 @@ print(bytearray1.lstrip(b".. "), end="\n\n") # Output: bytearray(b'salamlar ..\n
 print(bytearray1.lstrip(b" .."), end="\n\n") # Output: bytearray(b'salamlar ..\n.. salamlar ..\n.. salamlar ..')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.lstrip "https://docs.python.org/3/library/stdtypes.html#bytearray.lstrip").
 
 <h3 id="1.3.19"><code>join(iterable)</code> Methodu</h3>
 
@@ -564,7 +564,7 @@ print(bytearray(b"--").join(m2)) # Output: bytearray(b'1--2--3')
 print(bytearray(b"--").join(m3)) # Output: bytearray(b'1--3--2') (rastgele olmasının sebebi set'in bir özelliği)
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.join "https://docs.python.org/3/library/stdtypes.html#bytearray.join").
 
 <h3 id="1.3.20"><code>center(width, fillbyte)</code> Methodu</h3>
 
@@ -627,7 +627,7 @@ bytearray(b'-123456-') (8)
 bytearray(b'--123456--') (10)
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.center "https://docs.python.org/3/library/stdtypes.html#bytearray.center").
 
 <h3 id="1.3.21"><code>rjust(width, fillbyte)</code> Methodu</h3>
 
@@ -657,7 +657,7 @@ bytearray(b'--123456') (8)
 bytearray(b'----123456') (10)
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.rjust "https://docs.python.org/3/library/stdtypes.html#bytearray.rjust").
 
 <h3 id="1.3.22"><code>ljust(width, fillbyte)</code> Methodu</h3>
 
@@ -687,7 +687,7 @@ bytearray(b'123456--') (8)
 bytearray(b'123456----') (10)
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.ljust "https://docs.python.org/3/library/stdtypes.html#bytearray.ljust").
 
 <h3 id="1.3.23"><code>count(x, start, end)</code> Methodu</h3>
 
@@ -697,7 +697,7 @@ bytearray1 = bytearray(b"Kahramanmaras")
 print(bytearray1.count(b"a")) # Output: 5
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.count "https://docs.python.org/3/library/stdtypes.html#bytearray.count").
 
 <h3 id="1.3.24"><code>index(sub, start, end)</code> Methodu</h3>
 
@@ -713,7 +713,7 @@ bytearray2 = bytearray(b"abc abc abcd abc abc abcd abc abc")
 print(bytearray2.index(b"x")) # ValueError: substring not found
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.index "https://docs.python.org/3/library/stdtypes.html#bytearray.index").
 
 <h3 id="1.3.25"><code>rindex(sub, start, end)</code> Methodu</h3>
 
@@ -725,7 +725,7 @@ print(bytearray1.rindex(b"abcd")) # Output: 21 (a ASCII karakteri ilk 21. index'
 print(bytearray1.rindex(b"x")) # ValueError: substring not found
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.rindex "https://docs.python.org/3/library/stdtypes.html#bytearray.rindex").
 
 <h3 id="1.3.26"><code>find(sub, start, end)</code> Methodu</h3>
 
@@ -737,7 +737,7 @@ print(bytearray1.find(b"abcd")) # Output: 8 (a ASCII karakteri ilk 8. index'te b
 print(bytearray1.find(b"x")) # Output: -1
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.find "https://docs.python.org/3/library/stdtypes.html#bytearray.find").
 
 <h3 id="1.3.27"><code>rfind(sub, start, end)</code> Methodu</h3>
 
@@ -749,7 +749,7 @@ print(bytearray1.rfind(b"abcd")) # Output: 21 (a ASCII karakteri ilk 21. index't
 print(bytearray1.rfind(b"x")) # Output: -1
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.rfind "https://docs.python.org/3/library/stdtypes.html#bytearray.rfind").
 
 <h3 id="1.3.28"><code>zfill(width)</code> Methodu</h3>
 
@@ -766,7 +766,7 @@ print(bytearray(b"+290").zfill(8)) # Output: bytearray(b'+0000290')
 print(bytearray(b"--random+text").zfill(20)) # Output: bytearray(b'-0000000-random+text')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.zfill "https://docs.python.org/3/library/stdtypes.html#bytearray.zfill").
 
 <h3 id="1.3.29"><code>partition(sep)</code> Methodu</h3>
 
@@ -779,7 +779,7 @@ print(bytearray(b"Istanbul").partition(b"an")) # Output: (bytearray(b'Ist'), byt
 print(bytearray(b"Istanbul").partition(b"fil")) # Output: (bytearray(b'Istanbul'), bytearray(b''), bytearray(b''))
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.partition "https://docs.python.org/3/library/stdtypes.html#bytearray.partition").
 
 <h3 id="1.3.30"><code>rpartition(sep)</code> Methodu</h3>
 
@@ -789,7 +789,7 @@ print(bytearray(b"Istanbul").rpartition(b"an")) # Output: (bytearray(b'Ist'), by
 print(bytearray(b"Istanbul").rpartition(b"fil")) # Output: (bytearray(b''), bytearray(b''), bytearray(b'Istanbul'))
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.rpartition "https://docs.python.org/3/library/stdtypes.html#bytearray.rpartition").
 
 <h3 id="1.3.31"><code>expandtabs(tabsize)</code> Methodu</h3>
 
@@ -799,7 +799,7 @@ a = bytearray(b"elma\tbir\tmeyvedir.")
 print(a.expandtabs(10)) # Output: bytearray(b'elma      bir       meyvedir.')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.expandtabs "https://docs.python.org/3/library/stdtypes.html#bytearray.expandtabs").
 
 <h3 id="1.3.32"><code>maketrans(from, to)</code> Methodu</h3>
 
@@ -811,7 +811,7 @@ c = bytearray.maketrans(a,b)
 print(c) # Output: b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`123defghijklmnopqrstuvwxyz{|}~\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff'
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.maketrans "https://docs.python.org/3/library/stdtypes.html#bytearray.maketrans").
 
 <h3 id="1.3.33"><code>translate(table)</code> Methodu</h3>
 
@@ -837,7 +837,7 @@ print(bytearray(b"aBCD").translate(bk)) # Output: bytearray(b'abcD')
 print(bytearray(b"aBCd").translate(kb)) # Output: bytearray(b'ABCd')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.translate "https://docs.python.org/3/library/stdtypes.html#bytearray.translate").
 
 <h3 id="1.3.34"><code>title()</code> Methodu</h3>
 
@@ -851,7 +851,7 @@ Bu algoritma, kelime grupları için dilden bağımsız (language-independent) b
 print(bytearray(b"they're bill's friends from the USA.").title()) # Output: bytearray(b"They\'Re Bill\'S Friends From The Usa.")
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.title "https://docs.python.org/3/library/stdtypes.html#bytearray.title").
 
 <h3 id="1.3.35"><code>istitle()</code> Methodu</h3>
 
@@ -860,7 +860,7 @@ Uygulandığı `bytearray`, `title()` methodunun algoritmasına uygunsa `True`, 
 print((bytearray(b"they're bill's friends from the USA.").title()).istitle()) # Output: True
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.istitle "https://docs.python.org/3/library/stdtypes.html#bytearray.istitle").
 
 <h3 id="1.3.36"><code>isalpha()</code> Methodu</h3>
 
@@ -871,7 +871,7 @@ print(bytearray(b"abcd1").isalpha()) # Output: False
 print(bytearray(b"abcd?").isalpha()) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.isalpha "https://docs.python.org/3/library/stdtypes.html#bytearray.isalpha").
 
 <h3 id="1.3.37"><code>isalnum()</code> Methodu</h3>
 
@@ -883,7 +883,7 @@ print(bytearray(b"1234abcd").isalnum()) # Output: True
 print(bytearray(b"1234!").isalnum()) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.isalnum "https://docs.python.org/3/library/stdtypes.html#bytearray.isalnum").
 
 <h3 id="1.3.38"><code>isdigit()</code> Methodu</h3>
 
@@ -893,7 +893,7 @@ print(bytearray(b"1234").isdigit()) # Output: True
 print(bytearray(b"abcd").isdigit()) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.isdigit "https://docs.python.org/3/library/stdtypes.html#bytearray.isdigit").
 
 <h3 id="1.3.39"><code>isspace()</code> Methodu</h3>
 
@@ -908,7 +908,7 @@ print(bytearray(b"\f").isspace()) # Output: True
 print(bytearray(b"a").isspace()) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.isspace "https://docs.python.org/3/library/stdtypes.html#bytearray.isspace").
 
 <h3 id="1.3.40"><code>isascii()</code> Methodu</h3>
 
@@ -918,7 +918,7 @@ print(bytearray(b"").isascii()) # Output: True
 print(bytearray(b"abcs").isascii()) # Output: True
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.isascii "https://docs.python.org/3/library/stdtypes.html#bytearray.isascii").
 
 <h3 id="1.3.41"><code>removeprefix(prefix)</code> Methodu</h3>
 
@@ -928,7 +928,7 @@ print(bytearray(b"TestHook").removeprefix(b"Test")) # Output: bytearray(b'Hook')
 print(bytearray(b"ATestHook").removeprefix(b"Test")) # Output: bytearray(b'ATestHook')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.removeprefix "https://docs.python.org/3/library/stdtypes.html#bytearray.removeprefix").
 
 <h3 id="1.3.42"><code>removesuffix(suffix)</code> Methodu</h3>
 
@@ -938,7 +938,7 @@ print(bytearray(b"TestHook").removesuffix(b"Hook")) # Output: bytearray(b'Test')
 print(bytearray(b"TestHookA").removesuffix(b"Hook")) # Output: bytearray(b'TestHookA')
 ```
 
-Daha fazla bilgi için [tıklayınız]().
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.removesuffix "https://docs.python.org/3/library/stdtypes.html#bytearray.removesuffix").
 
 <h3 id="1.3.43"><code>append(item)</code> Methodu</h3>
 
@@ -949,6 +949,8 @@ bytearray1.append(0xf3)
 print(bytearray1) # Output: bytearray(b'\xf0\xf1\xf2\xf3')
 ```
 
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.append "https://docs.python.org/3/library/stdtypes.html#bytearray.append").
+
 <h3 id="1.3.44"><code>clear()</code> Methodu</h3>
 
 Uygulandığı `bytearray` objesinin içini boşaltır. Örnek:
@@ -957,6 +959,8 @@ bytearray1 = bytearray(b"\xf0\xf1\xf2")
 bytearray1.clear()
 print(bytearray1) # Output: bytearray(b'')
 ```
+
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.clear "https://docs.python.org/3/library/stdtypes.html#bytearray.clear").
 
 <h3 id="1.3.45"><code>copy()</code> Methodu</h3>
 
@@ -967,6 +971,8 @@ bytearray2 = bytearray1.clear()
 print(id(bytearray1) == id(bytearray2)) # Output: False
 ```
 
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.copy "https://docs.python.org/3/library/stdtypes.html#bytearray.copy").
+
 <h3 id="1.3.46"><code>extend(iterable_of_ints)</code> Methodu</h3>
 
 `iterable_of_ints` parametresinde argüman olarak girdiğiniz `range(0,256)` aralığındaki integer'lardan veya bu aralıktaki hexadecimal sayılardan oluşan iterable objenin öğelerini, uygulandığı `bytearray` objesine eklemek için kullanılır. Iterable objedeki integer'lara karşılık gelen ASCII karakterlerini `bytearray` objesinin sonuna (en sağına) ekler. Örnek:
@@ -975,6 +981,8 @@ bytearray1 = bytearray(b"\xf0\xf1\xf2")
 bytearray1.extend([0x03,0x04,0x05])
 print(bytearray1) # Output: bytearray(b'\xf0\xf1\xf2\x03\x04\x05')
 ```
+
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.extend "https://docs.python.org/3/library/stdtypes.html#bytearray.extend").
 
 <h3 id="1.3.47"><code>insert(index, item)</code> Methodu</h3>
 
@@ -993,6 +1001,8 @@ bytearray1.insert(2, 0x66)
 print(bytearray1) # Output: bytearray(b'eafbcd')
 ```
 
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.insert "https://docs.python.org/3/library/stdtypes.html#bytearray.insert").
+
 <h3 id="1.3.48"><code>pop(index)</code> Methodu</h3>
 
 `index` parametresinde belirtilen index'deki item'ı önce döndürür sonra uygulandığı `bytearray` objesinden siler. Örnek:
@@ -1005,6 +1015,8 @@ bytearray1 = bytearray(b"abcd")
 print(bytearray1.pop(0)) # Output: 97
 print(bytearray1) # Output: bytearray(b'bcd')
 ```
+
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.pop "https://docs.python.org/3/library/stdtypes.html#bytearray.pop").
 
 <h3 id="1.3.49"><code>remove(value)</code> Methodu</h3>
 
@@ -1019,6 +1031,8 @@ bytearray1.remove(97)
 print(bytearray1) # Output: bytearray(b'bcd')
 ```
 
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.remove "https://docs.python.org/3/library/stdtypes.html#bytearray.remove").
+
 <h3 id="1.3.50"><code>reverse()</code> Methodu</h3>
 
 Uygulandığı `bytearray` objesini ters çevirmek için kullanılır. Örnek:
@@ -1031,3 +1045,5 @@ bytearray1 = bytearray(b"abcd")
 bytearray1.reverse()
 print(bytearray1) # Output: bytearray(b'dcba')
 ```
+
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtypes.html#bytearray.reverse "https://docs.python.org/3/library/stdtypes.html#bytearray.reverse").
