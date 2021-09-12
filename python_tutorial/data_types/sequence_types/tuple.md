@@ -1,6 +1,6 @@
 ﻿# İçindekiler
 
-- [# Demet (Tuple)](#1)
+- [Demet (Tuple)](#1)
     - [Tuple'larda İşlemler](#1.1)
     - [Tuple Üreteçleri (Tuple Comprehensions)](#1.2)
     - [Tuple Methodları](#1.3)
