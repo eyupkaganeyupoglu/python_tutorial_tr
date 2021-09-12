@@ -1,5 +1,15 @@
 # İçindekiler
 - [`bool(x)` Fonksiyonu](#1)
+    - [Boolean Type Fonksiyonları](#1.1)
+        - [`as_integer_ratio()` Methodu](#1.1.1)
+        - [`bit_length()` Methodu](#1.1.2)
+        - [`to_bytes(length, byteorder, signed=False)` Methodu](#1.1.3)
+        - [`from_bytes(bytes, byteorder, signed=False)` Methodu](#1.1.4)
+        - [`conjugate()` Methodu](#1.1.5)
+        - [`denominator` Methodu](#1.1.6)
+        - [`numerator` Methodu](#1.1.7)
+        - [`imag()` Methodu](#1.1.8)
+        - [`real()` Methodu](#1.1.9)
 
 <h1 id="1"><code>bool(x)</code> Fonksiyonu</h1>
 
@@ -7,7 +17,7 @@
 
 <h2 id="1.1">Boolean Type Fonksiyonları</h2>
 
-<h3 id="1.1."><code>as_integer_ratio()</code> Methodu</h3>
+<h3 id="1.1.1"><code>as_integer_ratio()</code> Methodu</h3>
 
 Birbirine bölündüğünde uygulandığı boolean değeri veren iki sayı döndürür. Bu iki sayı `tuple` içinde döndürülür. Örnek:
 ```py
@@ -15,7 +25,7 @@ print(True.as_integer_ratio()) # Output: (1, 1)
 print(False.as_integer_ratio()) # Output: (0, 1)
 ```
 
-<h3 id="1.1."><code>bit_length()</code> Methodu</h3>
+<h3 id="1.1.2"><code>bit_length()</code> Methodu</h3>
 
 `bit_length()` methodu, uygulandığı boolean değerin bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(True))`: `0b1`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş benzerdir. Örnek:
 ```py
@@ -26,7 +36,7 @@ print(len(bin(False)[2:])) # Output: 1 (`1` 1 birim uzunluğundadır)
 ```
 `False` değerinin binary değeri `0b0`'dır. 0 değeri uzunluk olarak bildiğimiz sıfırı temsil ettiği için `bit_length` methodu doğru sonuç olan `0`'ı döndürür. Ama `len(bin()[2:])` kodu sadece `0b`'dan sonra bir şey olup olmadığına baktığı için hatalı sonuç verir.
 
-<h3 id="1.1."><code>to_bytes(length, byteorder, signed=False)</code> Methodu</h3>
+<h3 id="1.1.3"><code>to_bytes(length, byteorder, signed=False)</code> Methodu</h3>
 
 Uygulandığı boolean değeri temsil eden byte array'ı döndürür. Örnek:
 ```py
@@ -55,7 +65,7 @@ print(False.to_bytes(1, byteorder='big', signed=False)) # Output: b'\x00'
 ```
 Boolean değerler sadece `True` ve `False`'dan ibarettir. Bu yüzden `signed` parametresi herhangi bir şeye etki etmez çünkü etki edecek karmaşıklıkta bir şey yok ortada. Sadece `True` ve `False` var.
 
-<h3 id="1.1."><code>from_bytes(bytes, byteorder, signed=False)</code> Methodu</h3>
+<h3 id="1.1.4"><code>from_bytes(bytes, byteorder, signed=False)</code> Methodu</h3>
 
 `bytes` parametresine argüman olarak girilen byte array'ı temsil eden boolean değeri döndürür. `from_bytes` methodu bir class method olduğu için direkt `bool` class'ına veya boolean type bir objeye uygulanabilir. Örnek:
 ```py
@@ -83,7 +93,7 @@ print(bool.from_bytes(b'\x00', byteorder='big', signed=True)) # Output: False
 print(bool.from_bytes(b'\x00', byteorder='big', signed=False)) # Output: False
 ```
 
-<h3 id="1.1."><code>conjugate()</code> Methodu</h3>
+<h3 id="1.1.5"><code>conjugate()</code> Methodu</h3>
 
 Herhangi bir float'ın complex eşleniği (conjugate) olan `self`'i (yani uygulandığı boolean değeri) döndürür. Örnek:
 ```py
@@ -91,7 +101,7 @@ print(True.conjugate()) # Output: 1
 print(False.conjugate()) # Output: 0
 ```
 
-<h3 id="1.1."><code>denominator</code> Methodu</h3>
+<h3 id="1.1.6"><code>denominator</code> Methodu</h3>
 
 Uygulandığı boolean değerin en küçük terimli paydasını içeren property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Boolean değerlerin paydası 1 olduğu için her zaman 1 döndürür. Örnek:
 ```py
@@ -99,7 +109,7 @@ print(True.denominator) # Output: 1
 print(False.denominator) # Output: 1
 ```
 
-<h3 id="1.1."><code>numerator</code> Methodu</h3>
+<h3 id="1.1.7"><code>numerator</code> Methodu</h3>
 
 Uygulandığı boolean değerin en küçük terimli payını içeren property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı boolean değerin paydası kendisi olduğu için uygulandığı boolean değerin döndürür. Örnek:
 ```py
@@ -107,7 +117,7 @@ print(True.numerator) # Output: 1
 print(False.numerator) # Output: 0
 ```
 
-<h3 id="1.1."><code>imag()</code> Methodu</h3>
+<h3 id="1.1.8"><code>imag()</code> Methodu</h3>
 
 Uygulandığı boolean değerin `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
 ```py
@@ -118,7 +128,7 @@ print(complex(False)) # Output: 0j
 print(False.imag) # Output: 0
 ```
 
-<h3 id="1.1."><code>real()</code> Methodu</h3>
+<h3 id="1.1.9"><code>real()</code> Methodu</h3>
 
 Uygulandığı boolean değerin `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
 ```py
