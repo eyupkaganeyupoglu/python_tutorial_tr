@@ -1,17 +1,17 @@
 ﻿# İçindekiler
 
--[Loop Yapısı](#1)
-    -[`while` Loop](#1.1)
-    -[`for` Loop](#1.2)
-        -[String'lere Davranışı](#1.2.1)
-        -[List'lere Davranışı](#1.2.2)
-        -[Dictionary'lere Davranışı](#1.2.3)
-    -[Loop Control Statements](#1.3)
-        -[`break` Statement](#1.3.1)
-        -[`continue` Statement](#1.3.2)
-        -[`pass` Statement](#1.3.3)
-    -[`else` statement'ın Loop'larda Kullanımı](#1.4)
-    -[Nested Loops](#1.5)
+- [Loop Yapısı](#1)
+    - [`while` Loop](#1.1)
+    - [`for` Loop](#1.2)
+        - [String'lere Davranışı](#1.2.1)
+        - [List'lere Davranışı](#1.2.2)
+        - [Dictionary'lere Davranışı](#1.2.3)
+    - [Loop Control Statements](#1.3)
+        - [`break` Statement](#1.3.1)
+        - [`continue` Statement](#1.3.2)
+        - [`pass` Statement](#1.3.3)
+    - [`else` statement'ın Loop'larda Kullanımı](#1.4)
+    - [Nested Loops](#1.5)
 
 <h1 id="1">Loop Yapısı</h1>
 
