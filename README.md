@@ -52,7 +52,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
         - [Bellek Görünümü (Memoryview)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/binary_types/memoryview.md)
 - Dış Kaynak İşlemleri (External Resources Operations)
     - [Dosya İşlemleri (File Operations)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/file_operations.md)
-    - [`with` Statement ve Context Manager](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/with_ve_context_manager.md)
+    - [Context Manager ve `with` Statement](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/with_ve_context_manager.md)
 - Fonksiyonlar (Functions)
     - [Fonksiyonlar (functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md)
     - [Gömülü Fonksiyonlar (Build-in Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/build-in_functions.md)

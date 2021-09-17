@@ -1194,7 +1194,7 @@ print("--random+text".zfill(20)) # Output: -0000000-random+text
 
 <h2 id="3.27"><code>partition(sep)</code> Methodu</h2>
 
-`sep` parametresine argüman olarak girilen string'i referans alarak, uygulandığı string'i soldan sağa doğru okur ve referansa uyan ilk yerden üçe böler. Sonucu list type olarak döndürür. Örnek:
+`sep` parametresine argüman olarak girilen string'i referans alarak, uygulandığı string'i soldan sağa doğru okur ve referansa uyan ilk yerden üçe böler. Sonucu tuple type olarak döndürür. Örnek:
 ```py
 print("İstanbul".partition("an")) # Output: ('ist', 'an', 'bul')
 ```
