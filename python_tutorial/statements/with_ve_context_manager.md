@@ -1,4 +1,4 @@
-# Context Manager
+# Context Manager ve `with` Statement
 Context manager, kullanılan kaynakların geri iade edilmesi için ortaya çıkmış bir protocol'dür. Kaynaklar sınırsız değildir ve boyutu işletim sistemiden işletim sistemine değişir. Devamlı kaynak edinip geri iade etmezseniz, işletim sisteminiz bir noktadan sonra size engel (`OSError`) olacaktır.
 
 Context manager, işletim sistemi kaynağının sadece belitlenen bir context'de geçerli olmasını sağlar ve bu context'den çıkınca bu kaynak otomatik olarak Python tarafından yok ediliyor. Bu protocol'ü kullanabilmemiz için belli kurallara uygun class'lar, yapılar oluşturmamız gerekir. Context manager protocol'üne uygun yazdığımız class'ları kullanırken de `with` statement'den yararlanacağız.

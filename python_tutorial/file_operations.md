@@ -1,837 +1,1230 @@
-﻿# Dosya İşlemleri
+﻿# İçindekiler
 
-## `open(r"file", mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)` Fonksiyonu
-`open()` fonksiyonu, dosya açmak veya oluşturmak için kullanılır. Eğer `open()` fonksiyonunda belirtilen uzantıda, belirtilen isimde bir dosya yoksa, belirtilen isimde bir dosya oluşturur.
+- [Dosya İşlemleri](#1)
+    - [<code>open()</code> Fonksiyonu](#1.1)
+    - [Dosyaya Erişim Kipleri](#1.2)
+        - [<code>r</code> kipi](#1.2.1)
+        - [<code>w</code> kipi](#1.2.2)
+        - [<code>a</code> kipi](#1.2.3)
+        - [<code>x</code> kipi](#1.2.4)
+        - [<code>r+</code> kipi](#1.2.5)
+        - [<code>w+</code> kipi](#1.2.6)
+        - [<code>a+</code> kipi](#1.2.7)
+        - [<code>x+</code> kipi](#1.2.8)
+        - [<code>rb</code> kipi](#1.2.9)
+        - [<code>wb</code> kipi](#1.2.10)
+        - [<code>ab</code> kipi](#1.2.11)
+        - [<code>xb</code> kipi](#1.2.12)
+        - [<code>rb+</code> kipi](#1.2.13)
+        - [<code>wb+</code> kipi](#1.2.14)
+        - [<code>ab+</code> kipi](#1.2.15)
+        - [<code>xb+</code> kipi](#1.2.16)
+    - [Dosyadaki İmleç Konumu](#1.3)
+        - [<code>tell()</code> Methodu](#1.3.1)
+        - [<code>seek(offset, whence = SEEK_SET)</code> Methodu](#1.3.2)
+        - [<code>seekable()</code> Methodu](#1.3.3)
+    - [Dosyaya Yazmak](#1.4)
+        - [<code>write(s)</code> Methodu](#1.4.1)
+        - [<code>writelines(lines)</code> Methodu](#1.4.2)
+        - [<code>writable()</code> Methodu](#1.4.3)
+    - [Dosyayı Okumak](#1.5)
+        - [<code>read(size = -1)</code> Methodu](#1.5.1)
+        - [<code>readline(size = -1)</code> Methodu](#1.5.2)
+        - [<code>readlines(hint = -1)</code> Methodu](#1.5.3)
+        - [<code>readable()</code> Methodu](#1.5.4)
+    - [Dosyaları Otomatik Kapatmak](#1.6)
+        - [<code>try</code> - <code>except (ErrorCode)</code> - <code>finally</code> Yapısı](#1.6.1)
+        - [<code>with</code> Statement](#1.6.2)
+    - [Dosyaya Ekleme Yapma](#1.7)
+        - [Dosyanın Sonunda ekleme yapmak](#1.7.1)
+        - [Dosyanın Başında Değişiklik yapmak](#1.7.2)
+        - [Dosyanın Ortasında Değişiklik yapmak](#1.7.3)
+    - [Dosya Methodları](#1.8)
+        - [<code>closed</code> Methodu](#1.8.1)
+        - [<code>mode</code> Methodu](#1.8.2)
+        - [<code>name</code> Methodu](#1.8.3)
+        - [<code>encoding</code> Methodu](#1.8.4)
+        - [<code>close()</code> Methodu](#1.8.5)
+        - [<code>fileno()</code> Methodu](#1.8.6)
+        - [<code>flush()</code> Methodu](#1.8.7)
+        - [<code>isatty()</code> Methodu](#1.8.8)
+        - [<code>truncate(size = None)</code> Methodu](#1.8.9)
+    - [İkili (Binary) Dosyalar](#1.9)
+        - [PDF Dosyaları](#1.9.1)
+        - [JPEG Dosyaları](#1.9.2)
+        - [PNG Dosyaları](#1.9.3)
+        - [GIF Dosyaları](#1.9.4)
+        - [TIFF Dosyaları](#1.9.5)
+        - [BMP Dosyaları](#1.9.6)
 
-- `"file"`: Dosya dizinini (path) temsil eder. Path yazarken `\` ayracını kaçış dizisi olarak algılayabilir. Bu yüzden her path yazdığınızda en başa `r` kaçış dizisini koyun. Yani `r"D:\falan_filan..."` şeklinde kullanın.
+<h1 id="1">Dosya İşlemleri</h1>
 
-- `mode`: Default değeri `"r"` olarak ayarlıdır. Dosyayı açarken hangi modda (örneğin okuma ya da yazma) açacağınızı belirlersiniz. `mode` parametresine girilebilecek argümanlar için [tıklayınız](asd). Devam etmeden önce bu argümanları öğrenmenizde fayda var.
+Python, dış kaynaklar (external sources) üzerinde I/O (input/output) işlemleri yapmamıza izin verir. Bunun için programın içine dış kaynağı (external source) dahil edip (include), dış kaynak (external source) üzerinde işlemler yapıp, bu işlemleri tekrar dış kaynağa (external source) yazmamız gerekmektedir. Bunu file I/O operation'ları ile yapabiliriz. bir metin dosyasını programınıza dahil etmek için o dosyayı önce açmanız gerekmektedir. Bunu `open()` build-in fonksiyonu ile yapıyoruz.
 
-- `buffering`: Default değeri `-1` olarak ayarlıdır. Buffering policy ayarlamak için kullanılır. Bir dosyayı açıp veri girdiğimizde, bu veriler tamponda (buffer) bekletilir. Buffer'da bekletilen veriler, dosya kapatıldığında dosyaya işlenir. `buffering` parametresinde ile buffer'a alma işleminin nasıl yürüyeceğini belirliyoruz.
+<h2 id="1.1"><code>open()</code> Fonksiyonu</h2>
+
+Open fonksiyonu `open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)` syntax'ına sahiptir. `open()` fonksiyonu, `file` parametresinde belirtilen PATH'da (dizinde) bulunan dosyayı `mode` parametresinde belirtilen modda ve diğer parametrelerde belirtilen kurallara göre açar/programa dahil eder (include). Parametrelerini teker teker açıklamak gerekirse:
+
+- `file`: Bu parametreye, açmak istediğiniz dosyanın ismini (uzantısı ile birlikte) veya direkt PATH'ını argüman olarak giriyorsunuz. Bu argüman string type olmalıdır. PATH tanımlarken iki nokta `..\falan_filan`, bir üst dizin (PATH); tek nokta `.\falan_filan`, o an bulunduğun dizin (PATH) anlamlarına gelmektedir. Argüman olarak dosya adı yerine PATH girecekseniz Python backslash (`\`) karakterini, bu karakterden sonra gelen harflerle beraber düşünerek escape characters tanımladığınızı sanabilir. Bu da size sıkıntı çıkarır. Bu yüzden PATH tanımlarken etkisizleştime harfi olarak kullanılan `r` harfini kullanmalısınız (örnek: `r"D:\falan_filan..."`). `file` parametresine PATH tanımlamak yerine sadece dosya ismini (uzantısı ile beraber) argüman olarak girerseniz Python, `open` fonksiyonunun çalıştığı python dosyasının bulunduğu PATH'ı değil, terminalin o an işaret ettiği PATH'ı dikkate alacaktır. Örnek:
+
+    **Terminalin işaret ettiği PATH:**
+
+    ![](https://i.ibb.co/bRzP4B4/image.png)
+
+    ```
+    D:\my_folder\education\software\software_lessons\python\python_tutorial
+    ```
+
+    **Python dosyasının bulunduğu PATH:**
+
+    ```py
+    print(__file__) # Output: d:\my_folder\education\software\software_lessons\python\python_tutorial\main\.md\TP1.py
+
+    dosya = open("deneme.txt", "r") # FileNotFoundError: [Errno 2] No such file or directory: 'deneme.txt'
+    dosya.close()
+    ```
+    Gördüğünüz gibi `FileNotFoundError` hatası aldık çünkü terminalde çalıştırmaya çalıştığınız Python dosyaları, o an terminalin işaret ettiği PATH'da aranır. Bulunamazsa `FileNotFoundError` hatası yükseltilir. Bu yüzden terminalde çalıştırdığınız Python dosyalarındaki `open` fonksiyonlarının `file` parametresine argüman girerken dikkatli olun. Alternatif çözüm:
+    ```py
+    dosya = open(r"{}deneme.txt".format(__file__[:-6]), "r")
+    print(dosya.read()) #Output: Selam
+    dosya.close()
+    ```
+    Ben yukarıdaki kodu `TP1.py` adlı Python dosyasında çalıştırıyorum. Yukarıdaki kodda `TP1.py` kısmından öncesine ihtiyacımız olduğu için `__file__[:-6]` kullandık. Aksi halde sadece `__file__` kullansaydık `TP1.py` kısmını da alırdı ve oluşan PATH işimize yaramazdı. `__file__[:-6]` kullanarak, `TP1.py` dosyası ile aynı klasörde bulunan `deneme.txt` dosyasına erişebildik.
+
+- `mode`: Bu parametreye argüman olarak dosya açma kipinin bulunduğu bir string tanımlanır.  `mode` parametresine argüman olarak girilen dosya açma kiplerinin (mode) ne anlamlar ifade ettiklerini öğrenmek için [tıklayınız](asd). `mode` parametresinin default değeri `"r"` olarak ayarlıdır.
+
+- `buffering`: Bir dosyayı açıp veri girdiğimizde bu veriler tamponda (buffer) bekletilir. Buffer'da bekletilen veriler, dosya kapatıldığında dosyaya işlenir. `buffering` parametresine girilen integer argüman ile ile buffer'a alma işleminin nasıl yürüyeceğini belirleyebiliriz.
     - `buffering = 0`: Veriler buffer'a alınmadan doğrudan dosyaya işlenir ama bu sadece `'b'` (binary) mode ile açılan dosyalarda mümkündür.
-    - `buffering=1`: Veriler satır satır dosyaya işlenir. Yani `f.write('ikinci satır\n')` komutu çalıştıktan sonra veri dosyaya işlenir ama `f.write('aaa')` komutunda işlenmez çünkü işlenmesi için `'\n'` kaçış dizisi beklenir. `buffering=1` yanlızca metin kiplerinde çalışır (dosyalar, metin ve ikili (binary) dosyalar olarak ikiye ayrılır.).
-    - `buffering=-1`: Default değerdir. Veriler buffer'da bekletilir. `buffering`'i belirtmeden `open()` kullanırsanız, kullandığınız işletim sistemi tampona alma işlemlerininin nasıl yürütüleceğine ve buffer boyutuna kendisi karar verecektir.
+    - `buffering = 1`: Veriler satır satır dosyaya işlenir. Yani `f.write('Falan filan\n')` komutu çalıştıktan sonra veri dosyaya işlenir ama `f.write('Falan filan')` komutunda işlenmez çünkü işlenmesi için `'\n'` kaçış dizisi beklenir. `buffering` `1` iken dosyalar yanlızca metin dosyaları için olan kipler ile açılırsa çalışır (dosyalar, metin ve ikili (binary) dosyalar olarak ikiye ayrılır).
+    - `buffering = -1`: `buffering` parametresinin default değeri `-1`'dir. `buffering` parametresine argüman olarak `-1` girilirse, dosya üzerinde yapılan işlemler buffer'da bekletilir. `buffering` parametresine argüman girmeden `open()` kullanırsanız, kullandığınız işletim sistemi tampona alma işlemlerininin nasıl yürütüleceğine ve buffer boyutuna kendisi karar verecektir.
 
-**Not:** Kendi sisteminizde default buffer boyutunun ne olduğunu merak ediyorsanız şu komutları kullanabilirsiniz:
-```py
-import io
-print(io.DEFAULT_BUFFER_SIZE) # Output: 8192
-```
+        **Not:** Kendi sisteminizde default buffer boyutunun ne olduğunu merak ediyorsanız:
+        ```py
+        import io
+        print(io.DEFAULT_BUFFER_SIZE) # Output: 8192 (win 10 pro kullanıyorum)
+        ```
 
 - `encoding`: Dosyayı hangi kod çözücüyle açacağını belirlediğiniz parametredir.
 
-- `errors`: `encoding` parametresinde belirtilen kod çözücü uygun değilse yükseltilecek hatanın belirlendiği parametredir. Bu parametrenin alabileceği argümanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/.md/kullanicidan_girdi_almak/tip_donusumleri.md#strobject-encodingutf-8-errorsstrict) ulaşabilirsiniz.
+- `errors`: `encoding` parametresinde belirtilen kod çözücü işinde başarısız olursa, Python'ın nasıl davranacağını belirleyebildiğiniz parametredir. Bu parametrenin alabileceği argümanlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#1.3").
 
-- `newline`: Farklı işletim sistemlerinde satır sonları birbirinden farklı şekilde gösterirlir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. Dosyada yazılı olan her satırın sonundaki kaçış dizilerini etkiler. Default değeri `None` olarak ayarlıdır ve bu argüman kullanılırsa, son satır hariç her satırın sonunda `\n` kaçış dizisi olur. Boş string `""` argümanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\n"` argümanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. `"\r"` argümanı verilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur. `\r\n` argümanı verilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur. Bu argümanlardan başka argüman kabul etmez.a
+- `newline`: Farklı işletim sistemlerinde dosyaların satır sonlarının ifade edilme şekli birbirinden farklılık gösterebilir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. `newline` parametresine girilen argüman ile dosyadaki her satırın sonundaki kaçış dizisi üzerinde işlem yapabilirsiniz. Default değeri `None`'dır.
+    - `newline` parametresine argüman girilmezse, son satır hariç her satırın sonunda `\n` kaçış dizisi olur.
+    - `newline`parametresine argüman olarak boş string `""` girilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur.
+    - `newline`parametresine argüman olarak `"\n"` girilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur.
+    - `newline`parametresine argüman olarak `"\r"` girilirse, son satır hariç her satırın sonunda `\r` kaçış dizisi olur.
+    - `newline`parametresine argüman olarak `\r\n` girilirse, son satır hariç her satırın sonunda `\r\n` kaçış dizileri olur.
 
-- `closefd`: `closefd` `False` ise ve file parametresine *filename* yerine *file descriptor* verilmişse, dosya kapatıldığında (close) temeldeki (underlying) *file descriptor* açık tutulacaktır. file parametresine *filename* verilmişse, `closefd`' default değeri olan `True` olmalıdır. Aksi halde hata oluşur. 
+    `newline`parametresi `None`, `""`, `\n`, `\r`, `\r\n` bunlardan başka argüman kabul etmez.
+    
+    **Dikkat:** `newline` parametresi ile ilgili yukarıda anlattığım sonuçlar `Windows 10 Pro` işletim sisteminde deneme yanılma yolu ile elde edilmiştir.
+
+
+- `closefd`: Bu parametreye argüman olarak `False` girilirse ve `file` parametresine dosya ismi (file name) yerine yerine dosya descriptor'ı ([file descriptor](https://www.computerhope.com/jargon/f/file-descriptor.htm "https://www.computerhope.com/jargon/f/file-descriptor.htm")) girilmişse, dosya kapatıldığında (close) temeldeki (underlying) dosya descriptor'ı ([file descriptor](https://www.computerhope.com/jargon/f/file-descriptor.htm "https://www.computerhope.com/jargon/f/file-descriptor.htm")) açık tutulacaktır. file parametresine dosya ismi (file name) verilmişse, `closefd`' default değeri olan `True` olmalıdır. Aksi halde hata yükseltilir.
 
 - `opener`: Python'un kendi opener'ı vardır. Custom opener tanımlamak için bu parametreyi kullanabilirsiniz.
 
-`open()` ile açtığınız dosyayı programınızda kullanabilmek için bir variable'a `dosya = open(...)` şeklinde atamanız gerekmektedir.
-
-**DİKKAT:** Bir dosyayı `open()` ile açtıktan sonra kapatmayı kesinlikle unutmayın. Aksi taktirde geri döndürülemez hatalarla karşılaşabilirsiniz.
-
-## Dosyaya Yazmak
-Yazılabilir dosyalara bir şeyler yazabilmek için kullanılan bazı fonksiyonlar vardır. Burada dikkat edilmesi gereken en önemli şeylerden birisi, `encoding` parametresidir. Bir dosyaya Türkçe karakterler içeren bir şeyler yazmak veya Türkçe karakterler içeren bir dosyayı okumak istiyorsanız, doğru sonuçlar elde etmek için `encoding` parametresini doğru kullanmalısınız.
-
-### `write("string")` Methodu
-Dosyaya bir adet string girebilmenizi sağlar. O anda imleç, yazılacak dosyanın neresindeyse, oradan yazmaya başlar. İmlecin bulunduğu yerde yazı varsa, `write()` methoduna girilen değer, bu yazının üzerine yazılır. Yani:
+**Not:** `open()` fonksiyonu ile açtığınız dosyayı programınızda kullanabilmek için `open()` fonksiyonunun döndürdüğü dosya objesini bir variable'a atamalısınız. Örnek:
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+my_path = r"{}deneme.txt".format(__file__[:-6])
+dosya = open(my_path, "w+")
+dosya.write("Selam ben Python")
+dosya.read() # Output: Selam ben Python
+print(dosya) # Output: <_io.TextIOWrapper name='D:\\my_folder\\education\\software\\software_lessons\\python\\python_tutorial\\main\\.md\\deneme.txt' mode='r' encoding='cp1254'>
+dosya.close()
+```
 
-dosya.write("Deneme")
+**DİKKAT:** Bir dosyayı açtıktan sonra kapatmayı kesinlikle unutmayın. Aksi taktirde geri döndürülemez hatalarla karşılaşabilirsiniz.
+
+<h2 id="1.2">Dosyaya Erişim Kipleri</h2>
+
+<h3 id="1.2.1"><code>r</code> kipi</h3>
+
+Default dosya açma kipidir. Bu kip, bir metin dosyasını **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili metin dosyasının belirttiğiniz path'da halihazırda var olması gerekir. Belirttiğiniz metin dosyası belirttiğiniz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
+
+<h3 id="1.2.2"><code>w</code> kipi</h3>
+
+Bu kip, bir metin dosyasını **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da zaten varsa, Python hiçbir şey sormadan metin dosyasının içeriğini silecektir (metin dosyasını silip baştan oluşturmuyor, içeriğini siliyor). Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da yoksa, Python o adda bir metin dosyasını otomatik olarak oluşturur (create).
+
+<h3 id="1.2.3"><code>a</code> kipi</h3>
+
+Bu kip, bir metin dosyasını **append** (ekleme) yetkisiyle açar. Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da zaten varsa, metin dosyasının içeriğinde herhangi bir değişiklik yapılmaz (yani `w` kipi gibi metin dosyası içeriğini silmez). Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da yoksa, Python otomatik olarak o adda bir metin dosyası oluşturur (create). Bu kiple açtığınız bir metin dosyasına yazdıklarınız, metin dosyasının sonuna eklenir çünkü dosyayı `"a"` kipiyle açarsanız, imleç dosyanın sonunda olur. Bu yüzden `seek(0)` gibi yöntemlerle metin dosyasının başına gitmek, metin dosyasının başına **append** (ekleme) işlemi uygulamanızı sağlamaz.
+
+<h3 id="1.2.4"><code>x</code> kipi</h3>
+
+Bu kip, bir metin dosyasını **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da zaten varsa, Python varolan metin dosyasını silmek yerine `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir metin dosyası belirttiğiniz path'da yoksa, Python belirttiğiniz isimde bir metin dosyası oluşturur (create).
+
+<h3 id="1.2.5"><code>r+</code> kipi</h3>
+
+Bu kip, bir metin dosyasını hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili metin dosyasının belirttiğiniz path'da halihazırda var olması gerekir. Belirttiğiniz metin dosyası belirttiğiniz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
+
+<h3 id="1.2.6"><code>w+</code> kipi</h3>
+
+Bu kip, bir metin dosyasını hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da zaten varsa, Python hiçbir şey sormadan metin dosyasının içeriğini silecektir (metin dosyasını silip baştan oluşturmuyor, içeriğini siliyor). Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da yoksa, Python o adda bir metin dosyasını otomatik olarak oluşturur (create).  
+
+<h3 id="1.2.7"><code>a+</code> kipi</h3>
+
+Bu kip, bir metin dosyasını hem **append** (ekleme) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da zaten varsa, metin dosyasının içeriğinde herhangi bir değişiklik yapılmaz (yani `w` kipi gibi metin dosyası içeriğini silmez). Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da yoksa, Python otomatik olarak o adda bir metin dosyası oluşturur (create). Bu kiple açtığınız bir metin dosyasına yazdıklarınız, metin dosyasının sonuna eklenir çünkü dosyayı `"a"` kipiyle açarsanız, imleç dosyanın sonunda olur. Bu yüzden `seek(0)` gibi yöntemlerle metin dosyasının başına gitmek, metin dosyasının başına **append** (ekleme) işlemi uygulamanızı sağlamaz.
+
+<h3 id="1.2.8"><code>x+</code> kipi</h3>
+
+Bu kip, bir metin dosyasını hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir metin dosyası belirttiğiniz path'da zaten varsa, Python varolan metin dosyasını silmek yerine `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir metin dosyası belirttiğiniz path'da yoksa, Python belirttiğiniz isimde bir metin dosyası oluşturur (create).
+
+<h3 id="1.2.9"><code>rb</code> kipi</h3>
+
+Bu kip, bir binary dosyayı **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili binary dosyanın belirttiğiniz path'da halihazırda var olması gerekir. Belirttiğiniz binary dosya belirttiğiniz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
+
+<h3 id="1.2.10"><code>wb</code> kipi</h3>
+
+Bu kip, bir binary dosyayı **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da zaten varsa, Python hiçbir şey sormadan binary dosyanın içeriğini silecektir (binary dosyayı silip baştan oluşturmuyor, içeriğini siliyor). Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da yoksa, Python o adda bir binary dosya otomatik olarak oluşturur (create).
+
+<h3 id="1.2.11"><code>ab</code> kipi</h3>
+
+Bu kip, bir binary dosyayı **append** (ekleme) yetkisiyle açar. Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da zaten varsa, binary dosyanın içeriğinde herhangi bir değişiklik yapılmaz (yani `w` kipi gibi binary dosyanın içeriğini silmez). Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da yoksa, Python otomatik olarak o adda bir binary dosya oluşturur (create). Bu kiple açtığınız bir binary dosyaya yazdıklarınız, binary dosyanın sonuna eklenir. Bu yüzden `seek(0)` gibi yöntemlerle binary dosyanın başına gitmek, metin dosyasının başına **append** (ekleme) işlemi uygulamanızı sağlamaz.
+
+<h3 id="1.2.12"><code>xb</code> kipi</h3>
+
+Bu kip, bir binary dosyayı **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da zaten varsa, Python varolan binary dosyayı silmek yerine `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir binary dosya belirttiğiniz path'da yoksa, Python belirttiğiniz isimde bir binary dosya oluşturur (create).
+
+<h3 id="1.2.13"><code>rb+</code> kipi</h3>
+
+Bu kip, bir binary dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili binary dosyanın belirttiğiniz path'da halihazırda var olması gerekir. Belirttiğiniz binary dosya belirttiğiniz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
+
+<h3 id="1.2.14"><code>wb+</code> kipi</h3>
+
+Bu kip, bir binary dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da zaten varsa, Python hiçbir şey sormadan binary dosyanın içeriğini silecektir (binary dosyayı silip baştan oluşturmuyor, içeriğini siliyor). Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da yoksa, Python o adda bir binary dosya otomatik olarak oluşturur (create).
+
+<h3 id="1.2.15"><code>ab+</code> kipi</h3>
+
+Bu kip, bir binary dosyayı hem **append** (ekleme) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da zaten varsa, binary dosyanın içeriğinde herhangi bir değişiklik yapılmaz (yani `w` kipi gibi binary dosyanın içeriğini silmez). Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da yoksa, Python otomatik olarak o adda bir binary dosya oluşturur (create). Bu kiple açtığınız bir binary dosyaya yazdıklarınız, binary dosyanın sonuna eklenir. Bu yüzden `seek(0)` gibi yöntemlerle binary dosyanın başına gitmek, metin dosyasının başına **append** (ekleme) işlemi uygulamanızı sağlamaz.
+
+<h3 id="1.2.16"><code>xb+</code> kipi</h3>
+
+Bu kip, bir binary dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir binary dosya belirttiğiniz path'da zaten varsa, Python varolan binary dosyayı silmek yerine `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir binary dosya belirttiğiniz path'da yoksa, Python belirttiğiniz isimde bir binary dosya oluşturur (create).
+
+<h2 id="1.3">Dosyadaki İmleç Konumu</h2>
+
+Bu kısımdan sonra "imleç" terimini çok fazla göreceğiniz için ne olduğunu açıklamam gerekiyor.
+
+**Not:** bu kısımda `write` ve `read` methodlarını kullanacağımız için bunları basitçe anlatayım (daha sonra detaylı anlatacağım). `write` methodu, kendisine verilen argümanı dosyaya yazar. `read` methodu, argümansız kullanılırsa dosyanın tamamını, argümanlı kullanılırsa argüman olarak girilen integer kadar byte'ı okur ve döndürür. 
+
+İmleç, dijital bir ortamda yazı yazarken yanıp sönen dikey düz çizgiye denir.
+
+![](https://i.ibb.co/qMcbGTD/mle.png)
+
+Dosya işlemlerinde karakterler, byte'larla ifade edilir. İmleç kavramı index mantığına benzer çalışır. Örnek:
+
+Birinci byte'dan hemen önceki konumda:
+
+![](https://i.ibb.co/v1BmKNM/image.png)
+
+İkinci byte'dan hemen önceki konumda:
+
+![](https://i.ibb.co/TmPkWHP/image.png)
+
+Üçüncü byte'dan hemen önceki konumda:
+
+![](https://i.ibb.co/BBTWN6p/image.png)
+
+**Dosya:**
+```
+123456789
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+dosya.seek(0)
+print(repr(dosya.read(1))) # Output: '1'
+dosya.seek(1)
+print(repr(dosya.read(1))) # Output: '2'
+dosya.seek(2)
+print(repr(dosya.read(1))) # Output: '3'
 
 dosya.close()
 ```
-**Eski Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Yeni Dosya:**
-```
-Denemeatır
-İkinci Satır
-Üçüncü Satır.
-```
+Bu örneklerden şu sonucu çıkarmanız gerekiyor: İmleç, ilgili byte'dan hemen önceki konumdan (yukarıda örnekleri var) itibaren write (yazma) veya read (okuma) işlemlerini yapar. Örneğin imleç, 2. byte'dan hemen önceki konumda (`seek(1)`) bulunuyorsa, write (yazma) veya read (okuma) işlemleri, 2. byte'da bulunan `"2"` string'ini de kapsar/etkiler. Kısaca "sıfırıncı byte" dediğimde siz "birinci byte'dan hemen önceki konumda bulunan imleci" kasttettiğimi anlayın çünkü bundan sonraki kısımlarda böyle anlatacağım.
 
-### `writelines([list])` Methodu
-Dosyaya birden fazla string girebilmenizi sağlar. Girmek istenilen stringler, bir liste içinde gösterilir. O anda imleç, yazılacak dosyanın neresindeyse, oradan yazmaya başlar. İmlecin bulunduğu yerde yazı varsa, `writelines()` methoduna girilen değer, bu yazının üzerine yazılır. Yani:
+Write (yazma) ve read (okuma) işlemlerinde kullanılan methodların hepsi tek bir imleci dikkate alır. Örnek:
+
+**Dosya:**
+```
+123456789
+```
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), "r+")
+dosya.write("abc")
+print(dosya.read()) # Output: 456789
+dosya.close()
+```
+**Dosya:**
+```
+abc456789
+```
+Gördüğünüz gibi `write` methodu sıfırıncı, birinci ve ikinci byte'larında işlem yaptıktan sonra imleç üçüncü byte'a (yani dördüncü byte'dan hemen önceki konuma) konumlandı ve `read` işlemi de üçüncü byte'dan itibaren (üçüncü byte dahil) işlem yaptı (üçüncü byte'da `"4"` string'i var). Write işleminden sonra imlecin konumu:
 
-dosya.writelines(["deneme1", "\ndeneme2"])
+![](https://i.ibb.co/cwfVs7k/image.png)
+
+Bu basit örnekle write (yazma) ve read (okuma) işlemlerinde kullanılan methodların hepsinin tek bir imleci dikkate aldığını kanıtlamış oluyoruz. İmlecin konumunu öğrenebilir ve değiştirebiliriz.
+
+**Not:** İmleç sıfırıncı byte'da değil de dosyanın sonunda olsaydı Write işleminde sonucunda elde edeceğimiz output `abc456789` şeklinde değil `123456789abc` şeklinde olurdu. Nedenini daha sonra daha iyi anlayacaksınız.
+
+<h3 id="1.3.1"><code>tell()</code> Methodu</h3>
+
+`tell` methodu, imlecin o anda hangi konumda olduğunu gösterir. Örnek:
+
+**Dosya:**
+```
+abcdefgh
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(dosya.read(2)) # Output: ab
+print(dosya.tell()) # Output: 2
+print(dosya.read(1)) # Output: c
+print(dosya.tell()) # Output: 3
 
 dosya.close()
 ```
-**Eski Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Yeni Dosya:**
-```
-deneme1
-deneme2inci Satır
-Üçüncü Satır.
-```
-**Dikkat:** Bu üzerine yazma olayında, üzerine yazılan satırın uzunluğu, üzerine yazdığının uzunluğundan küçükse (`İlk Satır`'ın `deneme1deneme2`'den küçük olması gibi) aşağıdaki gibi absürt durumlar oluşabilir.
-```
-deneme1deneme2�kinci Satır
-Üçüncü Satır.
-```
+`tell` methodunun `2` output'unu vermesi, imlecin o an 2. byte'da (3. byte'dan hemen önceki konumda) olduğu anlamına gelmektedir (2. byte'da (yani 3. byte'da) `c` karakteri var).
 
-### `writable()` Methodu
-Dosyanın yazılabilir olup olmamasını sorgulayabilmemizi sağlar. Yazılabilir bir doyaysa `True`, değilse `False` döndürür.
+`UTF-8` kod çözücüde bazı karakterler bir, bazı karakterler iki byte ile ifade edilmektedir. Python'da imlecin konumunu byte'lara göre belirlediği için 2 byte ile ifade edilen karakterlerde imlecin konumu, tek byte ile ifade edilen karakterlere göre farklılık göstermektedir. Örnek:
+
+**Dosya:**
+```
+abcçdefg
+```
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="w", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
 
+print("ç".encode("utf-8")) # Output: b'\xc3\xa7'
+
+print(dosya.read(3)) # Output: abc
+print(dosya.tell()) # Output: 3
+print(dosya.read(1)) # Output: ç
+print(dosya.tell()) # Output: 5
+
+dosya.close()
+```
+`"ç"` karakteri `UTF-8` kod çözücüde 2 byte (`b'\xc3\xa7'`) ile ifade edildiği için Python bu karakteri okuduktan sonra imleç 5. byte'a (5. byte'da (yani 6. byte'da) `"d"` string'i var) geçiyor çünkü 3. ve 4. byte'lar (yani 4. ve 5. byte'lar) `ç` karakterini ifade etmek için kullanılıyor. Bu yüzden `read` methodu ile ister üçüncü byte'dan itibaren okumaya başlarsanız `"ç"` karakteri döndürülür ve imleç 5. byte konumuna geçer.
+
+Her satırın sonunda kaçış dizileri (escape character) vardır ve bu escape character'ler de byte'larla ifade edilir. Örnek:
+
+**Dosya:**
+```
+abc
+def
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(dosya.read(3)) # Output: abc
+print(dosya.tell()) # Output: 3
+print(repr(dosya.read(1))) # Output: '\n'
+print(dosya.tell()) # Output: 5
+print(dosya.read(3)) # Output: def
+
+dosya.close()
+```
+gördüğünüz gibi sıfırıncı, birinci ve ikinci byte'lar `"a"`, `"b"` ve `"c"` karakterlerini ifade etmek için kullanılırken, üçüncü ve dördüncü byte'lar `"\n"` escape character'ini ifade etmek için kullanılır.
+
+<h3 id="1.3.2"><code>seek(offset, whence = SEEK_SET)</code> Methodu</h3>
+
+`seek` methodu, imlecin istenilen konuma konumlandırmak için kullanılır. `seek` methodu, `offset` parametresine argüman olarak girilen integer'ın ifade ettiği byte'a imleci kunumlandırır. Örnek:
+
+**Dosya:**
+```
+abcdefg
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+dosya.seek(2)
+print(dosya.read()) # Output: cdefg
+
+dosya.close()
+```
+Yukarıdaki kodda sıfırıncı ve birinci byte'lar `"a"`, `"b"` karakterlerini, ikinci byte `"c"` karakterini ifade etmektedir. `seek` methodu imleci ikinci byte'a, yani `"c"` karakterine (`"c"` karakterinden hemen önceki konuma) konumlandırır. Bu yüzden output'da `"c"` karakteri de bulunmaktadır.
+
+İki byte ile ifade edilen karakterleri ilk byte'ından itibaren olumalısınız. İkinci byte'ından itibaren okumaya çalışırsanız `UnicodeDecodeError` hatası ile karşılaşırsınız çünkü o karakter 2 byte ile ifade ediliyor. Birini okuyup birini eksik bırakarak ifade edilemez. Örnek:
+
+**Dosya:**
+```
+abcçdefg
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print("ç".encode("utf-8")) # Output: b'\xc3\xa7'
+
+dosya.seek(4)
+print(dosya.read(1)) # Output: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa7 in position 0: invalid start byte
+
+dosya.close()
+```
+Hata mesajındada dediği gibi "`UTF-8` kod çözücü `0xa7` (Yani `b'\xa7'`) kodunu çözemiyor: geçersiz (invalid) başlangıç byte'ı".
+
+Her satırın sonunda kaçış dizileri (escape character) vardır ve bu escape character'ler de byte'larla ifade edilir. Örnek:
+
+**Dosya:**
+```
+abc
+def
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(dosya.read(3)) # Output: abc
+print(dosya.tell()) # Output: 3
+print(repr(dosya.read(1))) # Output: '\n'
+print(dosya.tell()) # Output: 5
+print(dosya.read(3)) # Output: def
+
+dosya.close()
+```
+gördüğünüz gibi sıfırıncı, birinci ve ikinci byte'lar `"a"`, `"b"` ve `"c"` karakterlerini ifade etmek için kullanılırken, üçüncü ve dördüncü byte'lar `"\n"` escape character'ini ifade etmek için kullanılır. Bu yüzden `read` methodu ile ister üçüncü ister dördüncü byte'dan itibaren okumaya başlayın, ikisinde de `"\n"` escape character'i döndürülür. Kanıt:
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print("\n".encode("utf-8")) # Output: b'\n'
+dosya.seek(3)
+print(repr(dosya.read(1))) # Output: '\n'
+dosya.seek(4)
+print(repr(dosya.read(1))) # Output: '\n'
+
+dosya.close()
+```
+Buradaki `seek` methodu (daha sonra detaylıca anlatılacak), kendisine argüman olarak verdiğiniz integer'ın ifade ettiği byte'a imleci konumlandırmak için kullanılır.
+
+**Not:** Yukarıdaki durum `"ş"`, `"İ"`, `"ç"` gibi Türkçe karakterlerde geçerli değildir çünkü `"\n"` karakteri byte olarak `b'\n'`, `"ç"` karakteri byte olarak `b'\xc5\x9f'` şeklinde ifade ediliyor ve `b'\xa7'` tek başına `"ç"` karakterini ifade edemez.
+
+`whence` parametresine argüman olarak, imleç konumlandırma işlemi yapılırken hangi ölçüte/kurala göre konumlandırma yapılacağını belirleyebilediğimiz özel anlamlara gelen string'ler giriyoruz. Bunlar:
+
+- `whence` parametresine argüman olarak `"SEEK_SET"` ya da `0` girilirse, dosyanın başına atıfta bulunulur (refers to). Bu durumda `offset` parametresine sadece sıfır ya da positif integer'lar argüman olarak girilebilir çünkü sıfırıncı byte'dan öncesi olamayacağı için mantıken negatif yönde ilerlenemez.
+
+- `whence` parametresine argüman olarak `"SEEK_CUR"` ya da `1` girilirse, dosyanın mevcut (current) konumuna atıfta bulunulur (refers to). Bu durumda `offset` parametresine sadece  sıfır ya da negatif ya da pozitif integer'lar argüman olarak girilebilir. Mevcut (current) konum, reading veya writing işlemlerinde değişen veya `seek()` methoduyla değiştirebildiğimiz imlecin o an bulunduğu konumdur.
+
+- `whence` parametresine argüman olarak `"SEEK_END"` ya da `2` girilirse, dosyanın sonuna atıfta bulunulur (refers to). Bu durumda `offset` parametresine sadece sıfır ya da negatif integer'lar argüman olarak girilebilir çünkü en sonuncu byte'dan sonrası olamayacağı için mantıken pozitif yönde ilerlenemez.
+
+**Not:** `whence` parametresine argüman olarak `"SEEK_CUR"` (`1`) veya `"SEEK_END"` (`2`) girecekseniz, ilgili dosya binary (`"rb"`, `"wb"`, `"ab"`, `"xb"`, `"rb+"`, `"wb+"`, `"ab+"`, `"xb+"`) modda açılmalıdır. Aksi halde `io.UnsupportedOperation: can't do nonzero end-relative seeks` hatası yükseltilir.
+
+<h3 id="1.3.3"><code>seekable()</code> Methodu</h3>
+
+`seekable()` methodu, bir dosya seekable (aranabilir) ise `True`; değilse (aranamaz), (yani `seek()`, `tell()` ve `truncate()` methodları `OSError` yükseltiyorsa), `False` döndürür.
+
+<h2 id="1.4">Dosyaya Yazmak</h2>
+
+Bir dosyaya yazabilmek için o dosyayı **write** (yazma) yetkisi ile açmanız gerekmektedir. Bir dosyaya bir şeyler yazarken dikkat edilmesi gereken en öncemli şeylerden birisi de `encoding` parametresine argüman olarak girdiğiniz kod çüzücüdür. Örneğin `UTF-8` ile encoding yapılmış (kodlanmış) bir dosyayı `ASCII` ile decoding yapamazsınız (kodunu çözemezsiniz). Bir dosyaya yazabilmek için belli methodlar vardır.
+
+<h3 id="1.4.1"><code>write(s)</code> Methodu</h3>
+
+`s` parametresine girdiğiniz string'i uygulandığı dosyaya yazdırır. Örnek:
+**Dosya:**
+```
+abcdefg
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+dosya.write("123")
+
+dosya.close()
+```
+**Dosya:**
+```
+123defg
+```
+Gördüğünüz gibi `write` methodu, imlecin bulunduğu byte'dan başlayarak `s` parametresine argüman olarak girilen string'i dosyaya yazdı. Eğer imlecin bulunduğu byte'da halihazırda bir yazı varsa, `write` methodu ile o dosyaya yazılanlar yukarıdaki örnekteki gibi halihazırda bulunan yazının üzerine yazılır (overwrite). İmleç dosyanın sonundaysa, o dosyaya yazılanlar dosyanın sonundan itibaren yazılır. Örnek:
+
+**Dosya:**
+```
+abcdefg
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+dosya.read()
+dosya.write("123")
+
+dosya.close()
+```
+**Dosya:**
+```
+abcdefg123
+```
+`read` methodu çalışınca imleç dosyanın en sonuna gitti. Bu sayede `write` methodu dosyanın en sonundan itibaren yazmaya başladı.
+
+<h3 id="1.4.2"><code>writelines(lines)</code> Methodu</h3>
+
+`lines` parametresine argüman olarak girilen, öğeleri string type olan iterable objenin öğelerini uygulandığı dosyaya yazdırır. `writelines` methodu da yazdırma işlemini imlecin konumuna göre yapar. `write` methodunda bahsedilen overwrite durumu bunda da geçerlidir. Örnek:
+
+**Dosya:**
+```
+abcdefg
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+dosya.writelines(["12", "34"])
+
+dosya.close()
+```
+**Dosya:**
+```
+1234efg
+```
+
+**Not:** `write` ve `writelines` methodlarının `s` ve `lines` parametrelerine girilen string'lerin uzunluğu en fazla overwrite edilecek satırın uzunluğu kadar olabilir. Aksi halde istenmeyen durumlar oluşur. Örnek:
+
+**Dosya:**
+```
+ab
+cd
+ef
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+1234cd
+ef
+
+dosya.close()
+```
+**Dosya:**
+```
+1234cd
+ef
+```
+Gördüğünüz gibi escape karakterler de overwrite edildi ve dosyanın düzeni satır düzeni bozuldu.
+
+<hr>
+
+Başka bir örnek:
+
+**Dosya:**
+```
+ab
+cd
+ef
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+dosya.writelines(["12", "34"])
+
+dosya.close()
+```
+**Dosya:**
+```
+1234cd
+ef
+```
+
+<h3 id="1.4.3"><code>writable()</code> Methodu</h3>
+
+Uygulandığı dosyanın write (yazma) yetkisi ile açılıp açılmadığını (bu yetkiye sahip olup olmadığını) sorgular. Sahipse (yazdırılabilirse) `True`, aksi durumda `False` döndürür. Örnek:
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="w", encoding="utf-8")
 print(dosya.writable()) # Output: True
+dosya.close()
 
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="w+", encoding="utf-8")
+print(dosya.writable()) # Output: True
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+print(dosya.writable()) # Output: False
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+print(dosya.writable()) # Output: True
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="a", encoding="utf-8")
+print(dosya.writable()) # Output: True
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="a+", encoding="utf-8")
+print(dosya.writable()) # Output: True
 dosya.close()
 ```
 
-## Dosyayı Okumak
-Okunulabilir dosyaları okuyabilmek için kullanılan bazı fonksiyonlar vardır. Burada dikkat edilmesi gereken en önemli şeylerden birisi, `encoding` parametresidir. Bir dosyaya Türkçe karakterler içeren bir şeyler yazmak veya Türkçe karakterler içeren bir dosyayı okumak istiyorsanız, doğru sonuçlar elde etmek için `encoding` parametresini doğru kullanmalısınız.
+<h2 id="1.5">Dosyayı Okumak</h2>
 
-### `read(sayı)` Methodu
-Bir dosyanın içeriğini okuyup döndürür. Bu output, string data type'ındadır. Bu output'da kaçış dizileri gibi Python'un gördüğü ama kullanıcının göremediği şeyler görünmez. Yani output, **kullanıcının gözünden** verilir. Eğer `sayı` parametresi belirtilirse, imlecin güncel konumundan, bu parametreye girilen integer'ın belirttiği uzunluk kadar karakteri okur ve döndürür. `sayı` parametresine `None` ya da negatif bir integer değer girilirse, boş parametre girildiği zamanki davranışın aynısını sergiler.
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+Bir dosyayı okuyabilmek için o dosyayı **read** (okuma) yetkisi ile açmanız gerekmektedir. Bir dosyayı okurken dikkat edilmesi gereken en öncemli şeylerden birisi de `encoding` parametresine argüman olarak girdiğiniz kod çüzücüdür. Örneğin `UTF-8` ile encoding işlemi yapılmış (kodlanmış) bir dosyayı `ASCII` ile decoding işlemi yapamazsınız (kodunu çözemezsiniz). Bir dosyayı okuyabilmek için belli methodlar vardır.
 
-print(dosya.read())
-print(dosya.read(11))
+<h3 id="1.5.1"><code>read(size = -1)</code> Methodu</h3>
 
-dosya.close()
-```
+Uygulandığı dosya objesini, `size` parametresine argüman olarak girilen integer'ın belirttiği byte kadar okur ve string type bir output döndürür. `read` methodunun `size` parametresine argüman olarak girilen integer'ın belirttiği byte'a kadar değil, byte kadar okuduğuna dikkat edilmesi gerekiyor. Örneğin `size` parametresine argüman olarak `5` girilirse, `read` methodu imlecin bulunduğu konumdan 5 byte kadar okur. `size` parametresine argüman girilmezse, imlecin bulunduğu konumdan (byte'dan) dosyanın sonuna kadar okur ve okuduğu kısımları döndürür. Bu output'lar **kullanıcı gözünden**'dir. Örnek:
+
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+abcdefg
 ```
-**`print(dosya.read())` Output:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.read(11))` Output:**
-```
-İlk Satır
-İ
-```
-
-### `readline(sayı = -1)` Methodu
-Bir dosyanın bir satırını okuyup döndürür. Bu output, string data type'ındadır. Bu output'da kaçış dizileri gibi Python'un gördüğü ama kullanıcının göremediği şeyler görünmez. Yani output, **kullanıcının gözünden** verilir. Aynı progress içerisinde her çağırıldığında bir sonraki satırı döndürür. Eğer dosya sonuna ulaşılmışsa, sonraki çağırılışlarında boş string `""` döndürür. Eğer `sayı` parametresi belirtilirse, imlecin bulunduğu satırdaki güncel konumundan, bu parametreye girilen integer'ın belirttiği uzunluk kadar karakteri okur ve döndürür. `sayı` parametresine negatif bir integer değer girilirse, boş parametre girildiği zamanki davranışın aynısını sergiler. `readline()` methoduna, `read()` methodundaki gibi `None` parametresi gürülemez. Girilirse `TypeError` hatası verir.
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
 
-print(dosya.readline())
-print(dosya.readline(3))
-print(dosya.readline(100))
+print(dosya.read(), end="\n\n") # Output: abcdefg
+
+dosya.seek(0)
+print(dosya.read(3), end="\n\n") # Output: abc
+
+dosya.seek(4)
+print(dosya.read(3), end="\n\n") # Output: efg
 
 dosya.close()
 ```
+
+`read` methodunun `size` parametresine argüman olarak negatif integer ya da `None` girmek ile argümansız kullanmak arasında bir fark yoktur. Kanıtı:
+
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+abcdefg
 ```
-**`print(dosya.readline())` Output:**
-```
-İlk Satır
-```
-**`print(dosya.readline(3))` Output:**
-```
-İlk
-```
-**`print(dosya.readline(100))` Output:**
-```
-'İlk Satır
-'
-```
-**Not:** En son output'da da gördüğünüz gibi, `readline()` methodu, sadece bir satırı okuduğu için `sayı` parametresine o satırdan daha uzun bir değer girilirse, satırın en sonuna kadar alır ve döndürür.
-
-### `readlines(sayı = -1)` Methodu
-Bir dosyanın bütün satırını okuyup döndürür. Bu output, list data type'ındadır. Bu output'da kaçış dizileri gibi Python'un gördüğü ama kullanıcının göremediği şeyler görünür. Yani output, **Python'un gözünden** verilir. Eğer `sayı` parametresi belirtilirse, imlecin güncel konumundan, bu parametreye girilen integer'ın belirttiği uzunluktaki karakterleri içeren bütün satırları döndürür. `sayı` parametresine `None` ya da negatif bir integer değer girilirse, boş parametre girildiği zamanki davranışın aynısını sergiler. Bu durumu örnekleyelim:
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
 
-print(dosya.readlines())
-print(dosya.readlines(9))
-print(dosya.readlines(10))
+dosya.seek(0)
+print(dosya.read(None), end="\n\n") # Output: abcdefg
+
+dosya.seek(0)
+print(dosya.read(-1), end="\n\n") # Output: abcdefg
+
+dosya.seek(0)
+print(dosya.read(-565214), end="\n\n") # Output: abcdefg
+
+dosya.seek(0)
+print(dosya.read(), end="\n\n") # Output: abcdefg
 
 dosya.close()
 ```
+
+**Not:** Okuyacak satır kalmamışsa (yani dosyanın sonuna ulaşılmışsa) `read` methodu boş string `""` döndürür.
+
+<h3 id="1.5.2"><code>readline(size = -1)</code> Methodu</h3>
+
+Uygulandığı dosya objesini, `size` parametresine argüman olarak girilen integer'ın belirttiği byte kadar satır satır (line) okur ve string type bir output döndürür.  `readline` methodunun `size` parametresine argüman olarak girilen integer'ın belirttiği byte'a kadar değil, byte kadar okuduğuna dikkat edilmesi gerekiyor. Örneğin `size` parametresine argüman olarak `5` girilirse, `readline` methodu imlecin bulunduğu konumdan 5 byte kadar okur. `size` parametresine argüman girilmezse, imlecin bulunduğu konumdan (byte'dan) satırın (line) sonuna kadar okur ve okuduğu kısımları döndürür. Bu output'lar **kullanıcı gözünden**'dir. Örnek:
+
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+abc
+def
+ghi
 ```
-**`print(dosya.readlines())` Output:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.readlines(9))` Output:**
-```
-['İlk Satır\n']
-```
-**`print(dosya.readlines(10))` Output:**
-```
-['İlk Satır\n', 'İkinci Satır\n']
-```
-Gördüğünüz gibi, dosya içindeki ilk index'e 1 numaralı karakter dersek, 9 numaralı karaktere kadarki alan birinci satır olarak kabul ediliyor. Bu yüzden `sayı` parametresine `10` sayısını girdiğimizde, 2. satıra geçtiğimiz için 2. satırın tamamını alıyor. Yani bir satırı alması için o satıra geçmiş olmamız yetiyor.
-
-
-### `readable()` Methodu
-Dosyanın okunabilir olup olmamasını sorgulayabilmemizi sağlar. Okunabilir bir doyaysa `True`, değilse `False` döndürür.
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
 
+print(repr(dosya.readline())) # Output: 'abc\n'
+
+print(repr(dosya.readline())) # Output: 'def\n'
+
+print(repr(dosya.readline())) # Output: 'ghi'
+
+dosya.close()
+```
+
+`readline` methodu, bir satırı okumayı bitirmeden diğer satırı okumaya geçmez. Yani `readline` methodu bir line'ı okumayı bitirmezse, kendisinden sonra gelen `readline` methodu o line'dan okumaya devame eder. Örnek:
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(repr(dosya.readline(2))) # Output: 'ab'
+
+print(repr(dosya.readline(3))) # Output: 'c\n'
+
+print(repr(dosya.readline(4))) # Output: 'def\n'
+
+dosya.close()
+```
+
+`readline` methodunun `size` parametresine ne kadar büyük bir integer verirseniz verin, imlecin bulunduğu line'ın sonuna kadar okur, daha fazlasını okumaz.
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(repr(dosya.readline(99999))) # Output: 'abc\n'
+
+dosya.close()
+```
+
+`read` methodunun `size` parametresine argüman olarak negatif integer girmek ile argümansız kullanmak arasında bir fark yoktur. Kanıtı:
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(repr(dosya.readline(-1))) # Output: 'abc\n'
+
+print(repr(dosya.readline(-1354146))) # Output: 'def\n'
+
+print(repr(dosya.readline())) # Output: 'ghi'
+
+dosya.close()
+```
+
+**Not:** Okuyacak satır kalmamışsa (yani dosyanın sonuna ulaşılmışsa) `readline` methodu boş string `""` döndürür.
+
+**Not:** `readline` methoduna `read` methodundaki gibi `None` argümanını veremezsiniz. Aksi halde `TypeError` hatası yükseltir.
+
+<h3 id="1.5.3"><code>readlines(hint = -1)</code> Methodu</h3>
+
+Uygulandığı dosya objesini, `hint` parametresine argüman olarak girilen integer'ın belirttiği byte'ları içeren satırları (line) okur ve her satırın bir string type obje olarak saklandığı bir liste objesi döndürür. `readlines` methodunun `hint` parametresine argüman olarak girilen integer'ın belirttiği byte'a kadar değil, byte kadar okuduğuna dikkat edilmesi gerekiyor. Örneğin `hint` parametresine argüman olarak `5` girilirse, `readlines` methodu imlecin bulunduğu konumdan 5 byte kadar okur. `size` parametresine argüman girilmezse, imlecin bulunduğu konumdan (byte'dan) başlayarak bütün satırların her birinin bir string type obje olarak saklandığı bir liste objesi döndürür. Bu liste objesinin her bir öğesi **Python'ın gözünden**'dir (`repr` fonksiyonu kullanılmış gibi). Örnek:
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(dosya.readlines()) # Output: ['abc\n', 'def\n', 'ghi']
+
+dosya.close()
+```
+
+`readlines` methodu imlecin bulunduğu konumdan okumaya başlar. Örnek:
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(repr(dosya.read(6))) # Output: 'abc\nde'
+print(dosya.readlines()) # Output: ['f\n', 'ghi']
+
+dosya.close()
+```
+`read(6)` işleminden sonra imleç 7. byte'a konumlanmıştır (7. byte'da `"6"` string'i var). Bu yüzden `readlines` methodu 7. byte'dan (yani `"6"` string'inden) başlayarak her satırın bir string type obje olarak saklandığı bir liste objesi döndürür.
+
+`readlines` methodu, `hint` parametresine girilen integer değerin belirttiği byte'a kadar olan bütün byte'ların bulunduğu line'ları (`"\n"`'e kadar, `"\n"` dahil) komple alır. Cümleyi anlamadıysanız örneğe bakın. Örnek:
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+dosya.read()
+print(dosya.tell()) # Output: 13 (dosyanın bittiği byte)
+dosya.seek(12)
+print(repr(dosya.read())) # Output: 'i'
+dosya.seek(13)
+print(repr(dosya.read())) # Output: ''
+dosya.seek(14)
+print(repr(dosya.read()), end="\n\n") # Output: ''
+
+dosya.seek(0)
+print("0:", dosya.readlines(0))
+dosya.seek(0)
+print("1:", dosya.readlines(1))
+dosya.seek(0)
+print("2:", dosya.readlines(2))
+dosya.seek(0)
+print("3:", dosya.readlines(3))
+dosya.seek(0)
+print("4:", dosya.readlines(4))
+dosya.seek(0)
+print("5:", dosya.readlines(5))
+dosya.seek(0)
+print("6:", dosya.readlines(6))
+dosya.seek(0)
+print("7:", dosya.readlines(7))
+dosya.seek(0)
+print("8:", dosya.readlines(8))
+dosya.seek(0)
+print("9:", dosya.readlines(9))
+dosya.seek(0)
+print("10:", dosya.readlines(10))
+dosya.seek(0)
+print("11:", dosya.readlines(11))
+dosya.seek(0)
+print("12:", dosya.readlines(12))
+dosya.seek(0)
+print("13:", dosya.readlines(13))
+dosya.seek(0)
+print("14:", dosya.readlines(14))
+
+dosya.close()
+```
+**Output:**
+```
+13
+'i'
+''
+''
+
+0: ['abc\n', 'def\n', 'ghi']
+1: ['abc\n']
+2: ['abc\n']
+3: ['abc\n']
+4: ['abc\n', 'def\n']
+5: ['abc\n', 'def\n']
+6: ['abc\n', 'def\n']
+7: ['abc\n', 'def\n']
+8: ['abc\n', 'def\n', 'ghi']
+9: ['abc\n', 'def\n', 'ghi']
+10: ['abc\n', 'def\n', 'ghi']
+11: ['abc\n', 'def\n', 'ghi']
+12: ['abc\n', 'def\n', 'ghi']
+13: ['abc\n', 'def\n', 'ghi']
+14: ['abc\n', 'def\n', 'ghi']
+```
+`readlines` methodunun `hint` parametresine argüman olarak girilen integer değer, yukarıda gösterilen örnekteki mantığa dayanan bir sonuca neden olur.
+
+`readlines` methodunun `hint` parametresine argüman olarak negatif integer ya da `None` girmek ile argümansız kullanmak arasında bir fark yoktur. Kanıtı:
+
+**Dosya:**
+```
+abc
+def
+ghi
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+
+print(repr(dosya.readlines(None))) # Output: ['abc\n', 'def\n', 'ghi']
+dosya.seek(0)
+print(repr(dosya.readlines(-1))) # Output: ['abc\n', 'def\n', 'ghi']
+dosya.seek(0)
+print(repr(dosya.readlines(-1354146))) # Output: ['abc\n', 'def\n', 'ghi']
+dosya.seek(0)
+print(repr(dosya.readlines())) # Output: ['abc\n', 'def\n', 'ghi']
+
+dosya.close()
+```
+
+<h3 id="1.5.4"><code>readable()</code> Methodu</h3>
+
+Uygulandığı dosyanın read (okuma) yetkisi ile açılıp açılmadığını (bu yetkiye sahip olup olmadığını) sorgular. Sahipse (okunabilirse) `True`, aksi durumda `False` döndürür. Örnek:
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="w", encoding="utf-8")
+print(dosya.readable()) # Output: False
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="w+", encoding="utf-8")
 print(dosya.readable()) # Output: True
+dosya.close()
 
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r", encoding="utf-8")
+print(dosya.readable()) # Output: True
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+print(dosya.readable()) # Output: True
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="a", encoding="utf-8")
+print(dosya.readable()) # Output: False
+dosya.close()
+
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="a+", encoding="utf-8")
+print(dosya.readable()) # Output: True
 dosya.close()
 ```
 
-## Dosyaları Otomatik Kapatmak
-Dosyaları kapatmazsanız fata error gibi ciddi sorunlarla uğraşmak zorunda kalırsınız. Bu yüzden bir dosya açtığınızda o dosyayı kapatmayı unutmayıp, bu alışkanlığı kazanmanız için bazı pratik yöntemler vardır.
+<h2 id="1.6">Dosyaları Otomatik Kapatmak</h2>
 
-### `try` - `except <ErrorCode>` - `finally` Yapısı
-`finally` statement'inde dosya kapama işlemi yapabilirsiniz. Bu sayede hem hata ayıklama sisteminin nimetlerinden faydalanırken, hem dosyanızı her durumda kapatan bir kod elde etmiş olacaksınız. Örnek:
+Dosyaları kapatmayı unutursanız, fatal error (ölümcül hata) sorunları ile uğraşmak zorunda kalırsınız. Bu sorunlardan birisi de memory overflow error'dür. Örneğin sürekli `open` fonksiyonu ile dosya açarsanız ve açtığınız dosyaları kapatmazsanız, bir süre sonra makinenizin belleği dolacak ve daha fazla dosya açmak istediğinizde memory overflow error ile karşılaşacaksınız. Bu ve bunun gibi çeşitli sorunlara karşı önlem almak için çeşitli yöntemler mevcuttur.
+
+<h3 id="1.6.1"><code>try</code> - <code>except (ErrorCode)</code> - <code>finally</code> Yapısı</h3>
+
+`try` - `except (ErrorCode)` - `finally` yapısının `finally` kısmında dosya kapatma işlemini yaparsanız, dosya işlemleri sırasında oluşabilecek herhangi bir hatadan sonra dosya anında kapatılacağı için dosyanızın bozulma olasılığı azalır. Örnek:
 ```py
 try:
-	dosya = open(r"deneme.txt", "r")
+	dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="w", encoding="utf-8")
 	# Burada dosyayla bazı işlemler yapıyoruz ve ansızın bir hata oluşuyor.
-except IOError:
-	print("bir hata oluştu!")
+except:
+	print("Bir hata oluştu!")
 finally:
 	dosya.close()
 ```
-Buradaki dosya işlemlerinde oluşabilecek hatalara karşı bir savunma mekanizması ayarlamakla kalmayıp, `finally` statement sayesinde, hata çıksa da çıkmasa da dosyayı kapatmış oluyorsunuz.
 
-### `with` Statement
-`with` statement sayesinde, açtığınız dosyada hata oluşsa bile Python dosyayı güvenli bir şekilde kapatacaktır. Syntax:
+<h3 id="1.6.2"><code>with</code> Statement</h3>
+
+`with` statement sayesinde, açtığınız dosyada hata oluşsa bile Python dosyayı güvenli bir şekilde kapatacaktır. Örnek:
 ```py
-with open("deneme.txt", "r") as dosya:
+with open(r"{}deneme.txt".format(__file__[:-6]), mode="w", encoding="utf-8") as dosya:
 	# Dosya işlemleri
 ```
-`as` keyword'ü, `with` bloğunda açtığın dosyayı kullanabilmen için `dosya` adında bir variable'a atıyor. Bu sayede dosya üzerinde `vrb = dosya.read()` gibi işlemler yapabilirsin. Burada dikkat edilmesi gereken yer, bu `dosya` adındaki variable'ı sadece `with` bloğunda kullanabilirsin. Çünkü `with` bloğu sonlandığında dosya otomatik olarak kapanacaktır. Bu yüzden mantıken `with` dışında kullanamıyorsun. Ama `with` bloğunda tanımladığın variable'ları, programın başka yerlerinde kullanabilirsin. Sadece `dosya` variable'sini, dosya kapandığı için kullanamıyorsun.
+`with` statement'ı daha sonra detaylıca anlatacağım. Şimdilik `with` statement'in, kod bloğundaki işlemler yapıldıktan (kod bloğunda çalıştırılacak bir kod kalmadığı için kod bloğundan çıkıldıktan) sonra dosyayı otomatik kapattığını ve `as` keyword'ünden sonra yazılan şeyin, açılan dosyanın objesinin atandığı bir variable olarak düşünebilirsiniz.
 
-## Dosyadaki İmleç Konumu
-Dosya işlemlerinde **imleç** dediğimiz bir kavram var. Bir dosyayı okurken veya yazarken imlecin yeri sürekli değişir. Örneğin:
+<h2 id="1.7">Dosyaya Ekleme Yapma</h2>
+
+Zaten halihazırda bulunan bir dosyanın içeriğinin çeşitli yerlerinde (başı, ortası, sonu vb.) değişiklik yapmak için o dosyayı ihtiyacınıza göre bir kip ile açmakla başlayın.
+
+<h3 id="1.7.1">Dosyanın Sonunda ekleme yapmak</h3>
+
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-`readline()` methodu bu dosyada bir kere çalıştığına, dosyanın başlangıcında olan imleç, 2. satırın başına geliyor. Tekrar çalıştığında da 3. satırın başına geliyor. Tekrar çalıştığında da 4. satır olmadığı için 3. satırın sonuna geliyor. Bu imlecin yeriyle oynayabilseydik, örneğin `readline()` gibi methodların sürekli aynı satırı yazdırmasını sağlayabilirdik. Bunu yapabilmemizi sağlayan bazı methodlar var:
-
-### `tell()` Methodu
-İmlecin, o anda bulunduğu byte konumunu söyler. Örnek:
-**Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+First Line
+Second Line
+Third Line
 ```
 **Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-
-dosya.readline(100)
-print(dosya.tell()) # Output: 12
-
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="a+", encoding="utf-8")
+dosya.write("\nFourth Line")
 dosya.close()
 ```
+**Dosya:**
+```
+First Line
+Second Line
+Third Line
+Fourth Line
+```
 
-### `seek(offset, whence = SEEK_SET)` Methodu
-`seek()` methodu, imleci, `offset` parametresinde belirtilen konumdaki byte'a konumlandırmanızı sağlar. Bu konumlandırmayı yaparken kaçış dizilerini de dikkate alır. Örneğin, `offset` parametresine `2` değerini, `whence` parametres
-ne `SEEK_SET` değerini girersek, imleç baştan 2. byte'a konumlandırır ve sonrasında yapılacak **write** (yazma) ve **read** (okuma) işlemlerini, 2. byte'ı dahil ederek yapar. Bu konumlandırmayı, index'lerdeki karakterlere göre değil, byte'lara göre yapar. Örneğin `"i"` karakteri, `utf-8` kod çözücüde 1 byte ile temsil edilirken, `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edilir. Bu yüzden aşağıdaki gibi bir durumla karşılaşılabilir:
+<hr>
 
 **Dosya:**
 ```
-ilk Satır
-İkinci Satır
-Üçüncü Satır.
+First Line
+Second Line
+Third Line
 ```
 **Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
-dosya.seek(2)
-print(dosya.read())
+dosya.read()
+dosya.write("\nFourth Line")
 
 dosya.close()
 ```
-**Output:**
-```
-k Satır
-İkinci Satır
-Üçüncü Satır.
-```
-Buradaki `"i"` karakteri, `utf-8` kod çözücüde 1 byte ile temsil edildiği için sıfırıncı ve birinci index'lerdeki byte'ları (`"il"`) atlayıp, 2. index'deki byte'dan itibaren (2. index'deki byte dahil) `read()` methodunu çalıştırdı.
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Kod:**
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-
-dosya.seek(2)
-print(dosya.read())
-
-dosya.close()
-```
-**Output:**
-```
-lk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-Buradaki `"İ"` karakteri, `utf-8` kod çözücüde 2 byte ile temsil edildiği için sıfırıncı ve birinci index'lerdeki byte'ları (`"İ"`) atlayıp, 2. index'deki byte'dan itibaren (2. index'deki byte dahil) `read()` methodunu çalıştırdı.
-
-`seek()` methodu ile konumlandırma işleminde kaçış dizileri de dikkate alınır. Örnek:
-
-**Dosya**
-```
-ilk Satır
-İkinci Satır
-Üçüncü Satır
-```
-**Kod:**
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-dosya.seek(10)
-print(dosya.read())
-print("\n")
-
-dosya.seek(11)
-print(dosya.read())
-print("\n")
-
-dosya.seek(12)
-print(dosya.read())
-
-dosya.close()
-```
-**Output:**
-```
-İkinci Satır
-Üçüncü Satır
-
-İkinci Satır
-Üçüncü Satır
-
-İkinci Satır
-Üçüncü Satır
-```
-`deneme.txt` dosyasının 10. ve 11. byte'larında `\n` kaçış dizisi vardır. kullanıcının gözünden bakıldığında kaçış dizileri görünmez. Bu yüzden Python 2. satırın başından itibaten yazdırır. 12. byte'da da aynı output'u almamızın sebebi, 12. byte'ın 2. satırın en başına denk gelmesinden kaynaklanmaktadır. 9. byte'dan itibaren yazdırmak isteseydik şöyle bir çıktı alırdık:
-```
-r
-İkinci Satır
-Üçüncü Satır
+First Line
+Second Line
+Third Line
+Fourth Line
 ```
 
-**Not:** `seek(0)` dosyanın en başına gider.
+<h3 id="1.7.2">Dosyanın Başında Değişiklik yapmak</h3>
 
-`whence` parametresinde ise, imleci konumlandırırken kullanacağı ölçütü belirleyebilirsiniz. `whence` parametresine `SEEK_SET` ya da `0` girilirse, dosyanın başına atıfta bulunur (refers to) ve `offset` sıfır ya da positif integer'lar olmalıdır; `SEEK_CUR` ya da `1` girilirse, mevcut (current) konuma (reading, writing işlemlerinde ya da `seek()` methoduyla değişen konum) atıfta bulunur (refers to) ve `offset` negatif integer'lar olabilir; `SEEK_END` ya da `2` girilirse, dosyanın sonuna atıfta bulunur (refers to) ve `offset` genellikle negatif integer'lardır. `whence` parametresine 1 ya da 2 argümanlar kullanılacaksa, dosya binary (rb, wb, ab, xb, rb+, wb+, ab+, xb+) modda açılmalıdır. Dosya binary modda açılmazsa, bu argümanları kullandığınızda `io.UnsupportedOperation: can't do nonzero end-relative seeks` hatası alırsınız.
-
-## Dosyaya Ekleme yapma
-Python'da, zaten var olan ve boş olmayan bir dosyanın içeriğine ekleme yapmak istediğimizde, o dosyayı `a` kipiyle açarız.
-
-### Dosyanın Sonunda Değişiklik yapmak
-Dosyayı açtığınızda imleç, dosyanın en sonundadır. Bu yüzden `write()` ya da `writelines()` methodlarıyla dosyaya bir şey yazmak isterseniz, bu yazı, dosyanın sonuna eklenir. Burada dikkat edilmesi gereken, dosyanın son satırındaki karakter dizisinde `\n` bulunmadığı için ekleyeceğiniz karakter dizilerinde bu kaçış dizilerine yer vermeyi unutmayın. Örnek:
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+First Line
+Second Line
+Third Line
 ```
-**`\n` kullanmadan:**
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="a", encoding="ascii")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
-dosya.write(r"\n yok")
-
-dosya.close()
-```
-**Output:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.\n yok
-```
-**`\n` kullanarak:**
-```py
-dosya = open(r"deneme.txt", mode="a", encoding="ascii")
-
-dosya.write("\n\\n var")
-
-dosya.close()
-```
-**Output:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-\n var
-```
-
-### Dosyanın Başında Değişiklik yapmak
-Dosya başında değişik yapmanın yöntemi:
-```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
-
-veri = dosya.read()
+temp = dosya.read()
 dosya.seek(0)
-dosya.write("Dosyanın başında değişiklik yapıldı.\n" + veri)
+dosya.write("Start\n" + temp)
 
 dosya.close()
 ```
-**Output:**
+**Dosya:**
 ```
-Dosyanın başında değişiklik yapıldı.
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-Bu kodda `read()` işleminden sonra imleç, dosyanın sonuna gitmiştir. Bu yüzden `seek(0)` işlemi önemlidir. Aksi taktirde istenilen string dosyanın sonundan yazılmaya başlanırdı ve böyle bir görüntü oluşurdu:
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.Dosyanın başında değişiklik yapıldı.
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+Start
+First Line
+Second Line
+Third Line
 ```
 
-### Dosyanın Ortasında Değişiklik yapmak
-Dosyanın başı ve sonu dışındaki herhangi bir yerinde değişiklik yapmak için birkaç yöntem mevcuttur. Örneğin, eğer dosyanın içindeki herhangi iki paragraf arasında yeni bir paragraf eklemek istiyorsanız:
-**Eski Dosya:**
+<h3 id="1.7.3">Dosyanın Ortasında Değişiklik yapmak</h3>
+
+**Dosya:**
 ```
-Bu birinci paragraf.
-Bu ikinci paragraf.
-Bu üçüncü paragraf.
+This is the first paragraph 
+This is the second paragraph 
+This is the third paragraph 
 ```
-**Program:**
+**Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
-veri = (dosya.readlines())
+temp = (dosya.readlines())
 dosya.seek(0)
-veri.insert(1, "Artık bu paragraf ikinci paragraf.\n")
-dosya.writelines(veri)
+temp.insert(1, "Now this is the second paragraph .\n")
+dosya.writelines(temp)
 
 dosya.close()
 ```
-**Yeni Dosya:**
+**Dosya:**
 ```
-Bu birinci paragraf.
-Artık bu paragraf ikinci paragraf.
-Bu ikinci paragraf.
-Bu üçüncü paragraf.
+This is the first paragraph 
+Now this is the second paragraph
+This is the second paragraph 
+This is the third paragraph 
 ```
-Eğer spesifik bir yere, örneğin iki kelime arasına ekleme yapmak istiyorsanız, `string` ve `list` methodlarıyla oluşturacağınız bir programla bunu halledebilirsiniz. Örnek:
-**Eski Dosya:**
-```
-Bu birinci satır.
-Bu ikinci satır.
-Bu üçüncü satır.
-```
-**Program:**
-```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
 
-# 1. Kısım (Aşağıda açıklandı)
-veri1 = (dosya.readlines())
-string_temp = str()
+<hr>
+
+**Dosya:**
+```
+This is the first paragraph 
+This is the second paragraph 
+This is the third paragraph 
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+
+temp1 = dosya.readlines()
 dosya.seek(0)
+temp2 = list(temp1[0].partition("first"))
+temp2.insert(1, "very ")
 
-# 2. Kısım (Aşağıda açıklandı)
-veri2 = list(veri1[0].partition("birinci"))
-veri2.insert(1, "en ")
+result = str()
+for i in temp2:
+    result += i
 
-# 3. Kısım (Aşağıda açıklandı)
-for i in veri2:
-	string_temp += i
+temp1[0] = result
+dosya.writelines(temp1)
 
-# 4. Kısım (Aşağıda açıklandı)
-veri1[0] = string_temp
-dosya.writelines(veri1)
-  
 dosya.close()
 ```
-**Yeni Dosya:**
+**Dosya:**
 ```
-Bu en birinci satır.
-Bu ikinci satır.
-Bu üçüncü satır.
+This is the very first paragraph 
+This is the second paragraph 
+This is the third paragraph 
 ```
-1. `readlines()` methodu ile dosyanın bütün satırlarını okuyup her satırın bir liste elemanı olduğu obje'yi `veri1` variable'ına eşitliyoruz.
 
-2. Stringlerdeki `partition()` methodu, `veri[0]` index'indeki liste elemanının içerdiği string'i `"birinci"` kelimesini referans alarak 3'e bölüyor ve bize, bu öğeleri içeren bir tuple objesi veriyor. Bu obje, `('Bu ', 'birinci', ' paragraf.\n')` içeriğine sahiptir. En son bu objeyi `list()` ile listeye dönüştürüyoruz ki üzerinde değişiklik yapabilelim. Daha sonra bu listenin 1. indexine `veri2.insert(1, "en ")` koduyla `"en"` stringini ekleyip `['Bu ', 'en ', 'birinci', ' paragraf.\n']` listesini elde ediyoruz.
+<h2 id="1.8">Dosya Methodları</h2>
 
-3. `veri2` variable'ının içindeki `['Bu ', 'en ', 'birinci', ' paragraf.\n']` listesinin öğelerini teker teker `for` loop ile alarak `string_temp` variable'sine ekliyoruz ve bu sayede elimizde `"Bu en birinci paragraf.\n"` şeklinde bir string oluyor. Bu stringi `veri1[0]` koduyla, eski index'in yerine atamış oluyoruz ve böylece istediğimiz sonucu elde etmiş oluyoruz.
+<h3 id="1.8.1"><code>closed</code> Methodu</h3>
 
-4. Son olarak `writelines()` methoduyla `veri1`'i dosyaya yazdırıyoruz. Bunu yapmadan önce `seek(0)` ile imleci dosyanın en başına götürmeyi unutmayın. Aksi halde sondan yazmaya başlar ve istediğiniz sonucu alamazsınız. Son olarak dosyayı `close()` methodu ile kapatmayı unutmayın.
-
-## Dosyaya Erişim Kipleri
-
-### `r` kipi
-Default dosya açma kipidir. Bu kip, bir dosyayı **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili dosyanın, bulunduğunuz path'da halihazırda var olması gerekir. Belirttiğiniz dosya, bulunduğunuz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
-
-### `w` kipi
-Bu kip, bir dosyayı **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten varsa, Python hiçbir şey sormadan dosya içeriğini silecektir. Eğer belirttiğiniz adda bir dosya bulunduğunuz path'da yoksa, Python o adda bir dosyayı otomatik olarak oluşturur.  
-
-### `a` kipi
-Bu kip, bir dosyayı **append** (ekleme) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten mevcutsa, dosya içeriğinde herhangi bir değişiklik yapılmaz, yani `w` kipi gibi dosya içeriğini silmez. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da yoksa, Python otomatik olarak o adda bir dosya oluşturacaktır. Bu kipte açtığınız bir dosyaya yazmak istediğiniz veriler, dosyanın sonuna eklenir. Bu yüzden `seek(0)` gibi komutlarla dosya başına gitmek, dosyanın başına **append** (ekleme) işlemi yapmanızı sağlamaz. 
-
-### `x` kipi
-Bu kip, bir dosyayı **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten varsa, Python varolan dosyayı silmek yerine size `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir dosya, bulunduğunuz path'da yoksa, belirttiğiniz isimde bir dosya oluşturur.
-
-### `r+` kipi
-Bu kip, bir dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili dosyanın, bulunduğunuz path'da halihazırda var olması gerekir. Belirttiğiniz dosya, bulunduğunuz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
-
-### `w+` kipi
-Bu kip, bir dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer dosya, bulunduğunuz path'da mevcutsa, dosya içeriğı silinir,. Eğer dosya, bulunduğunuz path'da mevcut değilse, belirtilen adda bir dosya oluşturulur.
-
-### `a+` kipi
-Bu kip, bir dosyayı hem **append** (ekleme) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten mevcutsa, içeriğinde herhangi bir değişiklik yapılmaz, yani `w+` kipi gibi dosya içeriğini silmez. Eğer belirttiğiniz adda bir dosya yoksa, Python otomatik olarak o adda bir dosya oluşturacaktır. Bu kipte açtığınız bir dosyaya yazmak istediğiniz veriler, dosyanın sonuna eklenir. Bu yüzden `seek(0)` gibi komutlarla dosya başına gitmek, dosyanın başına **append** (ekleme) işlemi yapmanızı sağlamaz. 
-
-### `x+` kipi
-Bu kip, bir dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten varsa, Python varolan dosyayı silmek yerine size `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir dosya, bulunduğunuz path'da yoksa, belirttiğiniz isimde bir dosya oluşturur.
-
-### `rb` kipi
-Bu kip, bir binary dosyayı **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili dosyanın, bulunduğunuz path'da halihazırda var olması gerekir. Belirttiğiniz dosya, bulunduğunuz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
-
-### `wb` kipi
-Bu kip, bir binary dosyayı **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten varsa, Python hiçbir şey sormadan dosya içeriğini silecektir. Eğer belirttiğiniz adda bir dosya bulunduğunuz path'da yoksa, Python o adda bir dosyayı otomatik olarak oluşturur.  
-
-### `ab` kipi
-Bu kip, bir binary dosyayı **append** (ekleme) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten mevcutsa, dosya içeriğinde herhangi bir değişiklik yapılmaz, yani `w` kipi gibi dosya içeriğini silmez. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da yoksa, Python otomatik olarak o adda bir dosya oluşturacaktır. Bu kipte açtığınız bir dosyaya yazmak istediğiniz veriler, dosyanın sonuna eklenir. Bu yüzden `seek(0)` gibi komutlarla dosya başına gitmek, dosyanın başına **append** (ekleme) işlemi yapmanızı sağlamaz. 
-
-### `xb` kipi
-Bu kip, bir binary dosyayı **write** (yazma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten varsa, Python varolan dosyayı silmek yerine size `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir dosya, bulunduğunuz path'da yoksa, belirttiğiniz isimde bir dosya oluşturur.
-
-### `rb+` kipi
-Bu kip, bir binary dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Bu kipi kullanabilmeniz için ilgili dosyanın, bulunduğunuz path'da halihazırda var olması gerekir. Belirttiğiniz dosya, bulunduğunuz path'da yoksa, Python `FileNotFoundError` hatası yükseltir.
-
-### `wb+` kipi
-Bu kip, bir binary dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer dosya, bulunduğunuz path'da mevcutsa, dosya içeriğı silinir,. Eğer dosya, bulunduğunuz path'da mevcut değilse, belirtilen adda bir dosya oluşturulur.
-
-### `ab+` kipi
-Bu kip, bir binary dosyayı hem **append** (ekleme) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten mevcutsa, içeriğinde herhangi bir değişiklik yapılmaz, yani `w+` kipi gibi dosya içeriğini silmez. Eğer belirttiğiniz adda bir dosya yoksa, Python otomatik olarak o adda bir dosya oluşturacaktır. Bu kipte açtığınız bir dosyaya yazmak istediğiniz veriler, dosyanın sonuna eklenir. Bu yüzden `seek(0)` gibi komutlarla dosya başına gitmek, dosyanın başına **append** (ekleme) işlemi yapmanızı sağlamaz. 
-
-### `xb+` kipi
-Bu kip, bir binary dosyayı hem **write** (yazma) hem de **read** (okuma) yetkisiyle açar. Eğer belirttiğiniz adda bir dosya, bulunduğunuz path'da zaten varsa, Python varolan dosyayı silmek yerine size `FileExistsError` hatası yükseltir. Belirttiğiniz adda bir dosya, bulunduğunuz path'da yoksa, belirttiğiniz isimde bir dosya oluşturur.
-
-## Dosya Methodları
-Dosyalar da bir data type (`<class '_io.TextIOWrapper'>`) oldukları için methodlara ve attribute'lara (class'lar konusunda bahsedilecek) sahiptir.
-
-### `closed` Attribute
-Dosyanın kapalı olup olmadığını sorgulamanızı sağlar.
+Uygulandığı dosya objesinin kapalı olup olmadığını denetleyen bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı dosya objesi kapalıysa `True`, değilse `False` döndürür. Örnek:
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
 print(dosya.closed) # Output: False
 
 dosya.close()
+
+print(dosya.closed) # Output: True
 ```
 
-### `mode` Attribute
-Dosyanın hangi kipte açılacağına dair bilgi verir.
+<h3 id="1.8.2"><code>mode</code> Methodu</h3>
+
+Uygulandığı dosya objesinin hangi kiple (mode) açıldığını denetleyen bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı dosya objesinin açıldığı kipi (mode) döndürür. Örnek:
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
 print(dosya.mode) # Output: r+
 
 dosya.close()
 ```
 
-### `name` Attribute
-Dosyanın adını verir.
-```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+<h3 id="1.8.3"><code>name</code> Methodu</h3>
 
-print(dosya.name) # Output: deneme.txt
+Uygulandığı dosya objesinin adını (uzantısı ile birlikte) veren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı dosya objesini `open` fonksiyonu ile açarken `file` parametresine girilen string'i döndürür. döndürür. Örnek:
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+print(dosya.mode) # Output: d:\my_folder\education\software\software_lessons\python\python_tutorial\main\.md\deneme.txt
 
 dosya.close()
 ```
 
-### `encoding` Attribute
-Dosyanın hangi kod çözücü ile kodlandığı hakkında bilgi verir.
+<h3 id="1.8.4"><code>encoding</code> Methodu</h3>
+
+Uygulandığı dosya objesinin encoding değerini veren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı dosya objesini `open` fonksiyonu ile açarken `encoding` parametresine girilen string'i döndürür. döndürür. Örnek:
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
 print(dosya.encoding) # Output: utf-8
 
 dosya.close()
 ```
 
-### `close()` Methodu
-`open()` fonksiyonu ile açılmış bir dosyayo kapatmak için kullanılır. Dosya zaten kapatılmış ise, bu methodun bir etkisi olmaz.
+<h3 id="1.8.5"><code>close()</code> Methodu</h3>
+
+Uygulandığı dosya objesini kapatır. Halihazırda zaten kapalı bir dosya objesine uygulanırsa bir şey değişmez (yani hata falan yükseltmez). Örnek:
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+print(dosya.closed) # Output: False
+
+dosya.close()
+
+print(dosya.closed) # Output: True
+```
 
 ### `detach()` Methodu
-**Stream**, Python'da bir dosyayı açtığında sana açma moduna göre verilen I/O objesidir. Aynı zamanda **file object**, **file-like object** de denir.
 
-Bir dosyayı `open()` fonksiyonu ile açtığınızda, `open()` fonksiyonunda belirtilen parametrelere göre özelleştirilmiş bir `<class '_io.TextIOWrapper'>` objesi (stream, file object, file-like object) oluşturuluyor. Bu objenin methodları ve attribute'ları sayesinde, hedef dosya üzerinde **write** (yazma) ve **read** (okuma) işlemleri yapabiliyoruz. `detach()` merhodu kullanıldığında, ilgili dosyanın **raw-stream** objesi döndürülür. Bu obje, ilgili dosya **read** (okuma) yetkisine sahip bir kiple açılmışsa `io.BufferedReader`, **write** (yazma) yetkisine sahip bir kiple açılmışsa `io.BufferedWriter`, hem **write** (yazma) hem **read** (okuma) yetkisine sahip bir kiple açılmışsa `io.BufferedRandom` objesidir. Bu method uygulandığında, sonraki bütün işlemler **raw-stream** üzerinden yapılır. Yani en başta `open()` fonksiyonu ile oluşturulan dosya objesi kullanılamaz. Bu yüzden en başta `open()` fonksiyonu ile oluşturulan dosya objesini kullanarak işlem yapmaya çalışırsanız `ValueError: underlying buffer has been detached` hatası alırsınız. `detach()` methodu ile oluşturulan **raw-stream** objesi, üzerinde daha detaylı dosya işlemleri yapılmasına olanak tanır. Kısaca, zaten en başta `open()` fonksiyonu ile oluşturulan dosya objesinin üzerinde yapılabilen işlemleri, daha çok ayrıntıya girmene izin vererek yapmana izin verir ama daha çok uğraştırır. Bu metod `io.IOBase` class'ından inherit edildiği için high level programming language (örneğin Python) ile uğraşanların bilmesi ya da kullanması gerekmemektedir. `io` modülündeki class'lara aşına olmak isteyenler araştırabilir. Daha ayrıntılı için [**`io` modülüne**](https://docs.python.org/3/library/io.html) bakabilirsiniz.
-
-### `fileno()` Methodu
-**File descriptor** numarası, underlying implementation (temel uygulama) tarafından işletim sisteminden **I/O** işlemlerini talep etmek için kullanılır. Bu, `fcntl` modülü veya `os.read()` veya bunlar gibi file descriptor kullanan diğer daha düşük seviyeli interface'ler için daha kullanışlı olabilir. Bu method, ilgili dosya için **File descriptor** integer değeri döndürür. `open()` ile bir dosyayı açmaya çalıştığında, açma iznin olmadığı için ilgili dosyayı açamadığında, ilgili dosyayı kapatmadan önce (Yani `open()` fonksiyonu ile `close()` methodu arasına) `fileno()` methodu kullanılırsa, `-1` outputunu verir.
-
-### `flush()` Methodu
-`open()` fonksiyonu ile bir dosyayı açtıktan sonra o dosyada yaptığınız değişiklikler, **buffer** (tampon) adı verilen bir bölgede bekletilir ve dosya `close()` methodu ile kapatıldığında, bu değişiklikler dosyaya işlenir. `flush()` methodu, bufferdaki değişikliklerin dosyaya işlenmesini sağlar. Bu sayede, dosyada yapılan değişiklikleri, dosyayı `close()` methodu ile kapatmak zorunda kalmadan dosyaya işleyebilirsiniz.
-
-### `isatty()` Methodu
-File stream'ın, interactive olup olmadığını döndürür. Stream eğer interactive ise (yani bir terminale veya tty cihazına bağlıysa) `True`, değilse `False` döner. Örneğin bu method, consol stream'ında `True` döndürürken, normal bir dosya açıp kullanıldığında `False` döndürür.
-
-**Not:** **consol stream'ı** ve [**terminal stream'ı**](https://docs.python.org/3/library/sys.html#sys.stdin) aynı şeylerdir. Terminale girilen `stdin` ve `stdout` verileri, **consol stream'ı**, diğer bir ismiyle **terminal stream'ı** oluşturuyor. **Terminal stream'a** yazı yazmak için `print()`, **Terminal stream'ı** okumak için `input()` kullanıyoruz gibi düşünebilirsiniz.
-
-### `read(sayı)` Methodu
-Bir dosyanın içeriğini okuyup döndürür. Bu output, string data type'ındadır. Bu output'da kaçış dizileri gibi python'un gördüğü ama kullanıcının göremediği şeyler görünmez. Yani output, **kullanıcının gözünden** verilir. Eğer `sayı` parametresi belirtilirse, imlecin güncel konumundan, bu parametreye girilen integer'ın belirttiği uzunluk kadar karakteri okur ve döndürür. `sayı` parametresine `None` ya da negatif bir integer değer girilirse, boş parametre girildiği zamanki davranışın aynısını sergiler.
+Python'da bir dosyayı açtığında açma moduna göre oluşturulan I/O objesine (yani, `open` fonksiyonu ile bir dosyayı açtığında, `open` fonksiyonunun döndürdüğü objeye (`io.TextIOWrapper`)) **Stream** ya da **file object** ya da **file-like object** denir (ben stream diyeceğim). `detach()` methodu, TextIOBase'i underlying binary buffer'dan ayırır ve döndürür. Yani bir stream'in **raw-stream** objesini dönüştürülür. Bu işlem sonrasındaki bütün işlemler raw-stream objesinde gerçekleşir. Yani stream objesini artık kullanamazsınız, kullanmaya çalışırsanız `ValueError: underlying buffer has been detached` hatası yükseltilir. Örnek:
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
-print(dosya.read())
-print(dosya.read(11))
+dosya.detach()
+
+dosya.close() # ValueError: underlying buffer has been detached
+```
+`detach` methodunun döndürdüğü raw-stream objesini `dosya` variable'ına atamadığımız için `dosya` variable'ında hala stream objesi bulunmaktadır. Bu yüzden `close` methodu stream objesine uygulanır. Raw-stream yerine stream objesi kullanıldığı için `ValueError: underlying buffer has been detached` hatası yükseltildi. Doğrusu:
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+dosya = dosya.detach()
 
 dosya.close()
 ```
-**Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.read())` Output:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.read(11))` Output:**
-```
-İlk Satır
-İ
-```
+`detach` methodunun döndürdüğü raw-stream objesini `dosya` variable'ına atadığımız için `dosya` variable'ında artık raw-stream objesi bulunmaktadır. Bu yüzden `close` methodu raw-stream objesine uygulanır. `close` methodu stream yerine raw-stream objesine uygulandığı için `ValueError: underlying buffer has been detached` hatası yükseltilmez.
 
-### `readline(sayı = -1)` Methodu
-Bir dosyanın bir satırını okuyup döndürür. Bu output, string data type'ındadır. Bu output'da kaçış dizileri gibi Python'un gördüğü ama kullanıcının göremediği şeyler görünmez. Yani output, **kullanıcının gözünden** verilir. Aynı progress içerisinde her çağırıldığında bir sonraki satırı döndürür. Eğer dosya sonuna ulaşılmışsa, sonraki çağırılışlarında boş string `""` döndürür. Eğer `sayı` parametresi belirtilirse, imlecin bulunduğu satırdaki güncel konumundan, bu parametreye girilen integer'ın belirttiği uzunluk kadar karakteri okur ve döndürür. `sayı` parametresine negatif bir integer değer girilirse, boş parametre girildiği zamanki davranışın aynısını sergiler. `readline()` methoduna, `read()` methodundaki gibi `None` parametresi gürülemez. Girilirse `TypeError` hatası verir.
+Stream dosyasını açtığınız mode'lara göre oluşturulan raw-stream objesi değişiklik gösterir:
+- Stream sadece read (okuma) yetkisine sahip bir kip (mode) ile açılmışsa, raw-stream objesi `io.BufferedReader` şeklindedir.
+- Stream sadece write (okuma) yetkisine sahip bir kip (mode) ile açılmışsa, raw-stream objesi `io.BufferedWriter` şeklindedir.
+- Stream hem read (okuma) hem write (yazma) yetkisine sahip bir kip (mode) ile açılmışsa, raw-stream objesi `io.BufferedRandom` şeklindedir.
+
+`detach()` methodu ile oluşturulan **raw-stream** objesi üzerinde daha detaylı dosya işlemleri yapabilirsiniz. Yani bildiğimiz dosya işlemlerini daha çok ayrıntıya girerek yapabiliriz ama daha çok uğraştırır. `detach()` methodu `io.IOBase` class'ından miras alındığı için Python gibi high level programlama dilleri ile uğraşanların bilmesi zorunlu değildir ve çok kullanılmaz (memory ile uğraşmak isteyenler C gibi low level programlama dillerine yönelsinler). İlla bilmek istiyorum diyorsanız [**`io` modülüne**](https://docs.python.org/3/library/io.html "https://docs.python.org/3/library/io.html") bakabilirsiniz.
+
+<h3 id="1.8.6"><code>fileno()</code> Methodu</h3>
+
+`fileno()` methodu, uygulandığı dosya objesinin **file descriptor** numarasını döndürür. Bu output integer type'dır. File descriptor numarası, underlying implementation (temel uygulama) tarafından, işletim sisteminden (OS) I/O işlemlerini talep etmek için kullanılır. Bu, `fcntl` modülü veya `os.read()` veya bunlar gibi file descriptor kullanan diğer daha düşük seviyeli interface'ler için daha kullanışlı olabilir. Her dosya objesi kendi file descriptor numarasına sahiptir. Örnek:
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya1 = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+dosya2 = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+dosya3 = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+dosya4 = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
-print(dosya.readline())
-print(dosya.readline(3))
-print(dosya.readline(100))
+print(dosya1.fileno()) # Output: 3
+print(dosya2.fileno()) # Output: 4
+print(dosya3.fileno()) # Output: 5
+print(dosya4.fileno()) # Output: 6
 
-dosya.close()
+dosya1.close()
+dosya2.close()
+dosya3.close()
+dosya4.close()
 ```
+
+**Not:** Açma izninizin olmadığı bir dosyayı `open` fonksiyonu ile açmaya çalıştıktan sonra ilgili dosya objesine `fileno` methodu uygularsanız (`open` fonksiyonu ile `dosya.close()` kodu arasından bahsediyorum), `fileno` methodu `-1` integer'ını döndürür.
+
+<h3 id="1.8.7"><code>flush()</code> Methodu</h3>
+
+`open()` fonksiyonu ile bir dosyayı açtıktan sonra o dosyada yaptığınız değişiklikler **buffer** (tampon) adı verilen bir bölgede bekletilir ve dosya `close()` methodu ile kapatıldığında, bu değişiklikler dosyaya işlenir. `flush()` methodu, buffer'daki değişikliklerin dosyaya işlenmesini sağlar. Bu sayede, dosyada yapılan değişiklikleri dosyayı `close()` methodu ile kapatmak zorunda kalmadan dosyaya işleyebilirsiniz.
+
+<h3 id="1.8.8"><code>isatty()</code> Methodu</h3>
+
+Stream'in interactive olup olmadığını (yani bir terminale veya tty cihazına bağlı olup olmadığını) sorgular. `isatty()` methodu, stream eğer interactive ise (yani bir terminale veya tty cihazına bağlıysa) `True`, değilse `False` döndürür. `isatty()` methodu örneğin, consol stream'ında `True` döndürürken, normal bir dosya açıp kullanıldığında `False` döndürür.
+
+**Not:** **Consol Stream**'i ve [**Terminal Stream**](https://docs.python.org/3/library/sys.html#sys.stdin "https://docs.python.org/3/library/sys.html#sys.stdin")'i aynı şeylerdir. Terminale girilen `stdin` ve `stdout` verileri, consol stream'i (diğer bir ismiyle terminal stream'i) oluşturuyor. Terminal stream'e yazı yazmak için `print()`, terminal stream'i okumak için `input()` kullanıyoruz gibi düşünebilirsiniz.
+
+<h3 id="1.8.9"><code>truncate(size = None)</code> Methodu</h3>
+
+`truncate` methodu, uygulandığı dosyayı byte cinsinden yeniden boyutlandırmak için kullanılır. `size` parametresine argüman girilmezse veya default değeri olan `None` girilirse, dosyanın başından (`seek(0)`) imlecin bulunduğu byte'a kadar (`tell()`) (imlecin bulunduğu byte'ı dahil etmeden) dosyayı yeniden boyutlandırır. Örnek:
+
 **Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.readline())` Output:**
-```
-İlk Satır
-```
-**`print(dosya.readline(3))` Output:**
-```
-İlk
-```
-**`print(dosya.readline(100))` Output:**
-```
-'İlk Satır
-'
-```
-**Not:** En son output'da da gördüğünüz gibi, `readline()` methodu, sadece bir satırı okuduğu için `sayı` parametresine o satırdan daha uzun bir değer girilirse, satırın en sonuna kadar alır ve döndürür.
-
-### `readlines(sayı = -1)` Methodu
-Bir dosyanın bütün satırını okuyup döndürür. Bu output, list data type'ındadır. Bu output'da kaçış dizileri gibi Python'un gördüğü ama kullanıcının göremediği şeyler görünür. Yani output, **Python'un gözünden** verilir. Eğer `sayı` parametresi belirtilirse, imlecin güncel konumundan, bu parametreye girilen integer'ın belirttiği uzunluktaki karakterleri içeren bütün satırları döndürür. `sayı` parametresine `None` ya da negatif bir integer değer girilirse, boş parametre girildiği zamanki davranışın aynısını sergiler. Bu durumu örnekleyelim:
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-
-print(dosya.readlines())
-print(dosya.readlines(9))
-print(dosya.readlines(10))
-
-dosya.close()
-```
-**Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.readlines())` Output:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**`print(dosya.readlines(9))` Output:**
-```
-['İlk Satır\n']
-```
-**`print(dosya.readlines(10))` Output:**
-```
-['İlk Satır\n', 'İkinci Satır\n']
-```
-Gördüğünüz gibi, dosya içindeki ilk index'e 1 numaralı karakter dersek, 9 numaralı karaktere kadarki alan birinci satır olarak kabul ediliyor. Bu yüzden `sayı` parametresine `10` sayısını girdiğimizde, 2. satıra geçtiğimiz için 2. satırın tamamını alıyor. Yani bir satırı alması için o satıra geçmiş olmamız yetiyor.
-
-
-### `readable()` Methodu
-Dosyanın okunabilir olup olmamasını sorgulayabilmemizi sağlar. Okunabilir bir doyaysa `True`, değilse `False` döndürür.
-```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
-
-print(dosya.readable()) # Output: True
-
-dosya.close()
-```
-
-### `seekable()` Methodu
-`seek()` methodundaki gibi, bir dosya, file stream'a erişime (access) izin veriyorsa, o dosya seekable'dir. `seekable()` methodu, bir dosya seekable ise `True`; seekable değilse, yani `seek()`, `tell()` ve `truncate()` methodları `OSError` yükseltiyorsa, `False` döndürür.
-
-### `tell()` Methodu
-İmlecin, o anda bulunduğu byte konumunu söyler. Örnek:
-**Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+abcdefg
 ```
 **Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
-dosya.readline(100)
-print(dosya.tell()) # Output: 12
-
-dosya.close()
-```
-
-### `truncate(size = None)` Methodu
-Uygulandığı dosyayı byte cinsinden yeniden boyutlandırmak için kullanılır. Size parametresi girilmezse (Yani default değer olan `None` değerine eşitse), current position'un konumunu değiştirmeden, current position'dan (current position'u **dahil etmeden**) itibaren siler. 
-
-**Eski Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Kod:**
-```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
-
-dosya.seek(6)
+dosya.seek(4)
 dosya.truncate()
 
 dosya.close()
 ```
-**Yeni Dosya:**
+**Dosya:**
 ```
-İlk S
+abcd
 ```
-`size` parametresi girilirse, bu parametreye girilen integer değerin belirttiği index'deki byte'dan itibaren (belirtilen index'deki byte'ı **dahil etmeden**) siler.
-**Eski Dosya:**
+Gördüğünüz gibi `seek(4)` methodu ile imleci 4. byte'a (5. byte'dan hemen önceki konum) konumlandırdık ve `truncate` methodu, uygulandığı dosyanın başından (`seek(0)`) imlecin bulunduğu 4. byte'a kadar dosyayı yeniden boyutlandırdı.
+
+`size` parametresine argüman olarak pozitif integer girilirse (negatif integer girilemez), dosyanın başından (`seek(0)`) o integer'ın belirttiği byte kadar dosyayı yeniden boyutlandırır. Örnek:
+
+**Dosya:**
 ```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
+abcdefg
 ```
 **Kod:**
 ```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
+
+dosya.truncate(4)
+
+dosya.close()
+```
+**Dosya:**
+```
+abcd
+```
+Gördüğünüz gibi `truncate` methodu uygulandığı dosyanın başından (`seek(0)`) başlayarak 4 byte boyutunda dosyayı yeniden boyutlandırdı.
+
+`size` parametresine argüman olarak girilen integer'ın belirttiği boyut `truncate` methodunun uygulandığı dosyanın boyutundan büyükse, boşluklar genellikle elmas içindeki soru işareti işareti ile doldurulur. Örnek:
+
+**Dosya:**
+```
+abc
+```
+**Kod:**
+```py
+dosya = open(r"{}deneme.txt".format(__file__[:-6]), mode="r+", encoding="utf-8")
 
 dosya.truncate(6)
 
 dosya.close()
 ```
-**Yeni Dosya:**
-```
-İlk S
-```
+**Dosya:**
 
-### `write("string")` Methodu
-Dosyaya bir adet string girebilmenizi sağlar. O anda imleç, yazılacak dosyanın neresindeyse, oradan yazmaya başlar. İmlecin bulunduğu yerde yazı varsa, `write()` methoduna girilen değer, bu yazının üzerine yazılır. Yani:
-```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+![](https://i.ibb.co/1mVxbCf/image.png)
 
-dosya.write("Deneme")
+<h2 id="1.9">İkili (Binary) Dosyalar</h2>
 
-dosya.close()
-```
-**Eski Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Yeni Dosya:**
-```
-Denemeatır
-İkinci Satır
-Üçüncü Satır.
-```
+Dosyalar, metin ve ikili (binary) dosyalar olarak ikiye ayrılır. Metin dosyalarının satır sonu işlemleri GNU/Linux dağıtımlarında `\n`, Windows işletim sisteminde `\r\n` karakterleriyle gösterir. Python herhangi bir dosyayı açarken eğer o dosya bir metin dosyası ise, satır sonlarını gösteren karakterleri dosyanın açıldığı işletim sistemine göre ayarlar. Yani satır sonlarını standart bir hale getirerek `\n` karakterine dönüştürür. Bir binary dosyayı metin dosyası gibi (`r`, `w`, `a`, `x`, `r+`, `w+`, `a+`, `x+`) açarsanız, metin ve binary dosyalardaki satır sonu işlemleri farklı olduğu için binary dosya bozulabilir. Binary dosyaları binary kipiyle (`rb`, `wb`, `ab`, `xb`, `rb+`, `wb+`, `ab+`, `xb+`) açarsanız Python, satır sonlarına herhangi bir değiştirme-dönüştürme işlemi uygulamaz ve dolayısıyla dosya bozulma riskine girmez.
 
-### `writelines([list])` Methodu
-Dosyaya birden fazla string girebilmenizi sağlar. Girmek istenilen stringler, bir liste içinde gösterilir. O anda imleç, yazılacak dosyanın neresindeyse, oradan yazmaya başlar. İmlecin bulunduğu yerde yazı varsa, `writelines()` methoduna girilen değer, bu yazının üzerine yazılır. Yani:
-```py
-dosya = open(r"deneme.txt", mode="r+", encoding="utf-8")
+<h3 id="1.9.1">PDF Dosyaları</h3>
 
-dosya.writelines(["deneme1", "\ndeneme2"])
-
-dosya.close()
-```
-**Eski Dosya:**
-```
-İlk Satır
-İkinci Satır
-Üçüncü Satır.
-```
-**Yeni Dosya:**
-```
-deneme1
-deneme2inci Satır
-Üçüncü Satır.
-```
-**Dikkat:** Bu üzerine yazma olayında, üzerine yazılan satırın uzunluğu, üzerine yazdığının uzunluğundan küçükse (`İlk Satır`'ın `deneme1deneme2`'den küçük olması gibi) aşağıdaki gibi absürt durumlar oluşabilir.
-```
-deneme1deneme2�kinci Satır
-Üçüncü Satır.
-```
-
-### `writable()` Methodu
-Dosyanın yazılabilir olup olmamasını sorgulayabilmemizi sağlar. Yazılabilir bir doyaysa `True`, değilse `False` döndürür.
-```py
-dosya = open(r"deneme.txt", mode="w", encoding="utf-8")
-
-print(dosya.writable()) # Output: True
-
-dosya.close()
-```
-
-## İkili (Binary) Dosyalar
-Dosyalar, metin ve ikili (binary) dosyalar olarak ikiye ayrılır. Metin dosyalarının satır sonu işlemleri, GNU/Linux dağıtımlarında `\n`, Windows işletim sisteminde `\r\n` karakterleriyle gösterir. Python herhangi bir dosyayı açarken, eğer o dosya bir metin dosyası ise, satır sonlarını gösteren karakterleri, dosyanın açıldığı işletim sistemine göre ayarlar. Yani satır sonlarını standart bir hale getirerek `\n` karakterine dönüştürür. Bir binary dosyayı metin dosyası gibi (`r`, `w`, `a`, `x`, `r+`, `w+`, `a+`, `x+`) açarsanız, metin ve binary dosyalardaki satır sonu işlemleri farklı olduğu için binary dosya bozulabilir. Binary dosyaları binary kipine sahip modlarda (`rb`, `wb`, `ab`, `xb`, `rb+`, `wb+`, `ab+`, `xb+`) açarsanız, Python satır sonlarına herhangi bir değiştirme-dönüştürme işlemi uygulamaz ve dolayısıyla dosya bozulma riskine girmez.
-
-### PDF Dosyaları
 PDF belgelerinde, o belge hakkında bazı önemli bilgiler veren birtakım özel etiketler bulunur. Bu etiketler şunlardır:
 | Etiket | Anlamı |
-|--------|--------|
+| :--------: |--------|
 | `/Creator` | Belgeyi oluşturan yazılım |
 | `/Producer` | Belgeyi PDF’e dönüştüren yazılım |
 | `/Title` | Belgenin başlığı |
@@ -843,14 +1236,15 @@ PDF belgelerinde, o belge hakkında bazı önemli bilgiler veren birtakım özel
 
 Bu etiketlerin tamamı bütün PDF dosyalarında tanımlı değildir. Ama özellikle `/Producer` etiketi her PDF dosyasında bulunur. `/Producer` etiketinin devamı `b'/Producer (Acrobat Distiller 2.0 for Macintosh)\r/T` şeklinde olabilir. `/Producer` ifadesinin dosya içinde geçtiği noktanın sıra numarasını bulmak için:
 ```py
-with  open("xxx.pdf", "rb") as dosya:
+with open("xxx.pdf", "rb") as dosya:
 	okunan = dosya.read()
 	producer_index = okunan.index(b"/Producer")
 	print(producer_index) # Output Örneği: 4077883
 ```
-**Not:** Buradaki `producer_index` variable'ı, `index()` methodu sayesinde `b"/Producer"` ifadesinin ilk bayt'ının dosya içindeki konumunu tutuyor. Yani `/` karakterini tutuyor. Sağlamasını yapmak için `print(chr(okunan[producer_index]))` kodunu çalıştırırsanız, `/` outputunu alırsınız.
+**Not:** Buradaki `producer_index` variable'ı, `b"/Producer"` byte dizisinin ilk bayt'ının dosya içindeki konumunu tutuyor. Yani `/` karakterinin ifade edildiği byte'ın konumunu belirten integer'ı tutuyor. Sağlamasını yapmak için `print(chr(okunan[producer_index]))` kodunu çalıştırırsanız, `/` outputunu alırsınız.
 
-### JPEG Dosyaları
+<h3 id="1.9.2">JPEG Dosyaları</h3>
+
 JPEG dosyalarının en başında aşağıdaki veriler bulunur:
 ```
 FF D8 FF E0 ? ? 4A 46 49 46 00 (Heksadesimal)
@@ -861,7 +1255,7 @@ JPEG dosyası bir CANON fotograf makinesi ile oluşturulmuşsa bu veriler aşağ
 FF D8 FF E0 ? ? 45 78 69 66 00 (Heksadesimal)
 255 216 255 224 ? ? 45 78 69 66 0 (Decimal)
 ```
-Bir JPEG dosyasını diğer resim dosyalarından ayırt etmek için JPEG dosyasının ilk 4 byte'ttan sonra gelen 2 byte'ı atlayıp, sonraki 5 byte'ı kontrol etmemiz yeterlidir. Bu ilk 11 byte'ın 7-10 byte'ları araında (7 ve 10 dahil) `"JFIF"` ya da `"Exif"` ifadelerine karşılık gelen byte'lar varsa bu dosya bir JPEG dosyasıdır. Bunu kontrol etmek için şöyle bir kod yazılabilir:
+Bir JPEG dosyasını diğer resim dosyalarından ayırt etmek için JPEG dosyasının ilk 4 byte'tan sonra gelen 2 byte'ı atlayıp, sonraki 5 byte'ı kontrol etmemiz yeterlidir. Bu ilk 11 byte'ın 7-10 byte'ları araında (7 ve 10 dahil) `"JFIF"` ya da `"Exif"` ifadelerine karşılık gelen byte'lar varsa bu dosya bir JPEG dosyasıdır. Bunu kontrol etmek için şöyle bir kod yazılabilir:
 ```py
 with  open("xxx.jpeg", "rb") as dosya:
 	data = dosya.read()
@@ -877,9 +1271,10 @@ b'\xff\xd8\xff\xe1T\xaaExif'
 ```
 Buradaki `/x` kısımlarını temizlersek `'ff d8 ff e0 00 10 J F I F'` tarzı bir format elde ederiz.
 
-**Not:** JPEG dosya biçimi ile ilgili bilgi edinmek için [bu siteyi](https://jpeg.org/) ve yardımcı kaynak için [bu siteyi](http://www.faqs.org/faqs/jpeg-faq/part1/section-15.html) kullanabilirsiniz.
+**Not:** JPEG dosya biçimi ile ilgili bilgi edinmek için [bu siteyi](https://jpeg.org/ "https://jpeg.org/") ve yardımcı kaynak için [bu siteyi](http://www.faqs.org/faqs/jpeg-faq/part1/section-15.html "http://www.faqs.org/faqs/jpeg-faq/part1/section-15.html) kullanabilirsiniz.
 
-### PNG Dosyaları
+<h3 id="1.9.3">PNG Dosyaları</h3>
+
 PNG dosyasının ilk 8 byte'ı mutlaka aşağıdaki değerleri içerir:
 ```
 "137 80 78 71 13 10 26 10" (decimal)
@@ -895,9 +1290,10 @@ with  open("xxx.png", "rb") as dosya:
 	else:
 		print("Bu bir PNG dosyası değildir.")
 ```
-**Not:** PNG dosya biçiminin teknik şartnamesine ulaşmak için [bu siteyi](http://www.libpng.org/pub/png/spec/) ve yardımcı kaynak için [bu siteyi](https://www.fileformat.info/format/png/egff.htm) kullanabilirsiniz.
+**Not:** PNG dosya biçiminin teknik şartnamesine ulaşmak için [bu siteyi](http://www.libpng.org/pub/png/spec/ "http://www.libpng.org/pub/png/spec/") ve yardımcı kaynak için [bu siteyi](https://www.fileformat.info/format/png/egff.htm "https://www.fileformat.info/format/png/egff.htm") kullanabilirsiniz.
 
-### GIF Dosyaları
+<h3 id="1.9.4">GIF Dosyaları</h3>
+
 Bir GIF dosyasının ilk üç byte'ı `GIF` karakterlerinden oluşur. Dolayısıyla bir dosyanın GIF dosyası olup olmadığını anlamak için ilk üç byte'ını okumak yeterlidir:
 ```py
 with  open("xxx.gif", "rb") as dosya:
@@ -907,9 +1303,10 @@ with  open("xxx.gif", "rb") as dosya:
 	else:
 		print("Bu bir GIF dosyası değildir.")
 ```
-**Not:** GIF standartlarının Mayıs 1987 sürümünde, bir GIF dosyasının ilk altı baytı `GIF87a`; Temmuz 1989 sürümünde, bir GIF dosyasının ilk altı baytı `GIF89a` karakterlerinden oluşur. GIF şartnamesine ulaşmak için [bu siteyi](https://www.w3.org/Graphics/GIF/spec-gif89a.txt) kullanabilirsiniz.
+**Not:** GIF standartlarının Mayıs 1987 sürümünde, bir GIF dosyasının ilk altı baytı `GIF87a`; Temmuz 1989 sürümünde, bir GIF dosyasının ilk altı baytı `GIF89a` karakterlerinden oluşur. GIF şartnamesine ulaşmak için [bu siteyi](https://www.w3.org/Graphics/GIF/spec-gif89a.txt "https://www.w3.org/Graphics/GIF/spec-gif89a.txt") kullanabilirsiniz.
 
-### TIFF Dosyaları
+<h3 id="1.9.5">TIFF Dosyaları</h3>
+
 Bir TIFF dosyasının ilk iki byte'ı `II` ya da `MM` karakterlerinden oluşur:
 ```py
 with  open("xxx.tiff", "rb") as dosya:
@@ -919,9 +1316,10 @@ with  open("xxx.tiff", "rb") as dosya:
 	else:
 		print("Bu bir TIFF dosyası değildir.")
 ```
-**Not:** TIFF şartnamesine  ulaşmak için [bu siteyi](https://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf) kullanabilirsiniz.
+**Not:** TIFF şartnamesine  ulaşmak için [bu siteyi](https://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf "(https://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf") kullanabilirsiniz.
 
-### BMP Dosyaları
+<h3 id="1.9.6">BMP Dosyaları</h3>
+
 Bir BMP dosyasının ilk iki byte'ı `BM` karakterlerinden oluşur:
 ```py
 with  open("xxx.bmp", "rb") as dosya:
@@ -931,4 +1329,4 @@ with  open("xxx.bmp", "rb") as dosya:
 	else:
 		print("Bu bir BMP dosyası değildir.")
 ```
-**Not:** BMP türündeki resim dosyalarına ilişkin bilgi için [bu siteyi](https://www.loc.gov/preservation/digital/formats/fdd/fdd000189.shtml) kullanabilirsiniz.
+**Not:** BMP türündeki resim dosyalarına ilişkin bilgi için [bu siteyi](https://www.loc.gov/preservation/digital/formats/fdd/fdd000189.shtml "https://www.loc.gov/preservation/digital/formats/fdd/fdd000189.shtml") kullanabilirsiniz.
