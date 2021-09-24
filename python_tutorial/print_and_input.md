@@ -1,7 +1,7 @@
 # İçindekiler
 - [Print-Input İşlemleri](#1)
 - [`print()` Fonksiyonu](#2)
-    - [`*object` Parametresi](#2.1)
+    - [`*values` Parametresi](#2.1)
     - [`sep` Parametresi](#2.2)
     - [`end` Parametresi](#2.3)
     - [`file` Parametresi](#2.4)
@@ -14,7 +14,7 @@ Programınıza girdi (input) almak için `input()`, çıktı (output) almak içi
 
 <h1 id="2"><code>print()</code> Fonksiyonu</h1>
 
-`print()` build-in fonksiyonu, `print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)` syntax'ına sahiptir. `print()` fonksiyonu `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan bir build-in (gömülü) fonksiyondur. Örnek:
+`print()` build-in fonksiyonu, `print(*values, sep=' ', end='\n', file=sys.stdout, flush=False)` syntax'ına sahiptir. `print()` fonksiyonu `file` parametresinde belirtilen, default değeri `sys.stdout` olan yere bir şeyler yazdırmak için kullanılan bir build-in (gömülü) fonksiyondur. Örnek:
 ```py
 print(35)
 print("Merhaba")
@@ -45,9 +45,9 @@ Merhaba
 
 ```
 
-<h2 id="2.1"><code>*object</code> Parametresi</h2>
+<h2 id="2.1"><code>*values</code> Parametresi</h2>
 
-`*object` parametresi bir yıldızlı parametredir. Yıldızlı parametrelerin tam olarak ne olduğunu daha sonra [burada](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md#yıldızlı-parametreler "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md#yıldızlı-parametreler") açıklanacak. `print()` fonksiyonu, `*object` parametresine girilen normal ya da yıldızlı argümanları yazdırır. Örnek:
+`*values` parametresi bir yıldızlı parametredir. Yıldızlı parametrelerin tam olarak ne olduğunu daha sonra [burada](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md#yıldızlı-parametreler "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md#yıldızlı-parametreler") açıklanacak. `print()` fonksiyonu, `*values` parametresine girilen normal ya da yıldızlı argümanları yazdırır. Örnek:
 ```py
 print("T" , "B" , "M" , "M") # Output: T B M M
 print(*"TBMM") # Output: T B M M
@@ -57,7 +57,7 @@ print(*"TBMM") # Output: T B M M
 
 <h2 id="2.2"><code>sep</code> Parametresi</h2>
 
-`sep` parametresi, `*object` parametresine girilen argümanlar arasına gelecek string'i belirlediğimiz parametredir. Default değeri (yani bu parametreye argüman girmediğiniz taktirde kullandığı argüman) bir adet boşluk (space) `" "` karakteridir. Örnek:
+`sep` parametresi, `*values` parametresine girilen argümanlar arasına gelecek string'i belirlediğimiz parametredir. Default değeri (yani bu parametreye argüman girmediğiniz taktirde kullandığı argüman) bir adet boşluk (space) `" "` karakteridir. Örnek:
 ```py
 print(1 , 2 , 3 , 4 , 5 , 6 , sep = "/") # Output: 1/2/3/4/5/6
 print(1 , 2 , 3 , 4 , 5 , 6 , sep = "+") # Output: 1+2+3+4+5+6
@@ -88,7 +88,7 @@ print(1 , 2 , 3 , 4 , 5 , 6 , sep = None) # Output: 1 2 3 4 5 6
 
 <h2 id="2.3"><code>end</code> Parametresi</h2>
 
-`end` parametresi, `*object` parametresine girilen argümanların sonuncusu yazdırıldıktan sonra yazdırılacak string'i belirlediğimiz parametredir. Default değeri `\n` kaçış dizisidir (Escape Sequences).
+`end` parametresi, `*values` parametresine girilen argümanların sonuncusu yazdırıldıktan sonra yazdırılacak string'i belirlediğimiz parametredir. Default değeri `\n` kaçış dizisidir (Escape Sequences).
 ```py
 print(1 , 2 , 3 , 4 , 5 , 6 , sep=", ", end = ", 7\n")
 print(1 , 2 , 3 , 4 , 5 , 6,  sep=", ")

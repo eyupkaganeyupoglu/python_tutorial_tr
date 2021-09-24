@@ -1213,7 +1213,7 @@ print("İstanbul".rpartition("fil")) # Output: ('', '', 'İstanbul')
 
 <h2 id="3.29"><code>encode(encoding='UTF-8',errors='strict')</code> Methodu</h2>
 
-Uygulandığı string'i istenilen kodlama sistemine göre kodlamamıza imkan tanır. `encoding` parametresine argüman olarak istediğiniz kodlama sistemini girersiniz. `errors` parametresine gireceğiniz argümanla, `encoding` parametresine argüman olarak girdiğiniz kod çözücünün `encode` methodunun uygulandığı string'i çözemediği durumda Python'un nasıl davranması gerektiğini belirleyebilirsiniz. `errors` parametresine girebileceğiniz argümanlara [buradan](bu md dosyasında "`str()` Fonksiyonu" başlığında) ulaşabilirsiniz. `encode` methodu output'larını `bytes` formatında verir. Örnek:
+Uygulandığı string'i istenilen kodlama sistemine göre kodlamamıza imkan tanır. `encoding` parametresine argüman olarak istediğiniz kodlama sistemini girersiniz. `errors` parametresine gireceğiniz argümanla, `encoding` parametresine argüman olarak girdiğiniz kod çözücünün `encode` methodunun uygulandığı string'i çözemediği durumda Python'un nasıl davranması gerektiğini belirleyebilirsiniz. `errors` parametresine girebileceğiniz argümanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#1.3") ulaşabilirsiniz. `encode` methodu output'larını `bytes` formatında verir. Örnek:
 ```py
 print("çilek".encode("ascii", "replace")) # Output: b'?ilek'
 print("çilek".encode("utf-8")) # Output: b'\xc3\xa7ilek'
