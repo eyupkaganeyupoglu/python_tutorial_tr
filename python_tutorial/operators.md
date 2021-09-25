@@ -44,8 +44,13 @@
     - [`is` Identity Operator](#1.7)
     - [`in` Membership Operator](#1.8)
 - [`:=` Assignment Expression](#2)
-- [Boolean Type](#3)
-- [Operator Önceliği](#4)
+- [Asterisk (*, **) Operator](#3)
+    - [Unpacking Into Function Call](#3.1)
+    - [Packing Arguments Given to Function](#3.2)
+    - [Positional Arguments With Keyword-only Arguments](#3.3)
+    - [Keyword-only Arguments Without Positional Arguments](#3.4)
+- [Boolean Type](#4)
+- [Operator Önceliği](#5)
 
 <h1 id="1">Operatörler (Operators)</h1>
 
@@ -233,7 +238,7 @@ print(1 != 1 or 2 != 2 or 3 != 3) # Output: False
 
 <h3 id="1.4.3"><code>not</code> Operator</h3>
 
-`not` operator'ı logical operator değildir. Operator'ların döndürdüğü veya value'ların ifade ettiği boolean değerleri tersine çeviren bir oparetor'dır. Yani `True`'yu `False`, `False`'ı `True` yapar. Örnek:
+`not` operator'ı logical operator değildir. Operator'ların döndürdüğü veya value'ların ifade ettiği boolean değerleri tersine çeviren bir operator'dır. Yani `True`'yu `False`, `False`'ı `True` yapar. Örnek:
 ```py
 # Value'ların sahip olduğu boolean değerlere örnek
 print(bool(1)) # Output: True
@@ -633,6 +638,7 @@ print(harf not in isim) # Output: False
 ```
 
 <h1 id="2"><code>:=</code> Assignment Expression</h1>
+
 Assignment expression, bir variable'a değer atama işlemini bir koşul durumunun içinde yapmamıza olanak sağlayarak fazladan bir statement kod yazmaktan bizi kurtarır.
 
 **Assignment expression Kullanmadan:**
@@ -659,7 +665,172 @@ else:
 
 **Not:**  `giriş := len(input("Adın ne? "))` kodunu parantez içinde (yani `(giriş := len(input("Adın ne? ")))` şeklinde) yazmazsanız, ya hata yükseltilecek ya da `if` istenilen şekilde çalışmayacak. Bu yüzden bu operator'ı kullanırken kodu parantez içine yazmalısın.
 
-<h1 id="3">Boolean Type</h1>
+<h1 id="3">Asterisk (<code>*</code>, <code>**</code>) Operator</h1>
+
+**Dikkat:** Bu kısımda bahsedeceğim şeylerin multiplication ve exponentiation operator'leri ile alakası yoktur. Prefix pozisyonunda kullanılan `*` ve `**` operator'lerinden bahsediyoruz.
+
+**Dikkat:** Burada bahsedeceğim şeyler fonksiyonlar konusu hakkında kavram ve kodlar içermektedir. Bu kısmı anlamazsanız [Fonksiyonlar (functions)](asd) kısmını bitirdikten sonra bu başlığı tekrar çalışın.
+
+<h2 id="3.1">Unpacking Into Function Call</h2>
+
+Asterisk operator'ları, fonksiyonların parametrelerine argüman olarak iterable bir objeyi açmak (unpack) için kullanılır.
+
+`*` operator'ı için örnek:
+```py
+fruits = ['lemon', 'pear', 'watermelon', 'tomato']
+print(fruits[0], fruits[1], fruits[2], fruits[3]) # Output: lemon pear watermelon tomato
+print(*fruits) # Output: lemon pear watermelon tomato
+```
+Gördüğünüz gibi `*` operator'ı, `fruits` iterable objesinin öğrelerinin her birini `print()` fonksiyonunun `*values` parametresine argüman olarak veriyor. Burada dikkat edilmesi gereken şey, `*values` parametresinde prefix olarak `*` operator'ı kullanılması. Bu sayede `fruits` listesinin öğe sayısının bilinmesine gerek kalmadan bütün öğeler birbirinden bağımsız argümanlar olarak `*values` parametresine girilir. Peki fonksiyonun parametresi prefix olarak `*` operator'ını içermezse? Örnek:
+```py
+def func(args):
+    print(args)
+
+args_exp = [1,2,3,4,5]
+func(*args_exp) # TypeError: func() takes 1 positional argument but 5 were given
+```
+Gördüğünüz gibi `*` operator'ı `args_exp` listesinin öğelerinin her birini argüman olarak `func` fonksiyonuna vermeye çalışıyor ama `func` fonksiyonunun sadece 1 parametresi var. Yükseltilen hata mesajında da bundan bahsediyor. Kısaca prefix olarak `*` operator'ı kullanan bir argümanı sadece prefix olarak `*` operator'ı kullanılmış bir parametreye girebilirsiniz.
+
+**Not:** `*` operator'ı sadece bir [syntactic sugar](https://en.wikipedia.org/wiki/Syntactic_sugar "https://en.wikipedia.org/wiki/Syntactic_sugar") değildir. Iterable obje belirli bir uzunlukta olmadığı sürece `*` operator'ını kullanmadan bu iterable objenin her bir öğesinin ayrı ayrı argüman olarak göndermek mümkün olmazdı. Iterable obje belirli bir uzunlukta olsaydı, her bir öğesini argüman olarak girebileceğimiz sayıda parametre tanımlayabilirdik.
+
+`**` operator'ı da `*` operator'ına benzer bir işleve sahiptir. Örnek:
+```py
+def func(**name_info):
+    print("{name} {surname}".format(**name_info))
+
+name_exp = {'name': "Eyüp Kağan", 'surname': "Eyüpoğlu"}
+func(**name_exp) # Output: Eyüp Kağan Eyüpoğlu
+```
+Gördüğünüz gibi `**` operator'ı, `name_exp` iterable objesinin öğelerini her birini key-value ilişkisine göre kullanmamıza izin veriyor. Burada dikkat edilmesi gereken şey, `**name_info` parametresinde prefix olarak `**` operator'ı kullanılması. Bu sayede `name_exp` dictionary'sinin öğe sayısının bilinmesine gerek kalmadan bütün öğeler birbirinden bağımsız argümanlar olarak `**name_info` parametresine girilir. Prefix olarak `**` operator'ı kullanan bir argümanı sadece prefix olarak `**` operator'ı kullanılarak tanımlanmış bir parametreye girilebilmesi kuralı burada da geçerlidir.
+
+`*` ve `**` operator'ları Python 3.5'ten itibaren fonksiyon çağırırken (call) birlikte kullanılabilir. Örnek:
+```py
+def func(*args, **kwargs):
+    for i in args:
+        print(i, end=" ")
+    for i in kwargs:
+        print(kwargs[i], end=" ")
+
+var1 = [1,2,3]
+var2 = {"1":"a", "2":"b", "3":"c"}
+
+func(*var1, **var2) # Output: 1 2 3 a b c 
+```
+Asterisk operator'ları parametre tanımlarken prefix olarak kullanacaksanız önce `*` sonra `**` sırasına dikkat ediniz. Aksi halde `SyntaxError: invalid syntax` hatası ile karşılaşırsınız. Örnek:
+```py
+def func(**kwargs, *args): # SyntaxError: invalid syntax
+    for i in args:
+        print(i, end=" ")
+    for i in kwargs:
+        print(kwargs[i], end=" ")
+
+var1 = [1,2,3]
+var2 = {"1":"a", "2":"b", "3":"c"}
+
+func(**var2, *var1)
+```
+Kullanıcı gözünden buradaki her şey mantıksal olarak doğru gözükse de Python için bu bir syntax hatasıdır. Bu yüzden önce `*` sonra `**` oprator'ları prefix olarak kullanılarak oluşturulmuş parametreleri tanımlamaya dikkat ediniz.
+
+`*` ve `**` operator'ları Python 3.5'ten itibaren fonksiyon çağırırken (call) birden fazla kez kullanılabilir. Örnek:
+```py
+def func(*all):
+    print(*all)
+
+var1 = [1,2,3,4,5]
+var2 = ["a","b","c"]
+
+func(*var1, *var2) # Output: 1 2 3 4 5 a b c
+print(*var1, *var2) # Output: 1 2 3 4 5 a b c
+```
+```py
+def func(**all_info):
+    print("{name} {surname} {a1} {a2}".format(**all_info))
+
+name_exp = {'name': "Eyüp Kağan", 'surname': "Eyüpoğlu"}
+job = {'a1': "Python", 'a2': "Dev."}
+
+func(**name_exp, **job) # Output: Eyüp Kağan Eyüpoğlu Python Dev.
+print("{name} {surname} {a1} {a2}".format(**name_exp, **job)) # Output: Eyüp Kağan Eyüpoğlu Python Dev.
+```
+
+**Not:** Yukarıda `**` operator'ını kullanırken dikkatli olmak gerekiyor çünkü birbiri ile çakışan key'ler exception (olağandışı durum) oluşabilir. Örnek:
+```py
+def func(**all_info):
+    print("{name} {surname} {a1} {a2}".format(**all_info))
+
+name_exp = {'name': "Eyüp Kağan", 'surname': "Eyüpoğlu"}
+job = {'a1': "Python", 'surname': "Dev."}
+
+func(**name_exp, **job) # TypeError: __main__.func() got multiple values for keyword argument 'surname' 
+print("{name} {surname} {a1} {a2}".format(**name_exp, **job)) # Output: TypeError: __main__.func() got multiple values for keyword argument 'surname' 
+```
+
+<h2 id="3.2">Packing Arguments Given to Function</h2>
+
+Fonksiyonun parametrelerini tanımlarken prafix olarak kullanılan `*` veya `**` operator'ları, bu parametrelere verilen sınırsız sayıda argümanı yakalamak (capture) için kullanılabilir. Bu argümanlar bir tuple ya da dictionary halinde yakalanır. Örnek:
+```py
+def func(*args):
+    print(type(args), args)
+
+args_exp = [1,2,3,4,5]
+func(*args_exp) # Output: <class 'tuple'> (1, 2, 3, 4, 5)
+```
+```py
+def func(**name_info):
+    print(type(name_info), name_info)
+
+name_exp = {'name': "Eyüp Kağan", 'surname': "Eyüpoğlu"}
+func(**name_exp) # Output: <class 'dict'> {'name': 'Eyüp Kağan', 'surname': 'Eyüpoğlu'}
+```
+`print` ve `zip` build-in fonksiyonlarının da bir parametresi `*` operator'ı prefix olarak kullanılarak oluşturulmuştur. Bu sayede sınırsız sayıda argümanı kabul eder.
+
+<h2 id="3.3">Positional Arguments With Keyword-only Arguments</h2>
+
+Python'da belli bir sırada olan argümanların her birine **Positional Arguments (Konumsal Argüman)** denir. Örnek:
+```py
+def func(p1, p2, p3):
+    pass
+```
+Yukarıdaki `func` fonksiyonunun `p1` parametresine girilece argüman birinci, `p2` parametresine girilece argüman ikinci, `p3` parametresine girilece argüman üçüncü positional argümandır. Daha fazla bilgi için [tıklayınız](https://clouds.eos.ubc.ca/~phil/docs/problem_solving/07-Functions-and-Modules/07.07-Positional-and-Keyword-Arguments.html#positional-arguments "https://clouds.eos.ubc.ca/~phil/docs/problem_solving/07-Functions-and-Modules/07.07-Positional-and-Keyword-Arguments.html#positional-arguments").
+
+Python'da yalnızca keyword'ünü (yani parametrenin ismini) belirterek argümanlara **Keyword-only Arguments** denir. Örnek:
+```py
+def func(*p1, p2):
+    print(*p1, p2)
+
+func(1,2,3) # TypeError: func() missing 1 required keyword-only argument: 'p2'
+func(1,2, p2 = 3) # Output: 1 2 3
+```
+
+Bir fonksiyona `*` veya `**` operator'larını prefix olarak kullanan parametreler ve bu parametrelerin ardından gelen keyword veya non keyword parametreler tanımlarsanız, bu fonksiyonu çağırırken fonksiyona gireceğiniz argümanların `*` veya `**` operator'larını prefix olarak kullanan parametrelere değil keyword veya non keyword parametrelere argüman olarak girmek istiyorsanız, bu parametrelerin isimlerini belirtmelisiniz. Örnek:
+```py
+def func(*args, temp = "d"):
+    print(*args, temp)
+
+harfler = "abc"
+func(*harfler) # Output: a b c d
+func(*harfler, temp = "e") # Output: a b c e
+```
+Asterisk operator'lar sınırsız sayıda argümanı yakalamak için kullanıldıkları için Python ne zaman yukarıdaki gibi `temp` parametresine argüman girdiğimizi kendi başına anlayamaz. Bu yüzden bunu elle yukarıdaki gibi belirtmeliyiz. Yukarıdaki kodda `temp` parametresi, default değere sahip olduğu için programda sıkıntı çıkarmadı. Olmasaydı çıkarırdı. Örnek:
+```py
+def func(*args, temp):
+    print(*args, temp)
+
+harfler = "abc"
+func(*harfler, temp = "d") # Output: a b c d
+func(*harfler, "e") # TypeError: func() missing 1 required keyword-only argument: 'temp'
+```
+Gördüğünüz gibi `"e"` string'inin `temp` parametresine argüman olarak girmek istediğimizi elle belirtmediğimizde Python bütün argümanları `*args` parametresine girmek istediğimizi sanıyor ve "`temp`'e 1 keyword-only argument gereklidir" anlamına gelen hata mesajı yükseltiyor.
+
+Bu davranış Python'a [**PEP 3102**](https://www.python.org/dev/peps/pep-3102/ "https://www.python.org/dev/peps/pep-3102/") ile tanıtıldı (introduced). 
+
+<h2 id="3.4">Keyword-only Arguments Without Positional Arguments</h2>
+
+
+
+Asterisk operator'ı hakkında daha fazla özellik, kullanım alanı ve bilgi için [tıklayınız](https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/ "https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/").
+
+<h1 id="4">Boolean Type</h1>
 
 Data type'ların duruma göre boolean değerleri `True` ya da `False` olabilir. Örnek:
 ```py
@@ -680,7 +851,7 @@ print(bool(True)) # Output: True
 
 **Not:** `None` değeri, "boş, yok" anlamlarına gelmektedir. Yani bir variable'a `None` atarsanız, Python bunu "Bu variable herhangi bir data içermiyor, boş bir variable." olarak yorumlar ama yine de bellekte o variable için **16 byte** boyutunda yer açar. Çünkü sonuç olarak bir variable bildirmiş (declaration) oluyorsunuz ve Python bu variable'ı daha sonra kullanma ihtimaliniz olduğu için bellekte bu variable'a 16 byte yer açar. `None`, genellikle bir variable'ın içeriğini daha sonra belirlemek istediğinizde kullanılır.
 
-<h1 id="4">Operator Önceliği</h1>
+<h1 id="5">Operator Önceliği</h1>
 
 Bir operator'ın önceliğini arttırmak için o operator'ın bulunduğu işlemi parantez `()` içine alabilirsiniz. Örneğin `2 + 2 * 2` işlemindeki `+` operator'ının önceliğini arttırmak için bu işlemi `(2 + 2) * 2` şeklinde yazabilirsiniz. Aşağıdaki operator'lar, en öncelikliden son öncelikliye doğru olmak üzere yukarıdan aşağıya sıralanmıştır.
 | Operator | Description |
