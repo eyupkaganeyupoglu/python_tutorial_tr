@@ -44,7 +44,7 @@
     - [`is` Identity Operator](#1.7)
     - [`in` Membership Operator](#1.8)
 - [`:=` Assignment Expression](#2)
-- [Asterisk (*, **) Operator](#3)
+- [Asterisk (`*`, `**`) Operator](#3)
     - [Unpacking Into Function Call](#3.1)
     - [Packing Arguments Given to Function](#3.2)
     - [Positional Arguments With Keyword-only Arguments](#3.3)
