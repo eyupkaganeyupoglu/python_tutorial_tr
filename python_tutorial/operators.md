@@ -767,7 +767,7 @@ print("{name} {surname} {a1} {a2}".format(**name_exp, **job)) # Output: TypeErro
 
 <h2 id="3.2">Packing Arguments Given to Function</h2>
 
-Fonksiyonun parametrelerini tanımlarken prafix olarak kullanılan `*` veya `**` operator'ları, bu parametrelere verilen sınırsız sayıda argümanı yakalamak (capture) için kullanılabilir. Bu argümanlar bir tuple ya da dictionary halinde yakalanır. Örnek:
+Fonksiyonun parametrelerini tanımlarken prafix olarak kullanılan `*` veya `**` operator'ları, bu parametrelere verilen sınırsız sayıda argümanı yakalamak (capture) için kullanılabilir. Bu argümanlar bir tuple ya da dictionary halinde yakalanır ve programda kullanılabilir. Örnek:
 ```py
 def func(*args):
     print(type(args), args)

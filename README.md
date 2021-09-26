@@ -72,7 +72,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 
 **!!DİKKAT!!** Bu tutorial hala tamamlanmamıştır. Konu başlıkları ve içerik %99 tamamlanmış olsa da hala bazı dil bilgisi ve markdown syntax hataları, bazı terimlerin yanlış kullanımı (örneğin atama (assignment) ve tanımlama (definition) terimlerini karıştırdığım yerler olabilir), tanımlanmamış bağlantılar mevcut olabilir ve konuların içeriklerinin düzenlenmesi, yeri geldiğinde bazı konu başlıkları farklı dosyalara ayrılması gerekebilir. Bu tutorial'ın release sürümü çıkınca bu kısmın hemen altında bunu belirteceğim. **Takipte kal!**
 
-<p align=center> <b><i>Release Sürümü Yükleniyor...</b></i> <b>[54.02268297005139]</b> </p>
+<p align=center> <b><i>Release Sürümü Yükleniyor...</b></i> <b>[58.8782562466773]</b> </p>
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>
