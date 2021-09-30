@@ -826,7 +826,15 @@ Bu davranış Python'a [**PEP 3102**](https://www.python.org/dev/peps/pep-3102/ 
 
 <h2 id="3.4">Keyword-only Arguments Without Positional Arguments</h2>
 
+`*` operator'ını kullanarak istenilen parametrelere keyword-only argüman girilmesini sağlayabilirsiniz. Örnek:
+```py
+def func(isim, *, yaş, meslek):
+    print(isim,yaş,meslek)
 
+func("Eyüp", yaş=20, meslek="Öğrenci") # Output: Eyüp 20 Öğrenci
+func("Eyüp", 20, meslek="Öğrenci") # TypeError: func() takes 1 positional argument but 2 positional arguments (and 1 keyword-only argument) were given   
+func("Eyüp", 20, "Öğrenci") # TypeError: func() takes 1 positional argument but 3 were given
+```
 
 Asterisk operator'ı hakkında daha fazla özellik, kullanım alanı ve bilgi için [tıklayınız](https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/ "https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/").
 

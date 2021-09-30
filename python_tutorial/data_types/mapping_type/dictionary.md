@@ -34,7 +34,7 @@ print(dict(key1="value", key2 = "value"), type(dict(key1="value", key2 = "value"
 {'key1': 'value', 'key2': 'value'} <class 'dict'>
 {'key1': 'value', 'key2': 'value'} <class 'dict'>
 ```
-Dictionary'lere `string`, `int`, `float`, `complex`, `list`, `dict`, `tuple`, `set` gibi birçok data type'ı `value` olarak ekleyebilirken; `tuple`, `str`, ve numeric (`int`, `float`, `complex`) gibi değiştirilemez (immutable) data type'ları `key` olara ekleyebilirsiniz. `list` ve `dict` değiştirilebilir (mutable) veri tipi olduğu için sözlüklere `key` olarak girilemez. Bunlar dışındaki data type'lar `key` olarak kullanılmaya çalışırsanız `TypeError: unhashable type: 'data type'ın ismi'` gibi hatalar yükseltilir. Sözlüklere girilebilecek veri tiplerine örnek:
+Dictionary'lere `str`, `int`, `float`, `complex`, `list`, `dict`, `tuple`, `set` gibi birçok data type'ı `value` olarak ekleyebilirken; `tuple`, `str`, ve numeric (`int`, `float`, `complex`) gibi değiştirilemez (immutable) data type'ları `key` olara ekleyebilirsiniz. `list` ve `dict` değiştirilebilir (mutable) veri tipi olduğu için sözlüklere `key` olarak girilemez. Bunlar dışındaki data type'lar `key` olarak kullanılmaya çalışırsanız `TypeError: unhashable type: 'data type'ın ismi'` gibi hatalar yükseltilir. Sözlüklere girilebilecek veri tiplerine örnek:
 ```py
 sözlük_düzeni = {1                  : "int",
 				 2.5                : "float",
@@ -57,7 +57,7 @@ print(sözlük_düzeni["liste"][1]) # Output: l2
 print(sözlük_düzeni["tuple"][1]) # Output: t2
 print(sözlük_düzeni["dict"]["k1"]) # Output: v1
 ```
-Gördüğünüz gibi dictionary içine tanımlanmış `list`, `tuple`, `string` gibi type'ların index'lerine ve nested dictionary'lerin içeriğine erişebiliyoruz.
+Gördüğünüz gibi dictionary içine tanımlanmış `list`, `tuple`, `str` gibi type'ların index'lerine ve nested dictionary'lerin içeriğine erişebiliyoruz.
 
 **Not:** Aşağıdaki variable'lara atanan yapıdaki objeler direkt olarak dictionary'e dönüştürülebilir:
 ```py
@@ -170,7 +170,7 @@ print(d1) # Output: {'Bir': 4, 'İki': 2, 'Üç': 3}
 ```
 Buradan, bir dictionary oluşturulurken o dictionary'e tanımladığınız `key`'lerden aynı olanların arasından, en son tanımlanan geçerli olur sonucunu çıkarabiliriz. Çünkü Python kodları soldan sağa doğru okuyor. Bu yüzden en son tanımlanan `key` en sağda, dolayısıyla en sağdaki en son okunan olacağı için Python bunu geçerli sayacak. Bu durum birbiri ardına tanımlanan aynı isimdeki variable'lar arasından en son tanımlananın value'sunun geçerli olmasına benziyor.
 
-**Not:** Dictionary, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.7'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Örnek:
+**Not:** Dictionary, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Örnek:
 ```py
 d1 = {"a":1, "b":2, "c":3}
 d2 = {"c":3, "a":1, "b":2}

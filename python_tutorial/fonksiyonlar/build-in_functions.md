@@ -3,40 +3,7 @@ Python ve Python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Göm�
 
 # `all(iterable)`
 
-**Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
-- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
-- **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
-
-**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
-- **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
-
-- **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
-
-- **Set**, indexlenemez (yani sırasız) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
-
-- **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
-
-[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası yükseltilir. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
-```py
-liste = ["l", "i", "s", "t", "e"]
-liste_iter1 = iter(liste)
-liste_iter2 = iter(liste)
-  
-print(next(liste_iter1)) # Output: l
-print(next(liste_iter1)) # Output: i
-print(next(liste_iter1)) # Output: s
-print(next(liste_iter1)) # Output: t
-print(next(liste_iter1)) # Output: e
-  
-print(liste_iter2.__next__()) # Output: l
-print(liste_iter2.__next__()) # Output: i
-print(liste_iter2.__next__()) # Output: s
-print(liste_iter2.__next__()) # Output: t
-print(liste_iter2.__next__()) # Output: e
-```
-Bir **Iterator**'ün barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası yükseltilir.
-
-**Not:** Bütün **Iterator**'ler **Iterable**'dir ama her **Iterable** obje, **Iterator** değildir. Örneğin bir `list` **Iterable** bir objedir ama **Iterator** değildir.
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/iterators.md).
 
 `all(iterable)` fonksiyonu aşağıdaki syntax'a sahiptir:
 ```py
@@ -68,40 +35,7 @@ all(), Empty: True
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#all).
 
 # `any(iterable)`
-**Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
-- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
--  **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
-
-**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
-- **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
-
-- **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
-
-- **Set**, indexlenemez (yani sırasız) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
-
-- **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
-
-[`iter()`](https://docs.python.org/3/library/functions.html#iter) fonksiyonu kullanarak, **Iterable** (tekrarlanabilir) bir objeden, **Iterator** objesi oluşturulabilir. Bunu mümkün kılmak için **Iterable** (tekrarlanabilir) bir objenin class'ının, **Iterator** döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır. `iter()` fonksiyonuna **Iterable** (tekrarlanabilir) olmayan bir obje verilirse, `TypeError` hatası yükseltilir. **Iterator**'ler, objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. **Iterator**'ler, `__next__()` methodu kullanarak, **Iterable** bir obje üzerinde iterate (yenileme) yapmak için kullanılan objelerdir.
-```py
-liste = ["l", "i", "s", "t", "e"]
-liste_iter1 = iter(liste)
-liste_iter2 = iter(liste)
-  
-print(next(liste_iter1)) # Output: l
-print(next(liste_iter1)) # Output: i
-print(next(liste_iter1)) # Output: s
-print(next(liste_iter1)) # Output: t
-print(next(liste_iter1)) # Output: e
-  
-print(liste_iter2.__next__()) # Output: l
-print(liste_iter2.__next__()) # Output: i
-print(liste_iter2.__next__()) # Output: s
-print(liste_iter2.__next__()) # Output: t
-print(liste_iter2.__next__()) # Output: e
-```
-Bir **Iterator**'ün barındırdığı öğe sayısından fazla `next` methodu ya da fonksiyonu kullanılırsa, başka kullanılabilir öğe bulamadığı için `StopIteration` hatası yükseltilir.
-
-**Not:** Bütün **Iterator**'ler **Iterable**'dir ama her **Iterable** obje, **Iterator** değildir. Örneğin bir `list` **Iterable** bir objedir ama **Iterator** değildir.
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/iterators.md).
 
 `any(iterable)` fonksiyonu aşağıdaki syntax'a sahiptir:
 ```py
@@ -363,18 +297,8 @@ print(list(map(karesini_al, l))) # Output: [1, 4, 9, 16, 25]
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#map).
 
 # `next(iterator, default)`
-**Ön bilgi:** *Iterate* ile *Iterate over* kelimelerinin farkı şudur:
-- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
--  **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/iterators.md).
 
-**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca tekrarlanabilir (can iterate over) herhangi bir şey, **Iterable** (tekrarlanabilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict` gibi data type'lar **Iterable**'dir. Collection type'lar (arrays) genellikle **iterable**'dir.
-- **List**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
-
-- **Tuple**, indexlenebilir (yani sıralı) ve değiştirilemez (immutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin verir.
-
-- **Set**, indexlenemez (yani sırasız) ve değiştirilebilir (mutable) bir collection'dır. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
-
-- **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next).
 
 `next()` fonksiyonu, bir `generator` nesnesinden bir sonraki öğeyi alır.

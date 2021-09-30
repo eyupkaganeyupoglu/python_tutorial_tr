@@ -165,47 +165,7 @@ print(i) # Output: 4
 
 Şimdi iterator ve iterable kavramlarını açıklayalım:
 
-**Ön bilgi:** Iterate ile Iterate over kelimelerinin farkı şudur:
-- **Iterate**, bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
--  **Iterate over**, bir şeyi sürekli tekrarlamak anlamında kullanılır (repeatedly).
-
-**Iterator** ile **Iterable** İki farklı kavramdır. Defalarca yinelenebilir (can iterate over) herhangi bir şey, Iterable (yinelenebilir) bir objedir. `str`, `list`, `tuple`, `set`, `frozenset`, `dict`, `range` gibi data type'lar, bir `__iter__()` methodu ile veya Sequence semantics uygulayan (implements) bir `__getitem__()` methodu ile tanımladığınız herhangi bir class'ın objeleri (instances) Iterable'dir. Collection type'lar (arrays) genellikle iterable'dir.
-
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#next "https://docs.python.org/3/library/functions.html#next").
-
-[`iter()`](https://docs.python.org/3/library/functions.html#iter "https://docs.python.org/3/library/functions.html#iter") build-in fonksiyonunu kullanarak iterable (yinelenebilir) bir objeden iterator objesi oluşturulabilir. Bunu mümkün kılmak için iterable (yinelenebilir) objeyi oluşturmak için kullanılan class'ın (örneğin iterable bir type olan liste objesi oluşturmak için `list` class'ının kullanılarak instantiation işlemi yapılması), iterator döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır (bu cümlenin ne anlama geldiğini class konusunu öğrendikten sonra anlayabilirsiniz). `iter()` fonksiyonuna iterable (yinelenebilir) olmayan bir obje verilirse, `TypeError` hatası yükseltilir. Iterator'lar, iterable objenin bir sonraki item'ına geçmeye yarayan `__next__()` methoduna sahiptir. Iterator'lar, `__next__()` methodu kullanarak iterable bir obje üzerinde iterate (yineleme) yapmak için kullanılan objelerdir.
-```py
-liste_exp = ["l", "i", "s", "t", "e"] # iterable bir type olan list
-liste_iter1 = iter(liste_exp)
-liste_iter2 = iter(liste_exp)
-
-print(next(liste_iter1)) # Output: l
-print(next(liste_iter1)) # Output: i
-print(next(liste_iter1)) # Output: s
-print(next(liste_iter1)) # Output: t
-print(next(liste_iter1)) # Output: e
-
-print(liste_iter2.__next__()) # Output: l
-print(liste_iter2.__next__()) # Output: i
-print(liste_iter2.__next__()) # Output: s
-print(liste_iter2.__next__()) # Output: t
-print(liste_iter2.__next__()) # Output: e
-```
-**Not:** Her iterator, iterable'dır (yinelenebilir) ama her iterable (yinelenebilir) obje iterator değildir. Örneğin bir `list` type bir obje iterable bir objedir ama iterator değildir.
-
-**Not:** Bir iterator'a barındırdığı öğe sayısından daha fazla `next` methodu veya fonksiyonu uygulanırsa, bu method veya fonksiyon başka kullanılabilir öğe bulamadığı için `StopIteration` hatası yükseltilir. Örnek:
-```py
-iterable_object_exp = ["selam", "merhaba"]
-iterator_exp = iter(iterable_object_exp)
-
-print(next(iterator)) # Output: selam
-print(next(iterator)) # Output: merhaba
-print(next(iterator)) # Output: StopIteration
-
-print(iterator_exp.__next__()) # Output: selam
-print(iterator_exp.__next__()) # Output: merhaba
-print(iterator_exp.__next__()) # Output: StopIteration
-```
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/iterators.md).
 
 Python'daki `for` loop, mantığı, `C` gibi low level programlama dillerindeki **for-each** loop mantığına dayanır. For-each loop ile ilgili bilgi için [**buraya**](https://en.wikipedia.org/wiki/Foreach_loop "https://en.wikipedia.org/wiki/Foreach_loop"), for loop'un çalışma mantığıyla ilgili ayrıntılı bilgi için de [**buraya**](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c "https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c") tıklayınız.
 

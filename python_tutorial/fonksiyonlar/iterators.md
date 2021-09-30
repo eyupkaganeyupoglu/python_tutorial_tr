@@ -1,4 +1,8 @@
-# Iterators (Yenileyiciler)
+# İçindekiler
+
+- [Iterators (Yenileyiciler)](#1)
+
+<h1 id="1">Iterators (Yenileyiciler)</h1>
 
 **Ön bilgi:** 'Iterate' ile 'Iterate over' kelimelerinin farkı şudur:
 - **Iterate:** Bir şeyi bir kere tekrarlamak anlamında kullanılan bir fiildir (repeat).
@@ -14,7 +18,7 @@
 
 - **Dictionary**, indexlenebilir (yani sıralı) ve değiştirilebilir (mutable) bir collection'dır. Python 3.6'dan önce indexlenemezken (yani sırasız),  Python 3.7'den itibaren indexlenebilir (yani sıralı) olmuştur. Duplicate members'a (Bir öğeden birden fazla olması) izin vermez.
 
-[**`iter()`**](https://docs.python.org/3/library/functions.html#iter) fonksiyonu ile, iterable (tekrarlanabilir) bir objenin template'i (şablonu) kullanılarak bir iterator objesi oluşturulabilir. Bunu mümkün kılmak için iterable (tekrarlanabilir) bir objenin class'ının, iterator döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır.
+[**`iter()`**](https://docs.python.org/3/library/functions.html#iter "https://docs.python.org/3/library/functions.html#iter") fonksiyonu ile, iterable (tekrarlanabilir) bir objenin template'i (şablonu) kullanılarak bir iterator objesi oluşturulabilir. Bunu mümkün kılmak için iterable (tekrarlanabilir) bir objenin class'ının, iterator döndüren bir `__iter__` ya da `0` ile başlayan sıralı (sequential) index'lere sahip `__getitem__` methoduna ihtiyacı vardır.
 
 **Not:** Oluşturulan bu iterator objesi ile iterable obje arasında birbirlerini etkileyecek bir ilişki yoktur, birbirlerinden bağımsız/farklı objelerdir. Örnek:
 ```py
