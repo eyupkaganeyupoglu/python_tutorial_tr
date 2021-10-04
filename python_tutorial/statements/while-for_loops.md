@@ -459,6 +459,7 @@ for i,j,k in s1,s2,s3:
 ```
 
 <h3 id="1.2.3">Dictionary'lere Davranışı</h3>
+
 ```py
 dict_exp = {"bir": 1,"iki": 2,"üç": 3,"dört": 4}
   

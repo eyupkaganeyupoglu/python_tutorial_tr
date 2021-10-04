@@ -305,7 +305,7 @@ Traceback (most recent call last):
 TypeError: Parolada Türkçe karakter kullanılamaz!
 ```
 
-**Not:** `raise` statement'ı herhangi bir namespace içinde kullanabilirsiniz. `if` gibi herhangi bir statement'ın kod bloğunda ya da herhangi bir namespace'de kullanmanız, `raise` statement'ın çalışmasında bir farklılığa sebep olmaz. Python bu statement'ı okuduktan sonra çalıştırır.
+**Not:** `raise` statement'ı herhangi bir namespace içinde kullanabilirsiniz. `if` gibi herhangi bir statement'ın kapsamında (kod block'larından bahsediyorum) ya da herhangi bir namespace'de kullanmanız, `raise` statement'ın çalışmasında bir farklılığa sebep olmaz. Python bu statement'ı okuduktan sonra çalıştırır.
 
 **Not:** `raise` statement'ı aşağıdaki örnekteki gibi de kullanabilirsiniz:
 ```py
@@ -420,7 +420,7 @@ Traceback (most recent call last):
 AssertionError: İsim bölümü boş.
 ```
 
-**Not:** `assert` statement'ı herhangi bir namespace içinde kullanabilirsiniz. `if` gibi herhangi bir statement'ın kod bloğunda ya da herhangi bir namespace'de kullanmanız, `assert` statement'ın çalışmasında bir farklılığa sebep olmaz. Python bu statement'ı okuduktan sonra çalıştırır. `assert` statement çalışınca Python, programı sonlandırır.
+**Not:** `assert` statement'ı herhangi bir namespace içinde kullanabilirsiniz. `if` gibi herhangi bir statement'ın kapsamında (kod block'larından bahsediyorum) ya da herhangi bir namespace'de kullanmanız, `assert` statement'ın çalışmasında bir farklılığa sebep olmaz. Python bu statement'ı okuduktan sonra çalıştırır. `assert` statement çalışınca Python, programı sonlandırır.
 
 **Not:** `assert` statement'ı, Python kodlarını debugging (hata ayıklama işlemi) yapmak için kullanılır. Bir Python dosyasını terminalden çalıştırırken `python -O dosya_adı` komutuyla çalıştırırsanız, Python dosyası içindeki bütün `assert` statement'lerini görmezden gelir. Bunu sağlayan şey optimize anlamına gelen `-O` parametresidir. Eğer `-O` olmadan `python dosya_adı` koduyla çalıştırırsanız, Python dosyası içindeki `assert` statement'lerini görmezden gelmez. Bu sayede debugging işlemi yapabiliyoruz dedim. Kanıtı:
 

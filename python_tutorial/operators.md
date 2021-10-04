@@ -142,6 +142,7 @@ print(10 / 5) # Output: 2
 ```
 
 <h3 id="1.2.5"><code>**</code> Exponentiation (Üs Alma) Operator</h3>
+
 Exponentiation operator'ı, solundaki operand'ın, sağındaki operand'a göre üssünü alır. Örneğin numenic type'larda üst alma işlemi yapar. Örnek:
 ```py
 print(2 ** 4) # Output: 8

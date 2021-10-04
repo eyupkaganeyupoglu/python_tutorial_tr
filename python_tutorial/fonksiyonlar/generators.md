@@ -7,7 +7,7 @@
 
 **Dikkat:** Generator'ü anlatmaya başlamadan önce şunu kafanıza kazıyın! Her generator bir iterator'dır. Çünkü iterator genel bir kavramdır. Yani Generator'lar, bir çeşit iterable objedir.
 
-`def` statement ile tanımladığımız bir fonksiyonun kod bloğunun herhangi bir yerinde `yield` statement varsa, bu fonksiyon çağırıldığında bir generator objesi döndürür. Örnek:
+`def` statement ile tanımladığımız bir fonksiyonun kod block'unun herhangi bir yerinde `yield` statement varsa, bu fonksiyon çağırıldığında bir generator objesi döndürür. Örnek:
 ```py
 def func(p1):
     if p1 == 1:

@@ -1,54 +1,55 @@
 ﻿# İçindekiler
 
 - [Dosya İşlemleri](#1)
-    - [<code>open()</code> Fonksiyonu](#1.1)
+    - [`open()` Fonksiyonu](#1.1)
     - [Dosyaya Erişim Kipleri](#1.2)
-        - [<code>r</code> kipi](#1.2.1)
-        - [<code>w</code> kipi](#1.2.2)
-        - [<code>a</code> kipi](#1.2.3)
-        - [<code>x</code> kipi](#1.2.4)
-        - [<code>r+</code> kipi](#1.2.5)
-        - [<code>w+</code> kipi](#1.2.6)
-        - [<code>a+</code> kipi](#1.2.7)
-        - [<code>x+</code> kipi](#1.2.8)
-        - [<code>rb</code> kipi](#1.2.9)
-        - [<code>wb</code> kipi](#1.2.10)
-        - [<code>ab</code> kipi](#1.2.11)
-        - [<code>xb</code> kipi](#1.2.12)
-        - [<code>rb+</code> kipi](#1.2.13)
-        - [<code>wb+</code> kipi](#1.2.14)
-        - [<code>ab+</code> kipi](#1.2.15)
-        - [<code>xb+</code> kipi](#1.2.16)
+        - [`r` kipi](#1.2.1)
+        - [`w` kipi](#1.2.2)
+        - [`a` kipi](#1.2.3)
+        - [`x` kipi](#1.2.4)
+        - [`r+` kipi](#1.2.5)
+        - [`w+` kipi](#1.2.6)
+        - [`a+` kipi](#1.2.7)
+        - [`x+` kipi](#1.2.8)
+        - [`rb` kipi](#1.2.9)
+        - [`wb` kipi](#1.2.10)
+        - [`ab` kipi](#1.2.11)
+        - [`xb` kipi](#1.2.12)
+        - [`rb+` kipi](#1.2.13)
+        - [`wb+` kipi](#1.2.14)
+        - [`ab+` kipi](#1.2.15)
+        - [`xb+` kipi](#1.2.16)
     - [Dosyadaki İmleç Konumu](#1.3)
-        - [<code>tell()</code> Methodu](#1.3.1)
-        - [<code>seek(offset, whence = SEEK_SET)</code> Methodu](#1.3.2)
-        - [<code>seekable()</code> Methodu](#1.3.3)
+        - [`tell()` Methodu](#1.3.1)
+        - [`seek(offset, whence = SEEK_SET)` Methodu](#1.3.2)
+        - [`seekable()` Methodu](#1.3.3)
     - [Dosyaya Yazmak](#1.4)
-        - [<code>write(s)</code> Methodu](#1.4.1)
-        - [<code>writelines(lines)</code> Methodu](#1.4.2)
-        - [<code>writable()</code> Methodu](#1.4.3)
+        - [`write(s)` Methodu](#1.4.1)
+        - [`writelines(lines)` Methodu](#1.4.2)
+        - [`writable()` Methodu](#1.4.3)
     - [Dosyayı Okumak](#1.5)
-        - [<code>read(size = -1)</code> Methodu](#1.5.1)
-        - [<code>readline(size = -1)</code> Methodu](#1.5.2)
-        - [<code>readlines(hint = -1)</code> Methodu](#1.5.3)
-        - [<code>readable()</code> Methodu](#1.5.4)
+        - [`read(size = -1)` Methodu](#1.5.1)
+        - [`readline(size = -1)` Methodu](#1.5.2)
+        - [`readlines(hint = -1)` Methodu](#1.5.3)
+        - [`readable()` Methodu](#1.5.4)
     - [Dosyaları Otomatik Kapatmak](#1.6)
-        - [<code>try</code> - <code>except (ErrorCode)</code> - <code>finally</code> Yapısı](#1.6.1)
-        - [<code>with</code> Statement](#1.6.2)
+        - [`try` - `except (ErrorCode)` - `finally` Yapısı](#1.6.1)
+        - [`with` Statement](#1.6.2)
     - [Dosyaya Ekleme Yapma](#1.7)
         - [Dosyanın Sonunda ekleme yapmak](#1.7.1)
         - [Dosyanın Başında Değişiklik yapmak](#1.7.2)
         - [Dosyanın Ortasında Değişiklik yapmak](#1.7.3)
     - [Dosya Methodları](#1.8)
-        - [<code>closed</code> Methodu](#1.8.1)
-        - [<code>mode</code> Methodu](#1.8.2)
-        - [<code>name</code> Methodu](#1.8.3)
-        - [<code>encoding</code> Methodu](#1.8.4)
-        - [<code>close()</code> Methodu](#1.8.5)
-        - [<code>fileno()</code> Methodu](#1.8.6)
-        - [<code>flush()</code> Methodu](#1.8.7)
-        - [<code>isatty()</code> Methodu](#1.8.8)
-        - [<code>truncate(size = None)</code> Methodu](#1.8.9)
+        - [`closed` Methodu](#1.8.1)
+        - [`mode` Methodu](#1.8.2)
+        - [`name` Methodu](#1.8.3)
+        - [`encoding` Methodu](#1.8.4)
+        - [`close()` Methodu](#1.8.5)
+        - [`detach()` Methodu](#1.8.6)
+        - [`fileno()` Methodu](#1.8.7)
+        - [`flush()` Methodu](#1.8.8)
+        - [`isatty()` Methodu](#1.8.9)
+        - [`truncate(size = None)` Methodu](#1.8.10)
     - [İkili (Binary) Dosyalar](#1.9)
         - [PDF Dosyaları](#1.9.1)
         - [JPEG Dosyaları](#1.9.2)
@@ -1096,7 +1097,7 @@ dosya.close()
 print(dosya.closed) # Output: True
 ```
 
-### `detach()` Methodu
+<h3 id="1.8.6"><code>detach()</code> Methodu</h3>
 
 Python'da bir dosyayı açtığında açma moduna göre oluşturulan I/O objesine (yani, `open` fonksiyonu ile bir dosyayı açtığında, `open` fonksiyonunun döndürdüğü objeye (`io.TextIOWrapper`)) **Stream** ya da **file object** ya da **file-like object** denir (ben stream diyeceğim). `detach()` methodu, TextIOBase'i underlying binary buffer'dan ayırır ve döndürür. Yani bir stream'in **raw-stream** objesini dönüştürülür. Bu işlem sonrasındaki bütün işlemler raw-stream objesinde gerçekleşir. Yani stream objesini artık kullanamazsınız, kullanmaya çalışırsanız `ValueError: underlying buffer has been detached` hatası yükseltilir. Örnek:
 ```py
@@ -1123,7 +1124,7 @@ Stream dosyasını açtığınız mode'lara göre oluşturulan raw-stream objesi
 
 `detach()` methodu ile oluşturulan **raw-stream** objesi üzerinde daha detaylı dosya işlemleri yapabilirsiniz. Yani bildiğimiz dosya işlemlerini daha çok ayrıntıya girerek yapabiliriz ama daha çok uğraştırır. `detach()` methodu `io.IOBase` class'ından miras alındığı için Python gibi high level programlama dilleri ile uğraşanların bilmesi zorunlu değildir ve çok kullanılmaz (memory ile uğraşmak isteyenler C gibi low level programlama dillerine yönelsinler). İlla bilmek istiyorum diyorsanız [**`io` modülüne**](https://docs.python.org/3/library/io.html "https://docs.python.org/3/library/io.html") bakabilirsiniz.
 
-<h3 id="1.8.6"><code>fileno()</code> Methodu</h3>
+<h3 id="1.8.7"><code>fileno()</code> Methodu</h3>
 
 `fileno()` methodu, uygulandığı dosya objesinin **file descriptor** numarasını döndürür. Bu output integer type'dır. File descriptor numarası, underlying implementation (temel uygulama) tarafından, işletim sisteminden (OS) I/O işlemlerini talep etmek için kullanılır. Bu, `fcntl` modülü veya `os.read()` veya bunlar gibi file descriptor kullanan diğer daha düşük seviyeli interface'ler için daha kullanışlı olabilir. Her dosya objesi kendi file descriptor numarasına sahiptir. Örnek:
 ```py
@@ -1145,17 +1146,17 @@ dosya4.close()
 
 **Not:** Açma izninizin olmadığı bir dosyayı `open` fonksiyonu ile açmaya çalıştıktan sonra ilgili dosya objesine `fileno` methodu uygularsanız (`open` fonksiyonu ile `dosya.close()` kodu arasından bahsediyorum), `fileno` methodu `-1` integer'ını döndürür.
 
-<h3 id="1.8.7"><code>flush()</code> Methodu</h3>
+<h3 id="1.8.8"><code>flush()</code> Methodu</h3>
 
 `open()` fonksiyonu ile bir dosyayı açtıktan sonra o dosyada yaptığınız değişiklikler **buffer** (tampon) adı verilen bir bölgede bekletilir ve dosya `close()` methodu ile kapatıldığında, bu değişiklikler dosyaya işlenir. `flush()` methodu, buffer'daki değişikliklerin dosyaya işlenmesini sağlar. Bu sayede, dosyada yapılan değişiklikleri dosyayı `close()` methodu ile kapatmak zorunda kalmadan dosyaya işleyebilirsiniz.
 
-<h3 id="1.8.8"><code>isatty()</code> Methodu</h3>
+<h3 id="1.8.9"><code>isatty()</code> Methodu</h3>
 
 Stream'in interactive olup olmadığını (yani bir terminale veya tty cihazına bağlı olup olmadığını) sorgular. `isatty()` methodu, stream eğer interactive ise (yani bir terminale veya tty cihazına bağlıysa) `True`, değilse `False` döndürür. `isatty()` methodu örneğin, consol stream'ında `True` döndürürken, normal bir dosya açıp kullanıldığında `False` döndürür.
 
 **Not:** **Consol Stream**'i ve [**Terminal Stream**](https://docs.python.org/3/library/sys.html#sys.stdin "https://docs.python.org/3/library/sys.html#sys.stdin")'i aynı şeylerdir. Terminale girilen `stdin` ve `stdout` verileri, consol stream'i (diğer bir ismiyle terminal stream'i) oluşturuyor. Terminal stream'e yazı yazmak için `print()`, terminal stream'i okumak için `input()` kullanıyoruz gibi düşünebilirsiniz.
 
-<h3 id="1.8.9"><code>truncate(size = None)</code> Methodu</h3>
+<h3 id="1.8.10"><code>truncate(size = None)</code> Methodu</h3>
 
 `truncate` methodu, uygulandığı dosyayı byte cinsinden yeniden boyutlandırmak için kullanılır. `size` parametresine argüman girilmezse veya default değeri olan `None` girilirse, dosyanın başından (`seek(0)`) imlecin bulunduğu byte'a kadar (`tell()`) (imlecin bulunduğu byte'ı dahil etmeden) dosyayı yeniden boyutlandırır. Örnek:
 

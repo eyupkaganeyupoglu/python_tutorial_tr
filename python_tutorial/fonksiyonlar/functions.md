@@ -135,7 +135,7 @@ Python'da **Asterisk Operator**'ını kullanarak sınırsız sayıda argüman ka
 
 <h2 id="1.2"><code>return</code> Statement</h2>
 
-Bir fonksiyon veya class tanımlarken o fonksiyon veya class'ın kod bloğunda tanımlanan local namespace'deki objeler, o kod bloğundan çıkıldıktan sonra bellekten silinir. Bu yüzden local namespace'deki objeleri global namespace'de doğrudan kullanamayız. Local namespace'deki verileri global namespace'de kullanabilmek için o veri `return` statement ile döndürmemiz (returned) gerekmektedir. Yani `return` statement, bir fonksiyonun local namespace'indeki verileri global namespace'e kazandırır. Örnek:
+Bir fonksiyon veya class tanımlarken o fonksiyon veya class'ın kapsamında (kod block'larından bahsediyorum) tanımlanan local namespace'deki objeler, o kapsamından (kod block'larından bahsediyorum) çıkıldıktan sonra bellekten silinir. Bu yüzden local namespace'deki objeleri global namespace'de doğrudan kullanamayız. Local namespace'deki verileri global namespace'de kullanabilmek için o veri `return` statement ile döndürmemiz (returned) gerekmektedir. Yani `return` statement, bir fonksiyonun local namespace'indeki verileri global namespace'e kazandırır. Örnek:
 ```py
 def func(p1):
     temp = p1*2
@@ -163,7 +163,7 @@ print(func(2)) # Output: 4
 
 <h2 id="1.3">Namespace Kavramı</h2>
 
-Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. Genelden özele doğru **Build-in**, **Global** ve **Local** olmak üzere 3 çeşit namespace (isim alanı) vardır. Build-in namespace'e, [`site` modülü](https://docs.python.org/3/library/site.html#module-site)'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır. Global namespace, programınızdaki her şeyi (class'lar, fonksiyonlar, variable'lar) kapsayan namespace'dir. Local namespace, class veya fonksiyonların kod blokları'dır. Oluşturulur, işlemler yapılır ve yok edilir. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
+Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. Genelden özele doğru **Build-in**, **Global** ve **Local** olmak üzere 3 çeşit namespace (isim alanı) vardır. Build-in namespace'e, [`site` modülü](https://docs.python.org/3/library/site.html#module-site)'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır. Global namespace, programınızdaki her şeyi (class'lar, fonksiyonlar, variable'lar) kapsayan namespace'dir. Local namespace, class veya fonksiyonların kapsamlarıdır (kod block'larından bahsediyorum). Oluşturulur, işlemler yapılır ve yok edilir. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
 
 **Not:** Local namespace'deki objeler, local namespace'den çıkıldıktan sonra global namespace'e kazanadırılmadıkları sürece bellekten silinir (istisnalar var mı bilmiyorum).
 
@@ -191,6 +191,7 @@ TypeError: 'int' object is not callable
 Gördüğünüz gibi `list` build-in class'ının identifier'ına global namespace'de `1` integer'ını atadığımız için build-in namespace'deki `list` class'ını geçersiz kılmış (override) olduk ve eski işlevinde kullanmaya çalıştığımızda `TypeError: 'int' object is not callable` hatası yükseltildi. Global namespace'deki `list` objesini `del` statement ile sildiğimizde ise tekrar build-in namespace'deki `list` build-in class'ı geçerli oldu ve eski işlevini kullanabilmeye başladık.
 
 <h2 id="1.4">Scope Kavramı</h2>
+
 Scope, "kapsam" anlamına gelmektedir. Global namespace aynı zamanda "her şeyi kapsayan" anlamına gelen "global scope" olarak da adlandırılabilir. `def` ve `class` statement'leri ile tanımladığımız fonksiyon ve class'lar, for loop'un initializer variable'ı local scope'a örnektir. Bir local scope, kendisini kapsayan bütün scope'ların (başka bir deyişle, kapsamında bulunduğu bütün scope'ların) içeriğine erişebilir. Örnek:
 ```py
 a = "a"
@@ -311,6 +312,7 @@ f1() # Output: 2
 `global a` statement, global namespace'de bulunan `a` variable'ının `f3` fonksiyonunun scope'unda bildirir (declare). Bu sayede `a += 1` kodunun bulunduğu scope'da `a` variable'ı olmadığı için aldığımız `UnboundLocalError: local variable 'x' referenced before assignment` gibi hatalar almıyoruz.
 
 <h2 id="1.6"><code>nonlocal</code> Keyword</h2>
+
 `nonlocal` keyword'ü, `global` keyword'ü ile benzer mantıkta çalışır. `nonlocal` keyword'ü, local namespace'de bulunan alt scope'ların, üst scope'lardaki objelere erişmesine imkan verir. Örnek:
 ```py
 def  f1():
@@ -354,7 +356,7 @@ print(var2()) # Output: 2
 print(var2()) # Output: 3
 ```
 Bu örnekle ilgili bazı önemli bilgiler:
-- Fonksiyonlar çağırıldıklarında kod block'larındaki objeler belleğe kaydedilir. Kod block'larındaki işlemlerin hepsi yapıldığında fonksiyon sonlanır ve belleğe kaydedilen objeler bellekten silinir.
+- Fonksiyonlar çağırıldıklarında kapsamlarındaki (kod block'larından bahsediyorum) objeler belleğe kaydedilir. Kod block'larındaki işlemlerin hepsi yapıldığında fonksiyon sonlanır ve belleğe kaydedilen objeler bellekten silinir.
 - `f1` fonksiyonu her çağırıldığında farklı bir `f2` objesi yaratılır (create) ve bu fonksiyon objesi `return f2` statement çalışınca döndürülür. Bu döndürülen birbirinden farklı objeler `var1` ve `var2` variable'larına atanır. Bu objeler sırasıyla `<function f1.<locals>.f2 at 0x000001BED3B99EE0>` ve `<function f1.<locals>.f2 at 0x000001BED3B99E50>` şeklindedir.
 - `var1` ve `var2` variable'larına atanan `f2` fonksiyon objeleri, `f1` fonksiyonunun ilk halini geçerli kabul eder. Yani ilk `f2` fonksiyonu `s += 1` işlemini gerçekleştirse bile ikinci `f2` fonksiyonu `s` variable'ını `0` değeri olarak kabul etmektedir. Durumla ilgili başka bir örnek:
     ```py
@@ -395,7 +397,7 @@ print(f1()()) # Output: 1
 print(f1()()) # Output: 1
 ```
 Bu örnekle ilgili bazı önemli bilgiler:
-- Fonksiyonlar çağırıldıklarında kod block'larındaki objeler belleğe kaydedilir. Kod block'larındaki işlemlerin hepsi yapıldığında fonksiyon sonlanır ve belleğe kaydedilen objeler bellekten silinir.
+- Fonksiyonlar çağırıldıklarında kapsamlarındaki (kod block'larından bahsediyorum) objeler belleğe kaydedilir. Kod block'larındaki işlemlerin hepsi yapıldığında fonksiyon sonlanır ve belleğe kaydedilen objeler bellekten silinir.
 - `f1` fonksiyonu her çağırıldığında farklı bir `f2` objesi yaratılır (create) ve bu fonksiyon objesi `return f2` statement çalışınca döndürülür (döndürülen `f2` fonksiyon objelerine kısaca "`f2`" diyeceğim). Bu işlem sonrasında `f1()()` işlemi Python'un gözünde `f2()` işlemine dönüşür.
 - `f2` fonksiyon objesi çalıştırıldığında ise kod bloğundaki işlemler yapılır ve bu fonksiyon objesi önceki örnekteki gibi `var1` gibi bir variable'a atanmadığı için bellekten silinir. Bu yüzden "1, 2, 3" gibi output'lar yerine "1, 1, 1" output'unu aldık.
 
@@ -443,7 +445,7 @@ print(*sorted(elemanlar, key=lambda p1:(p1[1])), sep=', ') # Output: ('bir', 1),
 
 <h1 id="3">Nested (İç İçe) Fonksiyonlar</h1>
 
-Bir fonksiyon başka bir fonksiyonun kod block'una tanımlanabilir. Bunlara nested (iç içe) fonksiyonlar denir. En dıştaki fonksiyona **enclosing**, enclosing fonksiyonun scope'una tanımlanan diğer bütün fonksiyonlar **nested** fonksiyon denir. Örnek:
+Bir fonksiyon başka bir fonksiyonun kapsamına (kod block'larından bahsediyorum) tanımlanabilir. Bunlara nested (iç içe) fonksiyonlar denir. En dıştaki fonksiyona **enclosing**, enclosing fonksiyonun scope'una tanımlanan diğer bütün fonksiyonlar **nested** fonksiyon denir. Örnek:
 ```py
 def enclosing_func():
     print("Enclosing fonksiyon çalıştı.")
@@ -478,7 +480,7 @@ Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](https:
 
 <h1 id="4">Recursive (Özyinelemeli) Fonksiyonlar</h1>
 
-Bir fonkiyon çağırıldığında kod block'unda başka bir fonksiyonu çağırabilir. Örnek:
+Bir fonkiyon çağırıldığında kapsamında (kod block'larından bahsediyorum) başka bir fonksiyonu çağırabilir. Örnek:
 ```py
 def func():
     print("Print fonksiyonu çağırıldı!")

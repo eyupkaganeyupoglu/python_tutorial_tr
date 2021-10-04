@@ -16,7 +16,9 @@
 
 <h1 id="0">Python Yazmak İçin Ne Kullanmalıyım?</h1>
 
-Ben VSCode kullanıyorum. VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını anlatmakta fayda var:
+Ben VSCode kullanıyorum. Bu yüzden bu tutorial boyunca göreceğiniz bütün kodlar, output'lar, debugger işlemleri vs. her şey VSCode kullanılarak elde edilmiştir. Başka bir IDE veya text editör kullanıp aynı şeyleri elde edemediyseniz yapabileceğim bir şey yok. Python'u öğrenene kadar VSCode kullanın.
+
+VSCode'da VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını anlatmakta fayda var:
 - **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text editor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
 - **Text editor:** Not defterinin gelişmiş versiyonudur diyebiliriz. Çeşitli extension'larla modifiye edilerek harika program geliştirme ortamlarına da dönüştürülebilir. IDE'lere göre daha hızlıdır ama bu hız kurduğunuz extension'lara göre değişebilir. Benim gibi 20 tane extension kullanıyorsanız, kullandığınız text editor, bir IDE kadar yavaş açılabilir. Kullandığım extension listesi:
 	
@@ -106,6 +108,7 @@ Bütün bunların ne oldukları ve nasıl kullanıldıkları zamanla daha iyi ot
 - [Keyword'ler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#keywords") identifier olarak kullanılamaz. Örnek: `global = 1`. Build-in namespace'de tanımlanmış `str`, `int`, `float`... vb. build-in class ve fonksiyonları da identifier olarak kullanmamalısınız. Python'un keyword'lerin identifier olarak kullanılmaması için bir savunma mekanizması vardır ama bu mekanizma build-in namespace'deki class'ları ve fonksiyonları kapsamamaktadır. Bu yüzden bunları identifier olarak kullanmayın, işlevselliklerini yokedersiniz ve dolayısıyla programınızı bozarsınız.
 
 <h1 id="6">Yorum (Comment) Satırları</h1>
+
 Python'da kodlarınızın ne işe yaradığını, kullanıcıların neler yapması gerektiğini veya canınız ne istiyorsa yazabileceğiniz yorum satırları (comment) bulunmaktadır. 
 
 **Tek satır yorum satırı:**

@@ -1,5 +1,10 @@
-# Decorators
-Python, mevcut bir koda işlevsellik (functionality) eklemek için decorator adı verilen ilginç bir özelliğe sahiptir. Buna **metaprogramming** da denir. Çünkü programın bir kısmı, compile time sırasında programın başka bir kısmını değiştirmeye (modify) çalışır.
+# İçindekiler
+
+- [Decorators](#1)
+
+<h1 id="1">Decorators</h1>
+
+Python, mevcut bir koda işlevsellik (functionality) eklemek için decorator adı verilen bir özelliğe sahiptir. Buna **metaprogramming** da denir. Çünkü programın bir kısmı, compile time sırasında programın başka bir kısmını değiştirmeye (modify) çalışır.
 
 Python'da (Class'lar dahil) her şey bir objedir ve bir obje farklı isimlere (identifier) sahip olabilir. Örnek:
 ```py
@@ -39,14 +44,14 @@ def is_called():
 var = is_called()
 var() # Output: Hello
 ```
-Yukarıdaki gibi bir enclosing fonksiyonun içinde tanımlı nested fonksiyonu direkt `return` statement ile döndürmeye ve döndürülen fonksiyonu yukarıdaki gibi kullanmaya **Closure** denir. Closure'lar, global value'ların kullanımını önleyebilir ve bu sayede bir tür veri gizleme (data hiding) sağlar. Çünkü closure fonksiyondaki value'lar, fonksiyon çalışmayı sonlandırdıktan sonra bellekten silinir.
-
-Closure'ın 3 şartı vardır:
+Yukarıdaki gibi bir enclosing fonksiyonun içinde tanımlı nested fonksiyonu direkt `return` statement ile döndürmeye ve döndürülen fonksiyonu yukarıdaki gibi kullanmaya **Closure** denir. Closure'ın 3 şartı vardır:
 - Nested fonksiyona sahip olmak
 - Nested fonksiyon, enclosing fonksiyondaki en az bir value'ya atıfta bulunmalıdır (refers to).
 - enclosing fonksiyon, nested fonksiyonu döndürmelidir.
 
-Bu üç şartı sağlayan nested fonksiyonlar closure olur. Bütün fonksiyon objeleri `__closure__` methoduna sahiptir. Bu method, closure fonksiyonun kullandığı enclosing fonksiyondaki objeleri (variable, fonksiyon vs.) içeren cell'leri içeren bir `tuble`'dır. Bu cell'lerdeki objelere de `cell_contents` methodu ile ulaşabilirsiniz. Örnek:
+Bu üç şartı sağlayan nested fonksiyonlar closure olur. Closure'lar, global value'ların kullanımını önleyebilir ve bu sayede bir tür veri gizleme (data hiding) sağlar. Çünkü closure fonksiyondaki variable'lara kullanıcı direkt olarak ulaşamaz (debugger ile falan bakamazsınız) ve fonksiyon çalışmayı sonlandırdıktan sonra local objeler bellekten silinir.
+
+Bütün fonksiyon objeleri `__closure__` methoduna sahiptir. Bu method, closure fonksiyonun kullandığı enclosing fonksiyondaki objelerin (variable, fonksiyon vs.) bulunduğu cell'leri içeren bir `tuble`'dır. Bu cell'lerdeki objelere de `cell_contents` methodu ile ulaşabilirsiniz. Örnek:
 ```py
 def make_multiplier_of(x,y,z,r):
     toplam = x+y+z
@@ -71,7 +76,7 @@ print(var.__closure__[5], ":", var.__closure__[5].cell_contents) # Output: <cell
 ```
 **Not:** Closure olma şartlarının hepsini sağlayamayan fonksiyonlar closure olamazlar. Closure olmayan fonksiyonların `__closure__` methodu `None` value'suna sahiptir.
 
-Fonksiyonlar ve methodlar çağırılabilir olduklarından **callable** olarak adlandırılırlar. Aslında special `__call__()` methodunun uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable döndüren bir callable'dir . Basitçe decorator, callable bir objeyi alır, bazı işlevsellik (functionality) ekler ve onu döndürür (`return`). Bir fonksiyonu decore etmek için `@{function_name}` kullanılır. Örnek:
+Fonksiyonların ve methodların çağırılabilir olma durumu **callable** olarak adlandırılır. Aslında `__call__()` special methodu uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable döndüren bir callable'dir. Basitçe decorator, callable bir objeyi alır, bazı işlevsellik (functionality) ekler ve onu döndürür (`return`). Bir fonksiyonu decore etmek için `@{function_name}` syntax yapısı kullanılır. Örnek:
 ```py
 def decorator_maker(func):
     def inner():
@@ -98,7 +103,7 @@ def decorator_exp():
 
 decorator_exp() # Output: Artık bu bir DECORATOR
 ```
-Bu iki koddan `decorator_exp = decorator_maker(decorator_exp)` kodu ile `@decorator_maker` decorator'ının eşdeğer olduğu sonucunu çıkarabilirsiniz.
+Bu iki koddan `decorator_exp = decorator_maker(decorator_exp)` kodu ile `@decorator_maker` decorator'ının eşdeğer olduğu sonucunu çıkarabilirsiniz. Burada `decorator_exp` fonksiyonuna işlevsellik (functionality) eklendi.
 
 Parametreli fonksiyonları aşağıdaki örnekteki gibi decore edip kullanıyoruz:
 ```py
@@ -118,7 +123,7 @@ def bölme_işlemi(a, b):
 bölme_işlemi(4,2) # Output: 4 ve 2 sayılarının, bölme işlemine göre sonucu: 2.0
 bölme_işlemi(2,0) # Output: 2 ve 0 sayılarının, bölme işlemine göre sonucu: Ops! Bölünemiyor...
 ```
-Burada `inner` fonksiyonu ile decore edilmiş `bölme_işlemi` fonksiyonunun aynı parametrelere sahip olduğunu farketmişsinizdir. İstediğiniz kadar parametreyi `*args` ve `**kwargs` kullanarak tanımlayabilirsiniz. Örnek:
+Burada `inner` fonksiyonu ile decore edilmiş `bölme_işlemi` fonksiyonunun aynı parametrelere sahip olduğunu farketmişsinizdir. Buradan "`inner` fonksiyonu decore edilen fonksiyon olarak kullanılıyor." sonucunu çıkarabilirsiniz. İstediğiniz kadar parametreyi `*args` ve `**kwargs` kullanarak tanımlayabilirsiniz. Örnek:
 ```py
 def printer(func):
     def inner(*args, **kwargs):
