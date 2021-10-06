@@ -1227,7 +1227,7 @@ PDF belgelerinde, o belge hakkında bazı önemli bilgiler veren birtakım özel
 | Etiket | Anlamı |
 | :--------: |--------|
 | `/Creator` | Belgeyi oluşturan yazılım |
-| `/Producer` | Belgeyi PDF’e dönüştüren yazılım |
+| `/Producer` | Belgeyi PDF'e dönüştüren yazılım |
 | `/Title` | Belgenin başlığı |
 | `/Author` | Belgenin yazarı |
 | `/Subject` | Belgenin konusu |

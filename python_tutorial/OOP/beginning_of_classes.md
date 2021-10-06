@@ -113,6 +113,8 @@ print(var) # Output: <__main__.A object at 0x0000016B43BFDFD0>
 ```
 Python, `A()` kodunun bulunduğu statement'ı okuduğunda bir instance yaratır ama bir sonraki statement'a geçtiğinde, yarattığı bu instance herhangi bir variable'a atanmadığı için bellekten silinir. Bu yüzden tek kullanımlıktır.
 
+**Not:** Şimdiye kadar anlattığım, type dönüşümlerinde kullandığımız `int()`, `str()`, `list()` vs. her şey aslında bir class. Bunları size "`int()` fonksiyonu", "`str()` fonksiyonu" olarak sunmuştum ama aslında bunlar `int`, `str` vs. class'larını kullanarak yaptığımız bir instantiation işlemidir. Mesela daha sonra anlatacağım ve "`property()` fonksiyonu" olarak bahsedeceğim şey de aslında `property` class'ını kullanarak yaptığımız bir instantiation işlemidir. Bu bilgi aklınızın bir köşesinde dursun çünkü Python'u anlamanız açısından önemli.
+
 <h1 id="2">Attributes</h1>
 
 Belli bir değeri/özelliği belirten, variable'lar gibi kullanılan class elemanlarına **Attribute** denir. Attribute'lar class ve instance attribute olmak üzere 2 çeşittir.
@@ -425,7 +427,7 @@ var = A()
 
 ![](https://i.ibb.co/YX198Dv/image.png)
 
-C'de uygulanan (implemented) bir special method'a erişmek (access) için bir extension type'ın dict'ine bir [slot wrapper](https://stackoverflow.com/questions/24708203/what-is-a-slot-wrapper-in-python#:~:text=A%20slot%20wrapper%20is%20installed,variant%20called%20method-wrapper) kurulur. Bu sayede C programlama dilinde yazılmış special methodları Python'da kullanabiliyoruz. Slot wrapper her zaman unbound'dur ve method wrapper, slot wrapper ile ilişkilidir (bound). Bunları, slot wrapper ve method wrapper kavramlarını gördüğünüzde yadırgamamanız için anlattım.
+C'de uygulanan (implemented) bir special method'a erişmek (access) için bir extension type'ın dict'ine bir [slot wrapper](https://stackoverflow.com/questions/24708203/what-is-a-slot-wrapper-in-python#:~:text=A%20slot%20wrapper%20is%20installed,variant%20called%20method-wrapper "https://stackoverflow.com/questions/24708203/what-is-a-slot-wrapper-in-python#:~:text=A%20slot%20wrapper%20is%20installed,variant%20called%20method-wrapper") kurulur. Bu sayede C programlama dilinde yazılmış special methodları Python'da kullanabiliyoruz. Slot wrapper her zaman unbound'dur ve method wrapper, slot wrapper ile ilişkilidir (bound). Bunları, slot wrapper ve method wrapper kavramlarını gördüğünüzde yadırgamamanız için anlattım.
 
 `__init__` constructor'ı tanımlanmış `A` ismindeki bir class'ı ele alalım. Bu durumda `A` class'ının kendi `__init__` constructor'ı, object base class'ın `__init__` constructor'ını geçersiz kıldığı (override) (daha sonra anlatılacak) için `<function A.__init__ at 0x000001D36879A430>` şeklinde depolanır.
 ```py
@@ -754,7 +756,7 @@ print(callable(A.class_method_exp)) # Output: True
 ```
 Yukarıda da gördüğünüz gibi `<classmethod object at 0x0000021910BB3430>` objesi çağırılabilir (callable) değilken, `<bound method A.class_method_exp of <class '__main__.A'>>` objesi çağırılabilirdir (callable).
 
-Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların class method'larını da etkiler (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1) kısmında anlattım.
+Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların class method'larını da etkiler (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1") kısmında anlattım.
 
 > ... class method'lar hariç bütün methodların kapsamında tanımlanan her şey instance'lara özelken, direkt olarak main class'ın kapsamında (enclosing scope) tanımlanan (class attribute'lar, class-instance-static method'lar, property objeleri vs.) objelerin üzerinde yapılan değişiklikler bu class'dan türetilen instance'ları da etkiler. ...
 
@@ -989,7 +991,7 @@ var.ic_print(var, A) # Output: A B
 A.ic_print(var, A) # Output: A B
 ```
 
-Main class'ın static method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların static method'larını da etkiler. (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1) kısmında anlattım.
+Main class'ın static method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların static method'larını da etkiler. (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1") kısmında anlattım.
 
 > ... class method'lar hariç bütün methodların kapsamında tanımlanan her şey instance'lara özelken, direkt olarak main class'ın kapsamında (enclosing scope) tanımlanan (class attribute'lar, class-instance-static method'lar, property objeleri vs.) objelerin üzerinde yapılan değişiklikler bu class'dan türetilen instance'ları da etkiler. ...
 
@@ -1057,7 +1059,7 @@ print(hasattr(A, "yyy")) # Output: Falsa
 print(hasattr(var, "yyy")) # Output: False
 ```
 
-Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hasattr).
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hasattr "https://docs.python.org/3/library/functions.html#hasattr").
 
 <h2 id="4.3"><code>getattr(obj, name, default)</code> Fonksiyonu</h2>
 
@@ -1088,7 +1090,7 @@ print(var.yyy) # Output: AttributeError: 'A' object has no attribute 'yyy'
 
 **Not:** Class'lardaki `__getattribute__` methodu bu build-in fonksiyonu kullanır. Bu methodun `__doc__` methoduna bakarsanız `'Return getattr(self, name).'` görürsünüz.
 
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#getattr).
+Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#getattr "https://docs.python.org/3/library/functions.html#getattr").
 
 <h2 id="4.4"><code>setattr(obj, name, value)</code> Fonksiyonu</h2>
 
@@ -1155,7 +1157,7 @@ Gördüğünüz gibi yeni eklenen `yyy` ve `zzz` class attribute gibi davranıyo
 
 **Not:** Class'lardaki `__setattr__` methodu bu build-in fonksiyonu kullanır. Bu methodun `__doc__` methoduna bakarsanız `'Implement setattr(self, name, value).'` yazdığını görürsünüz.
 
-Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#setattr).
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#setattr "https://docs.python.org/3/library/functions.html#setattr").
 
 <h2 id="4.5"><code>delattr(obj, name)</code> Fonksiyonu</h2>
 
@@ -1171,7 +1173,7 @@ delattr(var, "xxx") # AttributeError: xxx
 
 **Not:** Class'lardaki `__delattr__` methodu bu build-in fonksiyonu kullanır. Bu methodun `__doc__` methoduna bakarsanız `'Implement delattr(self, name).'` yazdığını görürsünüz.
 
-Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#delattr).
+Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#delattr "https://docs.python.org/3/library/functions.html#delattr").
 
 <h2 id="4.6"><code>__dict__</code> Methodu</h2>
 

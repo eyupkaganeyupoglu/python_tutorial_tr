@@ -163,7 +163,7 @@ print(func(2)) # Output: 4
 
 <h2 id="1.3">Namespace Kavramı</h2>
 
-Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. Genelden özele doğru **Build-in**, **Global** ve **Local** olmak üzere 3 çeşit namespace (isim alanı) vardır. Build-in namespace'e, [`site` modülü](https://docs.python.org/3/library/site.html#module-site)'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır. Global namespace, programınızdaki her şeyi (class'lar, fonksiyonlar, variable'lar) kapsayan namespace'dir. Local namespace, class veya fonksiyonların kapsamlarıdır (kod block'larından bahsediyorum). Oluşturulur, işlemler yapılır ve yok edilir. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
+Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. Genelden özele doğru **Build-in**, **Global** ve **Local** olmak üzere 3 çeşit namespace (isim alanı) vardır. Build-in namespace'e, [`site` modülü](https://docs.python.org/3/library/site.html#module-site "https://docs.python.org/3/library/site.html#module-site")'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır. Global namespace, programınızdaki her şeyi (class'lar, fonksiyonlar, variable'lar) kapsayan namespace'dir. Local namespace, class veya fonksiyonların kapsamlarıdır (kod block'larından bahsediyorum). Oluşturulur, işlemler yapılır ve yok edilir. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
 
 **Not:** Local namespace'deki objeler, local namespace'den çıkıldıktan sonra global namespace'e kazanadırılmadıkları sürece bellekten silinir (istisnalar var mı bilmiyorum).
 
@@ -401,7 +401,7 @@ Bu örnekle ilgili bazı önemli bilgiler:
 - `f1` fonksiyonu her çağırıldığında farklı bir `f2` objesi yaratılır (create) ve bu fonksiyon objesi `return f2` statement çalışınca döndürülür (döndürülen `f2` fonksiyon objelerine kısaca "`f2`" diyeceğim). Bu işlem sonrasında `f1()()` işlemi Python'un gözünde `f2()` işlemine dönüşür.
 - `f2` fonksiyon objesi çalıştırıldığında ise kod bloğundaki işlemler yapılır ve bu fonksiyon objesi önceki örnekteki gibi `var1` gibi bir variable'a atanmadığı için bellekten silinir. Bu yüzden "1, 2, 3" gibi output'lar yerine "1, 1, 1" output'unu aldık.
 
-Namespace ve Scope kavramlarıyla alakalı daha fazla bilgi işin [tıklayınız](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces).
+Namespace ve Scope kavramlarıyla alakalı daha fazla bilgi işin [tıklayınız](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces "https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces").
 
 <h1 id="2"><code>lambda</code> Fonksiyonu</h1>
 

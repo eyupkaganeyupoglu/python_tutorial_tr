@@ -670,7 +670,7 @@ else:
 
 **Dikkat:** Bu kısımda bahsedeceğim şeylerin multiplication ve exponentiation operator'leri ile alakası yoktur. Prefix pozisyonunda kullanılan `*` ve `**` operator'lerinden bahsediyoruz.
 
-**Dikkat:** Burada bahsedeceğim şeyler fonksiyonlar konusu hakkında kavram ve kodlar içermektedir. Bu kısmı anlamazsanız [Fonksiyonlar (functions)](asd) kısmını bitirdikten sonra bu başlığı tekrar çalışın.
+**Dikkat:** Burada bahsedeceğim şeyler fonksiyonlar konusu hakkında kavram ve kodlar içermektedir. Bu kısmı anlamazsanız [Fonksiyonlar (functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md") kısmını bitirdikten sonra bu başlığı tekrar çalışın.
 
 <h2 id="3.1">Unpacking Into Function Call</h2>
 
