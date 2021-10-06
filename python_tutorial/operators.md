@@ -672,6 +672,8 @@ else:
 
 **Dikkat:** Burada bahsedeceğim şeyler fonksiyonlar konusu hakkında kavram ve kodlar içermektedir. Bu kısmı anlamazsanız [Fonksiyonlar (functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md") kısmını bitirdikten sonra bu başlığı tekrar çalışın.
 
+Asterisk operator'ı hakkında daha fazla özellik, kullanım alanı ve bilgi için [tıklayınız](https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/ "https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/").
+
 <h2 id="3.1">Unpacking Into Function Call</h2>
 
 Asterisk operator'ları, fonksiyonların parametrelerine argüman olarak iterable bir objeyi açmak (unpack) için kullanılır.
@@ -836,8 +838,6 @@ func("Eyüp", yaş=20, meslek="Öğrenci") # Output: Eyüp 20 Öğrenci
 func("Eyüp", 20, meslek="Öğrenci") # TypeError: func() takes 1 positional argument but 2 positional arguments (and 1 keyword-only argument) were given   
 func("Eyüp", 20, "Öğrenci") # TypeError: func() takes 1 positional argument but 3 were given
 ```
-
-Asterisk operator'ı hakkında daha fazla özellik, kullanım alanı ve bilgi için [tıklayınız](https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/ "https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/").
 
 <h1 id="4">Boolean Type</h1>
 

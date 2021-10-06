@@ -303,3 +303,5 @@ hello
 world
 ```
 Coroutines function definition statement ile ilgili daha fazla bilgi için [tıklayınız](https://docs.python.org/3/reference/compound_stmts.html#coroutines "https://docs.python.org/3/reference/compound_stmts.html#coroutines").
+
+Variable'lar, expression'lar ve statement'lar hakkında daha fazla bilgi içib [tıklayınız](https://www.greenteapress.com/thinkpython/thinkCSpy/html/chap02.html "https://www.greenteapress.com/thinkpython/thinkCSpy/html/chap02.html").

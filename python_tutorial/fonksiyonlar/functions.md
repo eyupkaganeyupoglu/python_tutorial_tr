@@ -17,6 +17,8 @@
 
 <h1 id="1">Fonksiyonlar</h1>
 
+**Not:** Python'da belli başlı işleri yapmaları için build-in fonksiyonların yeterli gelmediği yerlerde kullanabileceğiniz birçok fonksiyonun bulunduğu `functools` modülü çok işinize yarar.
+
 Belli başlı görevleri yapmak için tanımlanmış işlevsel yapıya **fonksiyon** denir. Farklı programlama dillerinde fonksiyonlar, **rutin** ya da **prosedür** olarak da isimlendirilebilir. Bir fonksiyonu kullanmadan önce onu tanımlamanız (definition) gerekmektedir. Bu işlemi, tanımlama anlamına gelen "definition" kelimesine itefen yapılmış `def` keyword'ü ile yapıyoruz. Syntax:
 ```py
 def identifier(parameters):
@@ -439,6 +441,18 @@ def sırala(p1):
     
 print(*sorted(elemanlar, key=sırala), sep=', ') # Output: ('bir', 1), ('iki', 2), ('üç', 3), ('dört', 4), ('beş', 5)
 print(*sorted(elemanlar, key=lambda p1:(p1[1])), sep=', ') # Output: ('bir', 1), ('iki', 2), ('üç', 3), ('dört', 4), ('beş', 5)
+```
+
+`lambda` fonksiyonları iç içe (nested) tanımlanabilir. Örnek:
+```py
+nested_lambda = lambda a : lambda b : a*b
+print(nested_lambda(2)(2)) # Output: 4
+```
+Tek satırda oluşturulan `if` - `else` yapısı kullanılarak nested lambda fonksiyonu tanımlayabilirsiniz. Örnek:
+```py
+nested_lambda = lambda a : (lambda b : a*b) if a < 10 else (lambda b : a+b)
+print(nested_lambda(2)(10)) # Output: 20
+print(nested_lambda(10)(2)) # Output: 12
 ```
 
 **Not:** Bir `lambda` fonksiyonunun objesi `<function <lambda> at 0x0000021BAD0ABF70>` gibidir.
