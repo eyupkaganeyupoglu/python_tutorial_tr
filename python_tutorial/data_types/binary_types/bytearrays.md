@@ -100,7 +100,7 @@ Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablos
     ```py
 	print(bytearray("aş", "ascii", "replace")) # Output: bytearray(b'a?')
     ```
-    Bu argümanlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#1.3").
+    Bu argümanlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3").
 
 Daha fazla bilgi için:
 - [Bytearray Function](https://docs.python.org/3/library/functions.html#func-bytearray "https://docs.python.org/3/library/functions.html#func-bytearray")
@@ -285,7 +285,7 @@ print("İ".encode("utf-8")) # Output: b'\xc4\xb0'
 print(bytearray("İ".encode("utf-8"))) # Output: bytearray(b'\xc4\xb0')
 print(bytearray("İ".encode("utf-8")).decode("utf-8")) # Output: İ
 ```
-`encoding` parametresine girilen argümanın belirttiği kod çözücünün kodu çözemediği zamanlarda Python'un nasıl davranacağını `errors` parametresine girilen argüman ile belirleyebilirsiniz. Bu parametreye `strict` (default değer), `ignore` ve `replace` argümanlarını girebilirsiniz. Bu argümanların ne gibi sonuçlara sebep olduklarına ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#str-fonksiyonu "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_type/string.md#str-fonksiyonu"). Örnek:
+`encoding` parametresine girilen argümanın belirttiği kod çözücünün kodu çözemediği zamanlarda Python'un nasıl davranacağını `errors` parametresine girilen argüman ile belirleyebilirsiniz. Bu parametreye `strict` (default değer), `ignore` ve `replace` argümanlarını girebilirsiniz. Bu argümanların ne gibi sonuçlara sebep olduklarına ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3"). Örnek:
 ```py
 print(bytearray(b'abcd\xe7').decode("ascii", "ignore")) # Output: abcd
 print(bytearray(b'abcd\xe7').decode("ascii", "replace")) # Output: abcd�

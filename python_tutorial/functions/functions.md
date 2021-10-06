@@ -131,7 +131,7 @@ Gördüğünüz gibi `p1` parametresine argüman girilmemesi halinde Python `"fu
 
 <h3 id="1.1.3">Yıldızlı (Asterisk) Parametreler</h3>
 
-Python'da **Asterisk Operator**'ını kullanarak sınırsız sayıda argüman kabul eden parametreler tanımlayabilirsiniz. Bu operator ile ilgili bilgilere ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/operators.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/operators.md#3").
+Python'da **Asterisk Operator**'ını kullanarak sınırsız sayıda argüman kabul eden parametreler tanımlayabilirsiniz. Bu operator ile ilgili bilgilere ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/operators.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/operators.md#3").
 
 **Not:** Bir fonksiyona max 256 tane argüman girebilirsin (bu şey parametre tanımlama sınırı da olabilir, bilmiyorum), ama bu durum **Python 3.7**'de kaldırıldı. Yani **Python 3.7**'den sonra böyle bir sınırlama yok.
 
@@ -483,7 +483,7 @@ print(five(plus(four()))) # Output: 9
 print(four(plus(four()))) # Output: 8
 print(five(plus(five()))) # Output: 10
 ```
-Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/basic_concepts.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/basic_concepts.md")'da anlatıldı. Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
+Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md")'da anlatıldı. Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
 - En içteki `five()` çalışır ve parametre olarak bir şey girilmediği için `5` döndürür.
 - `plus()` çalışır ve parametre olarak aldığı `5`'i kullanarak `lambda x : x + 5` `lambda` fonksiyonunu döndürür.
 - `four()` çalışır ve parametre olarak `lambda` fonksiyonu objesi aldığı için `p1` parametresinin değeri default değeri olan `None` değeri değil, `lambda` fonksiyonu objesi olur. Bu yüzden `if` çalışmaz, `else` çalışır.

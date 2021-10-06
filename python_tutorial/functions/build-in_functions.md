@@ -34,7 +34,7 @@
 
 <h1 id="1"><code>all(iterable)</code> Fonksiyonu</h1>
 
-**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/iterators.md).
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md").
 
 `all(iterable)` fonksiyonu aşağıdaki syntax'a sahiptir:
 ```py
@@ -69,7 +69,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 
 <h1 id="2"><code>any(iterable)</code> Fonksiyonu</h1>
 
-**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/iterators.md).
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md").
 
 `any(iterable)` fonksiyonu aşağıdaki syntax'a sahiptir:
 ```py
@@ -137,7 +137,7 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#dir
 
 <h1 id="7"><code>eval(expression, globals=None, locals=None)</code> Fonksiyonu</h1>
 
-**Ön bilgi:** Bu bölümü anlayabilmek için [expression](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#2") ve [statement](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#3") kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md").
+**Ön bilgi:** Bu bölümü anlayabilmek için [expression](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#2") ve [statement](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#3") kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md").
 
 Expression ve statement'i ayırt edebilmek için `eval()` kullanılabilir çünkü `eval()`, parametre olarak sadece expression'ları kabul eder. `eval()` fonksiyonu `expression` parametresine argüman olarak girilen string'i yorumlar ve çalıştırır. Yani `eval("print('selam')")` şeklinde bir komut tanımlarsanız, `eval()` bunu önce yorumlar, sonra yorumundan çıkardığı anlamsal kodu (yani `print('selam')` kodunu) çalıştırır. `eval()`'in bu özelliğini kullanırken dikkat edilmelidir çünkü bu fonksiyon kötü amaçlarla da kullanılabilir. Örneğin sistem dosyalarını silecek bir kodu `eval()` fonksiyonuna yazabilirsiniz. Bunu önlemek için kodunuza kontrol mekanizması eklenmelidir. `eval()` fonksiyonunun `expression` parametresine argüman olarak statement (örneğin `eval("a=5")` gibi bir assignment statement) işlemini içeren bir string giremezsiniz. `eval()` fonksiyonu yavaş çalışan bir fonksiyondur. Bu yüzden en son tercihiniz olmalıdır. Örnek:
 ```py
@@ -161,7 +161,7 @@ bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#eva
 
 <h1 id="8"><code>exec(expression, globals=None, locals=None)</code> Fonksiyonu</h1>
 
-**Ön bilgi:** Bu bölümü anlayabilmek için [expression](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#2") ve [statement](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md#3") kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md").
+**Ön bilgi:** Bu bölümü anlayabilmek için [expression](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#2") ve [statement](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#3") kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md").
 
 `exec()` fonksiyonu, `eval()`'den farklı olarak sadece expression'ları değil, statement'ları da yorumlayıp çalıştırabilir. Örneğin `exec()` fonksiyonu ile assignment statement tanımlayabilirsiniz.
 ```py

@@ -31,7 +31,7 @@
 
 Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu). Class'lar bizi belli obje ve fonksiyon gruplarını her seferinde en baştan yazma zahmetinden kurtarır. Çünkü bir class'dan, bu class'ın bütün içeriğine sahip istediğimiz sayıda **instance** adı verilen objeler üretilebilir. Instance Türkçede 'örnek', 'oluşum' anlamlarına gelmektedir.
 
-**Not:** "Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu)." dedim diye class'lar obje değildir diye düşünmeyin. Python'da `if`, `def`, `and`, `or` gibi keyword, statement ve operator'lar hariç her şey (class'lar dahil) bir objedir. Bunlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/statements/statements_and_keywords.md").
+**Not:** "Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu)." dedim diye class'lar obje değildir diye düşünmeyin. Python'da `if`, `def`, `and`, `or` gibi keyword, statement ve operator'lar hariç her şey (class'lar dahil) bir objedir. Bunlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md").
 
 <h2 id="1.1">Class Definition</h2>
 
@@ -509,7 +509,7 @@ class A():
 var = A()
 print(var.func().attri2) # AttributeError: 'NoneType' object has no attribute 'attri2'
 ```
-[Fonksiyonlar (Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/fonksiyonlar/functions.md") konusunu anlayan, yukarıdaki hatanın sebebini zaten biliyordur. Bilmeyenler için anlatayım. Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/basic_concepts.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/basic_concepts.md#2") kodları çalıştırır. `var.func().attri2` kodu şu sırayla çalışır:
+[Fonksiyonlar (Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md") konusunu anlayan, yukarıdaki hatanın sebebini zaten biliyordur. Bilmeyenler için anlatayım. Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md#2") kodları çalıştırır. `var.func().attri2` kodu şu sırayla çalışır:
 1. Python önce `var` instance'ı üzerinden `func` methodunu çağırır.
 2. `func` method'unda herhangi bir `return` statement olmadığı için `func` method'u `NoneType` (`<class 'NoneType'>`) döndürür.
 3. Bu işlemlerden sonra `var.func().attri2` kodu Python'ın gözünde `NoneType.attri2` koduna dönüşür.
