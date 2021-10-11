@@ -49,6 +49,7 @@
     - [Packing Arguments Given to Function](#3.2)
     - [Positional Arguments With Keyword-only Arguments](#3.3)
     - [Keyword-only Arguments Without Positional Arguments](#3.4)
+    - [Positional-only Arguments Without Keyword Arguments](#3.5)
 - [Boolean Type](#4)
 - [Operator Önceliği](#5)
 
@@ -837,6 +838,20 @@ def func(isim, *, yaş, meslek):
 func("Eyüp", yaş=20, meslek="Öğrenci") # Output: Eyüp 20 Öğrenci
 func("Eyüp", 20, meslek="Öğrenci") # TypeError: func() takes 1 positional argument but 2 positional arguments (and 1 keyword-only argument) were given   
 func("Eyüp", 20, "Öğrenci") # TypeError: func() takes 1 positional argument but 3 were given
+```
+
+<h2 id="3.5">Positional-only Arguments Without Keyword Arguments</h2>
+
+`/` operator'ını kullanarak istenilen parametrelere positional-only argüman girilmesini sağlayabilirsiniz. Örnek:
+```py
+def func(isim, yaş, /, meslek="Yok", maddi_gelir=0):
+    print(isim,yaş,meslek,maddi_gelir)
+
+func("Eyüp", 20, "Öğrenci", 3000) # Output: Eyüp 20 Öğrenci 3000
+func("Eyüp", 20, "Öğrenci", maddi_gelir=3000) # Output: Eyüp 20 Öğrenci 3000
+func("Eyüp", 20, meslek="Öğrenci", maddi_gelir=3000) # Output: Eyüp 20 Öğrenci 3000
+func("Eyüp", yaş=20, merslek="Öğrenci", maddi_gelir=3000) # TypeError: func() got some positional-only arguments passed as keyword arguments: 'yaş'
+func(isim="Eyüp", yaş=20, merslek="Öğrenci", maddi_gelir=3000) # TypeError: func() got some positional-only arguments passed as keyword arguments: 'isim, yaş'
 ```
 
 <h1 id="4">Boolean Type</h1>
