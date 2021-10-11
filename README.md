@@ -71,6 +71,8 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 - İçe Aktarma Sistemi (Import System)
     - [Modüller (Modules)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/import_system/modules.md)
     - [Paketler (Packets)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/import_system/packets.md)
+- Modüller (Modules)
+    - [Numpy](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_genel.md)
 
 **!!DİKKAT!!** Bu tutorial hala tamamlanmıştır. Tutorial'da herhangi bir hata bulursanız lütfen issue veya comment bırakın. Teşekkürler.
 
