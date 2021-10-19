@@ -1,8 +1,8 @@
 # İçindekiler
--[`if` Statement](#1)
--[`elif` Statement](#2)
--[`else` Statement](#3)
--[Tek satırda `if` - `else` tanımlamak](#4)
+- [`if` Statement](#1)
+- [`elif` Statement](#2)
+- [`else` Statement](#3)
+- [Tek satırda `if` - `else` tanımlamak](#4)
 
 <h1 id="1"><code>if</code> Statement</h1>
 
