@@ -72,7 +72,12 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
     - [Modüller (Modules)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/import_system/modules.md)
     - [Paketler (Packets)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/import_system/packets.md)
 - Modüller (Modules)
-    - [Numpy](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_genel.md)
+    - [Numpy Giriş](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_giris.md)
+    - [NDArray (N-Dimensional Array)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/ndarray.md)
+    - [Numpy Data Types](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_data_types.md)
+    - [NDArray'lerde İşlemler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/ndarray_operation.md)
+    - [NDArray'leri Dilimlemek (Slicing)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/slicing.md)
+    - [Numpy Fonksiyonları](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_functions.md)
 
 **!!DİKKAT!!** Bu tutorial hala tamamlanmıştır. Tutorial'da herhangi bir hata bulursanız lütfen issue veya comment bırakın. Teşekkürler.
 
