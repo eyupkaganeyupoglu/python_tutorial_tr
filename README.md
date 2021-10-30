@@ -80,7 +80,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
         - [NDArray'leri Dilimlemek (Slicing)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/slicing.md)
         - [Numpy Fonksiyonları](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_functions.md)
 
-**!!DİKKAT!!** Bu tutorial hala tamamlanmıştır. Tutorial'da herhangi bir hata bulursanız lütfen issue veya comment bırakın. Teşekkürler.
+**!!DİKKAT!!** Bu tutorial hala tamamlanmıştır. Tutorial'da herhangi bir hata bulursanız lütfen issue veya comment bırakın. Teşekkürler
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>
