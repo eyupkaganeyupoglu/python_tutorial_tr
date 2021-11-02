@@ -11,7 +11,7 @@
 
 <h2 align='center'> Bu Tutorial nereden çıktı? </h2>
 
-Ben bir şeye çalışırken her zaman not tutarım. Çünkü benim için beyin bir veri depolama aracı değil, veriyi işleme aracıdır. Bu yüzden beynimi veri depolamakla meşgul etmeyip, hazır veriyi işleme konusunda eğittim. Bu yüzden insanların isimlerini çoğunlukla hatırlayamam. Python'ı öğrenirken de not tutuyordum. Bir süre sonra bu notların değerini farkettim ve bunu bir ürüne dönüştürmeye karar verdim. O zamandan bu zaman kadar hem Python öğrenip hem de öğrendiklerimi tutorial formatında not almaya başladım. Bu yüzden bu tutorialin hala sağlam bir bakıma ihtiyacı var çünkü tutorial de benimle birlikte geliştiği için ilk konular acemice yazılmış durumda. Bütün bu kusurları zamanla düzeltip durumu sizinle paylaşacağım.
+Ben bir şeye çalışırken her zaman not tutarım. Çünkü benim için beyin bir veri depolama aracı değil, veriyi işleme aracıdır. Bu yüzden beynimi veri depolamakla meşgul etmeyip, hazır veriyi işleme konusunda eğittim. Bu yüzden insanların isimlerini çoğunlukla hatırlayamam. Python'ı öğrenirken de not tutuyordum. Bir süre sonra bu notların değerini farkettim ve bunu bir ürüne dönüştürmeye karar verdim. O zamandan bu zaman kadar hem Python öğrenip hem de öğrendiklerimi tutorial formatında not almaya başladım.
 
 <h2 align='center'> Bu Tutorial'dan Nasıl Yararlanacağım? </h2>
 
@@ -79,8 +79,6 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
         - [NDArray'lerde İşlemler](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/ndarray_operation.md)
         - [NDArray'leri Dilimlemek (Slicing)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/slicing.md)
         - [Numpy Fonksiyonları](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/Modules/Numpy/numpy_functions.md)
-
-**!!DİKKAT!!** Bu tutorial hala tamamlanmıştır. Tutorial'da herhangi bir hata bulursanız lütfen issue veya comment bırakın. Teşekkürler.
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>
