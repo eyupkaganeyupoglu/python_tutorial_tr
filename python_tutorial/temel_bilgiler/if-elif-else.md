@@ -68,7 +68,7 @@ else: # daha sonra anlatılacak
 elif (condition):
 	# Expression
 ```
-`if` statement gibi tak başına kullanılamaz, `if` statement'a bağımlıdır. Sadece kendinden önceki `if` ya da `elif` statement çalışmazsa ve `condition`'a girilen koşul sağlanıyorsa çalışır. Örnek:
+`elif` statement kendisinden önceki `elif` ya da `if` statement'a bağımlıdır. Sadece kendinden önceki `if` ya da `elif` statement çalışmazsa ve `condition`'a girilen koşul sağlanıyorsa çalışır. Örnek:
 ```py
 sayı = int(input("Sayı gir: "))
 if sayı == 0:
