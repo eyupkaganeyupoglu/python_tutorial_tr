@@ -140,7 +140,7 @@ else:
 	# Expression
 ```
 
-`if` statement gibi tak başına kullanılamaz, `if` statement'a bağımlıdır. `else` statement sadece kendinden önceki `if` ya da `elif` statement çalışmazsa çalışır. Örnek:
+`else` statement kendisinden önceki `elif` ya da `if` statement'a bağımlıdır. Sadece kendinden önceki `if` ya da `elif` statement çalışmazsa çalışır. Örnek:
 ```py
 sayı = int(input("Sayı gir: "))
 if sayı == 0:
