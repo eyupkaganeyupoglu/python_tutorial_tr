@@ -308,7 +308,7 @@ Bir cümle yazınız: Selam Ben Python
 Selam_Ben_Python
 ```
 
-**Örnek Program:** Aşağıdaki program, `ilk_metin` variable'ında olan ve `ikinci_metin` variable'ında olmayan karakterleri tespit edip, bu kadarketleri `fark` variable'ında toplar.
+**Örnek Program:** Aşağıdaki program, `ilk_metin` variable'ında olan ve `ikinci_metin` variable'ında olmayan karakterleri tespit edip, bu kadarketleri `fark` variable'ında toplar. Bunu yaparken tespit edilen karakter `fark` içinde zaten varsa bu karakteri tekrar eklemez.
 ```py
 # İki string arasındaki farkları bulmak
 ilk_metin = "asdasfddgdhfjfdgdşfkgjdfklgşjdfklgjdfkghdfjghjklsdhajlsdhjkjhkhjjh"
@@ -354,7 +354,7 @@ for i in l1,l2,l3:
 ```
 [1, 2, 3], [4, 5, 6], [7, 8, 9], 
 ```
-`for` loop'ın `l1,l2,l3` girdisine karşı tepkisini `(l1, l2, l3)` şeklinde düşünebilirsiniz. Yani `for` loop sırayla `l1`, `l2` ve `l3` listelerinde gezinmek yerine `(l1, l2, l3)` yapısının içinde geziniyor. Bu yüzden `i` variable'ına her seferinde sırasıyla bu `l1`, `l2` ya da `l3` listelerinin direkt kendisi atanıyor. Başka bir örnek:
+`for` loop'ın `l1,l2,l3` girdisine karşı tepkisini `(l1, l2, l3)` şeklinde düşünebilirsiniz. Yani `for` loop sırayla `l1`, `l2` ve `l3` listelerinde gezinmek yerine `(l1, l2, l3)` tuple'ının içinde geziniyor. Başka bir örnek:
 ```py
 l1 = [1,2,3]
 l2 = [4,5,6]
@@ -367,7 +367,7 @@ for i,j in l1,l2,l3:
 ```
 ValueError: too many values to unpack (expected 2)
 ```
-Burada `i` variable'ının `(l1, l2, l3)` yapısının içinde gezineceğini, `j` variable'ının da bu yapının içindeki `l1`, `l2` ve `l3` listelerinin içinde gezineceğini ve `1 2 3 4 5 6 7 8 9` gibi bir output elde edeceğinizi düşünmüş olabilirsiniz ama işler öyle yürümüyor. Bu `ValueError` hatası, `for` loop'ın `loop_control_variable` kısmına tanımlanan variable sayısı ile `iterable_object` kısmına girilen objelerin herhangi birinin eleman sayısı birbirine eşit olmadığı durumlarda yükseltilir. Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin eleman sayısının 3 olmasıdır. Başka bir hatalı örnek:
+Buradaki hatanın nedeni önceden anlattığım string'lerdeki hatanın nedeniyle aynıdır. Başka bir hatalı örnek:
 ```py
 l1 = [1]
 l2 = [4]
@@ -380,20 +380,22 @@ for i,j in l1,l2,l3:
 ```
 ValueError: not enough values to unpack (expected 2, got 1)
 ```
-Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin eleman sayısının 1 olmasıdır. Başka bir hatalı örnek:
+Buradaki hatanın nedeni önceden anlattığım string'lerdeki hatanın nedeniyle aynıdır. Başka bir hatalı örnek:
 ```py
-l1 = [1]
-l2 = [4,5]
-l3 = [7,8,9,1]
+l1 = [1,2]
+l2 = [3,4]
+l3 = [5,6,7,8]
 
 for i,j in l1,l2,l3:
     print(i,j, sep=", ")
 ```
 **Output:**
 ```
-ValueError: not enough values to unpack (expected 2, got 1)
+1, 2
+3, 4
+ValueError: too many values to unpack (expected 2)
 ```
-Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin bazılarının eleman sayısının tutarsız olmasıdır. Python bir statement'daki kodları soldan sağa doğru okuduğu için ilk `l1` objesini okudu ve "açmak için yeterli değer yok" anlamına gelen `ValueError: not enough values to unpack (expected 2, got 1)` hatasını verdi. `iterable_object` kısmında ilk sırada `l1` yerine `l3` olsaydı `ValueError: too many values to unpack (expected 2)` hatası yükseltilirdi. `l2` doğru eleman sayısına sahip olduğu için hata yükseltmez. Doğru kullanım örneği:
+Buradaki hatanın nedeni önceden anlattığım string'lerdeki hatanın nedeniyle aynıdır. Doğru kullanım örneği:
 ```py
 l1 = [1,2]
 l2 = [4,5]
@@ -417,9 +419,13 @@ for i,j,k in l1,l2,l3:
 ```
 **Output:**
 ```
-1, 2, 3, 4, 5, 6, 7, 8, 9, 
+1, 2, 3
+4, 5, 6
+7, 8, 9
 ```
 Buradaki `for` loop'da 3 tane `loop_control_variable` tanımlıdır ve `iterable_object` kısmına girilen objelerin eleman sayıları 3'dir. Sayılar tutarlı olduğu için hata yükseltilmedi.
+
+**Not:** Yukarıdaki koddan yola çıkarak `l1,l2,l3` kısmını `([1,2,3],[4,5,6],[7,8,9])` olarak, `i,j,k` kısmını da `(i,j,k)` olarak düşün ve `i=1`,`j=2`,`k=3` / `i=4`,`j=5`,`k=6` / `i=7`,`j=8`,`k=9` tarzında bir mantığın işlediğini kabul edin. Bu sayede kafanıza oturur sanırım.
 
 İç içe oluşturulan listelere **nested list** denir. Bu listelerin içinde de yukarıdaki gibi gezinebilirsiniz. Örnek:
 ```py
@@ -448,9 +454,19 @@ for x,y,z in l1:
 ```
 ValueError: not enough values to unpack (expected 3, got 2)
 ```
-Böyle bir yapının içinde gezinebilmek için **nested `for` loop** yapısını (daha sonra anlatılacak) kullanmalısınız.
+Böyle bir yapının içinde gezinebilmek için **nested `for` loop** yapısını (daha sonra anlatılacak) kullanmalısınız. Burada `l1` listesinin öğelerinin 2 öğesi olduğu için 2 `loop_control_variable` kullanmalıyız. Örnek:
+```py
+l1 = [( (1,2) , (3,4) ) , ( (7,8) , (9,10) )]
 
-**List'lere Davranışı** başlığından şimdiye kadar anlatılan şeyler `tuple`, `set`, `frozenset`, `range` gibi data type'larda da geçerlidir. sadece `set` ve `frozenset`'de olduğu gibi `list` data type'ı ile %100 aynı şekilde sonuçlanmaz. Örnek:
+for x,y in l1:
+    print(x,y, sep=", ", end=", ")
+```
+**Output:**
+```
+(1, 2), (3, 4), (7, 8), (9, 10), 
+```
+
+[List'lere Davranışı](#1.2.2) başlığından şimdiye kadar anlatılan şeyler `tuple`, `set`, `frozenset`, `range` gibi data type'larda da geçerlidir. sadece `set` ve `frozenset`'de olduğu gibi `list` data type'ı ile %100 aynı şekilde sonuçlanmaz. Örnek:
 ```py
 s1 = {1,2,3}
 s2 = {4,5,6}
@@ -494,7 +510,7 @@ Buradaki `dict_exp.items()` kodu `dict_items([('bir', 1), ('iki', 2), ('üç', 3
 
 <h3 id="1.3.1"><code>break</code> Statement</h3>
 
-`break` statement, kapsamında bulunduğu ilk loop'u bir anda sonlandırır. Böylelikle loop, hiçbir koşula bağlı kalmadan sonlanmış olur. Örnek:
+`break` statement, kapsamında (scope) bulunduğu ilk loop'u bir anda sonlandırır. Böylelikle loop, hiçbir koşula bağlı kalmadan sonlanmış olur. Örnek:
 ```py
 a = 0
 while a < 5:
@@ -552,7 +568,7 @@ Gördüğünüz gibi `b == 2` koşulu sağlandığınıda `if` statement, dolay�
 
 <h3 id="1.3.2"><code>continue</code> Statement</h3>
 
-`continue` statement, `break` statement gibi kapsamında bulunduğu ilk loop'u etkiler. Bir loop `continue` statement ile karşılaşınca yinelenir. Bu yüzden Python, `continue` statement'dan sonraki işlemleri okumadığı için yapmaz. Örnek:
+`continue` statement, `break` statement gibi kapsamında bulunduğu ilk loop'u etkiler. Bir loop `continue` statement ile karşılaşınca yinelenir. Bu yüzden Python, `continue` statement'dan sonraki işlemleri çalıştırmaz. Örnek:
 ```py
 for i in range(11):
     if i % 2 == 0:
@@ -574,9 +590,7 @@ while sayı <= 10:
 1 3 5 7 9 
 1 3 5 7 9
 ```
-Gördüğünüz gibi `for` ve `while` statement'lara tanımlanan `continue` statement her çalıştığında loop yinelendi. Bu yüzden tek sayılar yazdırılmadı.
-
-`continue` statement, kapsamında bulunduğu **ilk loop'u** bir anda sonlandırır demiştim. Örnek:
+Gördüğünüz gibi `for` ve `while` statement'lara tanımlanan `continue` statement her çalıştığında loop yinelendi. Bu yüzden tek sayılar yazdırılmadı. Başka bir örnek:
 ```py
 for i in ["a","b","c"]:
     for j in [1,2,3]:
@@ -611,7 +625,7 @@ Gördüğünüz gibi `b == 2` koşulu sağlandığınıda `if` statement, dolay�
 
 <h3 id="1.3.3"><code>pass</code> Statement</h3>
 
-`pass` statement, "hiçbir şey yapma, geç." anlamına gelmektedir. Python, program içinde herhangi bir yerde `pass` statement ile karşılaşırsa, hiçbir şey yapmaz ve sonraki statement'a geçer. Örnekler:
+`pass` statement, "hiçbir şey yapma, geç." anlamına gelmektedir. Python, program içinde herhangi bir yerde `pass` statement ile karşılaşırsa, hiçbir şey yapmadan devam eder. Örnekler:
 ```py
 class A:
     pass
@@ -627,6 +641,8 @@ while a < 3:
 for i in range(10):
     pass
 ```
+
+**Not:** `pass` statement çok boş ve basit gözükse bile bir algoritmayı koda dönüştürürken bazı durumlarda kullanılması zorunludur.
 
 <h2 id="1.4"><code>else</code> statement'ın Loop'larda Kullanımı</h2>
 
@@ -732,4 +748,4 @@ for i in l1:
     for k in j:
 TypeError: 'int' object is not iterable
 ```
-Bu `for` loops yapısı ilk çalıştığında `i:( (1,2) , (3,4) )`, `j:(1,2)` ve `k:1` şeklinde gezinir. Gezinirken bir ara `i:(5,6)` ve `j:5` olur ama `k`'nın içinde gezinebileceği bir iterator objesi olmaz çünkü `5` iterable bir obje değildir. Bu yüzden `TypeError: 'int' object is not iterable` hatası yükseltilir. Diğer data type'larda da benzer sorunlarla karşılaşabilirsiniz. Bu yüzden "nested `for` loop ile nested `list` sayısı aynı olmak zorunda" kuralına uyunuz.
+Bu `for` loops yapısı ilk çalıştığında `i:( (1,2) , (3,4) )`, `j:(1,2)` ve `k:1` şeklinde gezinir. Gezinirken bir ara `i:(5,6)` ve `j:5` olur ama `5` iterable bir obje olmadığı için `k` `5`'in içinde gezinemez ve `TypeError: 'int' object is not iterable` hatası yükseltilir. Diğer data type'larda da benzer sorunlarla karşılaşabilirsiniz. Bu yüzden "nested `for` loop ile nested `list` sayısı aynı olmak zorunda" kuralına uyunuz.
