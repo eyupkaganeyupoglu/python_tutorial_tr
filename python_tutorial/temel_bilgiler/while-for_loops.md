@@ -167,7 +167,7 @@ print(i) # Output: 4
 
 **Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md").
 
-Python'daki `for` loop, mantığı, `C` gibi low level programlama dillerindeki **for-each** loop mantığına dayanır. For-each loop ile ilgili bilgi için [**buraya**](https://en.wikipedia.org/wiki/Foreach_loop "https://en.wikipedia.org/wiki/Foreach_loop"), for loop'un çalışma mantığıyla ilgili ayrıntılı bilgi için de [**buraya**](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c "https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c") tıklayınız.
+Python'daki `for` loop mantığı `C` gibi low level programlama dillerindeki **for-each** loop mantığına dayanır. For-each loop ile ilgili bilgi için [**buraya**](https://en.wikipedia.org/wiki/Foreach_loop "https://en.wikipedia.org/wiki/Foreach_loop"), for loop'un çalışma mantığıyla ilgili ayrıntılı bilgi için de [**buraya**](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c "https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c") tıklayınız.
 
 Aşağıdaki `for` ve `while` loop kodları biribiriyle tamamen aynı çalışır:
 ```py
@@ -215,7 +215,7 @@ for i in a1,a2,a3:
 ```
 123, 456, 789, 
 ```
-`for` loop'ın `a1,a2,a3` girdisine karşı tepkisini `(a1, a2, a3)` şeklinde düşünebilirsiniz. Yani `for` loop sırayla `a1`, `a2` ve `a3` string'lerinde gezinmek yerine `(a1, a2, a3)` yapısının içinde geziniyor. Bu yüzden `i` variable'ına her seferinde sırasıyla bu `a1`, `a2` ya da `a3` string'lerinin direkt value'ları atanıyor. Başka bir örnek:
+`for` loop'ın `a1,a2,a3` karşı tepkisini `(a1, a2, a3)` şeklinde düşünebilirsiniz. Yani `for` loop sırayla `a1`, `a2` ve `a3` string'lerinde gezinmek yerine `(a1, a2, a3)` tuple'ının içinde geziniyor. Bu yüzden `i` variable'ına her seferinde sırasıyla bu `a1`, `a2` ya da `a3` string'leri atanıyor. Başka bir örnek:
 ```py
 a1 = "123"
 a2 = "456"
@@ -228,7 +228,7 @@ for i,j in a1,a2,a3:
 ```
 ValueError: too many values to unpack (expected 2)
 ```
-Burada `i` variable'ının `(a1, a2, a3)` yapısının içinde gezineceğini, `j` variable'ının da bu yapının içindeki `a1`, `a2` ve `a3` string'lerinin içinde gezineceğini ve `1 2 3 4 5 6 7 8 9` gibi bir output elde edeceğinizi düşünmüş olabilirsiniz ama işler öyle yürümüyor. Bu `ValueError` hatası, `for` loop'ın `loop_control_variable` kısmına tanımlanan variable sayısı ile `iterable_object` kısmına girilen objelerin herhangi birinin eleman sayısı birbirine eşit olmadığı durumlarda yükseltilir. Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin eleman sayısının 3 olmasıdır. Başka bir hatalı örnek:
+Burada `i` variable'ının `(a1, a2, a3)` yapısının içinde gezineceğini, `j` variable'ının da bu yapının içindeki `a1`, `a2` ve `a3` string'lerinin içinde gezineceğini ve `1 2 3 4 5 6 7 8 9` gibi bir output elde edeceğinizi düşünmüş olabilirsiniz ama işler öyle yürümüyor. Bu statement'in çalışması için basitçe, `for` loop'ın `loop_control_variable` kısmına tanımlanan variable sayısı ile `iterable_object` kısmına girilen objelerin her birinin eleman sayısı birbirine eşit olmalı. Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin eleman sayısının 3 olmasıdır. Başka bir hatalı örnek:
 ```py
 a1 = "1"
 a2 = "4"
@@ -243,18 +243,20 @@ ValueError: not enough values to unpack (expected 2, got 1)
 ```
 Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin eleman sayısının 1 olmasıdır. Başka bir hatalı örnek:
 ```py
-a1 = "1"
-a2 = "45"
-a3 = "7891"
+a1 = "12"
+a2 = "34"
+a3 = "5678"
 
 for i,j in a1,a2,a3:
     print(i,j, sep=", ")
 ```
 **Output:**
 ```
-ValueError: not enough values to unpack (expected 2, got 1)
+1, 2
+3, 4
+ValueError: too many values to unpack (expected 2)
 ```
-Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen objelerin bazılarının eleman sayısının tutarsız olmasıdır. Python bir statement'daki kodları soldan sağa doğru okuduğu için ilk `a1` objesini okudu ve "açmak için yeterli değer yok" anlamına gelen `ValueError: not enough values to unpack (expected 2, got 1)` hatasını verdi. `iterable_object` kısmında ilk sırada `a1` yerine `a3` olsaydı `ValueError: too many values to unpack (expected 2)` hatası yükseltilirdi. `a2` doğru eleman sayısına sahip olduğu için hata yükseltmez. Doğru kullanım örneği:
+Buradaki hatanın sebebi ise 2 tane `loop_control_variable` tanımlıyken `iterable_object` kısmına girilen `a3` objesinin eleman sayısının tutarsız olmasıdır. Doğru kullanım örneği:
 ```py
 a1 = "12"
 a2 = "45"
@@ -274,13 +276,17 @@ a2 = "456"
 a3 = "789"
 
 for i,j,k in a1,a2,a3:
-    print(i,j,k, sep=", ", end=", ")
+    print(i,j,k, sep=", ")
 ```
 **Output:**
 ```
-1, 2, 3, 4, 5, 6, 7, 8, 9, 
+1, 2, 3
+4, 5, 6
+7, 8, 9
 ```
 Buradaki `for` loop'da 3 tane `loop_control_variable` tanımlıdır ve `iterable_object` kısmına girilen objelerin eleman sayıları 3'dir. Sayılar tutarlı olduğu için hata yükseltilmedi.
+
+**Not:** Yukarıdaki koddan yola çıkarak `a1,a2,a3` kısmını `("123","456","789")` olarak, `i,j,k` kısmını da `(i,j,k)` olarak düşün ve `i=1`,`j=2`,`k=3` / `i=4`,`j=5`,`k=6` / `i=7`,`j=8`,`k=9` tarzında bir mantığın işlediğini kabul edin. Bu sayede kafanıza oturur sanırım.
 
 **Örnek Program:** Aşağıdaki program, `cümle` variable'ına girdiğiniz input değerindeki boşluk (`" "`) karakterlerini, underscore (`"_"`) karakteri ile değiştirip, son durumu yazdırır.
 ```py
