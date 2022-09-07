@@ -182,7 +182,7 @@ Sayı gir: 2
 Girdiğiniz sayı 0 ya da 1 değildir.
 ```
 
-**Not:** [`elif` Statement](#2) başlığında da gördüğünüz gibi herhangi bir `if` veya `if` - `elif` statement, `else` statement olmadan da çalışabilir ama `else` statement'ın tek çalışma koşulu kendinden önceki `if` ya da `elif` statement çalışmaması olduğu için kendinden önce çalışmayan bir `if` ya da `elif` statement'a ihtiyaç duyuyor.
+**Not:** Herhangi bir `if` veya `if` - `elif` statement, `else` statement olmadan da kullanılabilir. Gördüğünüz gibi `else` statement'ın tek çalışma koşulu kendinden önceki `if` ya da `elif` statement çalışmaması.
 
 **Not:** Her `else` statement, kendinden önceki `if` ya da `elif` statement'ı dikkate alır. Örnek:
 ```py
