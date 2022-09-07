@@ -41,7 +41,7 @@ temp = 123
 a = iter(temp) # TypeError: 'int' object is not iterable
 ```
 
-Iterable bir obje tekrarlanamaz, yani içinde gezinemezsiniz. Iterator bir obje tekrarlanabilir, yani içinde gezinilebilir. Iterator'ler bunu mümkün kılan `__next__()` methoduna sahiptir. `__next__()` methodu kullanılarak bir iterator üzerinde iterate (yenileme, yani içinde gezinme) işlemi yapılabilir. Örnek:
+Iterable bir obje tekrarlanamaz, yani içinde gezinemezsiniz. Iterator bir obje tekrarlanabilir, yani içinde gezinilebilir. Iterator'ler bunu mümkün kılan `__next__()` methoduna sahiptir. `__next__()` methodu veya `next()` build-in fonksiyonu kullanılarak bir iterator üzerinde iterate (yenileme, yani içinde gezinme) işlemi yapılabilir. Örnek:
 ```py
 liste = ["l", "i", "s", "t", "e"]
 liste_iter1 = iter(liste)
