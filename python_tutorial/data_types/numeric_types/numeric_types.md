@@ -103,7 +103,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 
 <h3 id="3.1.1"><code>as_integer_ratio()</code> Methodu</h3>
 
-Birbirine bölündüğünde uygulandığı integer veren iki sayıyı döndürür. Bu iki sayı `tuple` içinde döndürülür ve integer'lar için her zaman `(asıl_sayı, 1)` formatındadır. Örnek:
+Birbirine bölündüğünde uygulandığı integerı veren iki sayıyı döndürür. Bu iki sayı `tuple` içinde döndürülür ve integer'lar için her zaman `(asıl_sayı, 1)` formatındadır. Örnek:
 ```py
 print((2).as_integer_ratio()) # Output: (2, 1)
 print((4).as_integer_ratio()) # Output: (4, 1)
@@ -132,10 +132,10 @@ Integer'lar length bytes kullanılarak temsil edilir. `to_bytes` methodunun uygu
 print((1024).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
 print((1024).to_bytes(1, byteorder='big')) # OverflowError: int too big to convert
 ```
-`byteorder` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ı temsil etmek için kullanılan bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. Örnek:
+`byteorder` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ı temsil etmek için kullanılan bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. `big` ve `little` bir nevi birbirinin aynalanmış halidir Örnek:
 ```py
-print((1024).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
-print((1024).to_bytes(10, byteorder='little')) # Output: b'\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00'
+print((1234).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\xd2'
+print((1234).to_bytes(10, byteorder='little')) # Output: b'\xd2\x04\x00\x00\x00\x00\x00\x00\x00\x00'
 ```
 `signed` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ın negatif mi pozitif mi olduğunu belirtirsiniz. Default değeri `False`'dır ve pozitif sayıları ifade eder. `True` ise negatif sayıları temsil eder. `signed` parametresine argüman olarak `True` verip, bu methodu pozitif bir sayıya uygularsınız `OverflowError` hatası alırsınız. Örnek:
 ```py
@@ -197,7 +197,7 @@ print((9124613461).numerator) # Output: 9124613461
 
 <h3 id="3.1.8"><code>imag</code> Methodu</h3>
 
-Uygulandığı integer `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+Uygulandığı integer `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı integer'ın imag'ı her zaman sıfır olduğu için sıfır döndürür. Örnek:
 ```py
 print(complex(9)) # Output: (9+0j)
 print((9).imag) # Output: 0
@@ -205,7 +205,7 @@ print((9).imag) # Output: 0
 
 <h3 id="3.1.9"><code>real</code> Methodu</h3>
 
-Uygulandığı integer `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+Uygulandığı integer `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı integer'ın real'ı her zaman kendisi olduğu için uygulandığı integer'ı döndürür. Örnek:
 ```py
 print(complex(9)) # Output: (9+0j)
 print((9).real) # Output: 9
@@ -241,7 +241,7 @@ print((9.337).as_integer_ratio()) # Output: (2628131857547395, 281474976710656)
 
 <h3 id="3.2.2"><code>is_integer()</code> Methodu</h3>
 
-Bir `float`'ın tam olmayan kısmında (noktanın sağındaki, ondalık olmayan) sıfır harici bir sayı olup olmadığını kontrol eder. Yani bu methodla, bir sayının integer'mı floating'mı olduğunu sorgulayabilirsiniz. Bu method, uygulandığı `float` integer ise `True`, değilse (yani integer ise) `False` döndürür. Örnek:
+Bir `float`'ın tam olmayan kısmının (kesirli kısmı) sıfır harici bir sayı olup olmadığını kontrol eder. Bu methodla bir sayının tam sayı ya da kesirli sayı olduğunu sorgulayabilirsiniz. Bu method uygulandığı `float` tamsayı ise `True`, değilse (yani kesirli sayı ise) `False` döndürür. Örnek:
 ```py
 print((10.00).is_integer()) # Output: True
 print((10.01).is_integer()) # Output: False
@@ -271,15 +271,15 @@ print((5/3).hex()) # Output: 0x1.aaaaaaaaaaaabp+0
 
 `s` parametresine argüman olarak girilen float type'ın `hex` methodunun ürettiği değerlerin float karşılıklarını döndürür. `fromhex` methodu bir class method olduğu için direkt `float` class'ına veya float type bir objeye uygulanabilir. `s` parametresine argüman olarak girilen değerler string type olamak zorundadır. Örnek:
 ```py
-print(float.fromhex("-0x1.999999999999ap-4"))
-print(float.fromhex("0x1.921f9f01b866ep+1"))
-print(float.fromhex("-0x1.2a9fbe76c8b44p+1"))
-print(float.fromhex(" 0x1.aaaaaaaaaaaabp+0"))
+print(float.fromhex("-0x1.999999999999ap-4")) # Output: -0.1
+print(float.fromhex("0x1.921f9f01b866ep+1"))  # Output: 3.14159
+print(float.fromhex("-0x1.2a9fbe76c8b44p+1")) # Output: -2.333
+print(float.fromhex(" 0x1.aaaaaaaaaaaabp+0")) # Output: 1.6666666666666667
 ```
 
 <h3 id="3.2.6"><code>imag</code> Methodu</h3>
 
-Uygulandığı float sayının `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+Uygulandığı float sayının `imag` (sanal) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı float'ın imag'ı her zaman sıfır olduğu için sıfır döndürür. Örnek:
 ```py
 print(complex(9.7)) # Output: (9.7+0j)
 print((9.7).imag) # Output: 0.0
@@ -287,7 +287,7 @@ print((9.7).imag) # Output: 0.0
 
 <h3 id="3.2.7"><code>real</code> Methodu</h3>
 
-Uygulandığı float sayının `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Örnek:
+Uygulandığı float sayının `real` (gerçek) kısmını içeren bir property'dir (ne olduğu class'lar konusunda anlatılacak. şimdilik bir değeri tutan variable olarak düşünün). Uygulandığı float'ın real'ı her zaman kendisi olduğu için uygulandığı float'ı döndürür. Örnek:
 ```py
 print(complex(9.7)) # Output: (9.7+0j)
 print((9.7).real) # Output: 9.7
@@ -423,14 +423,14 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functio
 ---| C
  D
 ```
-Integer'lar için output `((a // b), (a % b))` işlemiyle aynıdır. Bu output `tuple` formatındadır.
+Integer'lar için output `((a // b), (a % b))` ile aynıdır. Bu output `tuple` formatındadır.
 ```py
 print(divmod(10, 2)) # Output: (5, 0)
 ```
 
 <h2 id="4.8"><code>max(item, *items, key, default)</code> Fonksiyonu</h2>
 
-`item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en büyük öğeyi ya da bir `dict` objesinin içerdiği en büyük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Örnek:
+`item` parametresine girilen `list`, `tuple` ya da `set` objesinin içerdiği en büyük öğeyi ya da bir `dict` objesinin içerdiği en büyük `key`'i döndürür. Ayrıca `*items` yıldızlı parametresi sayesinde, birden fazla `item` girmemize izin verir. `*items` parametresine girilen itemlerin data type'ları farklı olursa sorun çıkabilir. Aksi halde:
 ```py
 # 1. Kod
 print(max([1,2],"sel",(1,2,3,4))) # TypeError: '>' not supported between instances of 'str' and 'list'
