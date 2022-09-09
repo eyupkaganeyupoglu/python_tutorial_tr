@@ -305,7 +305,7 @@ Traceback (most recent call last):
 TypeError: Parolada Türkçe karakter kullanılamaz!
 ```
 
-**Not:** `raise` statement'ı herhangi bir namespace içinde kullanabilirsiniz. `if` gibi herhangi bir statement'ın kapsamında (kod block'larından bahsediyorum) ya da herhangi bir namespace'de kullanmanız, `raise` statement'ın çalışmasında bir farklılığa sebep olmaz. Python bu statement'ı okuduktan sonra çalıştırır.
+**Not:** `reise` statement'ı `assert` statement gibi herhangi bir namespace içinde kullanabilirsiniz. `reise` statement çalışınca program sonlandırılır.
 
 **Not:** `raise` statement'ı aşağıdaki örnekteki gibi de kullanabilirsiniz:
 ```py
@@ -363,7 +363,7 @@ Traceback (most recent call last):
     raise TypeError("Öylesine bir error.")
 TypeError: Öylesine bir error.
 ```
-Buradaki `During handling of the above exception, another exception occurred` mesajının türkçesi `Yukarıdaki exception'ın işlenmesi sırasında başka bir exception oluştu` şeklindedir. Yani bu "`NameError` oluştuğu sırada, başka bir exception olan (another exception) `ValueError` oluştu." anlamına gelmektedir. `raise` statement'ını `from` keyword'ü ile birlikte kullanınca bu anlam değişmektedir:
+Buradaki "During handling of the above exception, another exception occurred" mesajı "Yukarıdaki exception'ın işlenmesi sırasında başka bir exception oluştu" anlamına gelmektedir. Yani bu "`ValueError` oluştuğu sırada, başka bir exception olan (another exception) `TypeError` oluştu." anlamına gelmektedir. `raise` statement'ını `from` keyword'ü ile birlikte kullanınca bu anlam değişmektedir:
 ```py
 try:
     print(i)
@@ -384,11 +384,11 @@ Traceback (most recent call last):
     raise ValueError("From için") from NE
 ValueError: From için
 ```
-Buradaki `The above exception was the direct cause of the following exception` mesajının türkçesi `Yukarıdaki exception, aşağıdaki exception'ın doğrudan nedeniydi` şeklindedir. Yani bu "`ValueError` oluşma nedeni `NameError`'dür." anlamına gelmektedir.
+Buradaki "The above exception was the direct cause of the following exception" mesajı "Yukarıdaki exception, aşağıdaki exception'ın doğrudan nedeniydi" anlamına gelmektedir. Yani bu "`TypeError` oluşma nedeni `ValueError`'dür." anlamına gelmektedir. Bu iki farklı durumun hangi durumlarda spesifik olarak işinize yarayacağı hakkında en ufak fikrim yok.
 
 <h2 id="2.6"><code>assert (condition), (error message)</code> Statement</h2>
 
-`assert` statement'ı `raise` statement'ının aksine özelleştirilebilir hata mesajları yaratmamıza olanak tanır. `(condition)`, logic bir ifadedir ve `False` olursa `assert` statement çalışır. `assert` çalıştığında `AssertionError` hata koduyla birlikte `(error message)`'da belirtilen hata mesajını yükseltir. Aşağıdaki iki kod aynı işleve sahiptir:
+`assert` statement'ı `raise` statement'ının aksine özelleştirilebilir hata mesajları yaratmamıza olanak tanır. `(condition)` logic bir ifadedir ve `False` olursa `assert` statement çalışır. `assert` çalıştığında `AssertionError` hata kodunu `(error message)` hata mesajı ile yükseltir. Aşağıdaki iki kod aynı işleve sahiptir:
 
 **`raise` Statement Örneği:**
 ```py
@@ -408,7 +408,7 @@ AssertionError: İsim bölümü boş.
 **`assert` Statement Örneği:**
 ```py
 giriş = input("Merhaba! Adın ne? ")
-assert (not (len(giriş) == 0)), ("İsim bölümü boş.")
+assert ((len(giriş) != 0)), ("İsim bölümü boş.")
 print("Hoşgeldiniz.")
 ```
 **Output:**
@@ -420,8 +420,8 @@ Traceback (most recent call last):
 AssertionError: İsim bölümü boş.
 ```
 
-**Not:** `assert` statement'ı herhangi bir namespace içinde kullanabilirsiniz. `if` gibi herhangi bir statement'ın kapsamında (kod block'larından bahsediyorum) ya da herhangi bir namespace'de kullanmanız, `assert` statement'ın çalışmasında bir farklılığa sebep olmaz. Python bu statement'ı okuduktan sonra çalıştırır. `assert` statement çalışınca Python, programı sonlandırır.
+**Not:** `assert` statement'ı `reise` statement gibi herhangi bir namespace içinde kullanabilirsiniz. `assert` statement çalışınca program sonlandırılır.
 
-**Not:** `assert` statement'ı, Python kodlarını debugging (hata ayıklama işlemi) yapmak için kullanılır. Bir Python dosyasını terminalden çalıştırırken `python -O dosya_adı` komutuyla çalıştırırsanız, Python dosyası içindeki bütün `assert` statement'lerini görmezden gelir. Bunu sağlayan şey optimize anlamına gelen `-O` parametresidir. Eğer `-O` olmadan `python dosya_adı` koduyla çalıştırırsanız, Python dosyası içindeki `assert` statement'lerini görmezden gelmez. Bu sayede debugging işlemi yapabiliyoruz dedim. Kanıtı:
+**Not:** `assert` statement'ı, Python kodlarını debugging (hata ayıklama işlemi) yapmak için kullanılır. Bir Python dosyasını terminalden çalıştırırken `python -O dosya_adı` komutuyla çalıştırırsanız, Python dosyası içindeki bütün `assert` statement'lerini görmezden gelir. Bunu sağlayan şey optimize anlamına gelen `-O` parametresidir. Eğer `-O` olmadan `python dosya_adı` koduyla çalıştırırsanız, Python dosyası içindeki `assert` statement'lerini görmezden gelmez. Bunu debugging yapmak için kullanabiliriz:
 
 ![](https://i.ibb.co/pZqwRNF/Ekran-Al-nt-s.png)
