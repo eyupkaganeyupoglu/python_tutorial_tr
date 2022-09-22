@@ -132,7 +132,7 @@ Integer'lar length bytes kullanılarak temsil edilir. `to_bytes` methodunun uygu
 print((1024).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
 print((1024).to_bytes(1, byteorder='big')) # OverflowError: int too big to convert
 ```
-`byteorder` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ı temsil etmek için kullanılan bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. `big` ve `little` bir nevi birbirinin aynalanmış halidir Örnek:
+`byteorder` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ı temsil etmek için kullanılan bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. `big` ve `little` bir nevi birbirinin aynalanmış halidir. Örnek:
 ```py
 print((1234).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\xd2'
 print((1234).to_bytes(10, byteorder='little')) # Output: b'\xd2\x04\x00\x00\x00\x00\x00\x00\x00\x00'

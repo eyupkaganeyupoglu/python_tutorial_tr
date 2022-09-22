@@ -27,35 +27,39 @@ print(False.as_integer_ratio()) # Output: (0, 1)
 
 <h3 id="1.1.2"><code>bit_length()</code> Methodu</h3>
 
-`bit_length()` methodu, uygulandığı boolean değerin bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(True))`: `0b1`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş benzerdir. Örnek:
+`bit_length()` methodu, uygulandığı boolean değerin bit uzunluğunu döndürür. `bin()` fonksiyonu, kendisine argüman olarak verilen integer'ın bit karşılığını döndürür (Örnek: `print(bin(True))`: `0b1`). `len(bin()[2:])` kodu ile `bit_length()` methodunun yaptığı iş benzer gibi gözüksede kesinlikle birbiri yerine kullanılamaz. Örnek:
 ```py
 print(True.bit_length()) # Output: 1 (`1` 1 birim uzunluğundadır)
 print(False.bit_length()) # Output: 0 (`0` 0 birim uzunluğundadır)
 print(len(bin(True)[2:])) # Output: 1 (`1` 1 birim uzunluğundadır)
 print(len(bin(False)[2:])) # Output: 1 (`1` 1 birim uzunluğundadır)
+print(len(bin(True))) # Output: 3 (`0b1` 1 birim uzunluğundadır)
+print(len(bin(False))) # Output: 3 (`0b0` 1 birim uzunluğundadır)
 ```
-`False` değerinin binary değeri `0b0`'dır. 0 değeri uzunluk olarak bildiğimiz sıfırı temsil ettiği için `bit_length` methodu doğru sonuç olan `0`'ı döndürür. Ama `len(bin()[2:])` kodu sadece `0b`'dan sonra bir şey olup olmadığına baktığı için hatalı sonuç verir.
+`False` değerinin binary değeri `0b0`'dır. Bu değer yokluğu temsil ettiği için `bit_length` methodu doğru sonuç olan `0`'ı döndürür. Ama `len(bin()[2:])` kodu sadece `0b`'dan sonra bir şey olup olmadığına baktığı için istenilen sonucu vermez.
 
 <h3 id="1.1.3"><code>to_bytes(length, byteorder, signed=False)</code> Methodu</h3>
 
-Uygulandığı boolean değeri temsil eden byte array'ı döndürür. Örnek:
+Uygulandığı boolean değeri temsil eden byte array döndürür. Örnek:
 ```py
 print(True.to_bytes(1, byteorder='big')) # Output: b'\x01'
 print(False.to_bytes(1, byteorder='big')) # Output: b'\x00'
 ```
-Boolean değerler length bytes kullanılarak temsil edilir. `to_bytes` methodunun uygulandığı boolean değer, en az `length` parametresinde argüman olarak girilen integer'ın belirttiği uzunluk kadar olmalı. `length` parametresinde argüman olarak girilen boolean değerden daha uzun olursa, fazlalıklar null (`b'\x00'`) ile doldurur; kısa olursa, `OverflowError: int too big to convert` hatası yükseltilir. Zaten boolean değerler 1 length kadardır. Örnek:
+Boolean değerler length bytes kullanılarak temsil edilir. `to_bytes` methodunun uygulandığı boolean değer, en az `length` parametresinde argüman olarak girilen integer'ın belirttiği uzunluk kadar olmalı. `length` parametresinde argüman olarak girilen boolean değerden daha uzun olursa, fazlalıklar null (`b'\x00'`) ile doldurur; kısa olursa, `OverflowError: int too big to convert` hatası yükseltilir. Zaten boolean değerler maksimum 1, minimum 0 uzunluğunda olabilir. Örnek:
 ```py
 print(True.to_bytes(1, byteorder='big')) # Output: b'\x01'
 print(True.to_bytes(0, byteorder='big')) # OverflowError: int too big to convert
 print(False.to_bytes(1, byteorder='big')) # Output: b'\x00'
 print(False.to_bytes(0, byteorder='big')) # Output: b''
 ```
-`False` değeri null ifade ettiği için `length` parametresinde argüman olarak `0` integer'ını girmemiz bir soruna neden olmaz. Çünkü `\x00` byte değeri null (yani hiçlik, hiçbir şey) ifade ettiği için `b'\x00'` ile `b''` aynı şeyi ifade eder.
+`False` değeri yokluğu ifade ettiği için `length` parametresinde argüman olarak `0` integer'ını girmemiz bir soruna neden olmaz ve boşluklar null `\x00` ile doldurulur.
 
-`byteorder` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı boolean değeri temsil etmek için kullanılan bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. Örnek:
+`byteorder` parametresine girilen argüman ile `to_bytes` methodunun uygulandığı boolean değeri temsil etmek için kullanılan bayt sırasını (order) belirlenir. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. `big` ve `little` bir nevi birbirinin aynalanmış halidir. Örnek:
 ```py
-print((1024).to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
-print((1024).to_bytes(10, byteorder='little')) # Output: b'\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00'
+print(True.to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01'
+print(True.to_bytes(10, byteorder='little')) # Output: b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+print(False.to_bytes(10, byteorder='big')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+print(False.to_bytes(10, byteorder='little')) # Output: b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
 ```
 `signed` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı boolean değerin negatif mi pozitif mi olduğunu belirtirsiniz. Default değeri `False`'dır ve pozitif sayıları ifade eder. `True` ise negatif sayıları temsil eder. `signed` parametresine argüman olarak `True` verip, bu methodu pozitif bir sayıya uygularsınız `OverflowError` hatası alırsınız. Örnek:
 ```py
@@ -80,12 +84,12 @@ print(bool.from_bytes([255, 0, 0], byteorder='big')) # Output: True
 print(bool.from_bytes(b'\x00', byteorder='big')) # Output: False
 print(bool.from_bytes([0, 0, 0], byteorder='big')) # Output: False
 ```
-`byteorder` parametresine girilen argüman ile, `bytes` parametresine argüman olarak girilen bytes objesinin bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. Örnek:
+`byteorder` parametresine girilen argüman ile, `bytes` parametresine argüman olarak girilen bytes objesinin bayt sırasını (order) belirler. `byteorder` parametresine argüman olarak `"big"` girilirse, en önemli byte (the most significant byte) byte array'ın başında, `"little"` girilirse, en önemli byte (the most significant byte) byte array'ın sonunda olur. `big` ve `little` bir nevi birbirinin aynalanmış halidir. Örnek:
 ```py
 print(bool.from_bytes(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01', byteorder='big')) # Output: True
 print(bool.from_bytes(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00', byteorder='little')) # Output: True
 ```
-`signed` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ın negatif mi pozitif mi olduğunu belirtirsiniz. Default değeri `False`'dır ve pozitif sayıları ifade eder. `True` ise negatif sayıları temsil eder. Boolean değerler için buna gerek yoktur çünkü boolean değer olarak sadece `0` ve `1` vardır. Örnek:
+`signed` parametresine girilen argüman ile, `to_bytes` methodunun uygulandığı integer'ın negatif mi pozitif mi olduğunu belirtirsiniz. Default değeri `False`'dır ve pozitif sayıları ifade eder. `True` ise negatif sayıları temsil eder ama boolean değerler için buna gerek yoktur çünkü sadece `True` ve `False` vardır. Örnek:
 ```py
 print(bool.from_bytes(b'\x01', byteorder='big', signed=True)) # Output: True
 print(bool.from_bytes(b'\x01', byteorder='big', signed=False)) # Output: True
