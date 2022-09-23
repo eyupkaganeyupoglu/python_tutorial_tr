@@ -87,14 +87,16 @@ print([1,2,3] * 2) # Output: [1, 2, 3, 1, 2, 3]
 ```
 Bir listeye öğe eklemek için addition (toplama `+`) operator'ını kullanarak öğe ekleyebilirsiniz. Bu durum yeniden tanımlama (redefinition) işlemi olsa bile list, değiştirilebilir (mutable) bir type olduğu için ID'si değişmez, yani farklı bir obje olmaz. Örnek:
 ```py
-l1 = ["item 1", "item 2"]
+l1 = [1,2]
 id_1 = id(l1)
-l1 += ["item 3"]
+print(l1) # Output:[1, 2]
+l1 += [3,4]
 id_2 = id(l1)
+print(l1) # Output:[1, 2, 3, 4]
 print((id_1 == id_2)) # Output: True
 ```
 
-Diğer iterable objeleri `list()` fonksiyonu ile list type'a dönüştürebilirsiniz. Örnek:
+Diğer iterable objeleri `list()` fonksiyonu ile list type bir objeye dönüştürebilirsiniz. Örnek:
 ```py
 print(list(range(0,4))) # Output: [0, 1, 2, 3]
 print(list((0,1,2,3))) # Output: [0, 1, 2, 3]
@@ -125,7 +127,7 @@ l1[:] = 5,6,7,8
 print(l1) # Output: [5, 6, 7, 8]
 ```
 
-Listede belli bir index'deki öğeyi tamamen silmek:
+Listede belli bir index'deki öğeyi silmek:
 ```py
 l1 = [1,2,3,4]
 del l1[0]
@@ -158,7 +160,7 @@ l1[0] = 5
 print(l1) # Output: [5, 2, 3, 4]
 print(l2) # Output: [5, 2, 3, 4]
 ```
-List, değiştirilebilir (mutable) bir data type olduğu için assignment operator (`=`) kullanılarak bir liste objesini yukarıdaki gibi farklı bir variable'a atarsanız, son durumda oluşan objeler aynı liste objesine atıfta bulunacağı (refers to) için birinde yapılan değişiklikler diğerini de etkiler. Bu durum değiştirilemez (immutable) data type'lar için geçerli değildir çünkü değiştirilemez (immutable) data type'ları değiştirmek için yeniden tanımlama (redefinition) işlemi yapmak zorundayız. Yeniden tanımlama (redefinition) işlemi sonucunda da mevcut obje farklı bir objeye dönüştüğü için birbirine atıfta bulunma durumu ortadan kalkacak ve bu objeler birbirini etkilemeyecek.
+List, değiştirilebilir (mutable) bir data type olduğu için assignment operator (`=`) kullanılarak bir liste objesini yukarıdaki gibi farklı bir variable'a atarsanız, son durumda oluşan objeler aynı liste objesine atıfta bulunacağı (refers to) için birinde yapılan değişiklikler diğerini de etkiler. Bu durum değiştirilemez (immutable) data type'lar için geçerli değildir çünkü değiştirilemez (immutable) data type'ları değiştirmek için yeniden tanımlama (redefinition) işlemi yapıyoruz ve sonuçta birbirinden farklı iki obje elde ediyoruz. Yeniden tanımlama (redefinition) işlemi sonucunda da mevcut obje farklı bir objeye dönüştüğü için birbirine atıfta bulunma durumu ortadan kalkacak ve bu objeler birbirini etkilemeyecek.
 
 Bir listeyi yukarıda anlattığım sorunu yaşamadan kopyalamak istiyorsanız aşağıdaki yöntemi kullanabilirsiniz:
 ```py
@@ -168,7 +170,7 @@ print(id(l1) == id(l2)) # Output: False
 print(l1) # Output: [1, 2, 3, 4]
 print(l2) # Output: [1, 2, 3, 4]
 ```
-Gördüğünüz gibi bu yöntemle içerikleri aynı ama iki farklı obje olan liste objeleri elde ettik.
+Gördüğünüz gibi bu yöntemle içerikleri aynı ama birbirinden bağımsız liste objeleri elde ettik.
 
 Bir liste içine tanımlanmış diğer index'lenebilir iterable objelerin index'lerine de erişebiliriz. Örnek:
 ```py
@@ -183,7 +185,7 @@ print(l1[3]["Sözlük"]) # Output: dictionary
 ```
 `obje[index][index]` yapısını çalışma mantığı:
 - Python `a[b][c]` yapısını soldan sağa okumaya başladığı için önce `a[b]` kısmını okur ve `a` objesinin `b` index'ine gider ve böylece `a[b]` kodu, `a` objesinin `b` index'indeki objeye atıfta bulunmuş olur. Bu objeye `x` diyelim.
-- Bu işlemden sonra `a[b][c]` kodu Python'un gözünde `x[c]` koduna dönüşür. Python `x[c]` kodu içinde aynı işlemleri yapar.
+- Bu işlemden sonra `a[b][c]` kodu Python'un gözünde `x[c]` koduna dönüşür. Python `x[c]` kodu için de aynı işlemleri yapar.
 - Python'u LEGO gibi düşünün. Kodları bütün olarak değil, parça parça yorumlayın. Böylelikle Python'un çalışma mantığını anlarsınız. Örneğin aşağıdaki iki kod tamamen aynı işi yapmaktadır:
     ```py
     l1 = [[[[1,2], [3,4]], [[5,6], [7,8]]], [[[9,10], [11,12]], [[13,14], [15,16]]]]
@@ -239,7 +241,7 @@ print(liste) # Output: ['Elma', 'Armut', 'Kiraz', 'Çilek', 'Şeftali']
 
 <h3 id="1.3.3"><code>insert(index, object)</code> Methodu</h3>
 
-`object` parametresinde argüman olarak girdiğiniz objeyi, uygulandığı listede, `index` parametresinde belirtilen index'e yerleştirir. Yeni object, yerini aldığı öğenin bir sağa kaymasına neden olur. Örnek:
+`object` parametresinde argüman olarak girdiğiniz objeyi, uygulandığı listede, `index` parametresinde belirtilen index'e yerleştirir. Yeni öğe, yerini aldığı öğenin ve sonraki öğelerin bir sağa kaymasına neden olur. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 print(liste) # Output: ['Elma', 'Armut', 'Kiraz']
@@ -249,7 +251,7 @@ print(liste) # Output: ['Elma', 'Çilek', 'Armut', 'Kiraz']
 
 <h3 id="1.3.4"><code>remove(value)</code> Methodu</h3>
 
-`value` parametresinde argüman olarak girdiğiniz value'yu, uygulandığı listeden siler. Örnek:
+Uygulandığı listeden `value` parametresinde belirtilen değeri siler. Örnek:
 ```py
 liste = ["Elma", "Armut", "Kiraz"]
 liste.remove("Elma")

@@ -9,7 +9,7 @@
 
 <h1 id="1">Demetler (Tuples)</h1>
 
-Tuple'lar değiştirilemez (immutable) data type'dır. Bu yüzden bir Tuple'ı değiştirmek için onu yeniden tanımlamak (redefinition) gerekir. Tuple'lar genellikle değiştirilmesini istemediğiniz verileri saklarken kullanılır. `tuple(iterable)` build'in fonksiyonu ile tuple oluşturabilirsiniz veya uygun objeleri tuple'a dönüştürebilirsiniz. Listeler normal parantez (`()`) ile ifade edilir. Örnek:
+Tuple'lar değiştirilemez (immutable) data type'dır. Bu yüzden bir Tuple'ı değiştirmek için onu yeniden tanımlamak (redefinition) gerekir. Tuple'lar genellikle değiştirilmesini istemediğiniz verileri saklarken kullanılır. `tuple(iterable)` build'in fonksiyonu ile tuple oluşturabilirsiniz veya uygun objeleri tuple'a objesi dönüştürebilirsiniz. Tuple'lar normal parantez (`()`) ile ifade edilir. Örnek:
 ```py
 t1 = ()
 t2 = tuple()
@@ -89,9 +89,9 @@ print((1,2,3) * 2) # Output: (1, 2, 3, 1, 2, 3)
 ```
 Bir Tuple'a öğe eklemek için addition (toplama `+`) operator'ını kullanarak öğe ekleyebilirsiniz. Bu durum yeniden tanımlama (redefinition) işlemi olduğu için ve tuple değiştirilemez (immutable) data type olduğu için bu işlemden sonra eski tuple ile yeni tuple birbirinden farklı (ID'leri farklı) iki obje olacaktır. Örnek:
 ```py
-t1 = ("item 1", "item 2")
+t1 = (1,2)
 id_1 = id(t1)
-t1 += ("item 2",)
+t1 += (3,)
 id_2 = id(t1)
 print((id_1 == id_2)) # Output: False
 ```
@@ -118,7 +118,7 @@ del t1
 print(t1) # NameError: name 't1' is not defined
 ```
 
-Bir listeyi kopyalamak ve sonuçları:
+Bir tuple'ı kopyalamak ve sonuçları:
 ```py
 t1 = (1,2,3,4)
 t2 = t1
@@ -126,6 +126,7 @@ print(t1) # Output: (1, 2, 3, 4)
 print(t2) # Output: (1, 2, 3, 4)
 print(id(t1) == id(t2)) # Output: True
 ```
+`t2` ve `t2` aynı tuple objesine atıfta bulunmaktadır (refers to).
 
 Bir tuple içine tanımlanmış diğer index'lenebilir iterable objelerin index'lerine de erişebiliriz. Örnek:
 ```py
@@ -139,23 +140,22 @@ print(t1[1][0])        # Output: tuple
 print(t1[2][1])        # Output: Liste
 print(t1[3]["Sözlük"]) # Output: dictionary
 ```
-`obje[index][index]` yapısını çalışma mantığını daha önce anlattığım için bildiğiniz yerleri atlayabilirsiniz:
+`obje[index][index]` yapısını çalışma mantığı:
 - Python `a[b][c]` yapısını soldan sağa okumaya başladığı için önce `a[b]` kısmını okur ve `a` objesinin `b` index'ine gider ve böylece `a[b]` kodu, `a` objesinin `b` index'indeki objeye atıfta bulunmuş olur. Bu objeye `x` diyelim.
-- Bu işlemden sonra `a[b][c]` kodu Python'un gözünde `x[c]` koduna dönüşür. Python `x[c]` kodu içinde aynı işlemleri yapar.
+- Bu işlemden sonra `a[b][c]` kodu Python'un gözünde `x[c]` koduna dönüşür. Python `x[c]` kodu için de aynı işlemleri yapar.
 - Python'u LEGO gibi düşünün. Kodları bütün olarak değil, parça parça yorumlayın. Böylelikle Python'un çalışma mantığını anlarsınız. Örneğin aşağıdaki iki kod tamamen aynı işi yapmaktadır:
-    ```py
-    t1 = ((((1,2), (3,4)), ((5,6), (7,8))), (((9,10), (11,12)), ((13,14), (15,16))))
+```py
+t1 = ((((1,2), (3,4)), ((5,6), (7,8))), (((9,10), (11,12)), ((13,14), (15,16))))
 
-    a1 = t1[0]
-    a2 = a1[0]
-    a3 = a2[0]
-    a4 = a3[0]
-    print(a4) # Output: 1
+a1 = t1[0]
+a2 = a1[0]
+a3 = a2[0]
+a4 = a3[0]
+print(a4) # Output: 1
+print(t1[0][0][0][0]) # Output: 1
+```
 
-    print(t1[0][0][0][0]) # Output: 1
-    ```
-
-**Tuple'ların listelerden bazı farkları:** Bir tuple'ın herhangi bir index'indeki öğesini başka bir şeyler değiştiremezsin veya silemezsin çünkü tuple'lar değiştirilemez (immutable) bir data type olduğu için listelerdeki gibi parça ekleme/çıkarma/silme işlemlerini desteklemez. Aşağıdaki örneklerdeki hata mesajlarında bu duruma vurgu yapılmış zaten:
+**Tuple'ların listelerden bazı farkları:** Bir tuple'ın herhangi bir index'indeki öğesini başka bir şeyler değiştiremezsin veya silemezsin çünkü tuple'lar değiştirilemez (immutable) bir data type olduğu için listelerdeki gibi parça ekleme/çıkarma/silme işlemlerini desteklemez. Aşağıdaki örneklerdeki hata mesajlarında bu duruma vurgu yapılmış:
 ```py
 t1 = (1,2,3,4)
 print(t1)

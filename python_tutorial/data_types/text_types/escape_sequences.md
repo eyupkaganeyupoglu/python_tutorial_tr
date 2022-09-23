@@ -23,13 +23,13 @@
 
 <h2 id="1.1">`\` Geçersiz Kılma (Backslash)</h2>
 
-Bu işaret Python'a, kendinden sonra gelen terimin işlevini geçersiz kılmasını söyler. Örnek:
+Backslash, string kapsamında kendinden sonra gelen işaretin işlevini geçersiz kılar. Örnek:
 ```py
 print("Bu \" ve bu \' tırnak işaretidir.") # Output: Bu " ve bu ' tırnak işaretidir.
 print('İstanbul\'un insanları...') # Output: İstanbul'un insanları... 
 print("Bu \\ backslash işaretidir.") # Output: Bu \ backslash işaretidir.
 ```
-Tek tırnak ile belirtilen uzun bir string'i parçalayarak kullanıcı için daha okunaklı hale getirmek için kullanılabilir. Örnek:
+Bir string'i parçalamak için kullanılabilir. Örnek:
 ```py
 print("Python 1990 yılında Guido Van Rossum tarafından geliştirilmeye başlanmış, oldukça güçlü ve yetenekli bir programlama dilidir.") # Output: Python 1990 yılında Guido Van Rossum tarafından geliştirilmeye başlanmış, oldukça güçlü ve yetenekli bir programlama dilidir.
 
