@@ -38,6 +38,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
         - [Kaçış Dizileri (Escape Sequences)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/escape_sequences.md)
         - [Karakter Kodlama (Character Encoding)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/character_encoding.md)
     - Dizi Türleri (Sequence Types)
+        - [Sequence Nedir]()
         - [Liste (list)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/sequence_types/list.md)
         - [Demet (Tuple)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/sequence_types/tuple.md)
         - [Range (Range)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/sequence_types/range.md)
