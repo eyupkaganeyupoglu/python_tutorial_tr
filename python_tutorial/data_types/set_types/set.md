@@ -40,73 +40,11 @@ print(s2) # Output: {'string', 1, 1.5, range(0, 10), b'\x00\x00\x00', frozenset(
 ```
 `bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `bytes`, `str`, `range` değiştirilemez (immutable) type'lar oldukları için set'e öğe olarak girilebilirler. `list`, `set`, `dict`, `bytearray` ve user-defined class'lar değiştirilebilir (mutable) data type'lar oldukları için set'e öğe olarak girilemezler.
 
-Set data type'ı sırasız olduğu için örneğin `print()` fonksiyonu ile yazdırılmak istense, program her çalıştırıldığında öğeler farklı sırada yazdırılabilir. Bu durum öğelerin **hashlenmesi** ile ilgilidir. Hash dediğimiz şey, veriyi daha az kaynak kullanarak ifade etmek için ilgili hashing algoritmasının ürettiği değerdir. Örneğin 1024 bitlik bir mesajı bir hashing algoritması 128 bitlik yapıya indirgeyebilir. Python'da da böyledir. Bir Python programı çalıştırıldığında, o programdaki değerler bir hash'e sahip olur. Çok kaynak kullanılarak ifade edilebilen değerlerin hash'leri, program her çalıştırıldığında değişir. Ama az kaynak kullanılarak ifade edilebilen değerlerin hash'leri her zaman aynıdır. Örnek:
-```py
-# Programı İlk Çalıştırmamız
-print(hash(tuple([1,2,3])))                # Output: 529344067295497451
-print(hash(tuple(["1","2","3"])))          # Output: 7401844457185675310
-print(hash(frozenset([1,2,3])))            # Output: -272375401224217160
-print(hash(frozenset(["1","2","3"])))      # Output: -2204149807619723895
-print(hash(bytes(12)))                     # Output: 6673985660609553768
-print(hash("String"))                      # Output: 4966508039248316583
+**Not:** Set data type'ı sırasız olduğu için örneğin `print()` fonksiyonu ile yazdırılmak istense, program her çalıştırıldığında öğeler farklı sırada yazdırılabilir. Bu durum öğelerin **hashlenmesi** ile ilgilidir. Hash dediğimiz şey, veriyi daha az kaynak kullanarak ifade etmek için ilgili hashing algoritmasının ürettiği değerdir. Örneğin 1024 bitlik bir mesajı bir hashing algoritması 128 bitlik yapıya indirgeyebilir. Python'da da böyledir. Bir Python programı çalıştırıldığında, o programdaki değerler bir hash'e sahip olur. Çoğu immutable built-in object hashable'dir. `list`, `set`, `dict`, `bytearray` gibi mutable container'lar hashable değildir. `tuple` ve `frozenset` gibi mutable container'lar hashable içeriğe sahipse hashable'dir. Çok kaynak kullanılarak ifade edilebilen değerlerin hash'leri program her çalıştırıldığında değişir ama az kaynak kullanılarak ifade edilebilen değerlerin hash'leri her zaman aynıdır. `bool`, `int`, `float`, `complex` ve `range` type'ların hash'leri hiçbir zaman değişmez çünkü bu type'lar az kaynak harcarlar ama `bytes` ve `str` type'ların hash'leri program her baştan çalıştırıldığında değişir çünkü bu type'lar çok kaynak harcarlar. `tuple` ve `frozenset` type'ları da içerdiği değerlere göre çok ya da az kaynak harcayabilir. **Hash** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hash "https://docs.python.org/3/library/functions.html#hash"). **Hashable** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/glossary.html#term-hashable "https://docs.python.org/3/glossary.html#term-hashable").
 
-print(hash(bool(True)), hash(bool(False))) # Output: 1 0
-print(hash(123))                           # Output: 123
-print(hash(123.123))                       # Output: 283618690133295227
-print(hash(123+123j))                      # Output: 123000492
-print(hash(range(10)))                     # Output: -7546101314042312252
-```
-```py
-# Programı İkinci Çalıştırmamız
-print(hash(tuple([1,2,3])))                # Output: 529344067295497451
-print(hash(tuple(["1","2","3"])))          # Output: -6370647310685844327
-print(hash(frozenset([1,2,3])))            # Output: -272375401224217160
-print(hash(frozenset(["1","2","3"])))      # Output: 7667363132115089216
-print(hash(bytes(12)))                     # Output: 3239916383633325594 
-print(hash("String"))                      # Output: -3850919489988372704
+**Not:** `None` type da değiştirilemez (immutable) bir type'dır ve hash'i her zaman sabittir. Ama farklı makinelerde bu hash değeri değişebilir. Örneğin bir makinede `-9223363241081056563` hash'ine sahipkenbaşka bir makinede `-9223363242374385203` hash'ine sahip olmuştur.
 
-print(hash(bool(True)), hash(bool(False))) # Output: 1 0
-print(hash(123))                           # Output: 123
-print(hash(123.123))                       # Output: 283618690133295227
-print(hash(123+123j))                      # Output: 123000492
-print(hash(range(10)))                     # Output: -7546101314042312252
-```
-```py
-# Programı Üçüncü Çalıştırmamız
-print(hash(tuple([1,2,3])))                # Output: 529344067295497451
-print(hash(tuple(["1","2","3"])))          # Output: 6340878864105529814
-print(hash(frozenset([1,2,3])))            # Output: -272375401224217160
-print(hash(frozenset(["1","2","3"])))      # Output: -5783254467061130136
-print(hash(bytes(12)))                     # Output: -7182886563342320287
-print(hash("String"))                      # Output: 8500247573865546266
-
-print(hash(bool(True)), hash(bool(False))) # Output: 1 0
-print(hash(123))                           # Output: 123
-print(hash(123.123))                       # Output: 283618690133295227
-print(hash(123+123j))                      # Output: 123000492
-print(hash(range(10)))                     # Output: -7546101314042312252
-```
-`bool`, `int`, `float`, `complex` ve `range` type'ların hash'leri hiçbir zaman değişmez çünkü bu type'lar az kaynak harcarlar. Ama `bytes` ve `str` type'ların hash'leri, program her baştan çalıştırıldığında değişir çünkü bu type'lar çok kaynak harcarlar. `tuple` ve `frozenset` type'ları da içerdiği değerlere göre çok ya da az kaynak harcayabilir. Örneğin öğeleri çok kaynak harcayan string veya bytes type olan bir tuple veya frozenset objelerinin hash'i, program her çalıştırıldığında değişirken; öğeleri az kaynak harcayan type'lar olan tuple veya frozenset objelerinin hash'i hep aynıdır. Yukarıda örneği var.
-
-**Not:** `list`, `set`, `dict`, `bytearray` gibi değiştirilebilir (mutable) type'lar hash'lenemez. Hash'lenmeye çalışılırsa `TypeError: unhashable type: 'list'`, `TypeError: unhashable type: 'set'`, `TypeError: unhashable type: 'dict'`, `TypeError: unhashable type: 'bytearray'` gibi hatalar yükseltilir. **Hash** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hash "https://docs.python.org/3/library/functions.html#hash"). **Hashable** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/glossary.html#term-hashable "https://docs.python.org/3/glossary.html#term-hashable").
-
-**Not:** `None` type da değiştirilemez (immutable) bir type'dır ve hash'i her zaman sabittir. Ama farklı makinelerde bu hash değeri değişebilir. Örneğin benim makinede (bilgisayarımda) `-9223363241081056563` hash'ine sahipken, bir arkadaşımın bilgisayarında `-9223363242374385203` hash'ine sahiptir.
-
-**Not:** Set, öğelerini hash'in sayısal büyüklüğüne göre mi sıralıyor diye bakmayın, ben baktım ve öyle bir şey yok sanırım. Örnek:
-```py
-set_exp = {"1", "2", "3"}
-for i in set_exp:
-    print(i, hash(i))
-print(set_exp)
-```
-**Output:**
-```
-2 -3778677644095488240
-1 7888383718303043910
-3 2738165215596315832
-{'2', '1', '3'}
-```
-Burada `'2'` string'ini hash'inin sayısal değeri diğerlerinden küçük olmasına rağmen ilk sırada. Bu da hash'lerin sıralanışının sayısal büyüklükleriyle alakalı olmadığını kanıtlıyor. Bu kadar ayrıntı bilmenize gerek yok. Diğer kısımlara geçin.
+**Not:** `set` type bir objenin öğeleri, öğelerin hash'lerinin sayısal büyüklüğüne göre mi sıralanıyor sorusunun cevabı "Hayır".
 
 <h2 id="1.1">Set'de İşlemler</h2>
 
@@ -114,7 +52,7 @@ Iterable bütün type'ları set'e dönüştürebilirsin. Örnek:
 ```py
 print("set:", {"A", "B", "C"})                       # Output: set: {'A', 'C', 'B'}
 print("frozenset:", set(frozenset({"A", "B", "C"}))) # Output: frozenset: {'A', 'C', 'B'}
-print("list:", set(["A", "B", "C"]))                 # Output: lis:t {'A', 'C', 'B'}
+print("list:", set(["A", "B", "C"]))                 # Output: list: {'A', 'C', 'B'}
 print("tuple:", set(("A", "B", "C")))                # Output: tuple: {'A', 'C', 'B'}
 print("str:", set("ABC"))                            # Output: str: {'A', 'C', 'B'}
 print("dict:", set({"A": "a", "B": "b", "C": "c"}))  # Output: dict: {'A', 'C', 'B'}
@@ -155,7 +93,7 @@ s1.add(5)
 print(s1) # Output: {1, 2, 3, 4, 5}
 print(s2) # Output: {1, 2, 3, 4, 5}
 ```
-Set, değiştirilebilir (mutable) bir data type olduğu için assignment operator (`=`) kullanılarak bir set objesini yukarıdaki gibi farklı bir variable'a atarsanız, son durumda oluşan objeler aynı set objesine atıfta bulunacağı (refers to) için birinde yapılan değişiklikler diğerini de etkiler. Bu durum değiştirilemez (immutable) data type'lar için geçerli değildir çünkü değiştirilemez (immutable) data type'ları değiştirmek için yeniden tanımlama (redefinition) işlemi yapmak zorundayız. Yeniden tanımlama (redefinition) işlemi sonucunda da mevcut obje farklı bir objeye dönüştüğü için birbirine atıfta bulunma durumu ortadan kalkacak ve bu objeler birbirini etkilemeyecek.
+Set, değiştirilebilir (mutable) bir data type olduğu için assignment operator (`=`) kullanılarak bir set objesini yukarıdaki gibi farklı bir variable'a atarsanız, son durumda oluşan objeler aynı set objesine atıfta bulunacağı (refers to) için birinde yapılan değişiklikler diğerini de etkiler. Bu durum değiştirilemez (immutable) data type'lar için geçerli değildir çünkü değiştirilemez (immutable) data type'ları değiştirmek için yeniden tanımlama (redefinition) işlemi yapmak zorundayız. Yeniden tanımlama (redefinition) işlemi sonucunda da mevcut obje farklı bir objeye dönüştüğü için birbirinden bağımsız olacak.
 
 <h2 id="1.2">Set Üreteçleri (Set Comprehensions)</h2>
 
@@ -216,7 +154,7 @@ print(set_exp) # Output: {"bir", "iki", "üç", "dört"}
 
 Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ve sonucu döndürür. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/1Rx3z20/a-fark-b.png)
+![](https://i.ibb.co/P4rYJcy/a-fark-b.png)
 
 Yukarıdaki şemaya göre `A - B` işlemi "`A`'da olup `B`'de olmayan" anlamına gelmektedir. Örnek:
 ```py
@@ -253,7 +191,7 @@ print(A) # Output: {5}
 
 <h3 id="1.3.6"><code>discard(element)</code> Methodu</h3>
 
-`element` parametresine argüman olarak girilen değeri set'den silmeye yarar. İşlev bakımından`add` methodunun zıttını yapar. `element` parametresinde belirtilen değer set'de yoksa hiçbir şey yapmaz. Örnek:
+`element` parametresine argüman olarak girilen değeri set'den silmeye yarar. İşlev bakımından `add` methodunun zıttıdır. `element` parametresinde belirtilen değer set'de yoksa hiçbir şey yapmaz. Örnek:
 ```py
 A = {1,2,3,4,5}
 A.discard(1)
@@ -264,7 +202,7 @@ print(A) # Output: {2, 3, 4, 5}
 
 <h3 id="1.3.7"><code>remove(element)</code> Methodu</h3>
 
-`element` parametresine argüman olarak girilen değeri set'den silmeye yarar. İşlev bakımından`add` methodunun zıttını, `discard` methodunun aynısını yapar. `element` parametresinde belirtilen değer set'de yoksa `KeyError` hatası yükseltir. Örnek:
+`element` parametresine argüman olarak girilen değeri set'den silmeye yarar. İşlev bakımından `add` methodunun zıttını, `discard` methodunun benzerini yapar ama `element` parametresinde belirtilen değer set'de yoksa `KeyError` hatası yükseltir. Örnek:
 ```py
 A = {1,2,3,4,5}
 A.remove(1)
@@ -365,12 +303,12 @@ print(A & B & C) # Output: {1}
 
 <h3 id="1.3.10"><code>isdisjoint(s)</code> Methodu</h3>
 
-Uygulandığı set objesi ile `s` parametresine argüman olarak girilen set objesinin kesişiminin boş olup olmadığını sordular. Boşsa `True`, diğer durumlarda `False` döndürür. Örnek:
+Uygulandığı set objesi ile `s` parametresine argüman olarak girilen set objesinin kesişiminin boş olup olmadığını sorgular. Boşsa `True`, diğer durumlarda `False` döndürür. Örnek:
 ```py
 A = {1,2,3,4,5}
 B = {1,2,3}
 C = {6,7}
-print(A.isdisjoint(B)) # Output: False (Boş değil)
+print(A.isdisjoint(B)) # Output: False (Boş değil çünkü kesişimi {1,2,3})
 print(A.isdisjoint(C)) # Output: True (Boş)
 ```
 
@@ -378,7 +316,7 @@ print(A.isdisjoint(C)) # Output: True (Boş)
 
 Uygulandığı set objesinin, `s` parametresine argüman olarak girilen set objesinin alt kümesi olup olmadığını sorgular. Alt kümesi ise `True`, diğer durumlarda `False` döndürür.
 
-**Alt Küme:** `A` ve `B` iki küme olmak üzere, `B` kümesinin bütün elemanları `A` kümesinde de varsa (başka bir deyişle, `B` kümesinin bütün elemanları `A` kümesine ait ise), `B` kümesi `A` kümesinin alt kümesidir.
+**Alt Küme:** `A` ve `B` iki küme olmak üzere, `A` kümesi `B` kümesini kapsıyorsa (başka bir deyişle `B` kümesinin bütün elemanları `A` kümesinde de varsa), `B` kümesi `A` kümesinin alt kümesidir.
 
 Örnek:
 ```py
@@ -404,7 +342,11 @@ print(B.issubset(A)) # Output: False (A kümesi B kümesini kapsamaz)
 
 <h3 id="1.3.12"><code>issuperset(s)</code> Methodu</h3>
 
-Uygulandığı set objesinin, `s` parametresine argüman olarak girilen set objesinin üst kümesi olup olmadığını sorgular. Başka bir deyişle, Uygulandığı set objesinin, `s` parametresine argüman olarak girilen set objesini kapsayıp kapsamadığını sorgular Üst kümesi ise (kapsıyorsa) `True`, diğer durumlarda `False` döndürür. Örnek:
+Uygulandığı set objesinin, `s` parametresine argüman olarak girilen set objesinin üst kümesi olup olmadığını sorgular. Üst kümesi ise `True`, diğer durumlarda `False` döndürür.
+
+**Üst Küme:** `A` ve `B` iki küme olmak üzere, `A` kümesi `B` kümesini kapsıyorsa (başka bir deyişle `B` kümesinin bütün elemanları `A` kümesinde de varsa), `A` kümesi `B` kümesinin üst kümesidir.
+
+Örnek:
 ```py
 A = {1,2,3,4,5}
 B = {1,2,3,4}
@@ -569,7 +511,7 @@ A = {1,2,3,4,5}
 print(A.pop()) # Output: 1
 print(A) # Output: {2, 3, 4, 5}
 ```
-`pop` merhodu, (yukarıdaki örnekte integer gibi) hash'leri her zaman aynı olan data type'larda her zaman aynı öğeyi silerken,  (yukarıdaki örnekte string gibi) hash'leri her seferinde değişen data type'larda her zaman aynı öğeyi silmeyebilir.
+`pop` merhodu, (yukarıdaki örnekte integer gibi) hash'leri her zaman aynı olan data type'larda her zaman aynı öğeyi silerken, (aşağıdaki örnekte string gibi) hash'leri her seferinde değişen data type'larda her zaman aynı öğeyi silmeyebilir.
 ```py
 B = {"1","2","3","4","5"}
 print(B.pop()) # Output: 3

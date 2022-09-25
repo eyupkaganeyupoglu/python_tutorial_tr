@@ -7,23 +7,26 @@
 
 <h1 id="1">Range</h1>
 
-Range, belli bir sayısal aralığı temsil eden spesifik obje türüne (type) verilen isimdir. `range()` build-in fonksiyonu ile range objeleri yaratabilirsiniz. `range(start=0, stop, step=1)` fonksiyonuna girilen argümanlar direkt integer type ya da `__index__` methodu uygulanmış (implement) bir obje olabilir.
-- `start` parametresine girilen integer type argüman, başlangıç değerini ifade eder. Oluşturuşturulan sayı topluluğuna bu integer değer dahil edilir. Örnek `list(range(2,5)) == [2,3,4]`. `start` parametresi girilmezse (omitted, ihmal etmek) default olarak `0` kabul edilir.
-- `stop` parametresine girilen integer type argüman, bitiş değerini ifade eder. Oluşturuşturulan sayı topluluğuna bu integer değer dahil edilmez. Örnek `list(range(2,5)) == [2,3,4]`. `range()` fonksiyonunu kullanabilmek için `stop` parametresine argüman girilmelidir.
-- `step` parametresine girilen integer type argüman, atlama değerini ifade eder. `step` parametresi girilmezse (omitted, ihmal etmek) default olarak `1` kabul edilir. Bu parametre `0` olarak girilirse `ValueError: range() arg 3 must not be zero` hatası yükseltilir çünkü matematiksel olarak bir sayıya `0` ekleyerek o sayıyı arttıramazsınız. Bu da `range()` fonksiyonunun işlevine aykırıdır.
-    - `step` pozitif bir değer olursa, bir `r` varaible'ına atanmış `range()` fonksiyonunun içeriği `i >= 0` ve `r[i] < stop` olmak üzere, `r[i] = start + step*i` formülü ile hesaplanır. Örnek:
+Range, belli bir sayısal aralığı temsil eden spesifik obje türüne verilen isimdir. `range()` build-in fonksiyonu ile range objeleri yaratabilirsiniz. `range(start=0, stop, step=1)` syntax'ına sahip bu fonksiyonuna girilen argümanlar integer type ya da `__index__` methodu uygulanmış (implement) bir obje olabilir.
+- `start` parametresine girilen integer type argüman, başlangıç değerini ifade eder ve dahil edilir. Örneğin `print(tuple(range(2,5))) # Output: (2,3,4)` gördüğünüz gibi start parametresine girilen `2` dahil edilmiş. `start` parametresi girilmezse (omitted, ihmal etmek) bu parametre default değeri olan `0`'ı kullanır.
+- `stop` parametresine girilen integer type argüman, bitiş değerini ifade eder ve dahil edilmez. Örneğin `print(tuple(range(2,5))) # Output: (2,3,4)` gördüğünüz gibi stop parametresine girilen `5` dahil edilmiş.
+- `step` parametresine girilen integer type argüman, atlama değerini ifade eder. `step` parametresi girilmezse (omitted, ihmal etmek) bu parametre default değeri olan `1`'ı kullanır. Bu parametre `0` olarak girilirse `ValueError: range() arg 3 must not be zero` hatası yükseltilir çünkü matematiksel olarak bir sayıya `0` ekleyerek o sayıyı arttıramadığınız için `range()` fonksiyonunun amacına aykırı bir durum oluşuyor ve hata yükseltiliyor.
+    - `step` pozitif bir değer olursa, bir `r` varaible'ına atanmış `range()` fonksiyonunun her bir öğesi `i >= 0` ve `r[i] < stop` olmak üzere, `r[i] = start + step*i` formülü ile hesaplanır. Örnek:
         ```
         `i >= 0` ve `r[i] < stop` olmak üzere, `r[i] = start + step*i`
 
         range(0,5,1) -> 0, 1, 2, 3, 4
 
-        `0 >= 0` ve `r[0] < 5` -> 0 > 5 olmak üzere, `r[0] = 0 + 1*0` -> 0 = 0 + 1*0` √
-        `1 >= 0` ve `r[1] < 5` -> 1 > 5 olmak üzere, `r[1] = 0 + 1*1` -> 1 = 0 + 1*1` √
-        `2 >= 0` ve `r[2] < 5` -> 2 > 5 olmak üzere, `r[2] = 0 + 1*2` -> 2 = 0 + 1*2` √
-        `3 >= 0` ve `r[3] < 5` -> 3 > 5 olmak üzere, `r[3] = 0 + 1*3` -> 3 = 0 + 1*3` √
-        `4 >= 0` ve `r[4] < 5` -> 4 > 5 olmak üzere, `r[4] = 0 + 1*4` -> 4 = 0 + 1*4` √
+        `0 >= 0` ve `r[0] < 5` -> 0 < 5 olmak üzere, `r[0] = 0 + 1*0` -> 0 = 0 + 1*0` √
+        `1 >= 0` ve `r[1] < 5` -> 1 < 5 olmak üzere, `r[1] = 0 + 1*1` -> 1 = 0 + 1*1` √
+        `2 >= 0` ve `r[2] < 5` -> 2 < 5 olmak üzere, `r[2] = 0 + 1*2` -> 2 = 0 + 1*2` √
+        `3 >= 0` ve `r[3] < 5` -> 3 < 5 olmak üzere, `r[3] = 0 + 1*3` -> 3 = 0 + 1*3` √
+        `4 >= 0` ve `r[4] < 5` -> 4 < 5 olmak üzere, `r[4] = 0 + 1*4` -> 4 = 0 + 1*4` √
+        `5 >= 0` ve `r[5] < 0` -> 5 < 5 olmak üzere, `r[5] = 0 + 1*5` -> 5 = 0 + 1*5` X (5 < 5 sağlamadığı için r[5] dahil edilmez.)
+
+        Not: 5 < 5 sağlamadığı için r[5] dahil edilmez.
         ```
-    - `step` negatif bir değer olursa, bir `r` variable'ına atanmış `range()` fonksiyonunun içeriği `i >= 0` ve `r[i] > stop` olmak üzere, `r[i] = start + step*i` formülü ile hesaplanır. Örnek:
+    - `step` negatif bir değer olursa, bir `r` variable'ına atanmış `range()` fonksiyonunun her bir öğesi `i >= 0` ve `r[i] > stop` olmak üzere, `r[i] = start + step*i` formülü ile hesaplanır. Örnek:
         ```
         `i >= 0` ve `r[i] > stop` olmak üzere, `r[i] = start + step*i`
 
@@ -34,9 +37,9 @@ Range, belli bir sayısal aralığı temsil eden spesifik obje türüne (type) v
         `2 >= 0` ve `r[2] > 0` -> 3 > 0 olmak üzere, `r[2] = 5 + -1*2` -> 3 = 5 + -1*2` √
         `3 >= 0` ve `r[3] > 0` -> 2 > 0 olmak üzere, `r[3] = 5 + -1*3` -> 2 = 5 + -1*3` √
         `4 >= 0` ve `r[4] > 0` -> 1 > 0 olmak üzere, `r[4] = 5 + -1*4` -> 1 = 5 + -1*4` √
-        `5 >= 0` ve `r[5] > 0` -> 1 > 0 olmak üzere, `r[5] = 5 + -1*5` -> 1 = 5 + -1*5` X (`r[5]` out of range)
+        `5 >= 0` ve `r[5] > 0` -> 0 > 0 olmak üzere, `r[5] = 5 + -1*5` -> 1 = 5 + -1*5` X (0 > 0 sağlamadığı için r[5] dahil edilmez.)
         ```
-    - `range(0,5,-1)` ve `range(5,0,1)` gibi `range` fonksiyonları yukarıda bahsedilen formülleri sağlamadığı için hiçbir değer döndürmez ve bu yüzden `list(range(0,5,-1))` ve `list(range(5,0,1))` kodları boş liste objeleri döndürür.
+    - `range(0,5,-1)` ve `range(5,0,1)` gibi tanımlanmış fonksiyonlar yukarıda bahsedilen formülleri sağlamadığı için boş kümedir, dolayısıyla bunları liste veya tuple'a dönüştürmek isterseniz elinize boş liste ve tuple geçer. Bu yüzden `start`, `stop` ve `step` parametrelerine argüman girerken bu förmüle uymasına dikkat edin.
 
 `range()` fonksiyonu örnekleri:
 ```py
@@ -51,7 +54,7 @@ print(list(range(0, 10, -1))) # Output: []
 print(list(range(10, 0, 1))) # Output: []
 ```
 
-**Not:** `sys.maxsize` (`Py_ssize_t` type bir variable'ın alabileceği max sayı. Yani işletim sisteminin bit'lerle ifade edebileceği max büyüklükteki sayı. 32 bir sistemlerde `2**31 - 1`, 64 bir sistemlerde `2**63 - 1` kadardır) değerinden daha büyük büyük sayılara izin verilir ama `len()` gibi bazı özellikler (features) `OverflowError` hatasına neden olabilir. Örnek:
+**Not:** `sys.maxsize`, `Py_ssize_t` type bir variable'ın alabileceği max sayıdır. Yani işletim sisteminin bit'lerle ifade edebileceği max büyüklükteki sayıdır. 32 bir sistemlerde `2**31 - 1`, 64 bir sistemlerde `2**63 - 1` kadardır. `sys.maxsize` değerinden daha büyük büyük sayılara izin verilir ama `len()` gibi bazı özellikler (features) `OverflowError` hatasına neden olabilir. Örnek:
 ```py
 print(range(2**63-1)) # Output: range(0, 9223372036854775807)
 print(range(2**63)) # Output: range(0, 9223372036854775808)
@@ -61,7 +64,7 @@ print(len(range(2**63-1))) # Output: 9223372036854775807
 print(len(range(2**63))) # OverflowError: Python int too large to convert to C ssize_t
 ```
 
-**Not:** Range'ler, concatenation ve repetition dışında tüm [common sequence operation'ları](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq-common "https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq-common") uygular (implement). Çünkü range obje'leri yalnızca strict bir pattern'i takip eden sequence'ları takip edebilir. Concatenation ve repetition genellikle bu pattern'leri ihlal eder (violate). Burası baya ayrıntı. Merak ettiyseniz terimleri kendiniz araştırabilirsiniz.
+**Not:** `range`'ler, concatenation ve repetition dışında tüm [common sequence operation'ları](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq-common "https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq-common") uygular (implement). Çünkü range obje'leri yalnızca strict bir pattern'i takip eden sequence'ları takip edebilir. Concatenation ve repetition genellikle bu pattern'leri ihlal eder (violate). Burası baya ayrıntı. Merak ettiyseniz terimleri kendiniz araştırabilirsiniz.
 
 **Not:** `range` type'ın `list` ya da `tuple` type'dan avantajlı olmasının sebebi, `range` type sadece `start`, `stop` ve `step` verilerini tuttuğu için `range(0,1,1)` objesi ile `range(0,255,1)` objesinin bellek boyutu aynıdır ama `list(range(0,1,1))` ile `list(range(0,255,1))`'in boyutu aynı değildir.
 ```py
@@ -76,23 +79,23 @@ print(list(range(2**63-1))) # MemoryError
 
 **Not:** Range objeleri, diğer [Sequence Types](https://docs.python.org/3/library/stdtypes.html?highlight=range#typesseq) objelere dönüştürebilir, membership (`in`) operator'ı ile içeriğine erişebilir ve index'lenebilir (negatif index'lemeyi destekler). Daha fazla bilgi için [tıklayınız](https://newbedev.com/does-range-really-create-lists).
 ```py
-r = range(0, 20, 2)
-print(r) # Output: range(0, 20, 2)
+print(range(-10, 10, 2)) # Output: range(-10, 10, 2)
+print(*range(-10, 10, 2)) # Output: -10 -8 -6 -4 -2 0 2 4 6 8
 
-print(10 in r) # Output: True
-print(11 in r) # Output: False
+print(-6 in range(-10, 10, 2)) # Output: True
+print(-7 in range(-10, 10, 2)) # Output: False
 
-print(r[5]) # Output: 10
-print(r[:5]) # Output: range(0, 10, 2)
-print(r[-1]) # Output: 18
+print(range(-10, 10, 2)[5]) # Output: 0
+print(range(-10, 10, 2)[:6]) # Output: range(-10, 2, 2)
+print(range(-10, 10, 2)[-1]) # Output: 8
 
-print(list(r)) # Output: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-print(tuple(r)) # Output: (0, 2, 4, 6, 8, 10, 12, 14, 16, 18)
+print(list(range(-10, 10, 2))) # Output: [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8]
+print(tuple(range(-10, 10, 2))) # Output: (-10, -8, -6, -4, -2, 0, 2, 4, 6, 8)
 ```
 
 **Not:** İki `range` objesinin üzerinde `==` ve `!=` işlemleri yapabiliriz. Bu işlemler, bu iki `range` objesinin içeriği aynı ya da farklı olmasına göre sonuçlar verir. Örnekler:
 ```py
-print(range(0) == range(2,1,3) or range(0,3,2) == range(0,4,2)) # Output: True (Çünkü hepsi hiçbir değer içermiyor)
+print(range(0) == range(2,1,3) or range(0,3,2) == range(0,4,2)) # Output: True (Çünkü hepsi boş)
 
 print(list(range(0,2,1))) # Output: [0, 1]
 print(list(range(1,-1,-1))) # Output: [1, 0]

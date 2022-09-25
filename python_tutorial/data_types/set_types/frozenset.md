@@ -29,75 +29,13 @@ fs2 = frozenset({"string",
 print(fs1) # Output: frozenset()
 print(fs2) # Output: frozenset({1, 1.5, range(0, 10), 'string', b'\x00\x00\x00', frozenset({1, 2, 3, 4}), ('tuple', 'Tuple'), (15+5j)})
 ```
-`bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `bytes`, `str`, `range` değiştirilemez (immutable) type'lar oldukları için frozenset'e öğe olarak girilebilirler. `list`, `set`, `dict`, `bytearray` ve user-defined class'lar değiştirilebilir (mutable) data type'lar oldukları için frozenset'e öğe olarak girilemezler.
+`bool`, `int`, `float`, `complex`, `tuple`, `frozenset`, `bytes`, `str`, `range` değiştirilemez (immutable) type'lar oldukları için set'e öğe olarak girilebilirler. `list`, `set`, `dict`, `bytearray` ve user-defined class'lar değiştirilebilir (mutable) data type'lar oldukları için set'e öğe olarak girilemezler.
 
-Frozenset data type'ı sırasız olduğu için örneğin `print()` fonksiyonu ile yazdırılmak istense, program her çalıştırıldığında öğeler farklı sırada yazdırılabilir. Bu durum öğelerin **hashlenmesi** ile ilgilidir. Hash dediğimiz şey, veriyi daha az kaynak kullanarak ifade etmek için ilgili hashing algoritmasının ürettiği değerdir. Örneğin 1024 bitlik bir mesajı bir hashing algoritması 128 bitlik yapıya indirgeyebilir. Python'da da böyledir. Bir Python programı çalıştırıldığında, o programdaki değerler bir hash'e sahip olur. Çok kaynak kullanılarak ifade edilebilen değerlerin hash'leri, program her çalıştırıldığında değişir. Ama az kaynak kullanılarak ifade edilebilen değerlerin hash'leri her zaman aynıdır. Örnek:
-```py
-# Programı İlk Çalıştırmamız
-print(hash(tuple([1,2,3])))                # Output: 529344067295497451
-print(hash(tuple(["1","2","3"])))          # Output: 7401844457185675310
-print(hash(frozenset([1,2,3])))            # Output: -272375401224217160
-print(hash(frozenset(["1","2","3"])))      # Output: -2204149807619723895
-print(hash(bytes(12)))                     # Output: 6673985660609553768
-print(hash("String"))                      # Output: 4966508039248316583
+**Not:** Set data type'ı sırasız olduğu için örneğin `print()` fonksiyonu ile yazdırılmak istense, program her çalıştırıldığında öğeler farklı sırada yazdırılabilir. Bu durum öğelerin **hashlenmesi** ile ilgilidir. Hash dediğimiz şey, veriyi daha az kaynak kullanarak ifade etmek için ilgili hashing algoritmasının ürettiği değerdir. Örneğin 1024 bitlik bir mesajı bir hashing algoritması 128 bitlik yapıya indirgeyebilir. Python'da da böyledir. Bir Python programı çalıştırıldığında, o programdaki değerler bir hash'e sahip olur. Çoğu immutable built-in object hashable'dir. `list`, `set`, `dict`, `bytearray` gibi mutable container'lar hashable değildir. `tuple` ve `frozenset` gibi mutable container'lar hashable içeriğe sahipse hashable'dir. Çok kaynak kullanılarak ifade edilebilen değerlerin hash'leri program her çalıştırıldığında değişir ama az kaynak kullanılarak ifade edilebilen değerlerin hash'leri her zaman aynıdır. `bool`, `int`, `float`, `complex` ve `range` type'ların hash'leri hiçbir zaman değişmez çünkü bu type'lar az kaynak harcarlar ama `bytes` ve `str` type'ların hash'leri program her baştan çalıştırıldığında değişir çünkü bu type'lar çok kaynak harcarlar. `tuple` ve `frozenset` type'ları da içerdiği değerlere göre çok ya da az kaynak harcayabilir. **Hash** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hash "https://docs.python.org/3/library/functions.html#hash"). **Hashable** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/glossary.html#term-hashable "https://docs.python.org/3/glossary.html#term-hashable").
 
-print(hash(bool(True)), hash(bool(False))) # Output: 1 0
-print(hash(123))                           # Output: 123
-print(hash(123.123))                       # Output: 283618690133295227
-print(hash(123+123j))                      # Output: 123000492
-print(hash(range(10)))                     # Output: -7546101314042312252
-```
-```py
-# Programı İkinci Çalıştırmamız
-print(hash(tuple([1,2,3])))                # Output: 529344067295497451
-print(hash(tuple(["1","2","3"])))          # Output: -6370647310685844327
-print(hash(frozenset([1,2,3])))            # Output: -272375401224217160
-print(hash(frozenset(["1","2","3"])))      # Output: 7667363132115089216
-print(hash(bytes(12)))                     # Output: 3239916383633325594 
-print(hash("String"))                      # Output: -3850919489988372704
+**Not:** `None` type da değiştirilemez (immutable) bir type'dır ve hash'i her zaman sabittir. Ama farklı makinelerde bu hash değeri değişebilir. Örneğin bir makinede `-9223363241081056563` hash'ine sahipkenbaşka bir makinede `-9223363242374385203` hash'ine sahip olmuştur.
 
-print(hash(bool(True)), hash(bool(False))) # Output: 1 0
-print(hash(123))                           # Output: 123
-print(hash(123.123))                       # Output: 283618690133295227
-print(hash(123+123j))                      # Output: 123000492
-print(hash(range(10)))                     # Output: -7546101314042312252
-```
-```py
-# Programı Üçüncü Çalıştırmamız
-print(hash(tuple([1,2,3])))                # Output: 529344067295497451
-print(hash(tuple(["1","2","3"])))          # Output: 6340878864105529814
-print(hash(frozenset([1,2,3])))            # Output: -272375401224217160
-print(hash(frozenset(["1","2","3"])))      # Output: -5783254467061130136
-print(hash(bytes(12)))                     # Output: -7182886563342320287
-print(hash("String"))                      # Output: 8500247573865546266
-
-print(hash(bool(True)), hash(bool(False))) # Output: 1 0
-print(hash(123))                           # Output: 123
-print(hash(123.123))                       # Output: 283618690133295227
-print(hash(123+123j))                      # Output: 123000492
-print(hash(range(10)))                     # Output: -7546101314042312252
-```
-`bool`, `int`, `float`, `complex` ve `range` type'ların hash'leri hiçbir zaman değişmez çünkü bu type'lar az kaynak harcarlar. Ama `bytes` ve `str` type'ların hash'leri, program her baştan çalıştırıldığında değişir çünkü bu type'lar çok kaynak harcarlar. `tuple` ve `frozenset` type'ları da içerdiği değerlere göre çok ya da az kaynak harcayabilir. Örneğin öğeleri çok kaynak harcayan string veya bytes type olan bir tuple veya frozenset objelerinin hash'i, program her çalıştırıldığında değişirken; öğeleri az kaynak harcayan type'lar olan tuple veya frozenset objelerinin hash'i hep aynıdır. Yukarıda örneği var.
-
-**Not:** `list`, `set`, `dict`, `bytearray` gibi değiştirilebilir (mutable) type'lar hash'lenemez. Hash'lenmeye çalışılırsa `TypeError: unhashable type: 'list'`, `TypeError: unhashable type: 'set'`, `TypeError: unhashable type: 'dict'`, `TypeError: unhashable type: 'bytearray'` gibi hatalar yükseltilir. **Hash** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hash "https://docs.python.org/3/library/functions.html#hash"). **Hashable** hakkında daha fazla bilgi için [tıklayınız](https://docs.python.org/3/glossary.html#term-hashable "https://docs.python.org/3/glossary.html#term-hashable").
-
-**Not:** `None` type da değiştirilemez (immutable) bir type'dır ve hash'i her zaman sabittir. Ama farklı makinelerde bu hash değeri değişebilir. Örneğin benim makinede (bilgisayarımda) `-9223363241081056563` hash'ine sahipken, bir arkadaşımın bilgisayarında `-9223363242374385203` hash'ine sahiptir.
-
-**Not:** Frozenset, öğelerini hash'in sayısal büyüklüğüne göre mi sıralıyor diye bakmayın, ben baktım ve öyle bir şey yok sanırım. Örnek:
-```py
-frozenset_exp = {"1", "2", "3"}
-for i in frozenset_exp:
-    print(i, hash(i))
-print(frozenset_exp)
-```
-**Output:**
-```
-2 -3778677644095488240
-1 7888383718303043910
-3 2738165215596315832
-{'2', '1', '3'}
-```
-Burada `'2'` string'ini hash'inin sayısal değeri diğerlerinden küçük olmasına rağmen ilk sırada. Bu da hash'lerin sıralanışının sayısal büyüklükleriyle alakalı olmadığını kanıtlıyor. Bu kadar ayrıntı bilmenize gerek yok. Diğer kısımlara geçin.
+**Not:** `frozenset` type bir objenin öğeleri, öğelerin hash'lerinin sayısal büyüklüğüne göre mi sıralanıyor sorusunun cevabı "Hayır".
 
 <h2 id="1.1">Frozenset'de İşlemler</h2>
 
@@ -156,7 +94,7 @@ Bu konu daha sonra comprehension başlığı altında daha detaylı anlatılacak
 
 <h3 id="1.3.1"><code>copy()</code> Methodu</h3>
 
-Uygulandığı frozenset'in bir kopyasını oluşturur (teoride böyle). `frozenset_exp1 = frozenset_exp2` gibi assignment operator kullanarak frozenset kopyalama yönteminden farkı, yeni frozenset ile eski frozenset'in birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Örnek:
+Uygulandığı frozenset'in bir kopyasını oluşturur. `frozenset_exp1 = frozenset_exp2` gibi assignment operator kullanarak frozenset kopyalama yönteminden farkı, yeni frozenset ile eski frozenset'in birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Ama bu teoride böyle. Pratikte iki obje de aynı id'lere sahip. Zaten `frozenset` immutable olduğu için üzerinde değişiklik yapamayacağınızdan bu durum önemli değil. Örnek:
 ```py
 frozenset_exp = frozenset({1,2,3,4,5})
 
