@@ -28,7 +28,7 @@ VSCode'da VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını 
 
 <h1 id="1">Python Sözlüğü (Python Glossary)</h1>
 
-Python'da kullanılan terimlerin tamamına [bu sözlükten ulaşabilirsiniz](https://docs.python.org/3/glossary.html ""https://docs.python.org/3/glossary.html").
+Python'da kullanılan terimlerin tamamına [bu sözlükten ulaşabilirsiniz](https://docs.python.org/3/glossary.html "https://docs.python.org/3/glossary.html").
 
 <h1 id="2">Python'un Çalışma Mantığı</h1>
 

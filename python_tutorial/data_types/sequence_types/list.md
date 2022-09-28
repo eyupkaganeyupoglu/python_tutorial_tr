@@ -248,6 +248,7 @@ print(liste) # Output: ['Elma', 'Armut', 'Kiraz']
 liste.insert(1, "Çilek")
 print(liste) # Output: ['Elma', 'Çilek', 'Armut', 'Kiraz']
 ```
+Burada dikkat edilmesi gereken şey `liste = ["Elma", "Armut", "Kiraz"].insert(1, "Çilek")` tuzağıdır. Fonksiyonların yaptıkları şey ile döndürdükleri her zaman birbirini tutmuyor. Örneğin `insert` methodu uygulandığı listenin herhangi bir index'ine bir öğe eklememize yarar ama döndürdüğü şey `None`'dur. Yani `liste = ["Elma", "Armut", "Kiraz"].insert(1, "Çilek")` yaparsanız `Liste == None` olur. Lego oynar gibi python kodlamak bazen böyle istenmeyen sonuçlara sebep oluyor.
 
 <h3 id="1.3.4"><code>remove(value)</code> Methodu</h3>
 

@@ -94,7 +94,7 @@ Bu konu daha sonra comprehension başlığı altında daha detaylı anlatılacak
 
 <h3 id="1.3.1"><code>copy()</code> Methodu</h3>
 
-Uygulandığı frozenset'in bir kopyasını oluşturur. `frozenset_exp1 = frozenset_exp2` gibi assignment operator kullanarak frozenset kopyalama yönteminden farkı, yeni frozenset ile eski frozenset'in birbirinden bağımsız, farklı (farklı ID'lere sahip) objeler olmasıdır. Ama bu teoride böyle. Pratikte iki obje de aynı id'lere sahip. Zaten `frozenset` immutable olduğu için üzerinde değişiklik yapamayacağınızdan bu durum önemli değil. Örnek:
+Uygulandığı frozenset'in bir kopyasını oluşturur. Örnek:
 ```py
 frozenset_exp = frozenset({1,2,3,4,5})
 
@@ -104,13 +104,13 @@ print(id(frozenset_exp) == id(frozenset_copy1)) # Output: True
 frozenset_copy2 = frozenset_exp.copy()
 print(id(frozenset_exp) == id(frozenset_copy2)) # Output: True
 ```
-`copy()` methodu, değiştirilemez (immutable) data type olan `frozenset`'de neden var anlamış değilim. Zaten bu method, `froozenset` type'da olmasına rağmen çalışmıyor gördüğünüz gibi. Değiştirilemez (immutable) data type'lar adı üstünde değiştirilemez olduğu için verimlilik açısından bütün kopyaları aynı bellek adresine atıfta bulunur. Bu yüzden aynı şeyin farklı kopyaları oluşturulmaz çünkü verimlilik açısından dezavantajlı ve gereksiz. 
+Değiştirilemez (immutable) data type'lar verimlilik açısından bütün kopyaları aynı bellek adresine atıfta bulunur, farklı kopyaları oluşturulmaz. Bu yüzden `frozenset`'in kopyasını ister `copy()` methodu ile ister assignment operator (`=`) oluşturmaya çalışın, bütün objeler aynı objeye atıfta bulunur.
 
 <h3 id="1.3.2"><code>difference(*s)</code> Methodu</h3>
 
 Uygulandığı frozenset ile `*s` parametresine girilen frozenset'lerin farkını alır ve sonucu döndürür. `A` ve `B` iki frozenset type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/1Rx3z20/a-fark-b.png)
+![](https://i.ibb.co/P4rYJcy/a-fark-b.png)
 
 Yukarıdaki şemaya göre `A - B` işlemi "`A`'da olup `B`'de olmayan" anlamına gelmektedir. Örnek:
 ```py
@@ -118,7 +118,6 @@ print(frozenset({1,2,3,4,5}).difference(frozenset({1,2,3}))) # Output: frozenset
 print(frozenset({1,2,3,4,5}).difference(frozenset({1,}),frozenset({2,}),frozenset({3,}))) # Output: frozenset({4, 5})
 print(frozenset({1,2,3,4,5}).difference(frozenset({1,2,3}),frozenset({1,4}))) # Output: frozenset({5})
 ```
-
 
 <h3 id="1.3.3"><code>intersection(*s)</code> Methodu</h3>
 
@@ -210,7 +209,7 @@ print(A | B | C) # Output: frozenset({1, 2, 3, 4, 5})
 
 <h3 id="1.3.5"><code>isdisjoint(s)</code> Methodu</h3>
 
-Uygulandığı frozenset objesi ile `s` parametresine argüman olarak girilen frozenset objesinin kesişiminin boş olup olmadığını sordular. Boşsa `True`, diğer durumlarda `False` döndürür. Örnek:
+Uygulandığı frozenset objesi ile `s` parametresine argüman olarak girilen frozenset objesinin kesişiminin boş olup olmadığını sorglar. Boşsa `True`, diğer durumlarda `False` döndürür. Örnek:
 ```py
 A = frozenset({1,2,3,4,5})
 B = frozenset({1,2,3})
@@ -249,7 +248,11 @@ print(B.issubset(A)) # Output: False (A kümesi B kümesini kapsamaz)
 
 <h3 id="1.3.7"><code>issuperset(s)</code> Methodu</h3>
 
-Uygulandığı frozenset objesinin, `s` parametresine argüman olarak girilen frozenset objesinin üst kümesi olup olmadığını sorgular. Başka bir deyişle, Uygulandığı frozenset objesinin, `s` parametresine argüman olarak girilen frozenset objesini kapsayıp kapsamadığını sorgular Üst kümesi ise (kapsıyorsa) `True`, diğer durumlarda `False` döndürür. Örnek:
+Uygulandığı frozenset objesinin, `s` parametresine argüman olarak girilen frozenset objesinin üst kümesi olup olmadığını sorgular. Üst kümesi ise `True`, diğer durumlarda `False` döndürür.
+
+**Üst Küme:** `A` ve `B` iki küme olmak üzere, `A` kümesi `B` kümesini kapsıyorsa (başka bir deyişle `B` kümesinin bütün elemanları `A` kümesinde de varsa), `A` kümesi `B` kümesinin üst kümesidir.
+
+Örnek:
 ```py
 A = frozenset({1,2,3,4,5})
 B = frozenset({1,2,3,4})

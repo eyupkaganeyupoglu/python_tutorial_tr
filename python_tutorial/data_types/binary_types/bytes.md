@@ -52,11 +52,11 @@
 
 <h1 id="1">Binary Sistem</h1>
 
-Binary, ikili demektir. ikili anlam birçok şeyle ifade edilebilir. Var/yok, sıcak/soğuk, aydınlık/karanlık... Bunlar gibi ikili anlam taşıyan ifadeler kullanan sistemler arasındaki iletişimi sağlamak için ikili anlam taşıyan ifadeleri birbirine dönüştürmeye **kodlama (encoding)** debir. Bilgisayar dilinde ikili sistem olarak `0` ve `1` kullanılır. Bu sisteme **Binary sistem** denir ve her bir `0` ya da `1`'e **bit** olarak ifade edilir.
+Binary, ikili demektir. ikili anlam birçok şeyle ifade edilebilir. Var/yok, sıcak/soğuk, aydınlık/karanlık... Bunlar gibi ikili anlam taşıyan ifadeler kullanan sistemler arasındaki iletişimi sağlamak için ikili anlam taşıyan ifadeleri birbirine dönüştürmeye **kodlama (encoding)** denir. Bilgisayar dilinde ikili sistem olarak `0` ve `1` kullanılır. Bu sisteme **Binary sistem** denir ve her biri **bit** olarak ifade edilir.
 
 <h2 id="1.1">8 bit'lik Sistem</h2>
 
-8 bit'in (8 tane `0` ya da `1`'in) bir araya gelerek oluşturduğu sisteme denir. Bu sistem, binary sayıları (`0` ve `1`'leri) kullanarak 0'dan 256'ya (0 dahil, 256 dahil değil) kadar olan sayılar üretebilir. Dolayısıyla 256 tane farklı sinyal oluşturabilir. Bu sinyaller topluluğunun ifade ettiği verinin büyüklüklerine verilen isimler ve birbirlerine dönüşümleri aşağıda listelenmiştir:
+8 bit'in (8 tane `0` veya `1`'in) bir araya gelerek oluşturduğu sisteme denir. Bu sistem, binary sayıları (`0` ve `1`'leri) kullanarak 0'dan 256'ya (0 dahil, 256 dahil değil) kadar olan sayılar üretebilir. Dolayısıyla 256 tane farklı sinyal oluşturabilir. Bu sinyaller topluluğunun ifade ettiği verinin büyüklüklerine verilen isimler ve birbirlerine dönüşümleri aşağıda listelenmiştir:
 - 8 **bit**'in bir araya gelmesi ile **byte** oluşur.
 - 1024 byte'ın bir araya gelmesi ile **kilobyte** oluşur.
 - 1024 kilobyte'ın bir araya gelmesi ile **megabyte** oluşur.
@@ -66,10 +66,10 @@ Binary, ikili demektir. ikili anlam birçok şeyle ifade edilebilir. Var/yok, s�
 
 <h2 id="1.2">Hata Kontrolü</h2>
 
-Alıcı ile verici arasında paylaşılan byte'lar, herhangi bir nedenden dolayı bozulabilir. Bunun yaratabileceği sorunlardan kurtulmak için hatalı byte'ları tespit eden hata kontrol sistemleri geliştirilmiştir. 8 bit'lik (1 byte) hata kontrol mekanizmalarında ilk 7 bit'i ifade etmek için kullanılırken, 8. bit hata kontrol mekanizması için kullanılır. Hata kontrol makenizması için kullanılan 8. bit'in çalışma mantığı, ilk 7 bit'in çift/tek olduğunu kontrol etmeye dayanır. İlk 7 bit'i ifade etmek için kullanılan `1`'lerin toplamı tek sayı ise byte tektir, çiftse byte çiftir. Örneğin `0110111` byte'ında beş tane `1` olduğu için bu byte tektir. Kullanıcının göndermek istediği byte tekse, gönderilen byte de tek; çiftse, çift olmalıdır. Hata kontrol mekanizması bunu denetler.
+Alıcı ile verici arasında paylaşılan byte'lar herhangi bir nedenden dolayı bozulabilir. Bunun yaratabileceği sorunlardan kurtulmak için hatalı byte'ları tespit eden hata kontrol sistemleri geliştirilmiştir. 8 bit'lik (1 byte) hata kontrol mekanizmalarında ilk 7 bit'i ifade etmek için kullanılırken, 8. bit hata kontrol mekanizması için kullanılır. Hata kontrol makenizması için kullanılan 8. bit'in çalışma mantığı, ilk 7 bit'in çift/tek olduğunu kontrol etmeye dayanır. İlk 7 bit'i ifade etmek için kullanılan `1`'lerin toplamı tek sayı ise byte tektir, çiftse byte çiftir. Örneğin `0110111` byte'ında beş tane `1` olduğu için bu byte tektir. Kullanıcının göndermek istediği byte tekse, gönderilen byte de tek; çiftse, çift olmalıdır. Hata kontrol mekanizması bunu denetler.
 
 **Örnek Protokol:** Bir sistemde, bütün byte'ların tek olarak iletilmesini istiyorsak kullanılacak protokolü şöyle düzenleyebiliriz:
-- Eğer karşı tarafa iletilen bir byte zaten tekse, o byte'ın başına `0` ekleyeceğiz. Böylece byte'ın teklik-çiftlik durumu değişmemiş olacak. Ama eğer iletilecek byte çiftse, o byte'ın başına `1` ekleyeceğiz. Böylece çift byte'ı, sistemimizin gerektirdiği şekilde, tek byte'a dönüştürmüş olacağız. Bu kontrol türüne **eşlik denetimi (parity check)** denir. Bu yapmamızı sağlayan bit'e de **eşlik bit'i (parity bit)** denir. `Tek eşlik denetimi (odd parity check)` ve **Çift eşlik denetimi (even parity check)** adlı iki tür eşlik denetimi bulunur. Merak ediyorsanız araştırabilirsiniz.
+- Eğer karşı tarafa iletilen bir byte zaten tekse, o byte'ın başına `0` ekleyeceğiz. Böylece byte'ın teklik-çiftlik durumu değişmemiş olacak. Ama eğer iletilecek byte çiftse, o byte'ın başına `1` ekleyeceğiz. Böylece çift byte'ı, sistemimizin gerektirdiği şekilde, tek byte'a dönüştürmüş olacağız. Bu kontrol türüne **eşlik denetimi (parity check)** denir. Bu yapmamızı sağlayan bit'e de **eşlik bit'i (parity bit)** denir. **Tek eşlik denetimi (odd parity check)** ve **Çift eşlik denetimi (even parity check)** adlı iki tür eşlik denetimi bulunur. Merak ediyorsanız araştırabilirsiniz.
 
 <h2 id="1.3">Karakterlerin Temsili</h2>
 
@@ -122,9 +122,17 @@ Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablos
         ```
     - `source` parametresine argüman olarak iterable bir obje girilirse, iterable objenin eleman sayısı kadar bir array oluşturulur. Örnek:
         ```py
-        print(bytes([1,2,3])) # Output: b'\x01\x02\x03'
-        print(bytes({1,2,3})) # Output: b'\x01\x02\x03'
-        print(bytes((1,2,3))) # Output: b'\x01\x02\x03'
+        print(bytes([4,2,6,1])) # Output: b'\x04\x02\x06\x01'
+        print(bytes([24,76,81])) # Output: b'\x18QL'
+        print(bytes([174,122,231])) # Output: b'\xaez\xe7'
+
+        print(bytes({4,2,6,1})) # Output: b'\x04\x02\x06\x01'
+        print(bytes({24,76,81})) # Output: b'\x18QL'
+        print(bytes({174,122,231})) # Output: b'\xaez\xe7'
+
+        print(bytes((4,2,6,1))) # Output: b'\x04\x02\x06\x01'
+        print(bytes((24,76,81))) # Output: b'\x18QL'
+        print(bytes((174,122,231))) # Output: b'\xaez\xe7'
         ```
         Bu iterable objenin elemanları `0 <= x < 256` değer aralığındaki integer sayılar olabilir. Bu değer aralığında olmazsa `ValueError: bytes must be in range(0, 256)` hatası yükseltilir.
         ```py
@@ -148,11 +156,11 @@ Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablos
 
 <h2 id="2.2">Bytes Methodları</h2>
 
-**Not:** Aşağıdaki methodlardan bazıları uygulandığı `bytes` objesini değiştirirken, bazıları işlevini gerçekleştikten sonra o `bytes` objesinin kopyasını döndürür. Bu yüzden kimi zaman ilgili methodu uyguladığınız `bytes` objesi değişikliğe uğramaz. Bu gibi durumları aşağıdaki methodları anlatırken belirtmeyi unutmuş olabilirim. Bu yüzden methodu kullanmadan önce o method uygulandığı `bytes` objesini mi değiştiriyor yoksa kopyasını mı döndürüyor, kontrol etmeyi ihmal etmeyin.
+**Not:** Aşağıdaki methodlardan bazıları uygulandığı `bytes` objesini değiştirirken, bazıları işlevini gerçekleştikten sonra o `bytes` objesinin kopyasını döndürür. Bu yüzden kimi zaman ilgili methodu uyguladığınız `bytes` objesi değişikliğe uğramaz. Bu gibi durumları aşağıdaki methodları anlatırken belirtmeyi unutmuş olabilirim. Bu yüzden methodu kullanmadan önce o method uygulandığı `bytes` objesini mi değiştiriyor yoksa kopyasını mı döndürüyor, kontrol etmeyi ihmal etmeyin. Benim gibi üşenmeyip güncellemek isteyen varsa commit'lere açığım.
 
 <h3 id="2.2.1"><code>fromhex(s)</code> Methodu</h3>
 
-Bu method bir class method olduğu için direkt `bytes` class'ına veya bu class'dan türetilen objelere uygulanabilir. `s` parametresine argüman olarak girilen, hexadecimal digit'ler belirten bir string'i `bytes` type'a dönüştürür. Bu dönüşümün ancak her bytes için en az 2 hexadecimal digit tanımlandığında yapılabilir. Aksi halde `ValueError: non-hexadecimal number found in fromhex() arg at position n` hatası yükseltilir. Bu dönüşüm hexadecimal digit'lerin kapsamında (`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f`) gerçekleşebilir. Aksi halde yine `ValueError` hatası yükseltilir. Boşluk (space) karakterlerini görmezden gelir. Python 3.7'den sonra ASCII whitespaces karakterini de (`20`) görmezden gelir. Örnek:
+Bu method bir class method olduğu için direkt `bytes` class'ına veya bu class'dan türetilen objelere uygulanabilir. `s` parametresine hexadecimal digit'ler belirten bir string girdiğinizde bunu `bytes` type'a dönüştürür. Bu dönüşüm ancak her bytes için en az 2 hexadecimal digit tanımlandığında yapılabilir. Aksi halde `ValueError: non-hexadecimal number found in fromhex() arg at position n` hatası yükseltilir. Bu dönüşüm hexadecimal digit'lerin kapsamında (`0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f`) gerçekleşebilir. Aksi halde yine `ValueError` hatası yükseltilir. Boşluk (space) karakterlerini görmezden gelir. Python 3.7'den sonra ASCII whitespaces karakterini de (`20`) görmezden gelir. Örnek:
 ```py
 print(bytes.fromhex("f9 c8")) # Output: b'\xf9\xc8'
 print(bytes.fromhex("f920c8")) # Output: b'\xf9 \xc8'
@@ -164,7 +172,7 @@ Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/stdtype
 
 <h3 id="2.2.2"><code>hex(sep, bytes_per_sep)</code> Methodu</h3>
 
-Uygulandığı `bytes` objesinin içerdiği string objesi olarak döndürür. Bir nevi `fromhex()` methodunun yaptığı işin tersini yapar diyebiliriz. `fromhex()` methodunun space karakterlerini görmezden gelmesi gibi `hex()` methodu da hexadecimal anlamına gelen `\x` kaçış dizisini (escape character) görmezden gelir. `sep` parametresine girilen string'i, her ikili hexadecimal digit'in arasına uygular ve bu sayede kullanıcı tarafından output'un okunması kolaylaşır. Örnek:
+`fromhex()` methodunun yaptığı işin tersini yapar. `fromhex()` methodunun space karakterlerini görmezden gelmesi gibi `hex()` methodu da hexadecimal anlamına gelen `\x` kaçış dizisini (escape character) görmezden gelir. `sep` parametresine girilen string'i, her ikili hexadecimal digit'in arasına uygular ve bu sayede kullanıcı tarafından output'un okunması kolaylaşır. Örnek:
 ```py
 print((bytes.fromhex("f9 c8")).hex("-")) # Output: f9-c8
 print((bytes.fromhex("f920c8")).hex("-")) # Output: f9-20-c8
