@@ -159,7 +159,7 @@ print(5 // 2) # Output: 2
 
 <h3 id="1.2.7"><code>%</code> Modulus (Modül) Operator</h3>
 
-Modulus operator'ı, iki operandın birbirine bölünübden kalanı verir. Örneğin numenic type'larda modulus işlemi yapar. Örnek:
+Modulus operator'ı, iki operandın birbirine bölümünden kalanı verir. Örneğin numenic type'larda modulus işlemi yapar. Örnek:
 ```py
 print(5 % 2) # Output: 1
 ```
