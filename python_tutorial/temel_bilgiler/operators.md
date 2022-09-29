@@ -639,7 +639,7 @@ print(harf in isim) # Output: True
 print(harf not in isim) # Output: False
 ```
 
-<h1 id="2"><code>:=</code> Assignment Expression</h1>
+<h1 id="2"><code>:=</code> Assignment Operator Expression</h1>
 
 Assignment expression, bir variable'a değer atama işlemini bir koşul durumunun içinde yapmamıza olanak sağlayarak fazladan bir statement kod yazmaktan bizi kurtarır.
 
