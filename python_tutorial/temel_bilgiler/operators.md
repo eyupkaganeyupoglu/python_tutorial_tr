@@ -149,7 +149,7 @@ Exponentiation operator'ı, solundaki operand'ın, sağındaki operand'a göre �
 print(2 ** 4) # Output: 8
 ```
 
-<h3 id="1.2.6"><code>//</code> Floor division (Taban Bölme)) Operator</h3>
+<h3 id="1.2.6"><code>//</code> Floor division (Taban Bölme) Operator</h3>
 
 Floor division operator'ı, iki operandı birbirine kalansız böler. Örneğin numenic type'larda kalansız bölme işlemi yapar. Örnek:
 ```py
