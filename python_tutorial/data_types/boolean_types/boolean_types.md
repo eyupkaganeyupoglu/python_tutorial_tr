@@ -15,7 +15,7 @@
 
 `x` parametresine girilen argümanın boolean karşılığınız verir. Bu argüman [truth testing procedure](https://docs.python.org/3/library/stdtypes.html#truth "https://docs.python.org/3/library/stdtypes.html#truth")'e göre dönüştürülür. Eğer `x` parametresine `False` ya da `False` değerine karşılık gelen bir ifade (`""`, 0 vs.) girilmişse ya da bir değer girilmemişse (**omitted**, yani ihmal etmek) `False`; aksi taktirde `True` döndürür. `bool` class'ı, `int` class'ının subclass'ıdır. Bu yüzden daha fazla subclass'landırılamaz. Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#bool "https://docs.python.org/3/library/functions.html#bool").
 
-<h2 id="1.1">Boolean Type Fonksiyonları</h2>
+<h2 id="1.1">Boolean Type Methodları</h2>
 
 <h3 id="1.1.1"><code>as_integer_ratio()</code> Methodu</h3>
 
