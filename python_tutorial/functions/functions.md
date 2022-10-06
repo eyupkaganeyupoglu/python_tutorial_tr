@@ -484,13 +484,10 @@ print(four(plus(four()))) # Output: 8
 print(five(plus(five()))) # Output: 10
 ```
 Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md")'da anlatıldı. Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
-- En içteki `five()` çalışır ve parametre olarak bir şey girilmediği için `5` döndürür.
-- `plus()` çalışır ve parametre olarak aldığı `5`'i kullanarak `lambda x : x + 5` `lambda` fonksiyonunu döndürür.
-- `four()` çalışır ve  `lambda` fonksiyonu objesi aldığı için `p1` parametresinin değeri default değeri olan `None` değeri değil, `lambda` fonksiyonu objesi olur. Bu yüzden `if` çalışmaz, `else` çalışır.
-- `else`'de tanımlı olan `p1(4)` Python gözünde `(lambda x : x + 5)(4)` anlamına gelmektedir. Buradaki `4` argümanı `lambda` fonksiyonunun `x` parametresine argüman olarak girilir ve `lambda` fonksiyonu kendisine tanımlanan işlemleri gerçekleştirip `9` integer'ını döndürür.
+- `five()` çalışır ve `p1` parametresi, bu parametreye herhangi bir argüman girilmediği için `None` değerine sahip olur. `None` değeri boolean olarak `false`'a karşılık geldiği için `5` döndürülür.
+- `plus()` çalışır ve `y` parametresine argüman olarak `5` değerine sahip olur ve `lambda x : x + 5` lambda fonksiyonu döndürülür.
+- `four()` çalışır ve `p1` parametresi `lambda x : x + 5` lambda fonksiyonunu argüman olarak alır. Bu lambda fonksiyonunun boolean karşılığı `true`'ya karşılık geldiği için `p1(4)` yani `(lambda x : x + 5)(4)` fonksiyonunun döndürdüğü `9` değeri döndürülür.
 - `print` fonksiyonu `9` integer'ını yazdırır.
-
-**Not:** `(lambda x : x + 5)(4)` ile `plus(5)(4)` aynı şeydir.
 
 <h1 id="4">Recursive (Özyinelemeli) Fonksiyonlar</h1>
 
