@@ -137,7 +137,7 @@ Python'da **Asterisk Operator**'ını kullanarak sınırsız sayıda argüman ka
 
 <h2 id="1.2"><code>return</code> Statement</h2>
 
-Bir fonksiyon veya class tanımlarken o fonksiyon veya class'ın kapsamında (kod block'larından bahsediyorum) tanımlanan local namespace'deki objeler, o kapsamından (kod block'larından bahsediyorum) çıkıldıktan sonra bellekten silinir. Bu yüzden local namespace'deki objeleri global namespace'de doğrudan kullanamayız. Local namespace'deki verileri global namespace'de kullanabilmek için o veri `return` statement ile döndürmemiz (returned) gerekmektedir. Yani `return` statement, bir fonksiyonun local namespace'indeki verileri global namespace'e kazandırır. Örnek:
+Bir fonksiyon tanımlarken o fonksiyon'un kapsamında (kod block'larından bahsediyorum) tanımlanan her şey (bunlara local objeler diyeceğim) fonksiyon sonlandıktan sonra bellekten silinir. Bu yüzden local objeleri global namespace'de doğrudan kullanamayız. Local objeleri global namespace'de kullanabilmek için o obje `return` statement ile döndürmemiz (returned) gerekmektedir. Yani `return` statement, ilgili fonksiyonun kapsamında bulunan local objelerini global namespace'e kazandırır. Örnek:
 ```py
 def func(p1):
     temp = p1*2
@@ -145,7 +145,7 @@ def func(p1):
 
 print(func(2)) # Output: 4
 ```
-Eğer `return` statement kullanırsanız ama bir şey döndürmezseniz (yani return statement'in sağına bir şey yazmazsanız), `return` statement `None` değerini döndürür. Örnek:
+`return` statement'ı tek başına kullanırsanız `None` değerini döndürür. Örnek:
 ```py
 def func(p1):
     temp = p1*2
@@ -153,7 +153,7 @@ def func(p1):
 
 print(func(2)) # Output: None
 ```
-Bir fonksiyon `return` statement ile karşılaşırsa, `return` statement'in sağındaki ifadeyi döndürür ve sonlanır. Bu yüzden `return` statement'den sonra tanımlanmış işlemler yapılmaz. Örnek:
+Bir fonksiyon `return` statement ile karşılaşırsa, `return` statement'dan sonra gelen ifadeyi döndürür ve sonlanır. Bu yüzden `return` statement'den sonra tanımlanmış şeyler okunmaz (yani çalıştırılmaz). Örnek:
 ```py
 def func(p1):
     temp = p1*2
@@ -165,7 +165,7 @@ print(func(2)) # Output: 4
 
 <h2 id="1.3">Namespace Kavramı</h2>
 
-Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi, farklı namespace'lerde (isim alanlarında) bulunmalarıdır. Genelden özele doğru **Build-in**, **Global** ve **Local** olmak üzere 3 çeşit namespace (isim alanı) vardır. Build-in namespace'e, [`site` modülü](https://docs.python.org/3/library/site.html#module-site "https://docs.python.org/3/library/site.html#module-site")'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır. Global namespace, programınızdaki her şeyi (class'lar, fonksiyonlar, variable'lar) kapsayan namespace'dir. Local namespace, class veya fonksiyonların kapsamlarıdır (kod block'larından bahsediyorum). Oluşturulur, işlemler yapılır ve yok edilir. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
+Python'da her nesnenin geçerli olduğu bir namespace (isim alanı) vardır. Aynı isme (identifier) sahip objelerin birbirine karışmamasının sebebi farklı namespace'lerde (isim alanlarında) bulunmalarıdır. Genelden özele doğru **Build-in**, **Global** ve **Local** olmak üzere 3 çeşit namespace (isim alanı) vardır. Build-in namespace'e, [`site` modülü](https://docs.python.org/3/library/site.html#module-site "https://docs.python.org/3/library/site.html#module-site")'nün constant'ları eklediği namespace'dir. Bu constant'lar, build-in fonksiyonlardır. Global namespace, programınızdaki her şeyi (class'lar, fonksiyonlar, variable'lar) kapsayan namespace'dir. Local namespace, class veya fonksiyonların kapsamlarıdır (kod block'larından bahsediyorum). Oluşturulur, işlemler yapılır ve yok edilir. Global namespace'deki objelere programın her yerinden erişilebilirken, Local namespace'lerdeki objelere programın her yerinen erişilemez, sadece bulundukları scope'dan ve bulundukları scope'un kapsamındaki scope'lardan erişilebilir.
 
 **Not:** Local namespace'deki objeler, local namespace'den çıkıldıktan sonra global namespace'e kazanadırılmadıkları sürece bellekten silinir (istisnalar var mı bilmiyorum).
 
@@ -194,7 +194,7 @@ Gördüğünüz gibi `list` build-in class'ının identifier'ına global namespa
 
 <h2 id="1.4">Scope Kavramı</h2>
 
-Scope, "kapsam" anlamına gelmektedir. Global namespace aynı zamanda "her şeyi kapsayan" anlamına gelen "global scope" olarak da adlandırılabilir. `def` ve `class` statement'leri ile tanımladığımız fonksiyon ve class'lar, for loop'un initializer variable'ı local scope'a örnektir. Bir local scope, kendisini kapsayan bütün scope'ların (başka bir deyişle, kapsamında bulunduğu bütün scope'ların) içeriğine erişebilir. Örnek:
+Scope, "kapsam" anlamına gelmektedir. Global namespace aynı zamanda "her şeyi kapsayan" anlamına gelen "global scope" olarak da adlandırılabilir. `def` ve `class` statement'leri ile tanımladığımız fonksiyon'lar, class'lar ve for loop'un initializer variable'ı local scope'a örnektir. Bir local scope, kendisini kapsayan bütün scope'ların (başka bir deyişle, kapsamında bulunduğu bütün scope'ların) içeriğine erişebilir. Örnek:
 ```py
 a = "a"
 def f1():
@@ -273,11 +273,11 @@ f1() # Error ---------------|
 ```
 f1 scope a
 ```
-`UnboundLocalError: local variable 'a' referenced before assignment` hatası, local bir variable'ı bildirmeden (declare) önce değer atamaya (assignment) çalıştığımızda ortaya çıkan hatadır. Python `a += 2` kodunu şöyle yorumlar:
-- `a += 2` kodu ile `a = a + 2` aynı şeylerdir. Python, `a = a + 2` kodunu soldan sağa doğru okurken ilk olarak `a = ` ifadesindeki assignment operator (`=`) ile karşılaştığı için bir atama işlemi yapmaya hazırlanıyor.
-- Python, assignment operator'den sonraki `a + 2` ifadesindeki toplama işlemini gerçekleştirmek için bulunduğu scope'da `a` variable'ını arar ama bulamadığı için `UnboundLocalError: local variable 'a' referenced before assignment` hatası yükseltir. Python'da `bool`, `int`, `float`, `tuple`, `str`, `frozenset`, `range`, `complex`... gibi değiştirilemez (immutable) data type'ların değerini değiştirmek için onu yeniden tanımlamak (redefinition) zorundasınız. Olmayan bir şeyi yeniden tanımlayamayacağınız için yukarıdaki örnekteki gibi, bildirmediğiniz (declare) bir variable'ı da yeniden tanımlayamazsınız (redefinition).
+`UnboundLocalError: local variable 'temp_var' referenced before assignment` hatası, local bir variable'ı bildirmeden (declare) önce değer atamaya (assignment) çalıştığımızda ortaya çıkan hatadır. Python `temp_var += 2` kodunu şöyle yorumlar:
+- `temp_var += 2` kodu ile `temp_var = atemp_var + 2` aynı şeylerdir. Python, `temp_var = temp_var + 2` kodunu soldan sağa doğru okurken ilk olarak `temp_var = ` ifadesindeki assignment operator (`=`) ile karşılaştığı için bir atama işlemi yapmaya hazırlanıyor.
+- Python, assignment operator'den sonraki `temp_var + 2` ifadesindeki toplama işlemini gerçekleştirmek için bulunduğu scope'da `temp_var` variable'ını arar ama bulamadığı için `UnboundLocalError: local variable 'temp_var' referenced before assignment` hatası yükseltir. Python'da `bool`, `int`, `float`, `tuple`, `str`, `frozenset`, `range`, `complex`... gibi değiştirilemez (immutable) data type'ların değerini değiştirmek için onu yeniden tanımlamak (redefinition) zorundasınız. Olmayan bir şeyi yeniden tanımlayamayacağınız için yukarıdaki örnekteki gibi, bildirmediğiniz (declare) bir variable'ı da yeniden tanımlayamazsınız (redefinition).
 
-Değiştirilebilir (mutable) objelerin değerini yeniden tanımlama (redefinition) işlemi yapmadan da değiştirebildiğiniz için bu sorunla karşılaşmazsınız. Ama değiştirilebilir (mutable) objelerin değerini yeniden tanımlama (redefinition) yöntemi ile değiştirmeye çalışırsanız yine aynı sebepten dolayı hata alırsınız. Örnek:
+Değiştirilebilir (mutable) objelerin değerini yeniden tanımlama (redefinition) yöntemi ile değiştirmeye çalışırsanız yine aynı sebepten dolayı hata alırsınız. Örnek:
 ```py
 def f1():
     a = ["f1 scope a"]
@@ -292,9 +292,9 @@ def f1():
     f2()
 f1()
 ```
-Gördüğünüz gibi sorun değiştirilebilir (mutable) ya da değiştirilemez (immutable) data type'larda değil, yeniden tanımlama (redefinition) işleminden kaynaklanıyormuş.
+Gördüğünüz gibi sorunun nedeni bir objenin mutable ya da immutable olmasın değil, yeniden tanımlama (redefinition) işleminden kaynaklanıyormuş.
 
-Peki neden Python her zaman yaptığı gibi bulunuduğu scope'u kapsayan scope'lara bakmıyor? Python'a "bunu bul" dediğinizde onu bulur, "bunu değiştir" dediğinizde onu değiştirir. Python, `a += 2` kodundaki gibi sadece "bunu değiştir" komutunu verdiğinizde "dur ben bunu bulayım sonra değiştireyim" diyecek kadar zeki değildir. Bu yüzden Python'a hem "bunu bul" hem de "bunu değiştir" komutlarını sırayla vermelisiniz. Bunu `nonlocal` ve `global` keyword'leri ile yapabilirsiniz.
+Peki neden Python her zaman yaptığı gibi bulunuduğu scope'u kapsayan scope'lara bakmıyor? Python'a "bunu bul" dediğinizde onu bulur, "bunu değiştir" dediğinizde onu değiştirir ama Python, `a += 2` kodundaki gibi sadece "bunu değiştir" komutunu verdiğinizde "dur ben bunu bulayım sonra değiştireyim" diyecek kadar zeki değildir. Bu yüzden Python'a hem "bunu bul" hem de "bunu değiştir" komutlarını sırayla vermelisiniz. Bunu `nonlocal` ve `global` keyword'leri ile yapabilirsiniz.
 
 <h2 id="1.5"><code>global</code> Keyword</h2>
 
@@ -428,7 +428,7 @@ func1 = lambda p1: ("Bu 2'dir.") if p1==2 else ("Bu 2 değildir.")
 print(func1(1)) # Output: Bu 2 değildir.
 print(func1(2)) # Output: Bu 2'dir.
 ```
-Bu gibi kullanımlar, `sorted()` fonksiyonundaki `key` parametresi gibi yerlerde kullanılır. Örnek:
+`lambda`, `sorted()` fonksiyonundaki `key` parametresi gibi yerlerde kullanıllabilir. Örnek:
 ```py
 elemanlar = [("bir", 1),
              ("dört", 4),
@@ -486,7 +486,7 @@ print(five(plus(five()))) # Output: 10
 Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md")'da anlatıldı. Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
 - En içteki `five()` çalışır ve parametre olarak bir şey girilmediği için `5` döndürür.
 - `plus()` çalışır ve parametre olarak aldığı `5`'i kullanarak `lambda x : x + 5` `lambda` fonksiyonunu döndürür.
-- `four()` çalışır ve parametre olarak `lambda` fonksiyonu objesi aldığı için `p1` parametresinin değeri default değeri olan `None` değeri değil, `lambda` fonksiyonu objesi olur. Bu yüzden `if` çalışmaz, `else` çalışır.
+- `four()` çalışır ve  `lambda` fonksiyonu objesi aldığı için `p1` parametresinin değeri default değeri olan `None` değeri değil, `lambda` fonksiyonu objesi olur. Bu yüzden `if` çalışmaz, `else` çalışır.
 - `else`'de tanımlı olan `p1(4)` Python gözünde `(lambda x : x + 5)(4)` anlamına gelmektedir. Buradaki `4` argümanı `lambda` fonksiyonunun `x` parametresine argüman olarak girilir ve `lambda` fonksiyonu kendisine tanımlanan işlemleri gerçekleştirip `9` integer'ını döndürür.
 - `print` fonksiyonu `9` integer'ını yazdırır.
 

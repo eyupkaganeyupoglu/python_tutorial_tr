@@ -681,11 +681,13 @@ Asterisk operator'ları, fonksiyonların parametrelerine argüman olarak iterabl
 
 `*` operator'ı için örnek:
 ```py
-fruits = ['lemon', 'pear', 'watermelon', 'tomato']
-print(fruits[0], fruits[1], fruits[2], fruits[3]) # Output: lemon pear watermelon tomato
-print(*fruits) # Output: lemon pear watermelon tomato
+def func(*args):
+    print(*args)
+
+args_exp = [1,2,3,4,5]
+func(*args_exp) # TypeError: func() takes 1 positional argument but 5 were given
 ```
-Gördüğünüz gibi `*` operator'ı, `fruits` iterable objesinin öğrelerinin her birini `print()` fonksiyonunun `*values` parametresine argüman olarak veriyor. Burada dikkat edilmesi gereken şey, `*values` parametresinde prefix olarak `*` operator'ı kullanılması. Bu sayede `fruits` listesinin öğe sayısının bilinmesine gerek kalmadan bütün öğeler birbirinden bağımsız argümanlar olarak `*values` parametresine girilir. Peki fonksiyonun parametresi prefix olarak `*` operator'ını içermezse? Örnek:
+`args_exp` listesinin öğeleri yıldız operatörü (`func(*args_exp)`) sayesinde `args` parametresine teker teker veriliyor. `func(*args)` yerine `func(args)`olsaydık:
 ```py
 def func(args):
     print(args)
@@ -705,9 +707,9 @@ def func(**name_info):
 name_exp = {'name': "Eyüp Kağan", 'surname': "Eyüpoğlu"}
 func(**name_exp) # Output: Eyüp Kağan Eyüpoğlu
 ```
-Gördüğünüz gibi `**` operator'ı, `name_exp` iterable objesinin öğelerini her birini key-value ilişkisine göre kullanmamıza izin veriyor. Burada dikkat edilmesi gereken şey, `**name_info` parametresinde prefix olarak `**` operator'ı kullanılması. Bu sayede `name_exp` dictionary'sinin öğe sayısının bilinmesine gerek kalmadan bütün öğeler birbirinden bağımsız argümanlar olarak `**name_info` parametresine girilir. Prefix olarak `**` operator'ı kullanan bir argümanı sadece prefix olarak `**` operator'ı kullanılarak tanımlanmış bir parametreye girilebilmesi kuralı burada da geçerlidir.
+Gördüğünüz gibi `**` operator'ı, `name_exp` iterable objesinin öğelerini her birini key-value ilişkisine göre kullanmamıza izin veriyor. Burada dikkat edilmesi gereken şey, `**name_info` parametresinde prefix olarak `**` operator'ı kullanılması. Bu sayede `name_exp` dictionary'sinin öğe sayısının bilinmesine gerek kalmadan bütün öğeler birbirinden bağımsız argümanlar olarak `**name_info` parametresine girilir. Kısaca prefix olarak `**` operator'ı kullanan bir argümanı sadece prefix olarak `**` operator'ı kullanılmış bir parametreye girebilirsiniz.
 
-`*` ve `**` operator'ları Python 3.5'ten itibaren fonksiyon çağırırken (call) birlikte kullanılabilir. Örnek:
+Python 3.5'ten itibaren fonksiyon çağırırken (call) `*` ve `**` operator'ları birlikte kullanılabilir. Örnek:
 ```py
 def func(*args, **kwargs):
     for i in args:
@@ -806,7 +808,7 @@ func(1,2,3) # TypeError: func() missing 1 required keyword-only argument: 'p2'
 func(1,2, p2 = 3) # Output: 1 2 3
 ```
 
-Bir fonksiyona `*` veya `**` operator'larını prefix olarak kullanan parametreler ve bu parametrelerin ardından gelen keyword veya non keyword parametreler tanımlarsanız, bu fonksiyonu çağırırken fonksiyona gireceğiniz argümanların `*` veya `**` operator'larını prefix olarak kullanan parametrelere değil keyword veya non keyword parametrelere argüman olarak girmek istiyorsanız, bu parametrelerin isimlerini belirtmelisiniz. Örnek:
+Bir fonksiyona `*` veya `**` operator'larını prefix olarak kullanan parametreler ve bu parametrelerin ardından gelen keyword veya non keyword parametreler tanımlarsanız, bu fonksiyonu çağırırken fonksiyona gireceğiniz argümanların yıldızlı parametreler yerine keyword veya non keyword parametrelere argüman olarak girmek istiyorsanız, bu parametrelerin isimlerini belirtmelisiniz. Örnek:
 ```py
 def func(*args, temp = "d"):
     print(*args, temp)
@@ -830,7 +832,7 @@ Bu davranış Python'a [**PEP 3102**](https://www.python.org/dev/peps/pep-3102/ 
 
 <h2 id="3.4">Keyword-only Arguments Without Positional Arguments</h2>
 
-`*` operator'ını kullanarak istenilen parametrelere keyword-only argüman girilmesini sağlayabilirsiniz. Örnek:
+`*` operator'ını kullanarak istenilen parametrelere keyword-only argüman girilmesini sağlayabilirsiniz. `*` operator'ından sonra tanımlanan parametrelere keyword-only argüman girmek zorunlu olur. Örnek:
 ```py
 def func(isim, *, yaş, meslek):
     print(isim,yaş,meslek)
@@ -842,7 +844,7 @@ func("Eyüp", 20, "Öğrenci") # TypeError: func() takes 1 positional argument b
 
 <h2 id="3.5">Positional-only Arguments Without Keyword Arguments</h2>
 
-`/` operator'ını kullanarak istenilen parametrelere positional-only argüman girilmesini sağlayabilirsiniz. Örnek:
+`/` operator'ını kullanarak istenilen parametrelere positional-only argüman girilmesini sağlayabilirsiniz. `/` operator'ından sonra tanımlanan parametrelere positional-only argüman girmek zorunlu olur. Örnek:
 ```py
 def func(isim, yaş, /, meslek="Yok", maddi_gelir=0):
     print(isim,yaş,meslek,maddi_gelir)
