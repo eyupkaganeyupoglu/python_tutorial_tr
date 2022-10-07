@@ -30,7 +30,7 @@
     - [`credits()` Constant](#24.4)
     - [`license()` Constant](#24.5)
 
-**Ön Bilgi:** Python ve Python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Gömülü fonksiyon olarak da bilinen build-in fonksiyonlar, Python diline gömülmüş fonksiyonlardır. Çoğu Python modülü Python diliyle yazılmıştır ama build-in fonksiyonlar **C** diliyle yazılmıştır. Aşağıda, bu tutorialin başka bir yerinde değinilmemiş ya da yeterince değinilmemiş build-in fonksiyonlar anlatılmıştır.
+**Ön Bilgi:** Python ve Python'daki build-in fonksiyonlar **C** diliyle yazılmıştır. Gömülü fonksiyon olarak da bilinen build-in fonksiyonlar, Python diline gömülmüş fonksiyonlardır. Çoğu Python modülü Python diliyle yazılmıştır ama build-in fonksiyonlar **C** diliyle yazılmıştır. Aşağıda, bu tutorialin başka bir yerinde değinilmemiş ya da yeterince değinilmemiş build-in fonksiyonlar anlatılmıştır. Yani dökümanı 50k satır yapmamak için diğer dökümanlarda anlattığım build-in fonksiyonları buraya eklemedim.
 
 <h1 id="1"><code>all(iterable)</code> Fonksiyonu</h1>
 
@@ -44,7 +44,7 @@ def all(iterable):
             return False
     return True # For çalışmazsa direkt bu satır çalışır.
 ```
-`all(iterable)` fonksiyonu, `iterable` parametresine girilen argümanlara göre aşağıdaki gibi davranır:
+Yani `all()` fonksiyonunun `True` sonucunu vermesi için `iterable` parametresine argüman olarak girilen iterable objenin bütün öğelerin boolean değeri `True` olmalı veya bu iterable obje boş olmalıdır. Örnek:
 ```py
 l1 = [1, 2.6, 13+2j,"boş değil"]    # All True
 l2 = [0, 0.0, 0+0j, ""]             # All False
@@ -63,7 +63,6 @@ all(), All False: False
 all(), One False: False
 all(), Empty: True
 ```
-Yani `all()` fonksiyonunun `True` sonucunu vermesi için `iterable` parametresine argüman olarak girilen iterable objenin bütün öğelerin boolean değeri `True` olmalı veya bu iterable obje boş olmalıdır.
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#all "https://docs.python.org/3/library/functions.html#all").
 
@@ -80,7 +79,7 @@ def any(iterable):
     return False # For çalışmazsa direkt bu satır çalışır.
 ```
 
-`any(iterable)` fonksiyonu, `iterable` parametresine girilen argümanlara göre aşağıdaki gibi davranır:
+Yani `any()` fonksiyonunun `True` sonucunu vermesi için `iterable` parametresine argüman olarak girilen iterable objenin en az bir tane öğesinin boolean değeri `True` olması yeterlidir. Örnek:
 ```py
 l1 = [1, 2.6, 13+2j,"boş değil"]    # All True
 l2 = [0, 0.0, 0+0j, ""]             # All False
@@ -99,13 +98,12 @@ any(), All False: False
 any(), One False: True
 any(), Empty: False
 ```
-Yani `any()` fonksiyonunun `True` sonucunu vermesi için `iterable` parametresine argüman olarak girilen iterable objenin en az bir tane öğesinin boolean değeri `True` olması yeterlidir.
 
 Daha fazla bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#any "https://docs.python.org/3/library/functions.html#any").
 
 <h1 id="3"><code>breakpoint(*args, **kws)</code> Fonksiyonu</h1>
 
-Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#breakpoint "https://docs.python.org/3/library/functions.html#breakpoint").
+Debugging işleminde kullanılan bir fonksiyondur. Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#breakpoint "https://docs.python.org/3/library/functions.html#breakpoint").
 
 <h1 id="4"><code>callable(object)</code> Fonksiyonu</h1>
 
@@ -163,7 +161,7 @@ bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#eva
 
 **Ön bilgi:** Bu bölümü anlayabilmek için [expression](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#2") ve [statement](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md#3") kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md").
 
-`exec()` fonksiyonu, `eval()`'den farklı olarak sadece expression'ları değil, statement'ları da yorumlayıp çalıştırabilir. Örneğin `exec()` fonksiyonu ile assignment statement tanımlayabilirsiniz.
+`exec()` fonksiyonu, `eval()`'den farklı olarak statement'ları yorumlayıp çalıştırabilir. Örneğin `exec()` fonksiyonu ile assignment statement tanımlayabilirsiniz.
 ```py
 def fuck():
     pass
@@ -177,7 +175,7 @@ bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#exe
 
 <h1 id="9"><code>filter(function, iterable)</code> Fonksiyonu</h1>
 
-`filter` fonksiyonu, `function` parametresine argüman olarak girilen fonksiyon objesini kullanarak `iterable` parametresine argüman olarak girilen iterable objenin öğelerini filtreler. `filter` fonksiyonu, `function` parametresine argüman olarak girilen fonksiyon objesinin kapsamında tanımlanan kurala uygun iterable objenin öğelerini içeren bir `filter` objesi döndürür. `function` parametresine argüman olarak girilen fonksiyon objesinin kapsamında tanımlanan `return` statement, boolean type bir değer döndürmelidir. Bu statement `True` döndürürse iterable objenin o öğesi filter nesnesine eklenir, `False` döndürürse eklenmez. Filtreleme işlemi bu şekilde gerçekleşir. Örnek:
+`filter` fonksiyonu, `function` parametresine argüman olarak girilen fonksiyon objesini kullanarak `iterable` parametresine argüman olarak girilen iterable objenin öğelerini filtreler. `filter` fonksiyonu, `function` parametresine argüman olarak girilen fonksiyon objesinin kapsamında tanımlanan kurala uygun iterable objenin öğelerini içeren bir `filter` objesi döndürür. `function` parametresine argüman olarak girilen fonksiyon boolean bir değer döndürmelidir. Bu fonksiyon `True` döndürürse iterable objenin o öğesi filter nesnesine eklenir, `False` döndürürse eklenmez. Filtreleme işlemi bu şekilde gerçekleşir. Örnek:
 ```py
 def tek(sayı):
     return sayı % 2 == 1
@@ -210,7 +208,7 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#for
 
 <h1 id="11"><code>globals()</code> Fonksiyonu</h1>
 
-Python'da scope'lar dictionary type bir data'dır. Örneğin global scope basit bir dictionary'ten ibarettir. Bu yüzden dictionary methodlarını kullanabiliyorsunuz. Ama bundan kaçınmalısınız çünkü işin sonunda nereden geldiği belli olmayan değerlerle global scope'u kirletmiş olursunuz. Global scope'u gösteren dictionary'de bulunan anahtar ve değerleri görmek için `print(globals())` kullanılır. `globals` adlı bu dictionary'nin içeriği, o anda global scope'da bulunan nesnelere göre farklılık gösterecektir. Örneğin global scope'a `x = 10` assignment statement'ını eklediğinizde, `globals()` dictionary'sine `{'a': 'yeni değer'}` item'ı eklenmiş olur. Örnek:
+Python'da scope'lardaki bilgiler her scope'a özel bir dictionary'de depolanır. Örneğin global scope basit bir dictionary'ten ibarettir. Bu yüzden dictionary methodlarını kullanabiliyorsunuz. Ama bundan kaçınmalısınız çünkü işin sonunda nereden geldiği belli olmayan değerlerle global scope'u kirletmiş olursunuz. Global scope'u gösteren dictionary'de bulunan anahtar ve değerleri görmek için `print(globals())` kullanılır. `globals` adlı bu dictionary'nin içeriği, o anda global scope'da bulunan nesnelere göre farklılık gösterecektir. Örneğin global scope'a `x = 10` assignment statement'ını eklediğinizde, `globals()` dictionary'sine `{'a': 'yeni değer'}` item'ı eklenmiş olur. Örnek:
 ```py
 print(globals(), end="\n\n")
 a = "yeni değer"
@@ -227,13 +225,13 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#glo
 
 <h1 id="12"><code>hash(object)</code> Fonksiyonu</h1>
 
-Verilen obje ve değerine göre karma (rastgele) tamsayı üretir.
+`object` parametresine girilen şeyin hash'ini döndürür.
 
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#hash "https://docs.python.org/3/library/functions.html#hash").
 
 <h1 id="13"><code>help(object)</code> Fonksiyonu</h1>
 
-Python'un ingilizce dökümanlarına ulaşırsınız. **Interactive help** ile özellikle aradığınız şeyler ulaşabilirsiniz. Bunun için `object` parametresine argüman olarak aratmak istediğiniz şeyi yazmalısınız. Direkt `help()` olarak kullanılırsa genel bir yardım arayüzü açılır ve `help>` ifadesinden sonra herhangi bir şeyi aratabilirsiniz. Hiçbir şey yazmadan direkt enter tuşuna basarsanız çıkış yapar. Herhangi bir şey hakkında direkt bilgi almak için `help(bilgi almak istediğiniz şey)` şeklinde kullanabilirsiniz.
+Python'un ingilizce dökümanlarına ulaşırsınız. **Interactive help** ile özellikle aradığınız bir şeye ulaşabilirsiniz. Bunun için `object` parametresine argüman olarak aratmak istediğiniz şeyi yazmalısınız. Direkt `help()` olarak kullanılırsa genel bir yardım arayüzü açılır ve `help>` ifadesinden sonra herhangi bir şeyi aratabilirsiniz. Hiçbir şey yazmadan direkt enter tuşuna basarsanız çıkış yapar. Herhangi bir şey hakkında direkt bilgi almak için `help(bilgi almak istediğiniz şey)` şeklinde kullanabilirsiniz.
 
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#help "https://docs.python.org/3/library/functions.html#help").
 
