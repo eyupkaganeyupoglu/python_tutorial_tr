@@ -4,7 +4,7 @@
 
 <h1 id="1">Decorators</h1>
 
-Python, mevcut bir koda işlevsellik (functionality) eklemek için decorator adı verilen bir özelliğe sahiptir. Buna **metaprogramming** da denir. Çünkü programın bir kısmı, compile time sırasında programın başka bir kısmını değiştirmeye (modify) çalışır.
+Python, mevcut bir koda işlevsellik (functionality) eklemek için decorator adı verilen bir özelliğe sahiptir. Buna **metaprogramming** de denir. Çünkü programın bir kısmı, compile time sırasında programın başka bir kısmını değiştirmeye (modify) çalışır.
 
 Python'da (Class'lar dahil) her şey bir objedir ve bir obje farklı isimlere (identifier) sahip olabilir. Örnek:
 ```py
@@ -32,17 +32,20 @@ def operate(func, x):
 print(operate(inc, 3)) # Output: 4
 print(operate(dec, 3)) # Output: 2
 ```
-Buradaki `operate` higher order function'dır.
+Buradaki `operate` fonksiyonu higher order function'dır.
 
 Ayrıca bir fonksiyon başka bir fonksiyonu döndürebilir. Örnek:
 ```py
 def is_called():
+    selamla = "Hello"
     def is_returned():
-        print("Hello")
+        print(selamla)
     return is_returned
 
 var = is_called()
 var() # Output: Hello
+
+is_called()() # Output: Hello
 ```
 Yukarıdaki gibi bir enclosing fonksiyonun içinde tanımlı nested fonksiyonu direkt `return` statement ile döndürmeye ve döndürülen fonksiyonu yukarıdaki gibi kullanmaya **Closure** denir. Closure'ın 3 şartı vardır:
 - Nested fonksiyona sahip olmak
@@ -51,7 +54,7 @@ Yukarıdaki gibi bir enclosing fonksiyonun içinde tanımlı nested fonksiyonu d
 
 Bu üç şartı sağlayan nested fonksiyonlar closure olur. Closure'lar, global value'ların kullanımını önleyebilir ve bu sayede bir tür veri gizleme (data hiding) sağlar. Çünkü closure fonksiyondaki variable'lara kullanıcı direkt olarak ulaşamaz (debugger ile falan bakamazsınız) ve fonksiyon çalışmayı sonlandırdıktan sonra local objeler bellekten silinir.
 
-Bütün fonksiyon objeleri `__closure__` methoduna sahiptir. Bu method, closure fonksiyonun kullandığı enclosing fonksiyondaki objelerin (variable, fonksiyon vs.) bulunduğu cell'leri içeren bir `tuble`'dır. Bu cell'lerdeki objelere de `cell_contents` methodu ile ulaşabilirsiniz. Örnek:
+Bütün fonksiyon objeleri `__closure__` methoduna sahiptir. `__closure__` methodu, enclosing fonksiyonda bulunan objeler arasından closure fonksiyonun kullandığı objeleri (variable, fonksiyon vs.) içeren cell'leri barındıran bir `tuble`'dır. Bu cell'lerdeki objelere de `cell_contents` methodu ile ulaşabilirsiniz. Closure olma şartlarının hepsini sağlayamayan fonksiyonlar closure olamazlar. Closure olmayan fonksiyonların `__closure__` methodu `None` value'suna sahiptir. Örnek:
 ```py
 def make_multiplier_of(x,y,z,r):
     toplam = x+y+z
@@ -61,22 +64,25 @@ def make_multiplier_of(x,y,z,r):
         return 2
 
     def multiplier():
-        result = ((toplam+x+y+z)*çarpım)+number_two()
+        a123 = number_two
+        print(a123)
+        result = ((toplam+x+y+z)*çarpım)+a123()
         return result
 
     return multiplier
 
-var = make_multiplier_of(1,2,3,4)
-print(var.__closure__[0], ":", var.__closure__[0].cell_contents) # Output: <cell at 0x00000161CABE9FD0: function object at 0x00000161CABE5040> : <function make_multiplier_of.<locals>.number_two at 0x00000161CABE5040>
-print(var.__closure__[1], ":", var.__closure__[1].cell_contents) # Output: <cell at 0x00000161CABE9FA0: int object at 0x00000161CA5F69D0> : 6 (toplam)
-print(var.__closure__[2], ":", var.__closure__[2].cell_contents) # Output: <cell at 0x00000161CABE9E50: int object at 0x00000161CA5F6930> : 1 (x)
-print(var.__closure__[3], ":", var.__closure__[3].cell_contents) # Output: <cell at 0x00000161CABE9E20: int object at 0x00000161CA5F6950> : 2 (y)
-print(var.__closure__[4], ":", var.__closure__[4].cell_contents) # Output: <cell at 0x00000161CABE9DF0: int object at 0x00000161CA5F6970> : 3 (z)
-print(var.__closure__[5], ":", var.__closure__[5].cell_contents) # Output: <cell at 0x00000161CABE9DC0: int object at 0x00000161CA5F6C10> : 24 (çarpım)
+var = make_multiplier_of(1,2,3,4) # multiplier fonksiyonunu döndürür.
+print(type(var.__closure__)) # Output: <class 'tuple'>
+print(make_multiplier_of.__closure__) # Output: None
+print(var.__closure__[0], ":", var.__closure__[0].cell_contents) # Output: <cell at 0x00000161CABE9FD0: function object at 0x00000161CABE5040> : <function make_multiplier_of.<locals>.number_two at 0x00000161CABE5040> (number_two fonksiyonu)
+print(var.__closure__[1], ":", var.__closure__[1].cell_contents) # Output: <cell at 0x00000161CABE9FA0: int object at 0x00000161CA5F69D0> : 6 (toplam variable'ı)
+print(var.__closure__[2], ":", var.__closure__[2].cell_contents) # Output: <cell at 0x00000161CABE9E50: int object at 0x00000161CA5F6930> : 1 (kullanılan x argümanı)
+print(var.__closure__[3], ":", var.__closure__[3].cell_contents) # Output: <cell at 0x00000161CABE9E20: int object at 0x00000161CA5F6950> : 2 (kullanılan y argümanı)
+print(var.__closure__[4], ":", var.__closure__[4].cell_contents) # Output: <cell at 0x00000161CABE9DF0: int object at 0x00000161CA5F6970> : 3 (kullanılan z argümanı)
+print(var.__closure__[5], ":", var.__closure__[5].cell_contents) # Output: <cell at 0x00000161CABE9DC0: int object at 0x00000161CA5F6C10> : 24 (result veriable'ı)
 ```
-**Not:** Closure olma şartlarının hepsini sağlayamayan fonksiyonlar closure olamazlar. Closure olmayan fonksiyonların `__closure__` methodu `None` value'suna sahiptir.
 
-Fonksiyonların ve methodların çağırılabilir olma durumu **callable** olarak adlandırılır. Aslında `__call__()` special methodu uygulanan (implements) herhangi bir obje çağırılabilir (callable) olarak adlandırılabilir. Yani bir decorator, callable döndüren bir callable'dir. Basitçe decorator, callable bir objeyi alır, bazı işlevsellik (functionality) ekler ve onu döndürür (`return`). Bir fonksiyonu decore etmek için `@{function_name}` syntax yapısı kullanılır. Örnek:
+`__call__()` special methodu uygulanan (implements) herhangi bir obje **callable** (çağırılabilir) olarak adlandırılabilir. Decorator callable döndüren bir callable'dir. Basitçe decorator, callable bir objeyi alır, bazı işlevsellik (functionality) ekler ve onu döndürür (`return`). Bir fonksiyonu decore etmek için `@{function_name}` syntax yapısı kullanılır. Örnek:
 ```py
 def decorator_maker(func):
     def inner():
@@ -123,7 +129,9 @@ def bölme_işlemi(a, b):
 bölme_işlemi(4,2) # Output: 4 ve 2 sayılarının, bölme işlemine göre sonucu: 2.0
 bölme_işlemi(2,0) # Output: 2 ve 0 sayılarının, bölme işlemine göre sonucu: Ops! Bölünemiyor...
 ```
-Burada `inner` fonksiyonu ile decore edilmiş `bölme_işlemi` fonksiyonunun aynı parametrelere sahip olduğunu farketmişsinizdir. Buradan "`inner` fonksiyonu decore edilen fonksiyon olarak kullanılıyor." sonucunu çıkarabilirsiniz. İstediğiniz kadar parametreyi `*args` ve `**kwargs` kullanarak tanımlayabilirsiniz. Örnek:
+Burada `inner` fonksiyonu ile decore edilmiş `bölme_işlemi` fonksiyonunun aynı parametrelere sahip olduğunu farketmişsinizdir. Bundan "`inner` nested fonksiyonu decore edilen fonksiyon olarak kullanılıyor, başka bir deyişle decore edilen fonksiyon ile `inner` nested fonksiyonu birbiriyle ilişkilendiriliyor" sonucunu çıkarabilirsiniz.
+
+İstediğiniz kadar parametreyi `*args` ve `**kwargs` kullanarak tanımlayabilirsiniz. Örnek:
 ```py
 def printer(func):
     def inner(*args, **kwargs):
@@ -136,7 +144,7 @@ def prints(*args, **kwargs):
 
 prints("Merhaba", "Ben", "Python!") # Output: Merhaba Ben Python!
 ```
-Burada `**kwargs` tanımlasam da kullanmadım çünkü işimi sadece `*args` görüyor.
+Burada `**kwargs` tanımlasam da kullanmadım çünkü sadece `*args` ile işimi halledebiliyorum.
 
 Python'da birden fazla decorator zincirlenebilir (chaining). Yani bir fonksiyon birden fazla farklı (veya aynı) decorator ile decore edilebilir. Örnek:
 ```py

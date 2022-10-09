@@ -5,9 +5,9 @@
 
 <h1 id="1">Generators (Üreteçler)</h1>
 
-**Dikkat:** Generator'ü anlatmaya başlamadan önce şunu kafanıza kazıyın! Her generator bir iterator'dır. Çünkü iterator genel bir kavramdır. Yani Generator'lar, bir çeşit iterable objedir.
+**Dikkat:** Generator'ü anlatmaya başlamadan önce şunu kafanıza kazıyın! Her generator bir iterator'dır. Çünkü iterator, generator'ı da kapsayan genel bir kavramdır. Yani Generator'lar bir çeşit iterable objedir.
 
-`def` statement ile tanımladığımız bir fonksiyonun kod block'unun herhangi bir yerinde `yield` statement varsa, bu fonksiyon çağırıldığında bir generator objesi döndürür. Örnek:
+`def` statement ile tanımladığımız bir fonksiyonun kod block'unun herhangi bir yerinde `yield` statement varsa, bu fonksiyon çağırıldığında bir generator objesi yaratılır (create). Örnek:
 ```py
 def func(p1):
     if p1 == 1:
@@ -21,9 +21,9 @@ print(func) # Output: <function func at 0x0000015B600DCE50>
 print(exp1) # Output: <generator object func at 0x0000024823442120>
 print(exp2) # Output: <generator object func at 0x0000024823466D60>
 ```
-Gördüğünüz gibi `else` bloğu çalışsa da çalışmasa da `func` fonksiyonu bir generator objesi döndürür.
+Gördüğünüz gibi `else` bloğu çalışsa da çalışmasa da `func` fonksiyonundan bir generator objesi yaratıldı (create).
 
-Bir fonksiyon `return` statement ile karşılaşınca sonlanır ve sonlandığı için local namespace'deki objeler ve değerler bellekten silinir. Bir Generetor `yield` statement ile karşılaşınca sonlanmaz ve sonlanmadığı için local objeler ve değerler bellekten silinmez. Bu yüzden RAM'de dolmaya sebep olabilir. Bunu RAM'inizin doluluğunu gösteren bir uygulama (windows için görev yöneticisi) ile takip edebilirsiniz. Aşağıda aynı işi yapan bir fonksiyon ve bir generator örneği verilmiştir:
+Bir fonksiyon `return` statement ile karşılaşınca sonlanır ve sonlandığı için kapsamındaki objeler ve değerler bellekten silinir ama bir generetor `yield` statement ile karşılaşınca sonlanmaz ve sonlanmadığı için local objeler ve değerler bellekten silinmez. Bu yüzden RAM'in dolmasına sebep olabilir. Bunu RAM'inizin doluluğunu gösteren bir uygulama (windows için görev yöneticisi) ile gözlemleyebilirsiniz. Aşağıda aunı işleve sahip bir fonksiyon ve bir generator örneği verilmiştir:
 ```py
 def function():
     sayı = 0
@@ -68,7 +68,7 @@ except:
 print(genr.gi_frame) # Output: None
 ```
 
-`next` fonksiyonu ve `__next__()` methodu, generator'ın kod bloğunda tanımlanmış `yield` statement'ları ile bağlantılıdır. Her `next`, bir `yield`'ı dikkate alır (başka bir deyişle her `yield` için bir `next`). Örnek:
+`next` fonksiyonu ve `__next__()` methodu, uygulandıkları generator objesinin `yield` statement'ları ile ilişkilidir. Yani her next işlemi bir `yield` statement tüketir. Örnek:
 ```py
 def generator_exp1():
     yield
@@ -80,11 +80,17 @@ try:
     for y in range(100):
         gen1.__next__()
         loop_cnt += 1
-except:
-    pass
-
-print(loop_cnt) # Output: 1
-########################################
+        
+except StopIteration:
+    print(loop_cnt)
+    print("StopIteration hatası yükseltildi")
+```
+```
+1
+StopIteration hatası yükseltildi
+```
+`generator_exp1` bir tane `yield` statement'a sahip olduğu için bu fonksiyondan türetilen generator objesi üzerinde `StopIteration` hatası yükseltilene kadar bir kere yield işlemi yapılabiliyor. Bu yüzden for loop bir kere yineleniyor (`loop_cnt` variable'ının `1` değerine sahip olması bunu kanıtlıyor).
+```py
 def generator_exp2():
     yield
     yield
@@ -96,12 +102,16 @@ try:
     for y in range(100):
         gen2.__next__()
         loop_cnt += 1
-except:
-    pass
 
-print(loop_cnt) # Output: 2
+except StopIteration:
+    print(loop_cnt)
+    print("StopIteration hatası yükseltildi")
 ```
-Gördüğünüz gibi 1 `yield` statement'a sahip olan generator objesi `StopIteration` hatası yükseltene kadar 1 defa next'lenebilirken, 2 `yield` statement'a sahip olan generator objesi `StopIteration` hatası yükseltene kadar 2 defa next'lenebiliyor. Bununla "Her `next`, bir `yield`'ı dikkate alır." iddasını kanıtlamış olduk. Bundan sonra "generator objesi her next'lendiğinde" dediğimde "generator objesi her `yield` statement ile karşılaştığında" olarak anlayın.
+```
+2
+StopIteration hatası yükseltildi
+```
+`generator_exp2` iki tane `yield` statement'a sahip olduğu için bu fonksiyondan türetilen generator objesi üzerinde `StopIteration` hatası yükseltilene kadar iki kere yield işlemi yapılabiliyor. Bu yüzden for loop iki kere yineleniyor (`loop_cnt` variable'ının `2` değerine sahip olması bunu kanıtlıyor). bu iki örnekle "Her next işlemi bir `yield` statement tüketir" iddasını kanıtlamış olduk. Bundan sonra "Generator objesi her next'lendiğinde" dediğimde "Generator objesi her `yield` statement ile karşılaştığında" olarak anlayın.
 
 **Not:** Generator objeleri fonksiyonlar gibi çağırılabilir (callable) değildir. Çağırmaya çağışırsanız `TypeError: 'generator' object is not callable` hatası yükseltilir. Örnek:
 ```py
@@ -112,10 +122,11 @@ def generator_exp():
     yield
 
 gen = generator_exp()
+print(callable(generator_exp),callable(gen)) # Output: True False
 gen() # TypeError: 'generator' object is not callable
 ```
 
-**Not:** `return` statement'ın Türkçe karşılığı "döndürmek", `yield` statement'ın Türkçe karşılığı "vermek"dir. Bundan sonra `yield` statement'dan bahsederken "... değerini verir."
+**Not:** `return` statement'ın Türkçe karşılığı "döndürmek", `yield` statement'ın Türkçe karşılığı "vermek"dir. Bundan sonra `yield` statement'dan "... değerini yield eder." şeklinde değil "... değerini verir." şeklinde bahsedeceğim.
 
 **Not:** Bir generator objesinin içerdiği bütün local objeler, bu generator objesinin `gi_frame` (frame objesi) adındaki propery methodunda bulunan `f_locals` dictionary'sinde bulunur. Örnek:
 ```py
@@ -177,9 +188,9 @@ Iterator ile generator'ın farkları şunlardır:
 
 - Generator oluşturmak için bir Python fonksiyonu (`def` statement ile tanımlanandan bahsediyorum) ya da **Comprehension** kullanabilirsiniz. Iterator oluşturmak için `iter()` fonksiyonlarını kullanmak zorundasınız.
 
-- Generator objesi `<generator object generator_exp at 0x0000023D508D6D60>`, `<class 'generator'>` şeklindedir. Bir iterator, kullanılan iterable type'a (class'a) özel farklı formlar kazanır. Örneğin `list` type bir objeyi kulanarak iterator oluşturursanız, o iterator objesi `<list_iterator object at 0x0000023D508EDFD0>`, `<class 'list_iterator'>` şeklinde; `tuple` type bir objeyi kulanarak iterator oluşturursanız, o iterator objesi `<list_iterator object at 0x0000023D508EDFD0>`, `<class 'list_iterator'>` şeklinde `<tuple_iterator object at 0x000001B30B15DFD0>, <class 'tuple_iterator'>` şeklinde olacaktır. Diğer type'ları kendiniz deneyerek keşfedebilirsiniz.
+- Generator objesi `<generator object generator_exp at 0x0000023D508D6D60>`, `<class 'generator'>` şeklindedir. Bir iterator, kullanılan iterable type'a (class'a) özel farklı formlar kazanır. Örneğin `list` type bir objeyi kullanarak oluşturulan iterator objesi `<list_iterator object at 0x0000023D508EDFD0>`, `<class 'list_iterator'>` şeklinde; `tuple` type bir objeyi kullanarak oluşturulan iterator objesi `<tuple_iterator object at 0x000001B30B15DFD0>, <class 'tuple_iterator'>` şeklinde olacaktır. Diğer type'ları kendiniz deneyerek keşfedebilirsiniz.
 
-- iterator'lar generator'lara göre bellek açısından daha verimlidir (memory-efficient). Bir generator'a `__sizeof__()` methodu uygulanırsa `120`; bir iterator'a `__sizeof__()` methodu uygulanırsa `32` outputunu verir. Örnek:
+- iterator'lar generator'lara göre bellek açısından daha verimlidir (memory-efficient). `__sizeof__()` methodunu kullanarak generator'ın bellekte 96, iterator'ın 32 byte yer kapladığını görebilirsiniz. Örnek:
     ```py
     # For windows 10 pro
     iterator_exp = iter(tuple())
@@ -188,7 +199,7 @@ Iterator ile generator'ın farkları şunlardır:
         yield
 
     print(iterator_exp.__sizeof__()) # Output: 32
-    print(generator_exp.__sizeof__()) # Output: 120
+    print(generator_exp.__sizeof__()) # Output: 96
     ```
 
 - Generator, ortak rutinlerde (co-routines) daha fazla işlevsellik (functionality) sağlar.
@@ -207,8 +218,7 @@ def generator1():
 
 def generator2():
     yield "generator2 başladı"
-    for i in generator1():
-        yield i
+    for i in generator1(): yield i
     yield "generator2 bitti"
 
 for i in generator2():
@@ -242,12 +252,4 @@ generator1 başladı
 generator1 bitti
 generator2 bitti
 ```
-Yukarıdaki `from` ile oluşturulan yapının işlevi aşağıdaki `for` loop ile aynıdır:
-```py
-# 1. Yapı
-yield from herhangi_bir_üreteç()
-
-# 2. Yapı
-for i in herhangi_bir_üreteç():
-    yield i
-```
+Yani `yield from generator1()` ile `for i in generator1(): yield i` aynı işleve sahiptirler.

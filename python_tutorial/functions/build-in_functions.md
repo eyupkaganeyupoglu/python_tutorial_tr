@@ -294,9 +294,7 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#loc
 
 <h1 id="18"><code>map(function, iterable, ...)</code> Fonksiyonu</h1>
 
-**Not:** `map` bir class'dır. "`map()` fonksiyonu" olarak bahsedeceğim şey de aslında `map` class'ını kullanarak yaptığımız bir instantiation işlemidir.
-
-`filter()` fonksiyonu, `iterable` parametresine argüman olarak girilen iterable objenin öğelerini, `function` parametresine argüman olarak girilen fonksiyon objenin kapsamında tanımlı olan return statement'daki boolean işleme göre `True` sonuç verenleri ayırıyordu/filtreliyordu. Ama `map()` fonksiyonu, `iterable` parametresine argüman olarak girilen iterable objenin öğelerini, `function` parametresine argüman olarak girilen fonksiyon objenin kapsamında tanımlı olan return statement'daki işlemi uygular. Yani `iterable` parametresine argüman olarak girilen iterable objenin öğelerin hepsi `function` parametresine argüman olarak girilen fonksiyon objenin kapsamında tanımlı olan return statement'daki işleme sokulur ve işleme sokulan öğeleri içeren bir `map` objesi döndürülür. Örnek:
+`filter()` fonksiyonu, `iterable` parametresine argüman olarak girilen iterable objenin öğelerini, `function` parametresine argüman olarak girilen fonksiyon objenin `true` döndürmesine göre ayırıyordu/filtreliyordu. `map()` fonksiyonu, `iterable` parametresine argüman olarak girilen iterable objenin öğelerine `function` parametresine argüman olarak girilen fonksiyon objende tanımlı işlemi uygular ve yeni öğeleri içeren bir `map` objesi döndürülür. Örnek:
 ```py
 l = [1,2,3,4,5]
 def karesini_al(i):
@@ -304,6 +302,8 @@ def karesini_al(i):
 print(map(karesini_al, l)) # Output: <map object at 0x000001DA2EF2EFA0>
 print(list(map(karesini_al, l))) # Output: [1, 4, 9, 16, 25]
 ```
+
+**Not:** `map` bir class'dır. "`map()` fonksiyonu" olarak bahsedeceğim şey de aslında `map` class'ını kullanarak yaptığımız bir instantiation işlemidir.
 
 **Not:** `map()` fonksiyonuna birden fazla iterable obje tanımlanabilir. `iterable, ...` buradaki üç nokta bu anlama gelmektedir.
 
@@ -330,13 +330,11 @@ Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#typ
 
 <h1 id="22"><code>vars(object)</code> Fonksiyonu</h1>
 
-Bulunduğunuz scope içindeki method, fonksiyon, attribute ve listeleri gösterir. Parametresiz kullanılırsa `locals()` ile aynı çıktıyı verir. Parametre olarak bir değer verilirse örneğin `vars(str)`, o nesnenin method ve attribute'larını öğrenmek için kullanabilirsiniz.
+Parametresiz kullanılırsa `locals()` ile aynı çıktıyı verir. Argüman olarak girilen nesnenin örneğin (`vars(str)`) method ve attribute'larını öğrenmek için kullanabilirsiniz. 
 
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#vars "https://docs.python.org/3/library/functions.html#vars").
 
 <h1 id="23"><code>zip(*iterables)</code> Fonksiyonu</h1>
-
-**Not:** `zip` bir class'dır. "`zip()` fonksiyonu" olarak bahsedeceğim şey de aslında `zip` class'ını kullanarak yaptığımız bir instantiation işlemidir.
 
 ```py
 a1 = ['a', 'b', 'c']
@@ -352,6 +350,8 @@ print(list(zip(a1, a2))) # Output: [('a', 'd'), ('b', 'e'), ('c', 'f')]
 print(zip(a1, a2, a3)) # Output: <zip object at 0x00000290FF0D6280>
 print(list(zip(a1, a2, a3))) # Output: [('a', 'd', 'h'), ('b', 'e', 'i'), ('c', 'f', 'j')]
 ```
+
+**Not:** `zip` bir class'dır. "`zip()` fonksiyonu" olarak bahsedeceğim şey de aslında `zip` class'ını kullanarak yaptığımız bir instantiation işlemidir.
 
 Bilgi için [tıklayınız](https://docs.python.org/3/library/functions.html#zip "https://docs.python.org/3/library/functions.html#zip").
 
