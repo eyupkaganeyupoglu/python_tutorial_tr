@@ -181,7 +181,7 @@ Buradaki decorator'lar `printer = star(percent(printer))` kodu ile eşdeğerdir.
 
 **Dikkat!** Buradan sonraki kısımları anlayabilmek için giriş seviye class bilginiz olmalıdır!
 
-Callable olan objeler decore edilebilir demiştik. Class'lar da callable bir obje oldukları için decore edilebilirler. Kullanıcının bir function gibi davranan bir obje yaratabilmesi için bir function gibi davranan bir obje döndürmesi gerekir. Bu nedenle `__call__` yararlı olabilir. Bir class'ı decore etmek için `@{class_name}` kullanılır. Mantığını anlamak için basit bir örnek:
+Callable olan objeler decore edilebilir demiştik. Class'lar da callable bir obje oldukları için decore edilebilirler. Kullanıcının function gibi davranan bir obje yaratabilmesi için function gibi davranan bir obje döndürmesi gerekir. Bu nedenle `__call__` yararlı olabilir. Bir class'ı decore etmek için `@{class_name}` kullanılır. Mantığını anlamak için basit bir örnek:
 ```py
 class Class_Decorator:
     def __init__(self, func):
