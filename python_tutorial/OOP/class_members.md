@@ -164,7 +164,7 @@ print(A().yazdir2()) # Output: Private Member 2
 
 <h2 id="1.3">Semi-private Members (Yarı-gizli Üyeler)</h2>
 
-Önüne (yani en soluna) bir tane alt çizgi (`_`) konularak oluşturulan isimlere (identifier) sahip class member'lara **Semi-Private Member**'lar denir.Ssemi-private member teknik olarak public member'dır. Yeni semi-private member'lar, Python kullanıcıların uydurduğu bir şeydir. Python kullanıcıları semi-private member'ları, bir class member'ın bellekteki ismini (identifier) değiştirmeden private member gibi kullanmak istediklerinde kullanmayı tercih eder.
+Önüne (yani en soluna) bir tane alt çizgi (`_`) konularak oluşturulan isimlere (identifier) sahip class member'lara **Semi-Private Member**'lar denir. Semi-private member teknik olarak public member'dır. Yeni semi-private member'lar, Python kullanıcıların uydurduğu bir şeydir. Python kullanıcıları semi-private member'ları, bir class member'ın bellekteki ismini (identifier) değiştirmeden private member gibi kullanmak istediklerinde kullanmayı tercih eder.
 ```py
 class A():
 #      Attribute  Attribute     Class Member   |  Bellekteki

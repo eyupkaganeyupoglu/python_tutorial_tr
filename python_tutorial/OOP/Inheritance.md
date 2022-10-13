@@ -25,7 +25,7 @@ Inheritance işleminde subclass base class'daki objeleri miras alması demek, ba
 ```py
 class A:
     class_exp1 = []
-    class_exp2 = "First object"
+    class_exp2 = "1. object"
 
     def func():
         pass
@@ -36,25 +36,25 @@ class B(A):
 print(B.func) # Output: <function A.func at 0x000001B3CEAE5040>
 print(A.func) # Output: <function A.func at 0x000001B3CEAE5040>
 
+print(A.class_exp1) # Output: []
+print(B.class_exp1) # Output: []
 A.class_exp1.append("Item 1")
 print(A.class_exp1) # Output: ['Item 1']
 print(B.class_exp1) # Output: ['Item 1']
-
 B.class_exp1.append("Item 2")
 print(A.class_exp1) # Output: ['Item 1', 'Item 2']
 print(B.class_exp1) # Output: ['Item 1', 'Item 2']
 
-A.class_exp2 = "First object"
-print(A.class_exp2) # Output: First object
-print(B.class_exp2) # Output: First object
-
-B.class_exp2 = "Second object"
-print(A.class_exp2) # Output: First object
-print(B.class_exp2) # Output: Second object
+print(A.class_exp2) # Output: 1. object
+print(B.class_exp2) # Output: 1. object
+A.class_exp2 = "2. object"
+print(A.class_exp2) # Output: 2. object
+print(B.class_exp2) # Output: 2. object
+B.class_exp2 = "3. object"
+print(A.class_exp2) # Output: 2. object
+print(B.class_exp2) # Output: 3. object
 ```
-Gördüğünüz gibi `A` base class'ındaki `func` fonksiyon objesi ile `B` subclass'ındaki `func` fonksiyon objesi aynı objeler. `A` base class'ındaki `class_exp1` listesi mutable olduğu için `A` ve `B` class'ı üzerinden yapılan, list method'lar kullanılarak yapılan değişiklikler iki class'da da görünür. Ama `A` base class'ındaki `class_exp2` string'i immutable olduğu için `A` class'ı üzerinden yeniden tanımlama (redefinition) yöntemiyle yapılan değişiklikler iki class'da da görünse bile `B` class'ı üzerinden yeniden tanımlama (redefinition) yöntemiyle yapılan değişiklikler sadece `B` class'ında görünür çünkü böyle yaparak `A` class'ındaki `class_exp2` objesini geçersiz kılmış (override) oluyoruz. Bu yüzden `A` ve `B` class'ındaki `class_exp2` objeleri birbirinden farklı oluyor.
-
-**Not:** `B` class'ındaki objelerin `A` class'ındaki objelere atıfta bulunmasının (refers to) kanıt:
+`B` class'ındaki objelerin `A` class'ındaki objelere atıfta bulunmasının (refers to) kanıtı:
 ```py
 class A:
     class_exp1 = []
@@ -75,18 +75,26 @@ class A:
 
 class B(A):
     pass
+
+print(A.class_exp1==B.class_exp1) # Output: True
+print(A.class_exp2==B.class_exp2) # Output: True
+print(A.func1==B.func1) # Output: True
+print(A.func2==B.func2) # Output: False
+print(A.func3==B.func3) # Output: True
+print(A.property_exp==B.property_exp) # Output: True
 ```
+`A.func2==B.func2` `False` olmasına aldanmayın, ikisi de `A.func2` objesi. Sadece `<class '__main__.B'>` kısmı farklı diye `False` sonucunu döndürüyor. Kanıtı:
 
 ![](https://i.ibb.co/WDYRsCH/image.png)
 
-`B` class'ının `__dict__` methoduna bakarsanız bu durumun ne anlama geldiğini daha iyi anlarsınız:
+`__dict__` methodu, bulunduğu objenin içerdiği kendisine ait objelerin bulunduğu bir dictionary objesidir demiştik. Yukarıdaki durumu daha iyi anlamak için `B` class'ının `__dict__` methoduna bakmanız yeterli:
 ```py
 print({(i):(A.__dict__[i]) for i in A.__dict__ if not "__" in i}) # Output: {'class_exp1': [], 'class_exp2': 'First object', 'func1': <function A.func1 at 0x00000203562060D0>, 'func2': <classmethod object at 0x0000020356204FD0>, 'func3': <staticmethod object at 0x0000020356204FA0>, 'property_exp': <property object at 0x00000203561F5E50>}
 print({(i):(B.__dict__[i]) for i in B.__dict__ if not "__" in i}) # Output: {}
 ```
 Gördüğünüz gibi `B` class'ının `A` class'ından miras aldığı objeler `B` class'ını `__dict__` methodunda bulunmuyor. Bu durum, `A` class'ındaki objelerin `B` class'ına kopyalanmadığını, `B` class'ındaki objelerin `A` class'ındaki objelere atıfta bulunduğunu (refers to) kanıtlar.
 
-**Not:** Bir class'ın base class ya da subclass olarak isimlendirilmesi sembolik bir şeydir. Python için bu durum "`B` class'ı `A` class'ından miras almış." şeklinde yorumlanır.
+**Not:** Bir class'ın base class ya da subclass olarak isimlendirilmesi programcıların kendi arasında iletişim kurabilmesi için uydurulmuş sembolik bir şeydir. Python için bu durum "`A` base class, `B` subclass." olarak değil "`B` class'ı `A` class'ından miras almış." şeklinde yorumlanır.
 
 <h2 id="1.1">Object Class</h2>
 
@@ -163,7 +171,7 @@ var.func3() # Output: func3 Çalıştı...
 ```
 Gördüğünüz gibi `B` class'ı `A` class'ının bütün objelerini olduğu gibi miras aldı.
 
-**Not:** Bir subclass, bir base class'ın her şeyini miras alacaksa, `class` statement ile bir subclass tanımlamak yerine basitçe `subclass = base_class()` gibi bir instantiation işlemi ile işinizi halledebilirsiniz. Örnek:
+**Not:** Bir subclass, bir base class'ın her şeyini miras alacaksa, `class` statement ile bir subclass tanımlamak yerine basitçe `subclass = base_class()` gibi bir instantiation işlemi ile de işinizi halledebilirsiniz (ben tercih etmiyorum). Örnek:
 ```py
 class A:
     pass
@@ -188,11 +196,10 @@ class C(A):
     def func(self):
         pass
 
-print(A.func) # Output: <function A.func at 0x00000294C0D96040>
-print(B.func) # Output: <function A.func at 0x00000294C0D96040>
-print(C.func) # Output: <function A.func at 0x00000294C0D960D0>>
+print(A.func==B.func) # Output: True
+print(A.func==C.func) # Output: False
+print(B.func==C.func) # Output: False
 ```
-Gördüğünüz gibi `B` class'ının `func` methodu, miras aldığı `A` class'ının `func` methodu ile aynı objeyken; `C` class'ının `func` methodu, miras aldığı `A` class'ının `func` methodundan farklı bir objedir. Bunun sebebi `C` class'ında tanımlanan `func` methodunun `A` class'ının `func` methodunu geçersiz kılmasıdır (override).
 
 <h3 id="1.2.3">Objeyi geçersiz kılmadan (override) miras almak</h3>
 
@@ -222,7 +229,7 @@ var.func1() # Output: func1 çalıştı...
 var.func2() # Output: func2 çalıştı...
 var.func3() # Output: func3 çalıştı...
 ```
-Buradaki `D` subclass'ı sırasıyla `C`, `B` ve `A` class'larından miras almıştır. Çoklu miras alma işlemi, ilgili class'ın MRO'suna göre yapılır. **Method resolution order** (kısaca **MRO**), "method çözümleme sırası" anlamına gelmektedir. MRO, [**directed acyclic graph**](https://en.wikipedia.org/wiki/Directed_acyclic_graph "https://en.wikipedia.org/wiki/Directed_acyclic_graph")'dan (kısaca DAG) türetilen, [**C3 linearization algorithm**](https://en.wikipedia.org/wiki/C3_linearization "https://en.wikipedia.org/wiki/C3_linearization")** tarafından oluşturulan [**total order**](https://en.wikipedia.org/wiki/Total_order "https://en.wikipedia.org/wiki/Total_order")'dır.
+Buradaki `D` subclass'ı sırasıyla `C`, `B` ve `A` class'larından miras almıştır. Çoklu miras alma işlemi, ilgili class'ın MRO'suna göre yapılır. **Method resolution order** (kısaca **MRO**), "method çözümleme sırası" anlamına gelmektedir. MRO, [**directed acyclic graph**](https://en.wikipedia.org/wiki/Directed_acyclic_graph "https://en.wikipedia.org/wiki/Directed_acyclic_graph")'dan (kısaca DAG) türetilen, [**C3 linearization algorithm**](https://en.wikipedia.org/wiki/C3_linearization "https://en.wikipedia.org/wiki/C3_linearization") tarafından oluşturulan [**total order**](https://en.wikipedia.org/wiki/Total_order "https://en.wikipedia.org/wiki/Total_order")'dır.
 
 Bir class'ın inheritance hierarchy'sini (miras almanın önem sırası) temsil eden, "yönlendirilmiş döngüsel olmayan grafik" anlamına gelen graph'a (graph'ın ne olduğunu bilmiyorsanız araştırın) **Directed Acyclic Graph (DAG)** denir. Kısacası class'ların inheritance konusunda birbirleriyle olan bağlantılarının gösterildiği grafiktir. Örnek:
 ```py
@@ -495,7 +502,7 @@ Burada, `A` class'ı üzerinden instance method çağırıken `self` parametresi
 
 Bu iki parametre birbiri ile ilişkili bazı kurallara sahiptir:
 
-`subclass_object` parametresine argüman olarak instance ya da subclass girilebilir demiştim. `subclass_object` parametresine argüman olarak girilen instance'ın türetildiği subclass'ın ya da direkt subclass'ın MRO'su, `subclass` parametresinde belirtilen class'ı içermelidir. Örneğin `subclass_object` parametresine argüman olarak girilen `D` subclass'ının MRO'su `D -> C -> B -> A -> object` şeklindeyse, `subclass` parametresine argüman olarak girilen class bu class'lardan birisi olmak zorundadır. Aksi halde, `TypeError: super(type, obj): obj must be an instance or subtype of type` hatası yükseltilir. Bu hata, "`super(type, obj)`: `obj` parametresine girilen şey, `type` parametresine girilen şeyin `instance`'ı ya da `subclass`'ı olmalıdır." anlamına gelmektedir.
+`subclass_object` parametresine argüman olarak instance ya da subclass girilebilir demiştim. `subclass_object` parametresine argüman olarak girilen instance'ın türetildiği subclass'ın ya da direkt subclass'ın MRO'su, `subclass` parametresinde belirtilen class'ı içermelidir. Örneğin `subclass_object` parametresine argüman olarak girilen `D` subclass'ının MRO'su `D -> C -> B -> A -> object` şeklindeyse, `subclass` parametresine argüman olarak girilen class bu class'lardan birisi olmak zorundadır. Aksi halde, `TypeError: super(type, obj): obj must be an instance or subtype of type` hatası yükseltilir. Bu hata, "`super(type, obj)`: `obj` parametresine girilen şey, `type` parametresine girilen şeyin instance'ı ya da subclass'ı olmalıdır." anlamına gelmektedir.
 
 `subclass_object` parametresine argüman olarak instance girilirse, `super()` fonksiyonunun oluşturduğu proxy objesi üzerinden çağırılacak instance ve class methodların `self`/`cls` olan ilk parametresine argüman olarak `self`/`cls` kelimelerini (veya ilgili methodun kapsamında bu identifier'lar yerine ne kullandıysanız onu) ya da instnace/class objesi girmek zorunda değiliz. Ama `subclass_object` parametresine argüman olarak subclass girilirse, `super()` fonksiyonunun oluşturduğu proxy objesi üzerinden çağırılacak instance methodların `self` olan ilk parametresine argüman olarak `self` kelimesini (veya ilgili methodun kapsamında bu identifier yerine ne kullandıysanız onu) ya da instnace girmek zorundayken, class methodların `cls` olan ilk parametresine argüman olarak `cls` (veya ilgili methodun kapsamında bu identifier yerine ne kullandıysanız onu) ya da class objesi girmek zorunda değilsiniz. Static methodlarda ilk parametre özel olmadığı için az önce anlattıklarımızla uğraşmanız gerekmez. Ama static methoda parametre olarak özellikle `self` veya `cls` tanımladıysanız, `subclass_object` parametresine argüman olarak instance da girseniz subclass da girseniz, `self` veya `cls` parametrelerine argüman girmek zorundasınız.
 
@@ -895,6 +902,6 @@ class D(A):
 var = D()
 var.print_msg() # Error
 ```
-Burada `C.print_msg(self)` kodundaki `self` parametresinin içerdiği instance `D` class'ından türetilen instance olduğu için ve `D` class'ı ile `C` class'ının MRO düzeyinde bir alakaları olmadığı için `super(C, self).print_msg()` statement okunduktan sonra `TypeError: super(type, obj): obj must be an instance or subtype of type` hatası yükseltilir.
+Burada `C.print_msg(self)` kodundaki `self` parametresinin içerdiği instance, `D` class'ından türetilen instance olduğu için ve `D` class'ı ile `C` class'ının MRO düzeyinde bir alakaları olmadığı için `super(C, self).print_msg()` statement okunduktan sonra `TypeError: super(type, obj): obj must be an instance or subtype of type` hatası yükseltilir.
 
 **Not:** `super()` fonksiyonunu kullanırken `RuntimeError: super(): no arguments` hatası alıyorsanız, büyük ihtimal ya bir instance veya class method'a `self` veya `cls` parametresi eklemeyi unuttunuz ya da `super()` fonksiyonunun parametrelerine yanlış argümanlar girdiniz.
