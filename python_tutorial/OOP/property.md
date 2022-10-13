@@ -35,25 +35,25 @@ Bunun sebebi `func2` fonksiyonunun artık `func2` property'sinin read işleminde
 
 ![](https://i.ibb.co/tXKdkTs/image.png)
 
-`func2` fonksiyonu `func2` property'sinin bir parçası olduğu için bu fonksiyonu `A.func2(var)` şeklinde çağıramazsınız. Çağırmaya çalışırsanız `TypeError: 'property' object is not callable` hataları yükseltilir çünkü `func2` artık bir property objesinin identifier'ıdır ve property objeleri çağırılabilir (callable) bir obje değildir. Benzeri `var.func2()` şeklindeki çağırmada da yaşanır çünkü `var` instance'ındaki `func2` attribute'u `None` value'sunu içerdiği için `TypeError: 'NoneType' object is not callable` hatası yükseltilir. `A` class'ını tanımlarken `func2` instance methoduna `return "Falan filan"` statement ekleseydik, `var` instance'ındaki `func2` attribute'u `"Falan filan"` value'suna sahip olacaktı ve `var.func2()` kodu bu sefer `TypeError: 'str' object is not callable` hatası yükseltecekti.
+`func2` fonksiyonu `func2` property'sinin bir parçası olduğu için bu fonksiyonu `A.func2(var)` şeklinde çağıramazsınız. Çağırmaya çalışırsanız `TypeError: 'property' object is not callable` hataları yükseltilir çünkü `func2` artık bir property objesinin identifier'ıdır ve property objeleri çağırılabilir (callable) bir obje değildir. Benzeri `var.func2()` şeklindeki çağırmada da yaşanır çünkü `var` instance'ındaki `func2` attribute'u `None` value'sunu içerdiği için `TypeError: 'NoneType' object is not callable` hatası yükseltilir.
 
 **Not:** Bu instance'daki `func2` attribute'u, main class'daki `func2` property objesindeki `fget` methoduna atanmış fonksiyon herhangi bir değer döndürmediği için `None` value'suna sahiptir.
 
-**Not:** Bir property, main class'da property objesi olarak bulunurken, main class'dan türetilen instance'da attribute olarak bulunur ama bu attribute, bu instance'ın `__dict__` methodunda bulunmaz. Yani instance'lardaki attribute'ların, main class'daki property objelerine atıfta bulunduğunu (refers to) söyleyebiliriz.
+**Not:** Bir property, main class'da property objesi olarak bulunurken, main class'dan türetilen instance'da attribute olarak bulunur ama bu attribute, bu instance'ın `__dict__` methodunda bulunmaz. Yani instance'lardaki bu attribute'ların main class'daki property objelerine atıfta bulunduğunu (refers to) söyleyebiliriz.
 
 <h2 id="1.2">Property Methodları</h2>
 
 Property'lerin üç önemli build-in methodu vardır:
 - Değer döndürmek için kullanılan, read yetkisini temsil eden `getter`
 - Değer atamak için kullanılan, write yetkisini temsil eden `setter`
-- Değer silmek için kullanılan, delete yetkisini temsil eden`deleter`
+- Değer silmek için kullanılan, delete yetkisini temsil eden `deleter`
 
 Bu build-in methodların etki ettiği üç tane method vardır:
 - `getter` build-in methodu ile decore edilmiş fonksiyonunun atandığı `fget` methodu
 - `setter` build-in methodu ile decore edilmiş fonksiyonunun atandığı `fset` methodu
 - `deleter` build-in methodu ile decore edilmiş fonksiyonunun atandığı `fdel` methodu
 
-Bu methodlara aşağıdaki gibi görüntüleyebilirsiniz:
+Bu methodlara `dir` fonksiyonu ile ulaşabilirsiniz:
 ```py
 print(dir(property), end=f"\n" + "-"*70 + "\n")
 
@@ -96,7 +96,7 @@ print(A.sayı.fget) # Output: <function A.sayı at 0x000001F0E8DD51F0>
 print(var.sayı) # Output: 0
 print(var._A__sayı) # Output: 0
 ```
-`getter` build-in methodu, `@{Property_object_name}.getter` formatında tanımlanır ve decore ettiği fonksiyonu `{Property_object_name}` kısmında belirtilen identifier'a sahip property objesinin `fget` methoduna atar. Read işleminden sorumlu fonksiyon düzgün çalışabilmesi için yukarıdaki `return self.__sayı` gibi ilgili attribute'un value'sunu döndürdüğü bir `return` statement içermelidir. Bu sayede yukarıdaki örnekteki gibi `var` instance'ındaki `sayı` attribute'u, read işleminden sorumlu fonksiyonun döndürdüğü değere sahip olur. Eğer read işleminden sorumlu fonksiyonda `return` statement olmasaydı, `sayı` attribute'unun value'su `None` olacaktı.
+`getter` build-in methodu, `@{Property_object_name}.getter` formatında tanımlanır ve decore ettiği fonksiyonu `{Property_object_name}` kısmında belirtilen identifier'a sahip property objesinin `fget` methoduna atar. `getter` methodunun çalışması için ilgili instance'da ilgili attribute (yani property) talep edilmeli (`var.sayı` gibi). Read işleminden sorumlu fonksiyon düzgün çalışabilmesi için yukarıdaki `return self.__sayı` gibi ilgili attribute'un value'sunu döndürdüğü bir `return` statement içermelidir. Bu sayede yukarıdaki örnekteki gibi `var` instance'ındaki `sayı` attribute'u, read işleminden sorumlu fonksiyonun döndürdüğü değere sahip olur. Eğer read işleminden sorumlu fonksiyonda `return` statement olmasaydı, `sayı` attribute'unun value'su `None` olacaktı.
 
 **Not:** Sadece read işlemi yapılabilen (yani sadece `fget` methoduna ilgili fonksiyon atanmış olan, `fset` ve `fdel` methodları `None` olan) attribute'lara **Read Only Attribute** (Salt Okunur Attribute) denir.
 
@@ -128,25 +128,9 @@ var.sayı = 1 # Output: Write işleminden sorumlu fonksiyon çalıştı...
 print(var.sayı) # Output: 1
 print(var._A__sayı) # Output: 1
 ```
-`setter` build-in methodu, `@{Property_object_name}.setter` formatında tanımlanır ve decore ettiği fonksiyonu `{Property_object_name}` kısmında belirtilen identifier'a sahip property objesinin `fset` methoduna atar. Write işleminden sorumlu fonksiyon düzgün çalışabilmesi için yukarıdaki `yeni_değer` gibi ekstra bir parametre ve `self.__sayı = yeni_değer` gibi ilgili attribute'un value'sunu değiştirdiğimiz bir statement içermelidir.
+`setter` build-in methodu, `@{Property_object_name}.setter` formatında tanımlanır ve decore ettiği fonksiyonu `{Property_object_name}` kısmında belirtilen identifier'a sahip property objesinin `fset` methoduna atar. `setter` methodunun çalışması için ilgili instance'da ilgili attribute'un (yani property'nin) yeniden tanımlanması (redefinition) gerekmektedir (`var.sayı` gibi). Write işleminden sorumlu fonksiyon düzgün çalışabilmesi için yukarıdaki `yeni_değer` gibi ekstra bir parametre ve `self.__sayı = yeni_değer` gibi ilgili attribute'un value'sunu değiştirdiğimiz bir statement içermelidir.
 
-**Not:** `setter` build-in methodu ile decore edilmiş fonksiyon, değerini değiştirdiği attribute'u döndürmek zorunda değildir. Örnek:
-```py
-class A():
-    def __init__(self):
-        self.__sayı = 0
-
-    @property
-    def sayı(self):
-        return self.__sayı
-
-    @sayı.setter
-    def sayı(self, yeni_değer):
-        print("Write işleminden sorumlu fonksiyon çalıştı...")
-        self.__sayı = yeni_değer
-        return self.__sayı
-```
-Buradaki `return self.__sayı` statement'ın `setter` build-in methodunun işleviyle bir alakası yok. Bu yüzden varlığı bir anlam ifade etmiyor. Bazı yerlerde `setter` fonksiyonunda `return` statement tanımladıkları için bu kısımdan bahsettim.
+**Not:** `setter` methodunun çalışması için ilgili instance'da ilgili attribute'un (yani property'nin) yeniden tanımlanması (redefinition) gerektiği için ilgili fonksiyona `return` statement tanımlamanız hiçbir anlam ifade etmez.
 
 Write işlemini kullanarak programımızda **backwards compatibility** (geriye dönük uyumluluk) konusunda avantaj sağlayabiliriz. Örnek:
 ```py
@@ -332,9 +316,9 @@ print(var._A__sayı) # Output: 0
 del var.sayı # Output: Delete işleminden sorumlu fonksiyon çalıştı...
 print(var.sayı) # AttributeError: 'A' object has no attribute '_A__sayı'
 ```
-`deleter` build-in methodu, `@{Property_object_name}.deleter` formatında tanımlanır ve decore ettiği fonksiyonu `{Property_object_name}` kısmında belirtilen identifier'a sahip property objesinin `fdel` methoduna atar. Delete işleminden sorumlu fonksiyon düzgün çalışabilmesi için yukarıdaki `del self.__sayı` gibi ilgili attribute'u bellekten sildiğimiz bir statement içermelidir.
+`deleter` build-in methodu, `@{Property_object_name}.deleter` formatında tanımlanır ve decore ettiği fonksiyonu `{Property_object_name}` kısmında belirtilen identifier'a sahip property objesinin `fdel` methoduna atar. `deleter` methodunun çalışması için ilgili instance'da ilgili attribute'un (yani property'nin) silinmesi (`del var.sayı` gibi) gerek. Delete işleminden sorumlu fonksiyon düzgün çalışabilmesi için yukarıdaki `del self.__sayı` gibi ilgili attribute'u bellekten sildiğimiz bir statement içermelidir.
 
-**Not:** `var` instance'ındaki `self__sayı` private instance attribute'u bellekten silindiği için `sayı` property'sinin fget methoduna tanımlı fonksiyonun `return self.__sayı` statement'i hata mesajı döndürür (yükseltir değil, döndürür). Bu yüzden `var` instance'ındaki `sayı` attribute'unun value'su bu hata mesajı olur. Kanıt:
+**Not:** `var` instance'ındaki `self__sayı` private instance attribute'u bellekten silindiği için `sayı` property'sinin `fget` methoduna tanımlı fonksiyonun `return self.__sayı` statement'i hata mesajı döndürür (yükseltir değil, döndürür). Bu yüzden `var` instance'ındaki `sayı` attribute'unun value'su bu hata mesajı olur. Kanıt:
 
 ![](https://i.ibb.co/swJ4ZjR/image.png)
 
@@ -502,38 +486,11 @@ class A():
 
 var = A()
 ```
-Bu koddaki (yukarıdaki kodun aynısı) `@property` decorator'ı, `sayı1` fonksiyonuna Python'ın build-in namespace'inde tanımlı `property` class'ının işlevselliğini (functionality) ekliyor. `@sayı1.getter`, `@sayı1.setter`, `@sayı1.deleter` decorator'ları da sırasıyla `sayı2`, `sayı3`, `sayı4` fonksiyonlarına, Python'ın build-in namespace'inde tanımlı `property` class'ının işlevselliği (functionality) eklenmiş `sayı1` fonksiyonunun işlevselliğini ekliyor. Burada `sayı2`, `sayı3`, `sayı4` fonksiyonlarının işlevselliklerinin (functionality) `sayı1` property objesine eklenmesi gibi bir durum söz konusu değil çünkü bu durum, decoretor'ların çalışma şekline aykırı. Bu yüzden decore edilen bütün fonksiyonların kendisine özel bir property objesi var.
+Bu koddaki (yukarıdaki kodun aynısı) `@property` decorator'ı, `sayı1` fonksiyonuna Python'ın build-in namespace'inde tanımlı `property` class'ının işlevselliğini (functionality) ekliyor. `@sayı1.getter`, `@sayı1.setter`, `@sayı1.deleter` decorator'ları da sırasıyla `sayı2`, `sayı3`, `sayı4` fonksiyonlarına, Python'ın build-in namespace'inde tanımlı `property` class'ının işlevselliği (functionality) eklenmiş `sayı1` fonksiyonunun işlevselliğini ekliyor. Yani burada `sayı2`, `sayı3`, `sayı4` fonksiyonlarının işlevselliklerinin (functionality) `sayı1` property objesine eklenmesi gibi bir durum söz konusu değil çünkü bu durum decoretor'ların çalışma şekline aykırı. `sayı1` property objesinin işlevselliğini (functionality) `sayı2`, `sayı3`, `sayı4` property'lerine ekleniyor. Bu yüzden decore edilen bütün fonksiyonların kendisine özel bir property objesi var.
 
-Gördüğünüz gibi `@property` decorator'unun ve bu decorator'un `getter`, `setter`, `deleter` build-in methodlarının böyle saçma davranışları olduğu için bu decorator'lar, bir property objesi yaratmanın en iyi yöntemi değildir (bana göre). "Decore ettiğim fonksiyonlar bir `property` objesinin parçası olsun. Normal fonksiyon gibi teker teker çağırıp kullanamayım." diyorsanız, `property` decorator'ını kullanabilirsiniz. "Decore ettiğim fonksiyonlar bir `property` objesinin parçası olsun ama aynı zamanda bu fonksiyonlar normal fonksiyon gibi teker teker çağırıp da kullanabileyim." diyorsanız, `property` class'ından bir property objesi türetebilirsiniz (daha sonra anlatılacak).
+Gördüğünüz gibi `@property` decorator'unun ve bu decorator'un `getter`, `setter`, `deleter` build-in methodlarının böyle saçma davranışları olduğu için bu decorator'lar, bir property objesi yaratmanın en iyi yöntemi değildir (bana göre). "Decore ettiğim fonksiyonlar bir `property` objesinin parçası olsun. Normal fonksiyon gibi teker teker çağırıp kullanamayayım." diyorsanız, `property` decorator'ını kullanabilirsiniz. "Decore ettiğim fonksiyonlar bir `property` objesinin parçası olsun ama aynı zamanda bu fonksiyonlar normal fonksiyon gibi teker teker çağırıp da kullanabileyim." diyorsanız, `property` class'ından bir property objesi türetebilirsiniz (daha sonra anlatılacak).
 
-**Not:** `@classmethod` ve `@staticmethod` decorator'larını `@property` decorator'ı ile zincirleme (chaining) kullanırsanız, hangisini önce yazdığınıza göre programınızın davranışı değişir. Örnek:
-```py
-class A:
-    @classmethod
-    @property
-    def func1(self):
-        return "getter_exp class method"
-
-    @staticmethod
-    @property
-    def func2():
-        return "getter_exp static method"
-
-var = A()
-print(var.func1) # Output: getter_exp class method
-print(var.func2) # Output: <property object at 0x0000025B80930180>
-```
-Yukarıdaki property'ler `classmethod(property(func1))`, `staticmethod(property(func2))` anlamlarına gelmektedir. Bu yüzden aşağıda gördüğünüz gibi istenmeyen sonuçlar yaratırlar:
-
-![](https://i.ibb.co/L1GFLK5/image.png)
-
-Bu property'leri doğru sırada kullanırsak bir sorun çıkarmadan görevlerini yaparlar. Örnek:
-```py
-
-```
-Yukarıdaki property'ler `property(classmethod(func1))`, `property(staticmethod(func2))` anlamlarına gelmektedir. Doğru zincirleme (chaining) uygulanan decorator'lar hiçbir sorun çıkarmadan çalıştı. Burada hata yükseltilmesinin sebebi, `classmethod` ve `staticmethod` objelerinin çağırılabilir (callable) olmamasından kaynaklanıyor (daha önce anlattım).
-
-![](https://i.ibb.co/txcD0vR/image.png)
+**Not:** `@classmethod` ve `@staticmethod` decorator'larını `@property` decorator'ı ile zincirleme (chaining) kullanmayın çünkü garip davranışlar sergiliyor. Sonuçları kendiniz deneyerek öğrenebilirsiniz.
 
 <h2 id="1.4"><code>property(fget=None, fset=None, fdel=None, doc=None)</code> Fonksiyonu</h2>
 
