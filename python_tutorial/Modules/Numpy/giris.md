@@ -162,4 +162,338 @@ import numpy as np
 a = np.array(1)
 print(a) # Output: 1
 ```
-Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+
+<h3 id="1.4.2"><code>zeros(shape, dtype=float, order='C', *, like=None)</code></h3>
+
+`shape` parametresine verilen integer ya da pozitif integer'lardan oluşan bir tuple argümanda bahsedilen şekilde, sıfırlarla dolu bir array döndürür. Örnek:
+```py
+import numpy as np
+a = np.zeros(4)
+b = np.zeros((2,3))
+c = np.zeros((2,3,4))
+print(a,b,c,sep="\n----------------\n")
+```
+**Output:**
+```
+[0. 0. 0. 0.]
+----------------
+[[0. 0. 0.]
+ [0. 0. 0.]]
+----------------
+[[[0. 0. 0. 0.]
+  [0. 0. 0. 0.]
+  [0. 0. 0. 0.]]
+
+ [[0. 0. 0. 0.]
+  [0. 0. 0. 0.]
+  [0. 0. 0. 0.]]]
+```
+`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.zeros.html).
+
+<h3 id="1.4.3"><code>ones(shape, dtype=None, order='C', *, like=None)</code></h3>
+
+`shape` parametresine verilen integer ya da pozitif integer'lardan oluşan bir sequence argümanda bahsedilen şekilde, sıfırlarla dolu bir array döndürür. Örnek:
+```py
+import numpy as np
+a = np.ones(4)
+b = np.ones((2,3))
+c = np.ones((2,3,4))
+print(a,b,c,sep="\n----------------\n")
+```
+**Output:**
+```
+[1. 1. 1. 1.]
+----------------
+[[1. 1. 1.]
+ [1. 1. 1.]]
+----------------
+[[[1. 1. 1. 1.]
+  [1. 1. 1. 1.]
+  [1. 1. 1. 1.]]
+
+ [[1. 1. 1. 1.]
+  [1. 1. 1. 1.]
+  [1. 1. 1. 1.]]]
+```
+`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.ones.html).
+
+<h3 id="1.4.4"><code>empty(shape, dtype=float, order='C', *, like=None)</code></h3>
+
+`shape` parametresine verilen integer ya da pozitif integer'lardan oluşan bir tuple argümanda bahsedilen şekilde, belleğin durumuna göre seçilen rastgele sayıların atandığı bir array döndürür. Örnek:
+```py
+import numpy as np
+a = np.empty(4)
+b = np.empty((2,3))
+c = np.empty((2,3,4))
+print(a,b,c,sep=f"\n{'-'*67}\n")
+```
+**Output:**
+```
+[8.90070286e-308 8.90070286e-308 1.33508506e-307 0.00000000e+000]
+-------------------------------------------------------------------
+[[ 0.0000000e+000 -5.1390467e-311  0.0000000e+000]
+ [ 0.0000000e+000  0.0000000e+000  0.0000000e+000]]
+-------------------------------------------------------------------
+[[[6.23042070e-307 4.67296746e-307 1.69121096e-306 1.86922637e-306]
+  [1.89146896e-307 7.56571288e-307 3.11525958e-307 1.24610723e-306]
+  [1.37962320e-306 1.29060871e-306 2.22518251e-306 1.33511969e-306]]
+
+ [[1.78022342e-306 1.05700345e-307 1.11261027e-306 1.11261502e-306]
+  [1.42410839e-306 7.56597770e-307 6.23059726e-307 1.42419530e-306]
+  [7.56599128e-307 1.78022206e-306 8.34451503e-308 8.34402698e-308]]]
+```
+`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.empty.html).
+
+<h3 id="1.4.5"><code>arange([start, ]stop, [step, ]dtype=None, *, like=None)</code></h3>
+
+`start` parametresine argüman olarak başlama değeri, `stop` parametresine argüman olarak biriş değeri, `step` parametresine argüman olarak adım değeri integer type olarak verilir. Verilen değerlere uygun bir boyutlu bir array döndürür. `start` dahil edilir, `stop` dahil edilmez. Örnek:
+```py
+import numpy as np
+a = np.arange(10)
+b = np.arange(4,10)
+c = np.arange(4,10,2)
+print(a,b,c,sep=f"\n{'-'*21}\n")
+```
+**Output:**
+```
+[0 1 2 3 4 5 6 7 8 9]
+---------------------
+[4 5 6 7 8 9]
+---------------------
+[4 6 8]
+```
+`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.arange.html).
+
+<h3 id="1.4.6"><code>linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)</code></h3>
+
+`start` parametresine argüman olarak başlama değeri, `stop` parametresine argüman olarak biriş değeri, `num` parametresine argüman olarak üretilecek öğe sayısı integer type olarak verilir. Verilen değerlere uygun eşit aralıklı öğelerden oluşan bir boyutlu bir array döndürür. `start` dahil edilir, `stop` dahil edilmez. Örnek:
+```py
+import numpy as np
+a = np.linspace(0,10,num=2)
+b = np.linspace(0,10,num=3)
+c = np.linspace(0,10,num=5)
+print(a,b,c,sep=f"\n{'-'*26}\n")
+```
+**Output:**
+```
+[ 0. 10.]
+--------------------------
+[ 0.  5. 10.]
+--------------------------
+[ 0.   2.5  5.   7.5 10. ]
+```
+`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.linspace.html).
+
+<h2 id="1.5">Adding, Removing, Sorting Elements</h2>
+
+<h3 id="1.5.1"><code>sort(a, axis= -1, kind=None, order=None)</code></h3>
+
+Array üzerinde sorting (sıralama) işlemi yapar. Asıl array objesini değiştirmez, sorting işlemi yapılmış halini döndürür. Örnek:
+```py
+import numpy as np
+a = np.array([2, 1, 5, 3, 7, 4, 6, 8])
+print(a) # Output: [2 1 5 3 7 4 6 8]
+print(np.sort(a)) # Output: [1 2 3 4 5 6 7 8]
+```
+Daha fazla bilgi için [tıklayın](https://numpy.org/doc/stable/reference/generated/numpy.sort.html?highlight=sort#numpy.sort).
+
+<h3 id="1.5.2"><code>concatenate((a1, a2, ...), axis=0, out=None, dtype=None, casting="same_kind")</code></h3>
+
+Argüman olarak verilen bir tuple içindeki array'leri ya da array_like sequence'ları birleştirir. Birleştirme işlemini gerçekleştirebilrmek için argüman olarak verilen array'lerin ya da array_like sequence'ların boyutları aynı olmalı. Örnek:
+```py
+import numpy as np
+a = np.array([2, 1, 5, 3])
+b = np.array([7, 4, 6, 8])
+c = [2, 1, 5, 3]
+d = [7, 4, 6, 8]
+print(np.concatenate((a,b))) # Output: [2 1 5 3 7 4 6 8]
+print(np.concatenate((c,d))) # Output: [2 1 5 3 7 4 6 8]
+```
+Daha fazla bilgi için [tıklayın](https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html?highlight=concatenate#numpy.concatenate).
+
+<h2 id="1.6">Shape ve Size</h2>
+
+<h3 id="1.6.1"><code>ndim(a)</code></h3>
+
+Argüman olarak girilen array'in boyut (dimension) bilgisini döndürür. Örnek:
+```py
+import numpy as np
+a = np.array([[4,2,3,1],[8,5,7,6]])
+b = np.array([11,9,12,10])
+print(np.ndim(a)) # Output: 2
+print(np.ndim(b)) # Output: 1
+```
+
+<h3 id="1.6.2"><code>size(a, axis=None)</code></h3>
+
+Argüman olarak girilen array'in toplam element sayısının (size) bilgisini döndürür. Örnek:
+```py
+import numpy as np
+a = np.array([[4,2,3,1],[8,5,7,6]])
+b = np.array([11,9,12,10])
+print(np.size(a)) # Output: 8
+print(np.size(b)) # Output: 4
+```
+
+<h3 id="1.6.3"><code>shape(a)</code></h3>
+
+Argüman olarak girilen array'in her boyutundaki element sayısını bilgisini (shape) bir tuple içinde döndürür. Örnek:
+```py
+import numpy as np
+a = np.array([0,0,0,0])
+b = np.array([[0,0,0,0],[0,0,0,0]])
+c = np.array([[[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0]]])
+print(np.shape(a)) # Output: (4,)
+print(np.shape(b)) # Output: (2, 4)
+print(np.shape(c)) # Output: (2, 2, 4)
+```
+
+<h2 id="1.7">Reshape Array</h2>
+
+<h3 id="1.7.1"><code>reshape(a, newshape, order='C')</code></h3>
+
+Argüman olarak girilen array üzerinde `newshape` parametresinde belirttiğiniz shape'e göre reshape işlemi yapar. Reshape işleminin gerçekleşebilmesi için ilgili array ve reshape'e göre oluşturulacak yeni array'ın size'i (yani toplam element sayısı) aynı olmalı. Örnek:
+```py
+import numpy as np
+a = np.array([[[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0]]])
+print("1.\n",np.reshape(a,(2,8)))
+print("2.\n",np.reshape(a,(2,2,2,2)))
+```
+**Output:**
+```
+1.
+ [[0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0]]
+2.
+ [[[[0 0]
+   [0 0]]
+
+  [[0 0]
+   [0 0]]]
+
+
+ [[[0 0]
+   [0 0]]
+
+  [[0 0]
+   [0 0]]]]
+```
+
+<h2 id="1.8">Array'e Yeni Boyut Eklemek</h2>
+
+<h3 id="1.8.1"><code>newaxis</code></h3>
+
+Bir array'e boyut eklemek için kullanılır. Örnek:
+```py
+import numpy as np
+a = np.array([0,0,0,0])
+print(a)
+a1_1 = a[np.newaxis,:]
+a1_2 = a[:,np.newaxis]
+print(a1_1,a1_2,sep="\n")
+print(np.shape(a1_1),np.shape(a1_2))
+```
+**Output:**
+```
+[0 0 0 0]
+[[0 0 0 0]]
+[[0]
+ [0]
+ [0]
+ [0]]
+(1, 4) (4, 1)
+```
+
+<h3 id="1.8.2"><code>expand_dims(a, axis)</code></h3>
+
+`a` parametresine argüman olarak girilen array'in `axis` parametresinde belirtilen axis'ine yeni boyut ekler. Örnek:
+```py
+import numpy as np
+a = np.array([0,0,0,0])
+print(a)
+print(np.expand_dims(a,axis=0))
+print(np.expand_dims(a,axis=1))
+print(np.shape(np.expand_dims(a,axis=0)),np.shape(np.expand_dims(a,axis=1)))
+```
+**Output:**
+```
+[0 0 0 0]
+[[0 0 0 0]]
+[[0]
+ [0]
+ [0]
+ [0]]
+(1, 4) (4, 1)
+```
+
+<h2 id="1.9">Indexing ve Slicing</h2>
+
+Indexing bildiğimiz python'daki gibi.
+
+![](https://numpy.org/doc/stable/_images/np_indexing.png)
+
+Belli koşulları sağlayan değerleri istiyorsanız:
+```py
+import numpy as np
+
+# 7'den küçük değerleri yazdırmak
+print(a[a<7]) # Output: [1 2 3 4 5 6]
+print(a[(a > 2) & (a < 11)]) # Output: [ 3  4  5  6  7  8  9 10]
+koşul1 = (a<7)
+koşul2 = (a > 5) | (a == 5)
+print(a[koşul1]) # Output: [1 2 3 4 5 6]
+print(a[koşul2]) # Output: [ 5  6  7  8  9 10 11 12]
+```
+Buradaki `koşul` numpy'a özel bir şeydir. Normal python'da böyle bir şey denemeye kalkarsanız olası seneryolarda `TypeError: '<' not supported between instances of 'list' and 'int'` gibi çeşitli hatalarla karşılaşabilirsiniz.
+
+<h3 id="1.9.1"><code>nonzero(a)</code></h3>
+
+Bir array'in her axis'i için sıfır olmayan elementlerin konumlarını içeren array'leri bir tuple içinde döndürür. Bu tuple objesini kullanarak ilgili array'in sıfır olmayan elemanlarına ulaşabilirsiniz. Örnek:
+```py
+import numpy as np
+a = np.array([[0, 8, 0], [7, 0, 0], [-5, 0, 1]])
+print(np.nonzero(a)) # Output: (array([0, 1, 2, 2], dtype=int64), array([1, 0, 0, 2], dtype=int64))
+print(a[np.nonzero(a)]) # Output: [ 8  7 -5  1]
+```
+Bu methodu belli bir koşula uyacak şekilde de kullanabilirsiniz. Örnek:
+```py
+import numpy as np
+a = np.array([[0, 8, 0], [7, 0, 0], [-5, 0, 1]])
+print(np.nonzero(a>5)) # Output: (array([0, 1], dtype=int64), array([1, 0], dtype=int64))
+print(a[np.nonzero(a>5)]) # Output: [8  7]
+```
+
+<h2 id="1.10">How to create an array from existing data</h2>
+
+<h3 id="1.10.1"><code>vstack(tup)</code></h3>
+
+İki array'i diket (vertical) olarak birleştirmek için kullanılır. `tup` parametresine argüman olarak bu iki array'i içeren bir tuple objesi verilmelidir. Örnek:
+```py
+import numpy as np
+a = np.array([[1,1],[2,2]])
+b = np.array([[3,3],[4,4]])
+print(np.vstack((a,b)))
+```
+**Output:**
+```
+[[1 1]
+ [2 2]
+ [3 3]
+ [4 4]]
+```
+
+<h3 id="1.10.2"><code>hstack(tup)</code></h3>
+
+İki array'i yatay (horizontal) olarak birleştirmek için kullanılır. `tup` parametresine argüman olarak bu iki array'i içeren bir tuple objesi verilmelidir. Örnek:
+```py
+import numpy as np
+a = np.array([[1,1],[2,2]])
+b = np.array([[3,3],[4,4]])
+print(np.hstack((a,b)))
+```
+**Output:**
+```
+[[1 1 3 3]
+ [2 2 4 4]]
+```
