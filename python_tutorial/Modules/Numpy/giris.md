@@ -285,6 +285,10 @@ print(a,b,c,sep=f"\n{'-'*26}\n")
 ```
 `dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.linspace.html).
 
+<h3 id="1.4.6">RNG Modülü</h3>
+
+RNG modülündeki `random`, `integers` gibi methodları kullanarak istediğiniz boyutta random array'ler oluşturabilirsiniz.
+
 <h2 id="1.5">Adding, Removing, Sorting Elements</h2>
 
 <h3 id="1.5.1"><code>sort(a, axis= -1, kind=None, order=None)</code></h3>
@@ -496,4 +500,396 @@ print(np.hstack((a,b)))
 ```
 [[1 1 3 3]
  [2 2 4 4]]
+```
+
+<h3 id="1.10.3"><code>copy()</code></h3>
+
+Bir array'in kopyasını oluşturmaya yarar. Oluşturulan kopya ana array'den bağımsızdır. Örnek:
+```py
+import numpy as np
+a = np.array(range(10))
+b = a.copy()
+print(a) # Output: [0 1 2 3 4 5 6 7 8 9]
+print(b) # Output: [0 1 2 3 4 5 6 7 8 9]
+a[0]=99
+print(a) # Output: [99 1 2 3 4 5 6 7 8 9]
+print(b) # Output: [0 1 2 3 4 5 6 7 8 9]
+```
+**Output:**
+```
+[[1 1 3 3]
+ [2 2 4 4]]
+```
+
+<h2 id="1.11">Basic Array Operations</h2>
+
+<h3 id="1.11.1">Operations</h3>
+
+Array'ler arasında Çeşitli matematiksel işlemler yapabilirsiniz. Örnek:
+```py
+import numpy as np
+a = np.array([1,2])
+b = np.ones(2,dtype=int)
+print(a) # Output: [1 2]
+print(b) # Output: [1 1]
+print(a+b) # Output: [2 3]
+```
+```py
+import numpy as np
+a = np.array([1,2])
+b = np.ones(2,dtype=int)
+print(a) # Output: [1 2]
+print(b) # Output: [1 1]
+print(a+b) # Output: [2 3]
+```
+**Output:**
+```
+[[1 2]
+ [3 4]]
+[1 1]
+[[2 3]
+ [4 5]]
+```
+
+<h3 id="1.11.2">Broadcasting</h3>
+
+Bir vector ve bir scalar veya uyumlu boyutlardaki array'ler arasında yapılan işlemlere **broadcasting** denir. NumPy bu işlemlerin/işlemin her hücrede olması gerektiğini anlar.
+```py
+import numpy as np
+a = np.array([[[1,1,1],[2,2,2]],[[3,3,3],[4,4,4]]])
+b = np.array(range(1,13)).reshape((2,2,3))
+print(a+b,end="\n-------------------n")
+print(b+2.5)
+```
+**Output:**
+```
+[[[ 2  3  4]
+  [ 6  7  8]]
+
+ [[10 11 12]
+  [14 15 16]]]
+-------------------
+[[[ 3.5  4.5  5.5]
+  [ 6.5  7.5  8.5]]
+
+ [[ 9.5 10.5 11.5]
+  [12.5 13.5 14.5]]]
+```
+
+<h3 id="1.11.3"><code>sum(a, axis=None, dtype=None, ...)</code></h3>
+
+Uygulandığı array'in elementlerinin toplamını döndürür. Örnek:
+
+```py
+import numpy as np
+a = np.array([[1,2],[3,4]])
+print(a.sum()) # Output: 10
+```
+`axis` parametresinde belirttiğiniz axis'e göre farklı axisler arasında toplama işlemi yapar. Örnek:
+```py
+import numpy as np
+a = np.array([[[1,1,1],[2,2,2]],[[3,3,3],[4,4,4]]])
+print(a,end="\n-----------\n")
+print(a.sum(axis=0),end="\n-----------\n")
+print(a.sum(axis=1),end="\n-----------\n")
+print(a.sum(axis=2))
+```
+**Output:**
+```
+[[[1 1 1]
+  [2 2 2]]
+
+ [[3 3 3]
+  [4 4 4]]]
+-----------
+[[4 4 4]
+ [6 6 6]]
+-----------
+[[3 3 3]
+ [7 7 7]]
+-----------
+[[ 3  6]
+ [ 9 12]]
+```
+
+<h3 id="1.11.4"><code>min(axis=None)</code></h3>
+
+Uygulandığı array'in elementleri arasından en küçüğünü döndürür. `axis` parametresinde belirtilen axis'lere göre minimum değeri bulur ve döndürür. Örnek:
+```py
+import numpy as np
+b = np.array(range(1,13)).reshape((2,2,3))
+print(b,end="\n----------------\n")
+
+print(b.min(),end="\n----------------\n")
+print(b.min(axis=0),end="\n----------------\n")
+print(b.min(axis=1),end="\n----------------\n")
+print(b.min(axis=2))
+```
+**Output:**
+```
+[[[ 1  2  3]
+  [ 4  5  6]]
+
+ [[ 7  8  9]
+  [10 11 12]]]
+----------------
+1
+----------------
+[[1 2 3]
+ [4 5 6]]
+----------------
+[[1 2 3]
+ [7 8 9]]
+----------------
+[[ 1  4]
+ [ 7 10]]
+```
+
+<h3 id="1.11.4"><code>max(axis=None)</code></h3>
+
+Uygulandığı array'in elementleri arasından en büyüğünü döndürür. `axis` parametresinde belirtilen axis'lere göre maxsimum değeri bulur ve döndürür. Örnek:
+```py
+import numpy as np
+b = np.array(range(1,13)).reshape((2,2,3))
+print(b,end="\n----------------\n")
+
+print(b.max(),end="\n----------------\n")
+print(b.max(axis=0),end="\n----------------\n")
+print(b.max(axis=1),end="\n----------------\n")
+print(b.max(axis=2))
+```
+**Output:**
+```
+[[[ 1  2  3]
+  [ 4  5  6]]
+
+ [[ 7  8  9]
+  [10 11 12]]]
+----------------
+12
+----------------
+[[ 7  8  9]
+ [10 11 12]]
+----------------
+[[ 4  5  6]
+ [10 11 12]]
+----------------
+[[ 3  6]
+ [ 9 12]]
+```
+
+<h3 id="1.11.5"><code>std()</code></h3>
+
+Uygulandığı array'in strandart sapmasını döndürür. Örnek:
+```py
+import numpy as np
+b = np.array([0,10,20,30,40])
+print(b.std()) # Output: 14.142135623730951
+b = np.array([0,0,0,0,0])
+print(b.std()) # Output: 0
+```
+
+<h2 id="1.12">How to get unique items and counts</h2>
+
+<h3 id="1.12.1"><code>unique(ar)</code></h3>
+
+`ar` parametresine argüman olarak girilen array'in elementlerini kullanarak benzersiz elementlerden oluşan bir array objesi döndürür. Benzersiz elementler demek, tekrar eden elementlerden sadece bir tane kullanılması anlamına gelir. Örnek:
+```py
+import numpy as np
+a = np.array([11, 11, 12, 13, 14, 15, 16, 17, 12, 13, 11, 14, 18, 19, 20])
+print(a) # Output: [11 11 12 13 14 15 16 17 12 13 11 14 18 19 20]
+print(np.unique(a)) # Output: [11 12 13 14 15 16 17 18 19 20]
+```
+Unique element'lerin tekrar etme sayısını istiyorsanız `return_count` parametresine `True` argümanını verin. Örnek:
+```py
+import numpy as np
+a = np.array([11, 11, 12, 13, 14, 15, 16, 17, 12, 13, 11, 14, 18, 19, 20])
+print(a) # Output: [11 11 12 13 14 15 16 17 12 13 11 14 18 19 20]
+print(np.unique(a)) # Output: [11 12 13 14 15 16 17 18 19 20]
+print(np.unique(a, return_counts=True)) # Output: (array([11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), array([3, 2, 2, 2, 1, 1, 1, 1, 1, 1], dtype=int64))    
+print(np.unique(a, return_counts=True)[1]) # Output: [3 2 2 2 1 1 1 1 1 1]
+```
+Unique element'lerin bulundukları indexleri istiyorsanız `return_index` parametresine `True` argümanını verin. Örnek:
+```py
+import numpy as np
+a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [1, 2, 3, 4]])
+print(a)
+print(np.unique(a))
+print(np.unique(a, return_index=True))
+print(np.unique(a, return_index=True)[1])
+print(np.unique(a, return_index=True, axis=1)[1])
+```
+**Output:**
+```
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]
+ [ 1  2  3  4]]
+[ 1  2  3  4  5  6  7  8  9 10 11 12]
+(array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12]), array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11], dtype=int64))
+[ 0  1  2  3  4  5  6  7  8  9 10 11]
+[0 1 2]
+```
+Başka bir örnek:
+```py
+import numpy as np
+a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [1, 2, 3, 4]])
+print(a,end="\n-------------------\n")
+unique_rows, indices, occurrence_count = np.unique(a, axis=0, return_counts=True, return_index=True)
+print(unique_rows,indices,occurrence_count,sep="\n-------------------\n")
+```
+**Output:**
+```
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]
+ [ 1  2  3  4]]
+-------------------
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+-------------------
+[0 1 2]
+-------------------
+[2 1 1]
+```
+
+<h2 id="1.13">Transposing ve Reshaping</h2>
+
+**Transposing:**
+
+![](../Numpy/g%C3%B6rseller/1.PNG)
+
+```py
+import numpy as np
+a = np.array([[1,2],[3,4],[5,6],[7,8]])
+print(a,end="\n---------------\n")
+print(np.transpose(a))
+```
+**Output:**
+```
+[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+---------------
+[[1 3 5 7]
+ [2 4 6 8]]
+```
+
+**Reshaping:**
+
+![](../Numpy/g%C3%B6rseller/2.PNG)
+
+```py
+import numpy as np
+a = np.array([[1,2],[3,4],[5,6],[7,8]])
+print(a,end="\n---------------\n")
+print(np.reshape(a,newshape=(2,4)),end="\n---------------\n")
+print(np.reshape(a,newshape=(8,)))
+```
+**Output:**
+```
+[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+---------------
+[[1 2 3 4]
+ [5 6 7 8]]
+---------------
+[1 2 3 4 5 6 7 8]
+```
+
+<h2 id="1.13">How to reverse an array</h2>
+
+<h3 id="1.13.1"><code>flip(m,axis)</code></h3>
+
+`m` parametresine argüman olarak girilen array üzerinde reverse işlemi uygular. Örnek:
+```py
+import numpy as np
+a = np.array(range(1,11))
+print(a) # Output: [ 1  2  3  4  5  6  7  8  9 10]
+print(np.flip(a)) # Output: [10  9  8  7  6  5  4  3  2  1]
+```
+`axis` parametresinde belirtilen axis düzeyinde reverse işlemi yapmasını istiyorsanız:
+```py
+import numpy as np
+a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+print(a,end="\n-----------------\n")
+print(np.flip(a),end="\n-----------------\n")
+print(np.flip(a,axis=0),end="\n-----------------\n")
+print(np.flip(a,axis=1))
+```
+**Output:**
+```
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+-----------------
+[[12 11 10  9]
+ [ 8  7  6  5]
+ [ 4  3  2  1]]
+-----------------
+[[ 9 10 11 12]
+ [ 5  6  7  8]
+ [ 1  2  3  4]]
+-----------------
+[[ 4  3  2  1]
+ [ 8  7  6  5]
+ [12 11 10  9]]
+```
+
+<h2 id="1.14">Flattening Multidimensional Arrays</h2>
+
+<h3 id="1.14.1"><code>flatten</code></h3>
+
+Uygulandığı array'i düzlediği farklı bir array objesi döndürür. Örnek:
+
+```py
+import numpy as np
+a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+a1 = a.flatten()
+print(a,end="\n-------------\n")
+a1[0] = 99
+print(a1,end="\n-------------\n")
+print(a,end="\n-------------\n")
+```
+**Output:**
+```
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+-------------
+[99  2  3  4  5  6  7  8  9 10 11 12]
+-------------
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+-------------
+```
+
+<h3 id="1.14.2"><code>ravel</code></h3>
+
+Uygulandığı array'i düzlediği farklı bir array objesi döndürür ama bu düzlenmiş array objesinin elementleri referans alınan array objesinin elementleriyle bağlantılıdır. Örnek:
+
+```py
+import numpy as np
+a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+a1 = a.ravel()
+print(a1,end="\n-------------\n")
+a1[0] = 99
+print(a,end="\n-------------\n")
+print(a1,end="\n-------------\n")
+```
+**Output:**
+```
+[ 1  2  3  4  5  6  7  8  9 10 11 12]
+-------------
+[[99  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+-------------
+[99  2  3  4  5  6  7  8  9 10 11 12]
+-------------
 ```
