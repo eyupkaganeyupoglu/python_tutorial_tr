@@ -424,4 +424,4 @@ AssertionError: İsim bölümü boş.
 
 **Not:** `assert` statement'ı, Python kodlarını debugging (hata ayıklama işlemi) yapmak için kullanılır. Bir Python dosyasını terminalden çalıştırırken `python -O dosya_adı` komutuyla çalıştırırsanız, Python dosyası içindeki bütün `assert` statement'lerini görmezden gelir. Bunu sağlayan şey optimize anlamına gelen `-O` parametresidir. Eğer `-O` olmadan `python dosya_adı` koduyla çalıştırırsanız, Python dosyası içindeki `assert` statement'lerini görmezden gelmez. Bunu debugging yapmak için kullanabiliriz:
 
-![](https://i.ibb.co/pZqwRNF/Ekran-Al-nt-s.png)
+![](./g%C3%B6rseller/6.png)
