@@ -110,7 +110,7 @@ Değiştirilemez (immutable) data type'lar verimlilik açısından bütün kopya
 
 Uygulandığı frozenset ile `*s` parametresine girilen frozenset'lerin farkını alır ve sonucu döndürür. `A` ve `B` iki frozenset type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/P4rYJcy/a-fark-b.png)
+![](./pics/1.png)
 
 Yukarıdaki şemaya göre `A - B` işlemi "`A`'da olup `B`'de olmayan" anlamına gelmektedir. Örnek:
 ```py
@@ -123,11 +123,11 @@ print(frozenset({1,2,3,4,5}).difference(frozenset({1,2,3}),frozenset({1,4}))) # 
 
 Uygulandığı frozenset ile `*s` parametresine girilen frozenset'lerin kesişimini alır ve sonucu döndürür. İki frozenset'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki frozenset type obje olmak üzere, `A & B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/LdKstBY/a-kesi-im-b.png)
+![](./pics/2.png)
 
 Yukarıdaki şemaya göre `A & B` işlemi "`A` ve `B`'de bulunan" anlamına gelmektedir. Örnekler:
 
-![](https://i.ibb.co/NTTF2th/12345-kesi-im-1236.png)
+![](./pics/3.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -139,7 +139,7 @@ print(A & B) # Output: frozenset({1, 2, 3})
 
 <hr>
 
-![](https://i.ibb.co/jvVsmY1/12345-1-2.png)
+![](./pics/4.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -152,7 +152,7 @@ print(A & B & C) # Output: frozenset() (boş frozenset)
 
 <hr>
 
-![](https://i.ibb.co/K6hSgCj/12345-123-14.png)
+![](./pics/5.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -167,11 +167,11 @@ print(A & B & C) # Output: frozenset({1})
 
 Uygulandığı frozenset ile `*s` parametresine girilen frozenset'lerin birleşimini alır ve sonucu döndürür. İki frozenset'i birleşimini almak için `|` operator'ı da kullanılabilir. `A` ve `B` iki frozenset type obje olmak üzere, `A | B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/CvjTRYs/a-birle-im-b.png)
+![](./pics/6.png)
 
 Yukarıdaki şemaya göre `A | B` işlemi "`A` veya `B`'de bulunan" anlamına gelmektedir. Örnekler:
 
-![](https://i.ibb.co/kQByHRV/12345-kesi-im-1236.png)
+![](./pics/7.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -183,7 +183,7 @@ print(A | B) # Output: frozenset({1, 2, 3, 4, 5, 6})
 
 <hr>
 
-![](https://i.ibb.co/xFN9bnz/12345-1-2.png)
+![](./pics/8.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -196,7 +196,7 @@ print(A | B | C) # Output: frozenset({1, 2, 3, 4, 5})
 
 <hr>
 
-![](https://i.ibb.co/PCjfjNY/12345-123-14.png)
+![](./pics/9.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -278,11 +278,11 @@ print(A.issuperset(B)) # Output: False (B kümesi A kümesini kapsamaz)
 
 `A` ve `B` iki frozenset objesi olmak üzere, `A.difference(B) | B.difference(A)` (yani `(A - B) | (B - A)`) işleminin sonucunu döndürür. Bu işlemin şematik gösterimi:
 
-![](https://i.ibb.co/3y5bxKY/symmetric-difference.png)
+![](./pics/10.png)
 
 Örnek:
 
-![](https://i.ibb.co/f8mtZhV/12345-12678.png)
+![](./pics/11.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py

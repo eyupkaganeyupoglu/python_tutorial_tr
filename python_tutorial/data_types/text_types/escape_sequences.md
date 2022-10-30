@@ -19,7 +19,7 @@
 
 Özel anlamları ve işlevleri olan karakterlerdir. ASCII'de tanımlanmıştır. ASCII tablosu:
 
-![](https://i.ibb.co/k8GSbKw/ASCII.jpg)
+![](./pics/1.jpg)
 
 <h2 id="1.1">`\` Geçersiz Kılma (Backslash)</h2>
 

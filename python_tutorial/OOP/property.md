@@ -29,11 +29,11 @@ var = A()
 ```
 `func1` methodu (`<function A.func1 at 0x00000160370A2790>`) `A` class'ında normal bir şekilde function variables kısmında bulunurken `func2` methodu bulunmuyor. Çünkü `func2` methodu bellekte `func2` adındaki property objesinin (`<property object at 0x00000160370ADC20>`) içinde bulunan `fget` methoduna atanmış `<function A.func2 at 0x00000160370A2790>` objesi olarak bellekte depolanır. Kanıt:
 
-![](https://i.ibb.co/YWSNxgf/image.png)
+![](./pics/7.png)
 
 Bunun sebebi `func2` fonksiyonunun artık `func2` property'sinin read işleminde (daha sonra anlayılacak) kullanılacak olmasıdır. Property'ler main class'da property objesi olarak bulunurken, main class'dan türetilen instance'larda attribute olarak bulunur. Kanıt:
 
-![](https://i.ibb.co/tXKdkTs/image.png)
+![](./pics/8.png)
 
 `func2` fonksiyonu `func2` property'sinin bir parçası olduğu için bu fonksiyonu `A.func2(var)` şeklinde çağıramazsınız. Çağırmaya çalışırsanız `TypeError: 'property' object is not callable` hataları yükseltilir çünkü `func2` artık bir property objesinin identifier'ıdır ve property objeleri çağırılabilir (callable) bir obje değildir. Benzeri `var.func2()` şeklindeki çağırmada da yaşanır çünkü `var` instance'ındaki `func2` attribute'u `None` value'sunu içerdiği için `TypeError: 'NoneType' object is not callable` hatası yükseltilir.
 
@@ -320,7 +320,7 @@ print(var.sayı) # AttributeError: 'A' object has no attribute '_A__sayı'
 
 **Not:** `var` instance'ındaki `self__sayı` private instance attribute'u bellekten silindiği için `sayı` property'sinin `fget` methoduna tanımlı fonksiyonun `return self.__sayı` statement'i hata mesajı döndürür (yükseltir değil, döndürür). Bu yüzden `var` instance'ındaki `sayı` attribute'unun value'su bu hata mesajı olur. Kanıt:
 
-![](https://i.ibb.co/swJ4ZjR/image.png)
+![](./pics/9.png)
 
 ```
 sayı: 'Traceback (most recent call last):\n  File "c:\\Users\\HP\\.vscode\\extensions\\ms-python.python-2021.8.1105858891\\pythonFiles\\lib\\python\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\pydevd_resolver.py", line 193, in _get_py_dictionary\n    attr = getattr(var, name)\n  File "d:\\my_folder\\education\\software\\software_lessons\\python\\python_tutorial\\main\\.md\\TP1.py", line 7, in sayı\n    return self.__sayı\nAttributeError: \'A\' object has no attribute \'_A__sayı\'\n'
@@ -377,7 +377,7 @@ print(var.sayı) # Output: AttributeError: 'A' object has no attribute '_A__say�
 ```
 `sayı` property'sinin `fget`, `fset` ve `fdel` methodlarının hepsi tanımlıdır çünkü bu methodlara atanan fonksiyonlar aynı isimdedir (identifier). Kanıtı:
 
-![](https://i.ibb.co/7kmgRmQ/image.png)
+![](./pics/10.png)
 
 Peki `fget`, `fset` ve `fdel` methodlarına atanan fonksiyonların isimleri farklı olsaydı? Örnek:
 ```py
@@ -407,9 +407,9 @@ var = A()
 ```
 `A` class'ında 4 farklı property objesi, `var` instance'ında 4 farklı attribute var. Kanıtı:
 
-![](https://i.ibb.co/0D8CDbd/image.png)
+![](./pics/11.png)
 
-![](https://i.ibb.co/4FSrsGm/image.png)
+![](./pics/12.png)
 
 Gördüğünüz gibi tam bir karmaşa oldu. Bu objeleri teker teker açıklayalım:
 - `A` class'ındaki `sayı1` property'sinin `fget` methodunda `sayı1` fonksiyonu tanımlıdır, `fset` ve `fdel` methodları tanımlı değildir. `sayı1` fonksiyonu herhangi bir `return` statement'e sahip olmadığı için `var` instance'ındaki `sayı1` attribute'u `None` value'suna sahiptir.

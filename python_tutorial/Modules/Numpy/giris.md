@@ -435,7 +435,7 @@ print(np.shape(np.expand_dims(a,axis=0)),np.shape(np.expand_dims(a,axis=1)))
 
 Indexing bildiğimiz python'daki gibi.
 
-![](./g%C3%B6rseller/3.png)
+![](./pics/3.png)
 
 Belli koşulları sağlayan değerleri istiyorsanız:
 ```py
@@ -758,7 +758,7 @@ print(unique_rows,indices,occurrence_count,sep="\n-------------------\n")
 
 **Transposing:**
 
-![](./g%C3%B6rseller/1.PNG)
+![](./pics/1.PNG)
 
 ```py
 import numpy as np
@@ -779,7 +779,7 @@ print(np.transpose(a))
 
 **Reshaping:**
 
-![](./g%C3%B6rseller/2.PNG)
+![](./pics/2.PNG)
 
 ```py
 import numpy as np

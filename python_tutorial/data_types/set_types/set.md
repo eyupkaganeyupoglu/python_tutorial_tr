@@ -154,7 +154,7 @@ print(set_exp) # Output: {"bir", "iki", "üç", "dört"}
 
 Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ve sonucu döndürür. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/P4rYJcy/a-fark-b.png)
+![](./pics/1.png)
 
 Yukarıdaki şemaya göre `A - B` işlemi "`A`'da olup `B`'de olmayan" anlamına gelmektedir. Örnek:
 ```py
@@ -170,7 +170,7 @@ print({1,2,3,4,5}.difference({1,2,3},{1,4})) # Output: {5}
 
 Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ama `difference` methodundaki gibi sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. `A` ve `B` iki set type obje olmak üzere, `A - B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/P4rYJcy/a-fark-b.png)
+![](./pics/1.png)
 
 Yukarıdaki şemaya göre `A - B` işlemi "`A`'da olup `B`'de olmayan" anlamına gelmektedir. Örnek:
 ```py
@@ -214,11 +214,11 @@ A.remove(6) # KeyError: 6
 
 Uygulandığı set ile `*s` parametresine girilen set'lerin kesişimini alır ve sonucu döndürür. İki set'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A & B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/LdKstBY/a-kesi-im-b.png)
+![](./pics/2.png)
 
 Yukarıdaki şemaya göre `A & B` işlemi "`A` ve `B`'de bulunan" anlamına gelmektedir. Örnekler:
 
-![](https://i.ibb.co/NTTF2th/12345-kesi-im-1236.png)
+![](./pics/3.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -230,7 +230,7 @@ print(A & B) # Output: {1, 2, 3}
 
 <hr>
 
-![](https://i.ibb.co/jvVsmY1/12345-1-2.png)
+![](./pics/4.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -243,7 +243,7 @@ print(A & B & C) # Output: set() (boş küme)
 
 <hr>
 
-![](https://i.ibb.co/K6hSgCj/12345-123-14.png)
+![](./pics/5.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -258,11 +258,11 @@ print(A & B & C) # Output: {1}
 
 Uygulandığı set ile `*s` parametresine girilen set'lerin farkını alır ama `intersection` methodundaki gibi sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. İki set'i kesişimini almak için `&` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A & B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/LdKstBY/a-kesi-im-b.png)
+![](./pics/2.png)
 
 Yukarıdaki şemaya göre `A & B` işlemi "`A` ve `B`'de bulunan" anlamına gelmektedir. Örnekler:
 
-![](https://i.ibb.co/NTTF2th/12345-kesi-im-1236.png)
+![](./pics/3.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -275,7 +275,7 @@ print(A & B) # Output: {1, 2, 3}
 
 <hr>
 
-![](https://i.ibb.co/jvVsmY1/12345-1-2.png)
+![](./pics/4.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -289,7 +289,7 @@ print(A & B & C) # Output: set() (boş küme)
 
 <hr>
 
-![](https://i.ibb.co/K6hSgCj/12345-123-14.png)
+![](./pics/5.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -372,11 +372,11 @@ print(A.issuperset(B)) # Output: False (B kümesi A kümesini kapsamaz)
 
 Uygulandığı set ile `*s` parametresine girilen set'lerin birleşimini alır ve sonucu döndürür. İki set'i birleşimini almak için `|` operator'ı da kullanılabilir. `A` ve `B` iki set type obje olmak üzere, `A | B` işleminin şematik gösterimi:
 
-![](https://i.ibb.co/CvjTRYs/a-birle-im-b.png)
+![](./pics/6.png)
 
 Yukarıdaki şemaya göre `A | B` işlemi "`A` veya `B`'de bulunan" anlamına gelmektedir. Örnekler:
 
-![](https://i.ibb.co/kQByHRV/12345-kesi-im-1236.png)
+![](./pics/7.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -388,7 +388,7 @@ print(A | B) # Output: {1, 2, 3, 4, 5, 6}
 
 <hr>
 
-![](https://i.ibb.co/xFN9bnz/12345-1-2.png)
+![](./pics/6.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -401,7 +401,7 @@ print(A | B | C) # Output: {1, 2, 3, 4, 5}
 
 <hr>
 
-![](https://i.ibb.co/PCjfjNY/12345-123-14.png)
+![](./pics/9.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -462,11 +462,11 @@ print(F) # Output: {1, 2, 3, 4, 5, 6, 7, 8, '0', '9'}
 
 `A` ve `B` iki set objesi olmak üzere, `A.difference(B) | B.difference(A)` (yani `(A - B) | (B - A)`) işleminin sonucunu döndürür. Bu işlemin şematik gösterimi:
 
-![](https://i.ibb.co/3y5bxKY/symmetric-difference.png)
+![](./pics/10.png)
 
 Örnek:
 
-![](https://i.ibb.co/f8mtZhV/12345-12678.png)
+![](./pics/11.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py
@@ -479,11 +479,11 @@ print(A.symmetric_difference(B)) # Output: {3, 4, 5, 6, 7, 8}
 
 `A` ve `B` iki set objesi olmak üzere, `A.difference(B) | B.difference(A)` (yani `(A - B) | (B - A)`) işleminin sonucu döndürmez, bunun yerine uygulandığı set'i değiştirir. Bu işlemin şematik gösterimi:
 
-![](https://i.ibb.co/3y5bxKY/symmetric-difference.png)
+![](./pics/10.png)
 
 Örnek:
 
-![](https://i.ibb.co/f8mtZhV/12345-12678.png)
+![](./pics/11.png)
 
 Yukarıdaki şemanın ifade ettiği kod:
 ```py

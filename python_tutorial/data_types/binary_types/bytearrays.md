@@ -60,7 +60,7 @@
 Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablosu dışında kalan karakterler doğrudan bytes olarak temsil edilemez. Bytes data type, string data type gibi değiştirilemez (immutable) bir data type'dır. bytearray bu durumu kaldıran bir fonksiyondur çünkü bytearray objeleri değiştirilebilir (mutable) objelerdir. `bytearray()` fonksiyonu kendisine girilen argümanı önce `bytes`'a, sonra `bytearray`'e dönüştürüp üzerinde değişiklik yapmamıza izin veren bir bytearray nesnesi döndürür. `bytearray(source, encoding, errors)` fonksiyonunun 3 parametresi vardır:
 - `source` parametresine argüman olarak bytes'lardan oluşan bir dizi (sequence) girilebilir ya da hiçbir şey girilmeyebilir. Bu dizi (sequence) bir string, integer ya da iterable bir obje olabilir.
 
-    ![](https://i.ibb.co/Vt49VrC/image.png)
+    ![](./pics/1.png)
 
     - `source` parametresine argüman olarak string girilirse, mutlaka `encoding` parametresine bu string'in hangi kod çözücü ile çözülmesi gerektiğini belirlemelisiniz. Aksi halde `TypeError: string argument without an encoding` hatası yükseltilir. Yanlış kod çözücü kullanırsanız yine hata yükseltilir. Örnek:
         ```py

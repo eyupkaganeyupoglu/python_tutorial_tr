@@ -143,7 +143,7 @@ print(type(gen.gi_frame.f_locals)) # Output: <class 'dict'>
 print(gen.gi_frame.f_locals) # Output: {'i': 1, 'j': 2, 'k': 3}
 ```
 
-![](https://i.ibb.co/Wc0tHZv/image.png)
+![](./pics/1.png)
 
 **Not:** `f_locals` dictionary'sindeki veriler, generator objesi her next'lendiğinde güncellenir. Yani generator next'lendiğinde, local variable'ların durumları kaydedilir.  Örnek:
 ```py

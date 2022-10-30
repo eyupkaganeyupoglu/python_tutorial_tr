@@ -75,7 +75,7 @@ Open fonksiyonu `open(file, mode='r', buffering=-1, encoding=None, errors=None, 
 
     **Terminalin işaret ettiği PATH:**
 
-    ![](https://i.ibb.co/bRzP4B4/image.png)
+    ![](./pics/1.png)
 
     ```
     D:\my_folder\education\software\software_lessons\python\python_tutorial
@@ -218,21 +218,21 @@ Bu kısımdan sonra "imleç" terimini çok fazla göreceğiniz için ne olduğun
 
 İmleç, dijital bir ortamda yazı yazarken yanıp sönen dikey düz çizgiye denir.
 
-![](https://i.ibb.co/qMcbGTD/mle.png)
+![](./pics/2.png)
 
 Dosya işlemlerinde karakterler, byte'larla ifade edilir. İmleç kavramı index mantığına benzer çalışır. Örnek:
 
 Birinci byte'dan hemen önceki konumda:
 
-![](https://i.ibb.co/v1BmKNM/image.png)
+![](./pics/3.png)
 
 İkinci byte'dan hemen önceki konumda:
 
-![](https://i.ibb.co/TmPkWHP/image.png)
+![](./pics/4.png)
 
 Üçüncü byte'dan hemen önceki konumda:
 
-![](https://i.ibb.co/BBTWN6p/image.png)
+![](./pics/5.png)
 
 **Dosya:**
 ```
@@ -272,7 +272,7 @@ abc456789
 ```
 Gördüğünüz gibi `write` methodu sıfırıncı, birinci ve ikinci byte'larında işlem yaptıktan sonra imleç üçüncü byte'a (yani dördüncü byte'dan hemen önceki konuma) konumlandı ve `read` işlemi de üçüncü byte'dan itibaren (üçüncü byte dahil) işlem yaptı (üçüncü byte'da `"4"` string'i var). Write işleminden sonra imlecin konumu:
 
-![](https://i.ibb.co/cwfVs7k/image.png)
+![](./pics/6.png)
 
 Bu basit örnekle write (yazma) ve read (okuma) işlemlerinde kullanılan methodların hepsinin tek bir imleci dikkate aldığını kanıtlamış oluyoruz.
 
@@ -1228,7 +1228,7 @@ dosya.close()
 ```
 **Dosya:**
 
-![](https://i.ibb.co/1mVxbCf/image.png)
+![](./pics/7.png)
 
 <h2 id="1.9">İkili (Binary) Dosyalar</h2>
 

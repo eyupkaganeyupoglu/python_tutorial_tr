@@ -75,7 +75,7 @@ Alıcı ile verici arasında paylaşılan byte'lar herhangi bir nedenden dolayı
 
 Binary sistem kullanarak alfabedeki farklı karakterleri temsil edebilirsiniz. Örnek:
 
-![](https://i.ibb.co/JzmHvzc/Ekran-Al-nt-s.png)
+![](./pics/2.png)
 
 <h1 id="2">Bytes</h1>
 
@@ -104,7 +104,7 @@ Burada aklınıza "Byte'lar `0` ve `1`'ler ile ifade ediliyorsa neden buradaki i
 Bytes data type, temel olarak ASCII karakterlerini kabul eder. Yani ASCII tablosu dışında kalan karakterler doğrudan bytes olarak temsil edilemez. Bu durumu düzeltmek için `bytes(source, encoding, errors)` fonksiyonu kullanılır:
 - `source` parametresine argüman olarak bytes'lardan oluşan bir dizi (sequence) girilebilir ya da hiçbir şey girilmeyebilir. Bu dizi (sequence) bir string, integer ya da iterable bir obje olabilir.
 
-    ![](https://i.ibb.co/Vt49VrC/image.png)
+    ![](./pics/1.png)
 
     - `source` parametresine argüman olarak string girilirse, mutlaka `encoding` parametresine bu string'in hangi kod çözücü ile çözülmesi gerektiğini belirlemelisiniz. Aksi halde `TypeError: string argument without an encoding` hatası yükseltilir. Yanlış kod çözücü kullanırsanız yine hata yükseltilir. Örnek:
         ```py

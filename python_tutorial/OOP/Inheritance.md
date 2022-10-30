@@ -85,7 +85,7 @@ print(A.property_exp==B.property_exp) # Output: True
 ```
 `A.func2==B.func2` `False` olmasına aldanmayın, ikisi de `A.func2` objesi. Sadece `<class '__main__.B'>` kısmı farklı diye `False` sonucunu döndürüyor. Kanıtı:
 
-![](https://i.ibb.co/WDYRsCH/image.png)
+![](./pics/5.png)
 
 `__dict__` methodu, bulunduğu objenin içerdiği kendisine ait objelerin bulunduğu bir dictionary objesidir demiştik. Yukarıdaki durumu daha iyi anlamak için `B` class'ının `__dict__` methoduna bakmanız yeterli:
 ```py
@@ -242,7 +242,7 @@ class B(E,D): pass
 class A(B,C): pass
 ```
 
-![](https://i.ibb.co/X5XstLP/A.png)
+![](./pics/6.png)
 
 Bu graph bize sadece hangi class'ın hangi class'dan miras aldığını söyler, single ya da multiple inheritance'ın MRO'su hakkında bir bilgi vermez.
 

@@ -69,7 +69,7 @@ class A:
 A class'ının içi.
 ```
 
-![](https://i.ibb.co/T8yYpbG/image.png)
+![](./pics/1.png)
 
 **Not:** Bu durum, import işlemlerinde de yaşanır çünkü import edilen dosya baştan sona okunur, dolayısıyla class'ların içi de okunur.
 
@@ -472,7 +472,7 @@ class A:
     pass
 ```
 
-![](https://i.ibb.co/XC7s4y5/image.png)
+![](./pics/2.png)
 
 `A` class'ından türetilen instance'a debugger ile baktığınızda `__init__` constructor'ının function variables değil, special variables sekmesinde `<method-wrapper '__init__' of A object at 0x000002288B12D430>` şeklinde depolandığını görürsünüz. Kanıt:
 ```py
@@ -482,7 +482,7 @@ class A:
 var = A()
 ```
 
-![](https://i.ibb.co/YX198Dv/image.png)
+![](./pics/3.png)
 
 C'de uygulanan (implemented) bir special method'a erişmek (access) için bir extension type'ın dict'ine bir [slot wrapper](https://stackoverflow.com/questions/24708203/what-is-a-slot-wrapper-in-python#:~:text=A%20slot%20wrapper%20is%20installed,variant%20called%20method-wrapper "https://stackoverflow.com/questions/24708203/what-is-a-slot-wrapper-in-python#:~:text=A%20slot%20wrapper%20is%20installed,variant%20called%20method-wrapper") kurulur. Bu sayede C programlama dilinde yazılmış special methodları Python'da kullanabiliyoruz. Slot wrapper her zaman unbound'dur ve method wrapper, slot wrapper ile ilişkilidir (bound). Bunları, slot wrapper ve method wrapper kavramlarını gördüğünüzde yadırgamamanız için anlattım.
 
@@ -493,7 +493,7 @@ class A:
         pass
 ```
 
-![](https://i.ibb.co/749ZxJX/image.png)
+![](./pics/4.png)
 
 `A` class'ından türetilen instance'lardaki `__init__` constructor'ları, `A` class'ının init constructor'ı ile ilişkilidir (bound) ve `<bound method A.__init__ of <__main__.A object at 0x000001D3687A13D0>>` şeklinde depolanır. `<bound method A.__init__ of <__main__.A object at 0x000001D3687A13D0>>` bu "`0x000001D3687A13D0` konumundaki `__main__.A`'dan (yani `A` class'ının) türetilen instance'ındaki, `A.__init__`'e (yani `A` class'ının `__init__` methoduna) bağlı method" anlamına gelmektedir.
 

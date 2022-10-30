@@ -22,9 +22,9 @@ VSCode'da VSCode bir text editor'dür. Burada IDE ile text editor'ün farkını 
 - **IDE (Integrated Development Environment):** Program geliştirmek için gerekli her şeyi size sunan bir geliştirme ortamıdır. Bir programdır. VS (Microsoft Visual Studio) IDE'lere bir örnektir. IDE'ler text editor'lerine göre daha ağır çalışır ve daha çok kaynak kullanırlar. Daha fazla bilgi için [tıklayınız](https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/ "https://www.vargonen.com/blog/ide-nedir-en-iyi-6-ide-editoru/").
 - **Text editor:** Not defterinin gelişmiş versiyonudur diyebiliriz. Çeşitli extension'larla modifiye edilerek harika program geliştirme ortamlarına da dönüştürülebilir. IDE'lere göre daha hızlıdır ama bu hız kurduğunuz extension'lara göre değişebilir. Benim gibi 20 tane extension kullanıyorsanız, kullandığınız text editor, bir IDE kadar yavaş açılabilir. Kullandığım extension listesi:
 	
-	![](./g%C3%B6rseller/1.png)
+	![](./pics/1.png)
 	
-	![](./g%C3%B6rseller/2.png)
+	![](./pics/2.png)
 
 <h1 id="1">Python Sözlüğü (Python Glossary)</h1>
 
@@ -76,7 +76,7 @@ massage = "What's up, Doc?"
 n = 17
 pi = 3.14159
 ```
-![](./g%C3%B6rseller/3.png)
+![](./pics/3.png)
 
 Variable'ları kullanarak işlem yapabilirsiniz. Örneğin:
 ```py
@@ -142,11 +142,11 @@ CMD ve PowerShell'in ne olduğunu bilmiyorsanız araştırın.
 
 - Herhangi bir klasör içinde ya da desktop'ta PowerShell'i açmak için klavyedeki `shift` tuşuna basılı tutarken ekrana sağ tıklarsanız, karşınıza çıkan arayüzde PowerShell'i açabilirsiniz.
 
-	![](./g%C3%B6rseller/4.png)
+	![](./pics/4.png)
 
 - Herhangi bir klasör açıkken arama çubuğuna cmd yazarsanız, o konuma (path) ayarlı bir cmd penceresi açılır. O konumdaki bir Python dosyasını çalıştırmak için `python dosya_ismi.py` komutunu kullanabilirsiniz.
 
-	![](./g%C3%B6rseller/5.png)
+	![](./pics/5.png)
 
 - cmd'yi çalıştırdıktan sonra herhangi bir adrese gitmek istiyorsanız `cd adres` komutunu kullanabilirsiniz. Örnek: `cd desktop/Files`
 
