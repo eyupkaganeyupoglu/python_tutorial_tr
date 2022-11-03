@@ -893,3 +893,20 @@ print(a1,end="\n-------------\n")
 [99  2  3  4  5  6  7  8  9 10 11 12]
 -------------
 ```
+
+<h2 id="1.15">Working with mathematical formulas</h2>
+
+![](pics/4.png)
+
+```py
+import numpy as np
+
+# error = (1/3) * np.sum(np.square(prediction - labels))
+error = (1/3) * np.sum(np.square(np.array([1,1,1]) - [1,2,3]))
+```
+
+<h2 id="1.16">How to save and load NumPy objects</h2>
+
+https://numpy.org/doc/stable/user/absolute_beginners.html#how-to-save-and-load-numpy-objects
+
+burada kaldın
