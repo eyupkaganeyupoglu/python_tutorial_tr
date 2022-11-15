@@ -907,6 +907,32 @@ error = (1/3) * np.sum(np.square(np.array([1,1,1]) - [1,2,3]))
 
 <h2 id="1.16">How to save and load NumPy objects</h2>
 
-https://numpy.org/doc/stable/user/absolute_beginners.html#how-to-save-and-load-numpy-objects
+Tek bir ndarray objesini depolamak için `save` methodu kullanılır ve `.nps` uzantılı bir dosya elde edilir. Birden fazla ndarray objesini depolamak için `savez` methodu kullanılır ve `.npz` uzantılı bir dosya elde edilir. `load` methodu ile `.npy` ve `.npz` dosyalarını içeri aktarabilirsiniz. Örnek:
+```py
+import numpy as np
 
-burada kaldın
+a1 = np.array([1, 2, 3])
+a2 = np.array([4, 5, 6])
+a3 = np.array([7, 8, 9])
+np.save("file1", a1)
+np.savez("file2",a2,a3)
+b1 = np.load("file1.npy")
+b2 = np.load("file2.npz")
+print(b1) # Output: [1 2 3]
+print(b2) # Output: <numpy.lib.npyio.NpzFile object at 0x000002C67FE61DC0>
+```
+
+NumPy array'lerini `.csv` ya da `.txt` gibi düz text formatında kaydetmek için `savetxt` methodunu, bu dosyalardan array'i çekmek için `loadtxt` methodunu kullanabilirsiniz. Örnek:
+```py
+import numpy as np
+
+a = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+np.savetxt('new_file.csv', a)
+np.savetxt('new_file.txt', a)
+b1 = np.loadtxt('new_file.csv')
+b2 = np.loadtxt('new_file.txt')
+print(b1) # Output: [1. 2. 3. 4. 5. 6. 7. 8.]
+print(b2) # Output: [1. 2. 3. 4. 5. 6. 7. 8.]
+```
+
+**Not:** Metin dosyaları ile uğraşmak ve paylaşmak daha kolay olsa bile `.npy` ve `.npz` dosyaları daha küçük boyuttadır ve daha hızlı okunur.
