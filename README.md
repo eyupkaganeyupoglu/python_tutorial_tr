@@ -21,7 +21,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 
 Şimdi konuları hangi sırayla çalışman gerektiğini listeleyeceğim ama bu `README` dosyasının tamamını okumayı bitirmeden başlama sakın. Aksi halde oluşabilecek maddi ve manevi zarardan müessesemiz sorumlu değildir.
 - Temel bilgiler
-    - [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md)
+    - [Temel Kavramlar](./python_tutorial/temel_bilgiler/basic_concepts.md)
     - [Print-Input İşlemleri](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/print_and_input.md)
     - [Operatörler (Operators)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/operators.md)
     - [Deyimler, İfadeler ve Anahtar Kelimeler (Statements, Expressions and Keywords)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md)
@@ -74,7 +74,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
     - [Paketler (Packets)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/import_system/packets.md)
 - Modüller (Modules)
     - Numpy
-        - Yakında Eklenecek
+        - [NumPy Nedir?](./python_tutorial/Modules/Numpy/ndarray_object.md)
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>
