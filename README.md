@@ -23,7 +23,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 - Temel bilgiler
     - [Temel Kavramlar](./python_tutorial/temel_bilgiler/basic_concepts.md)
     - [Print-Input İşlemleri](./python_tutorial/temel_bilgiler/print_and_input.md)
-    - [Operatörler (Operators)](./main/python_tutorial/temel_bilgiler/operators.md)
+    - [Operatörler (Operators)](./python_tutorial/temel_bilgiler/operators.md)
     - [Deyimler, İfadeler ve Anahtar Kelimeler (Statements, Expressions and Keywords)](./python_tutorial/temel_bilgiler/statements_expressions_keywords.md)
     - [`if`-`elif`-`else` Deyimleri (Statements)](./python_tutorial/temel_bilgiler/if-elif-else.md)
     - [`while`-`for` Döngüleri (Loops)](./python_tutorial/temel_bilgiler/while-for_loops.md)
