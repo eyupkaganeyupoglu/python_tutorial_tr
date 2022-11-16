@@ -18,7 +18,7 @@ print(dir(A()))
 ```
 Gördüğünüz gibi kod block'una hiçbir şey tanımlamadığımız bir class bile içerisinde birçok fonksiyon ve attribute'e sahiptir. İşte nesne/obje tam olarak budur.
 
-**Not:** Python'da keyword'ler, statement'lar ve operator'lar hariç her şey bir objedir. Bunlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md").
+**Not:** Python'da keyword'ler, statement'lar ve operator'lar hariç her şey bir objedir. Bunlara ulaşmak için [tıklayınız](./python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md).
 
 <h2 id="1.1">First Class Objects</h2>
 

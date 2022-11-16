@@ -131,7 +131,7 @@ Gördüğünüz gibi `p1` parametresine argüman girilmemesi halinde Python `"fu
 
 <h3 id="1.1.3">Yıldızlı (Asterisk) Parametreler</h3>
 
-Python'da **Asterisk Operator**'ını kullanarak sınırsız sayıda argüman kabul eden parametreler tanımlayabilirsiniz. Bu operator ile ilgili bilgilere ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/operators.md#3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/operators.md#3").
+Python'da **Asterisk Operator**'ını kullanarak sınırsız sayıda argüman kabul eden parametreler tanımlayabilirsiniz. Bu operator ile ilgili bilgilere ulaşmak için [tıklayınız](./python_tutorial/blob/main/python_tutorial/temel_bilgiler/operators.md#3).
 
 **Not:** Bir fonksiyona max 256 tane argüman girebilirsin (bu şey parametre tanımlama sınırı da olabilir, bilmiyorum), ama bu durum **Python 3.7**'de kaldırıldı. Yani **Python 3.7**'den sonra böyle bir sınırlama yok.
 
@@ -483,7 +483,7 @@ print(five(plus(four()))) # Output: 9
 print(four(plus(four()))) # Output: 8
 print(five(plus(five()))) # Output: 10
 ```
-Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md")'da anlatıldı. Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
+Python'un bir kodu nasıl okuyup çalıştırdığını [Temel Kavramlar](./python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md)'da anlatıldı. Yukarıdaki `print(four(plus(five())))` şöyle çalışır:
 - `five()` çalışır ve `p1` parametresi, bu parametreye herhangi bir argüman girilmediği için `None` değerine sahip olur. `None` değeri boolean olarak `false`'a karşılık geldiği için `5` döndürülür.
 - `plus()` çalışır ve `y` parametresine argüman olarak `5` değerine sahip olur ve `lambda x : x + 5` lambda fonksiyonu döndürülür.
 - `four()` çalışır ve `p1` parametresi `lambda x : x + 5` lambda fonksiyonunu argüman olarak alır. Bu lambda fonksiyonunun boolean karşılığı `true`'ya karşılık geldiği için `p1(4)` yani `(lambda x : x + 5)(4)` fonksiyonunun döndürdüğü `9` değeri döndürülür.

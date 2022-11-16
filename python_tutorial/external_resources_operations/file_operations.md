@@ -97,7 +97,7 @@ Open fonksiyonu `open(file, mode='r', buffering=-1, encoding=None, errors=None, 
     ```
     Bu kod `TP1.py` adlı Python dosyasında çalıştırıldı ve `deneme.txt` dosyası `TP1.py` dosyasıyla aynı klasörün içinde olduğu için yukarıdaki gibi bir kod yazdık. Farklı klasörlerde olsaydı ona göre  kodda değişiklikler yapılması gerekirdi.
 
-- `mode`: Bu parametreye argüman olarak string formatında dosya açma kipi girilir. `mode` parametresine argüman olarak girilen dosya açma kiplerinin (mode) ne anlamlar ifade ettiklerini öğrenmek için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/external_resources_operations/file_operations.md#1.2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/external_resources_operations/file_operations.md#1.2"). `mode` parametresinin default değeri `"r"`'dir.
+- `mode`: Bu parametreye argüman olarak string formatında dosya açma kipi girilir. `mode` parametresine argüman olarak girilen dosya açma kiplerinin (mode) ne anlamlar ifade ettiklerini öğrenmek için [tıklayınız](./python_tutorial/blob/main/python_tutorial/external_resources_operations/file_operations.md#1.2). `mode` parametresinin default değeri `"r"`'dir.
 
 - `buffering`: Bir dosyayı açıp veri girdiğimizde bu veriler tamponda (buffer) bekletilir. Buffer'da bekletilen veriler ancak dosya kapatıldığında dosyaya işlenir. `buffering` parametresine girilen integer argüman ile buffer'a alma işleminin nasıl yürüyeceğini belirleyebiliriz.
     - `buffering = 0`: Veriler buffer'a alınmadan doğrudan dosyaya işlenir ama bu sadece `'b'` (binary) mode ile açılan dosyalarda mümkündür.
@@ -112,7 +112,7 @@ Open fonksiyonu `open(file, mode='r', buffering=-1, encoding=None, errors=None, 
 
 - `encoding`: Dosyayı hangi kod çözücüyle açacağını belirlediğiniz parametredir.
 
-- `errors`: `encoding` parametresinde belirtilen kod çözücünün başarısız olması durumunda Python'ın nasıl davranacağını belirlediğimiz parametredir. Bu parametrenin alabileceği argümanlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3").
+- `errors`: `encoding` parametresinde belirtilen kod çözücünün başarısız olması durumunda Python'ın nasıl davranacağını belirlediğimiz parametredir. Bu parametrenin alabileceği argümanlara ulaşmak için [tıklayınız](./python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3).
 
 - `newline`: Farklı işletim sistemlerinde dosyaların satır sonlarının ifade edilme şekli birbirinden farklılık gösterebilir. Örneğin GNU/Linux'ta `\n` şeklindeyken, Windows'da `\r\n` şeklinde olabilir. `newline` parametresine girilen argüman ile dosyadaki her satırın sonundaki kaçış dizisi üzerinde işlem yapabilirsiniz. Default değeri `None`'dır.
     - `newline` parametresine argüman girilmezse, son satır hariç her satırın sonunda `\n` kaçış dizisi olur.

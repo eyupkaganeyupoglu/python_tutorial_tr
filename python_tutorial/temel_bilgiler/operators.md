@@ -671,7 +671,7 @@ else:
 
 **Dikkat:** Bu kısımda bahsedeceğim şeylerin multiplication ve exponentiation operator'leri ile alakası yoktur. Prefix pozisyonunda kullanılan `*` ve `**` operator'lerinden bahsediyoruz.
 
-**Dikkat:** Burada bahsedeceğim şeyler fonksiyonlar konusu hakkında kavram ve kodlar içermektedir. Bu kısmı anlamazsanız [Fonksiyonlar (functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md") kısmını bitirdikten sonra bu başlığı tekrar çalışın.
+**Dikkat:** Burada bahsedeceğim şeyler fonksiyonlar konusu hakkında kavram ve kodlar içermektedir. Bu kısmı anlamazsanız [Fonksiyonlar (functions)](./python_tutorial/blob/main/python_tutorial/functions/functions.md) kısmını bitirdikten sonra bu başlığı tekrar çalışın.
 
 Asterisk operator'ı hakkında daha fazla özellik, kullanım alanı ve bilgi için [tıklayınız](https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/ "https://treyhunner.com/2018/10/asterisks-in-python-what-they-are-and-how-to-use-them/").
 

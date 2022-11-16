@@ -32,7 +32,7 @@
 
 Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu). Class'lar bizi belli obje ve fonksiyon gruplarını her seferinde en baştan yazma zahmetinden kurtarır. Çünkü bir class'dan, bu class'ın bütün içeriğine sahip istediğimiz sayıda **instance** adı verilen objeler üretilebilir. Instance Türkçede 'örnek', 'oluşum' anlamlarına gelmektedir.
 
-**Not:** "Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu)." dedim diye class'lar obje değildir diye düşünmeyin. Python'da keyword'ler, statement'lar ve operator'lar hariç her şey (class'lar dahil) bir objedir. Bunlara ulaşmak için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md").
+**Not:** "Class'lar, obje yaratmak için kullanılan bir code template'dir (kod şablonu)." dedim diye class'lar obje değildir diye düşünmeyin. Python'da keyword'ler, statement'lar ve operator'lar hariç her şey (class'lar dahil) bir objedir. Bunlara ulaşmak için [tıklayınız](./python_tutorial/blob/main/python_tutorial/temel_bilgiler/statements_expressions_keywords.md).
 
 <h2 id="1.1">Class Definition</h2>
 
@@ -528,7 +528,7 @@ var = A()
 print(var.func().attri2) # AttributeError: 'NoneType' object has no attribute 'attri2'
 ```
 
-Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md#2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md#2") kodları çalıştırır. Aritmetik işlem mantığına göre Python `var.func().attri2` kodunu şöyle yorumlar:
+Python dahil çoğu programlama dili [aritmetik işlem mantığıyla](./python_tutorial/blob/main/python_tutorial/temel_bilgiler/basic_concepts.md#2) kodları çalıştırır. Aritmetik işlem mantığına göre Python `var.func().attri2` kodunu şöyle yorumlar:
 1. Python önce `var` instance'ı üzerinden `func` methodunu çağırır.
 2. `func` method'unda herhangi bir `return` statement olmadığı için çalıştıktan sonra bellekten silinir.
 3. Python'da varolmayan bir şey `None` değeriyle ifade edilir. `None` değeri `NoneType` (`<class 'NoneType'>`) bir objedir.
@@ -552,7 +552,7 @@ Python `var.func().attri2` kodunu şöyle yorumlar:
 3. `var.func().attri2` işlemlerden sonra `var.func().attri2` kodu Python'ın gözünde `"func attribute".attri2` koduna dönüşür.
 4. `"func attribute"` bir string (`str`) objesidir. Bu string objesinin `attri2` adında bir methodu olmadığı için `AttributeError: 'str' object has no attribute 'attri2'` hatası yükseltilir.
 
-[Fonksiyonlar (Functions)](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md") konusunu anlayan, yukarıda anlattığım durumların nedenini zaten anlamıştır.
+[Fonksiyonlar (Functions)](./python_tutorial/blob/main/python_tutorial/functions/functions.md) konusunu anlayan, yukarıda anlattığım durumların nedenini zaten anlamıştır.
 
 Instance'lardaki `__init__` constructor objeleri instance'a özel değildir, main class'ın `__init__` constructor objesi ile ilişkilidir (bound). Örnek:
 ```py
@@ -666,7 +666,7 @@ print(callable(A.class_method_exp)) # Output: True
 ```
 Yukarıda da gördüğünüz gibi `<bound method A.class_method_exp of <class '__main__.A'>>` objesi çağırılabilirdirken (callable) `<classmethod object at 0x0000021910BB3430>` objesi çağırılabilir (callable) değildir. Bu yüzden python `A` class'ının, `A` class'ının `class_method_exp` objesine bağlı methodu (`<bound method A.class_method_exp of <class '__main__.A'>>`) kullanır.
 
-**Not:** Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların class method'larını da etkiler (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1") kısmında anlattım. İlgili kısım:
+**Not:** Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların class method'larını da etkiler (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](./python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1) kısmında anlattım. İlgili kısım:
 
 > ... `__init__` constructor'ı ve instance method kapsamında tanımlanan şeyler dışındaki her şey main class'dan erişilebilir ve değiştirilebilir. Bu değişiklik ilgili main class'dan türetilen instance'ları da etkiler (çünkü instance'lardaki bu objeler main class'dakilere atıfta bulunur). ...
 
@@ -888,7 +888,7 @@ print(callable(A.static_method_exp)) # Output: True
 ```
 Yukarıda da gördüğünüz gibi `<function A.static_method_exp at 0x0000019A1FBE9940>` objesi çağırılabilirdirken (callable) `<staticmethod object at 0x0000019A1FBF12E0>` objesi çağırılabilir (callable) değildir. Bu yüzden python `A` class'ının, `A` class'ının `static_method_exp` objesine bağlı methodu (`<function A.static_method_exp at 0x0000019A1FBE9940>`) kullanır.
 
-**Not:** Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların static method'larını da etkiler (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1") kısmında anlattım. İlgili kısım:
+**Not:** Main class'ın class method'larında yapılan değişiklikler, bu main class'dan türetilen instance'ların static method'larını da etkiler (aynı instance method'lardaki gibi). Bunun nedenini [Instance Methods](./python_tutorial/blob/main/python_tutorial/OOP/beginning_of_classes.md#3.1) kısmında anlattım. İlgili kısım:
 
 > ... `__init__` constructor'ı ve instance method kapsamında tanımlanan şeyler dışındaki her şey main class'dan erişilebilir ve değiştirilebilir. Bu değişiklik ilgili main class'dan türetilen instance'ları da etkiler (çünkü instance'lardaki bu objeler main class'dakilere atıfta bulunur). ...
 

@@ -47,7 +47,7 @@ Merhaba
 
 <h2 id="2.1"><code>*values</code> Parametresi</h2>
 
-`*values` parametresi bir yıldızlı parametredir. Yıldızlı parametrelerin tam olarak ne olduğunu daha sonra [burada](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md#1.1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/functions.md#1.1.3") açıklanacak. `print()` fonksiyonu, `*values` parametresine girilen normal ya da yıldızlı argümanları yazdırır. Örnek:
+`*values` parametresi bir yıldızlı parametredir. Yıldızlı parametrelerin tam olarak ne olduğunu daha sonra [burada](./python_tutorial/blob/main/python_tutorial/functions/functions.md#1.1.3) açıklanacak. `print()` fonksiyonu, `*values` parametresine girilen normal ya da yıldızlı argümanları yazdırır. Örnek:
 ```py
 print("T" , "B" , "M" , "M") # Output: T B M M
 print(*"TBMM") # Output: T B M M

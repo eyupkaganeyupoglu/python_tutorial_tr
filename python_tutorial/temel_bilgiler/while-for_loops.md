@@ -165,7 +165,7 @@ print(i) # Output: 4
 
 Şimdi iterator ve iterable kavramlarını açıklayalım:
 
-**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/functions/iterators.md").
+**Ön bilgi:** Bu bölümü anlayabilmek için iterator ve iterable kavramlarını bilmeniz gerekmektedir. Gerekli bilgiler için [tıklayınız](./python_tutorial/blob/main/python_tutorial/functions/iterators.md).
 
 Python'daki `for` loop mantığı `C` gibi low level programlama dillerindeki **for-each** loop mantığına dayanır. For-each loop ile ilgili bilgi için [**buraya**](https://en.wikipedia.org/wiki/Foreach_loop "https://en.wikipedia.org/wiki/Foreach_loop"), for loop'un çalışma mantığıyla ilgili ayrıntılı bilgi için de [**buraya**](https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c "https://towardsdatascience.com/python-basics-iteration-and-looping-6ca63b30835c") tıklayınız.
 

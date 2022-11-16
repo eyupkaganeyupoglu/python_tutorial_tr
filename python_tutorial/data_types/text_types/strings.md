@@ -924,7 +924,7 @@ print(repr(metin.strip(".. "))) # Output: 'salamlar ..\n.. salamlar ..\n.. salam
 print(repr(metin.strip(" .."))) # Output: 'salamlar ..\n.. salamlar ..\n.. salamlar'
 print(repr(metin.strip(".."))) # Output: ' salamlar ..\n.. salamlar ..\n.. salamlar '
 ```
-`repr` fonksiyonu hakkında bilgi için [tıklayınız](https://github.com/hirelaxstudio/python_tutorial_tr/blob/main/python_tutorial/data_types/text_types/character_encoding.md#4.1).
+`repr` fonksiyonu hakkında bilgi için [tıklayınız](./python_tutorial_tr/blob/main/python_tutorial/data_types/text_types/character_encoding.md#4.1).
 
 <h2 id="3.15"><code>lstrip(chars)</code> Methodu</h2>
 
@@ -1170,7 +1170,7 @@ print("İstanbul".rpartition("fil")) # Output: ('', '', 'İstanbul')
 
 <h2 id="3.29"><code>encode(encoding='UTF-8',errors='strict')</code> Methodu</h2>
 
-Uygulandığı string'i istenilen kodlama sistemine göre kodlamamıza imkan tanır. `encoding` parametresine argüman olarak bir kodlama sistemini girilebilir ve default değeri `"UTF-8"`'dir. `encoding` parametresine girilen kod çözücü bu string'i çözemediği durumda Python'un nasıl davranması gerektiği`errors` parametresine girilen argümanla belirlenir ve default değeri `"strict"`'dir. `errors` parametresine girebileceğiniz argümanlara [buradan](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3") ulaşabilirsiniz. `encode` methodu `bytes` formatında output verir. Örnek:
+Uygulandığı string'i istenilen kodlama sistemine göre kodlamamıza imkan tanır. `encoding` parametresine argüman olarak bir kodlama sistemini girilebilir ve default değeri `"UTF-8"`'dir. `encoding` parametresine girilen kod çözücü bu string'i çözemediği durumda Python'un nasıl davranması gerektiği`errors` parametresine girilen argümanla belirlenir ve default değeri `"strict"`'dir. `errors` parametresine girebileceğiniz argümanlara [buradan](./python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#1.3) ulaşabilirsiniz. `encode` methodu `bytes` formatında output verir. Örnek:
 ```py
 print("çilek".encode("ascii", "replace")) # Output: b'?ilek'
 print("çilek".encode("utf-8")) # Output: b'\xc3\xa7ilek'
@@ -1332,7 +1332,7 @@ print("sss".isprintable()) # Output: True
 
 <h2 id="3.41"><code>format(*args, **kwargs)</code> Methodu</h2>
 
-Ne olduğunu [burada](https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#2.2 "https://github.com/e-k-eyupoglu/python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#2.2") anlattım.
+Ne olduğunu [burada](./python_tutorial/blob/main/python_tutorial/data_types/text_types/strings.md#2.2) anlattım.
 
 <h2 id="3.42"><code>format_map(map)</code> Methodu</h2>
 
