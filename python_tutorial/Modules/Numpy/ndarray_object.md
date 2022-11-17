@@ -124,6 +124,7 @@ print("4:",a,end="\n\n",sep="\n")
 [Array attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#arrays-ndarray) ve [array object](https://numpy.org/doc/stable/reference/arrays.html#arrays) hakkında daha fazla bilgi tıklayınız.
 
 <h2 id="1.3">NumPy'ın Desteklediği Veri Türleri</h2>
+
 |     Type     | Description                                                                                                         |
 | :----------: | :------------------------------------------------------------------------------------------------------------------ |
 |   `bool_`    | Byte olarak depolanan boolean (`True` ya da `False`)                                                                |
