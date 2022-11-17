@@ -75,6 +75,7 @@ Ben, konu başlıklarını hangi sıraya göre çalışman gerektiğini aşağı
 - Modüller (Modules)
     - Numpy
         - [NumPy Nedir?](./python_tutorial/Modules/Numpy/what_is_numpy.md)
+        - [NumPy Array'leri](./python_tutorial/Modules/Numpy/ndarray_object.md)
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=3.9.2&style=flat-square&labelColor=green&color=green"/></p>

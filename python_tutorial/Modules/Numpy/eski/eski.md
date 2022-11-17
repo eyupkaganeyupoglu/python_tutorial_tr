@@ -1,15 +1,3 @@
-<h2 id="1.4">Array Oluşturmak</h2>
-
-<h3 id="1.4.1"><code>array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)</code></h3>
-
-`object` parametresine argüman olarak girilen sequence'ı `ndarray`'e dönüştürür. Argüman olarak array, any object exposing the array interface, an object whose `__array__` method returns an array ve nested sequence verilebilir. Argüman olarak scalar bir object verilirse 0 dimension'lı bir array döndürür (kısaca tek integer). Örnek:
-```py
-import numpy as np
-a = np.array(1)
-print(a) # Output: 1
-```
-`dtype` parametresine argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
-
 <h3 id="1.4.2"><code>zeros(shape, dtype=float, order='C', *, like=None)</code></h3>
 
 `shape` parametresine verilen integer ya da pozitif integer'lardan oluşan bir tuple argümanda bahsedilen şekilde, sıfırlarla dolu bir array döndürür. Örnek:
