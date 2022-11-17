@@ -124,27 +124,27 @@ print("4:",a,end="\n\n",sep="\n")
 [Array attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#arrays-ndarray) ve [array object](https://numpy.org/doc/stable/reference/arrays.html#arrays) hakkında daha fazla bilgi tıklayınız.
 
 <h2 id="1.3">NumPy'ın Desteklediği Veri Türleri</h2>
-|Type|Description|
-|:-:|:-|
-|`bool_`|Byte olarak depolanan boolean (`True` ya da `False`)|
-|`int_`|Default integer type (C'deki `long` ile neredeyse aynı (same as), normalde ya `int32` ya da `int64`)|
-|`intc`|C'deki `int` ile birebir aynı (identical)(normalde ya `int32` ya da `int64`)|
-|`intp`|Indexing için kullanılan integer (C'deki `ssize_t` ile neredeyse aynı (same as), normalde ya `int32` ya da `int64`)|
-|`int8`|Byte (-128 to 127)|
-|`int16`|Integer (-32768 to 32767)|
-|`int32`|Integer (-2147483648 to 2147483647)|
-|`int64`|Integer (-9223372036854775808 to 9223372036854775807)|
-|`uint8`|Unsigned integer (0 to 255)|
-|`uint16`|Unsigned integer (0 to 65535)|
-|`uint32`|Unsigned integer (0 to 4294967295)|
-|`uint64`|Unsigned integer (0 to 18446744073709551615)|
-|`float_`|`float64` için kısaltma (shorthand)|
-|`float16`|Half precision float: sign bit, 5 bits exponent, 10 bits mantissa|
-|`float32`|Single precision float: sign bit, 8 bits exponent, 23 bits mantissa|
-|`float64`|Double precision float: sign bit, 11 bits exponent, 52 bits mantissa|
-|`complex_`|`complex128` için kısaltma (shorthand)|
-|`complex64`|İki 32-bit ile temsil edilen complex sayı (real and imaginary components)|
-|`complex128`|İki 64-bit ile temsil edilen complex sayı (real and imaginary components)|
+|     Type     | Description                                                                                                         |
+| :----------: | :------------------------------------------------------------------------------------------------------------------ |
+|   `bool_`    | Byte olarak depolanan boolean (`True` ya da `False`)                                                                |
+|    `int_`    | Default integer type (C'deki `long` ile neredeyse aynı (same as), normalde ya `int32` ya da `int64`)                |
+|    `intc`    | C'deki `int` ile birebir aynı (identical)(normalde ya `int32` ya da `int64`)                                        |
+|    `intp`    | Indexing için kullanılan integer (C'deki `ssize_t` ile neredeyse aynı (same as), normalde ya `int32` ya da `int64`) |
+|    `int8`    | Byte (-128 to 127)                                                                                                  |
+|   `int16`    | Integer (-32768 to 32767)                                                                                           |
+|   `int32`    | Integer (-2147483648 to 2147483647)                                                                                 |
+|   `int64`    | Integer (-9223372036854775808 to 9223372036854775807)                                                               |
+|   `uint8`    | Unsigned integer (0 to 255)                                                                                         |
+|   `uint16`   | Unsigned integer (0 to 65535)                                                                                       |
+|   `uint32`   | Unsigned integer (0 to 4294967295)                                                                                  |
+|   `uint64`   | Unsigned integer (0 to 18446744073709551615)                                                                        |
+|   `float_`   | `float64` için kısaltma (shorthand)                                                                                 |
+|  `float16`   | Half precision float: sign bit, 5 bits exponent, 10 bits mantissa                                                   |
+|  `float32`   | Single precision float: sign bit, 8 bits exponent, 23 bits mantissa                                                 |
+|  `float64`   | Double precision float: sign bit, 11 bits exponent, 52 bits mantissa                                                |
+|  `complex_`  | `complex128` için kısaltma (shorthand)                                                                              |
+| `complex64`  | İki 32-bit ile temsil edilen complex sayı (real and imaginary components)                                           |
+| `complex128` | İki 64-bit ile temsil edilen complex sayı (real and imaginary components)                                           |
 
 <h2 id="1.?">Array Oluşturmak</h2>
 
