@@ -165,7 +165,171 @@ Bir `dtype` objesi oluşturmak için `dtype(object, align, copy)` methodu kullan
 
 `dtype` ile ilgili daha fazla bilgi ve kullanımıyla ilgili örnekler için [tıklayınız](https://numpy.org/doc/stable/reference/generated/numpy.dtype.html?highlight=numpy%20dtype#numpy.dtype).
 
-<h2 id="1.?">?</h2>
+<h2 id="1.3">Array Attribute'ları</h2>
+
+<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
+
+`a` parametresine argüman olarak girilen array'in dimension ve her dimension'ındaki item sayısı bilgisini içeren bir tuple döndürür. Örnek:
+```py
+import numpy as np
+
+a = np.ones((4))
+b = np.ones((4, 3))
+c = np.ones((4, 3, 2))
+
+print(a, np.shape(a), end="\n\n")
+print(b, np.shape(b), end="\n\n")
+print(c, np.shape(c))
+```
+**Output:**
+```
+[1. 1. 1. 1.] (4,)
+
+[[1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]] (4, 3)
+
+[[[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]] (4, 3, 2)
+```
+`shape` attribute'u ilgili array'i yeniden şekillendirmek (reshape) için de kullanılabilir. Örnek:
+```py
+import numpy as np
+
+a = np.ones((4, 3, 2))
+
+print(a, np.shape(a), end="\n\n")
+a.shape = (4, 6)
+print(a, np.shape(a), a.shape)
+```
+**Output:**
+```
+[[[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]] (4, 3, 2)
+
+[[1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1.]] (4, 6) (4, 6)
+```
+Gördüğünüz gibi `np.shape(a)` ile `a.shape` arasında bir fark yoktur. İkisi de aynı bilgiyi verir.
+
+**Not:** Bu işlemin yapılabilmesi için ilgili array'in eski ve yeni shape'i aynı sayıda item'a sahip olmalıdır aksi halde `ValueError: cannot reshape array of size 24 into shape (4,5)` örneğindeki gibi bir hata döndürür.
+
+<h3 id="1.3.2"><code>reshape(a, newshape, order='C')</code> Attribute'u</h3>
+
+`a` parametresine argüman olarak girilen array'i `newshape` parametresine girilen tuple'da belirtilene göre yeniden boyutlandırdığı bir array öbjesi döndürür (yani `a` parametresine argüman olarak girilen array'i etkilemez). Örnek:
+```py
+import numpy as np
+
+a = np.ones((4, 3, 2))
+
+print(a, np.shape(a), end="\n\n")
+b = a.reshape((4, 6))
+print(a, np.shape(a), end="\n\n")
+print(b, np.shape(b))
+```
+**Output:**
+```
+[[[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]] (4, 3, 2)
+
+[[[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]]] (4, 3, 2)
+
+[[1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1.]
+ [1. 1. 1. 1. 1. 1.]] (4, 6)
+```
+
+<h3 id="1.3.3"><code>ndim(a)</code> Attribute'u</h3>
+
+`a` parametresine argüman olarak girilen array'in dimension sayısını döndürür. Örnek:
+```py
+import numpy as np
+
+a = np.ones((4, 3, 2))
+
+print(np.ndim(a)) # Output: 3
+a.shape = (4, 6)
+print(np.ndim(a),a.ndim) # Output: 2 2
+```
+gördüğünüz gibi np.ndim(a) ile a.ndim arasında bir fark yoktur. İkisi de aynı bilgiyi verir.
+
+<h3 id="1.3.4"><code>itemsize</code> Attribute'u</h3>
+
+Bir array'in her item'ının bellekte kapladığı alanı byte cinsinden döndürür. Örnek:
+```py
+import numpy as np
+
+a1 = np.ones((5,), dtype=np.int8)
+a2 = np.ones((5,), dtype=np.int32)
+a3 = np.ones((5,), dtype=np.float16)
+
+print(a1.itemsize) # Output: 1
+print(a2.itemsize) # Output: 4
+print(a3.itemsize) # Output: 2
+```
+
+<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
+
+<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
+
+<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
 
 <h2 id="1.?">Array Oluşturmak</h2>
 

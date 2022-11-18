@@ -174,50 +174,6 @@ print(np.size(a)) # Output: 8
 print(np.size(b)) # Output: 4
 ```
 
-<h3 id="1.6.3"><code>shape(a)</code></h3>
-
-Argüman olarak girilen array'in her boyutundaki element sayısını bilgisini (shape) bir tuple içinde döndürür. Örnek:
-```py
-import numpy as np
-a = np.array([0,0,0,0])
-b = np.array([[0,0,0,0],[0,0,0,0]])
-c = np.array([[[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0]]])
-print(np.shape(a)) # Output: (4,)
-print(np.shape(b)) # Output: (2, 4)
-print(np.shape(c)) # Output: (2, 2, 4)
-```
-
-<h2 id="1.7">Reshape Array</h2>
-
-<h3 id="1.7.1"><code>reshape(a, newshape, order='C')</code></h3>
-
-Argüman olarak girilen array üzerinde `newshape` parametresinde belirttiğiniz shape'e göre reshape işlemi yapar. Reshape işleminin gerçekleşebilmesi için ilgili array ve reshape'e göre oluşturulacak yeni array'ın size'i (yani toplam element sayısı) aynı olmalı. Örnek:
-```py
-import numpy as np
-a = np.array([[[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0]]])
-print("1.\n",np.reshape(a,(2,8)))
-print("2.\n",np.reshape(a,(2,2,2,2)))
-```
-**Output:**
-```
-1.
- [[0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0]]
-2.
- [[[[0 0]
-   [0 0]]
-
-  [[0 0]
-   [0 0]]]
-
-
- [[[0 0]
-   [0 0]]
-
-  [[0 0]
-   [0 0]]]]
-```
-
 <h2 id="1.8">Array'e Yeni Boyut Eklemek</h2>
 
 <h3 id="1.8.1"><code>newaxis</code></h3>
