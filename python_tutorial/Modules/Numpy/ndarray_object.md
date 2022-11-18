@@ -123,7 +123,18 @@ print("4:",a,end="\n\n",sep="\n")
 
 [Array attributes](https://numpy.org/doc/stable/reference/arrays.ndarray.html#arrays-ndarray) ve [array object](https://numpy.org/doc/stable/reference/arrays.html#arrays) hakkında daha fazla bilgi tıklayınız.
 
-<h2 id="1.3">NumPy'ın Desteklediği Veri Türleri</h2>
+<h2 id="1.2">NumPy'ın Desteklediği Veri Türleri (<code>dtype</code>)</h2>
+
+Bir `dtype`,
+- Data'nın type'ına (integer, float ya da Python object),
+- Data'nın size'ına,
+- Byte order (little-endian or big-endian),
+- Structured type olması durumunda, field'lerin adları (name), her field'ın data type'ı ve her filed tarafından alınan memory block parçasına ()part of memory block),
+- Data dype bir subarray ise, shape ve data type'ına
+
+bağlı olarak bir array'e karşılık gelen sabit bellek bloğunun (fixed block of memory) yorumlanmasını (interpretation) açıklar.
+
+**Not:** Byte order'a data type'a prefix olarak `<` ya da `>` eklenerek karar verilir. `<` encoding'in little-endian olduğu anlamına gelir (en önemsizi (least significant) en küçük adreste saklanır). `>` encoding'in big-endian olduğu anlamına gelir (en önemli (most significant) byte en küçük adreste saklanır).
 
 |     Type     | Description                                                                                                         |
 | :----------: | :------------------------------------------------------------------------------------------------------------------ |
@@ -147,9 +158,14 @@ print("4:",a,end="\n\n",sep="\n")
 | `complex64`  | İki 32-bit ile temsil edilen complex sayı (real and imaginary components)                                           |
 | `complex128` | İki 64-bit ile temsil edilen complex sayı (real and imaginary components)                                           |
 
-<h2 id="1.?">Array Oluşturmak</h2>
+Bir `dtype` objesi oluşturmak için `dtype(object, align, copy)` methodu kullanılır.
+- **`object`**: Argüman olarak bir data type objesine dönüştürülecek objeyi kabul eder.
+- **`align:bool` (optional)**: Bilgi için [tıklayın](https://numpy.org/doc/stable/reference/generated/numpy.dtype.html?highlight=numpy%20dtype#numpy.dtype).
+- **`copy:bool` (optional)**: Bilgi için [tıklayın](https://numpy.org/doc/stable/reference/generated/numpy.dtype.html?highlight=numpy%20dtype#numpy.dtype).
 
-<h2 id="1.?">Array Oluşturmak</h2>
+`dtype` ile ilgili daha fazla bilgi ve kullanımıyla ilgili örnekler için [tıklayınız](https://numpy.org/doc/stable/reference/generated/numpy.dtype.html?highlight=numpy%20dtype#numpy.dtype).
+
+<h2 id="1.?">?</h2>
 
 <h2 id="1.?">Array Oluşturmak</h2>
 
