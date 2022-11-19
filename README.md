@@ -7,7 +7,7 @@
 
 <p align=center> <b>Direkt aşağı kaydırmadan önce buraları oku!</b> </p>
 
-Bu tutorial'da Python ile ilgili neredeyse her konuya değinmeye, her konunun neredeyse bütün potansiyel alt başlıklarını anlatmaya çalıştım. Örneğin başka bir tutorial, herhangi bir data type'ın max 8-9 tane methoduna değinirken, ben üşenmeyip bütün methodlarını teker teker anlattım. Yani bu tutorial'da kafanda herhangi bir soru işareti kalmamasına özellikle önem verdim. Çünkü ben Python öğrenirken kafamdaki soru işaretlerini gidermeye saatlerimi hatta günlerimi harcadığım gibi bu soru işaretleri yüzünden senin de zamanının gereksiz gitmesini istemiyorum. Ama bu "Araştırma, sadece benim tutorial'ım sana yeter." demek değildir.
+Bu tutorial'da Python ile ilgili neredeyse her konuya değinmeye, her konunun neredeyse bütün potansiyel alt başlıklarını anlatmaya çalıştım. Örneğin başka bir tutorial, herhangi bir data type'ın max 8-9 tane methoduna değinirken, ben üşenmeyip bütün methodlarını teker teker anlattım. Yani bu tutorial'da kafanda herhangi bir soru işareti kalmamasına özellikle önem verdim. Çünkü ben Python öğrenirken kafamdaki soru işaretlerini gidermeye saatlerimi hatta günlerimi harcadığım gibi bu soru işaretleri yüzünden senin de zamanının gereksiz gitmesini istemiyorum. Ama bu "Araştırma, sadece benim tutorial'ım sana yeter." demek değildir. Eğer bu tutorial'ı beğenirsen, yıldızlayıp paylaşarak bana destek vermeyi unutma.
 
 <h2 align='center'> Bu Tutorial nereden çıktı? </h2>
 
