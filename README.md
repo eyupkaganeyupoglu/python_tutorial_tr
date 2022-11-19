@@ -96,6 +96,7 @@ Bu tutorial'ı hazırlarken bir sürü kaynaktan yararlandım ama sadece en çok
 - [Medium](https://medium.com/ "https://medium.com/")
 - [Think Python](https://greenteapress.com/thinkpython/html/index.html "https://greenteapress.com/thinkpython/html/index.html")
 <br>
+<p align=center> <b>Bu Tutorial'ı Paylaş</b> </p>
 <table align='center'>
 	<tr>
 		<td>
