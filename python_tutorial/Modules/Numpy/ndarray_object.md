@@ -4,7 +4,7 @@
 
 <h1 id="1"><code>ndarray</code> Object</h1>
 
-NumPy'da tanımlanan en önemli obje, `ndarray` adı verilen N boyutlu bir array türüdür. `ndarray`, aynı type itemlerin toplandığı bir koleksiyonudur (grid of value, collection). Bu itemlara erişmek için zero-based index'leme kullanılır (yani ilk item'in index'i `0` olarak ifade edilir). Bir `ndarray`'deki her bir item bellekte aynı boyutta yer kaplar ve `data-type` objesinin bir objesidir (`data-type` = `dtype`).
+NumPy'da tanımlanan en önemli obje, `ndarray` adı verilen N boyutlu bir array türüdür. `ndarray`, aynı type data'ların (bunlara element veya item denir ama ben element olarak bahsedeceğim) toplandığı bir koleksiyonudur (grid of value, collection). Bu elementlere erişmek için zero-based index'leme kullanılır (yani ilk elementin index'i `0` olarak ifade edilir). Bir `ndarray`'deki her bir element bellekte aynı boyutta yer kaplar ve `data-type` objesinin bir objesidir (`data-type` = `dtype`).
 
 Bir ndarray'i slicing yoluyla (daha sonra anlatılacak) parçalarsan bir array scalar elde edersin.
 
@@ -169,7 +169,7 @@ Bir `dtype` objesi oluşturmak için `dtype(object, align, copy)` methodu kullan
 
 <h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
 
-`a` parametresine argüman olarak girilen array'in dimension ve her dimension'ındaki item sayısı bilgisini içeren bir tuple döndürür. Örnek:
+`a` parametresine argüman olarak girilen array'in dimension ve her dimension'ındaki element sayısı bilgisini içeren bir tuple döndürür. Örnek:
 ```py
 import numpy as np
 
@@ -241,7 +241,7 @@ print(a, np.shape(a), a.shape)
 ```
 Gördüğünüz gibi `np.shape(a)` ile `a.shape` arasında bir fark yoktur. İkisi de aynı bilgiyi verir.
 
-**Not:** Bu işlemin yapılabilmesi için ilgili array'in eski ve yeni shape'i aynı sayıda item'a sahip olmalıdır aksi halde `ValueError: cannot reshape array of size 24 into shape (4,5)` örneğindeki gibi bir hata döndürür.
+**Not:** Bu işlemin yapılabilmesi için ilgili array'in eski ve yeni shape'i aynı sayıda elemente sahip olmalıdır aksi halde `ValueError: cannot reshape array of size 24 into shape (4,5)` örneğindeki gibi bir hata döndürür.
 
 <h3 id="1.3.2"><code>reshape(a, newshape, order='C')</code> Attribute'u</h3>
 
@@ -312,7 +312,7 @@ gördüğünüz gibi np.ndim(a) ile a.ndim arasında bir fark yoktur. İkisi de 
 
 <h3 id="1.3.4"><code>itemsize</code> Attribute'u</h3>
 
-Bir array'in her item'ının bellekte kapladığı alanı byte cinsinden döndürür. Örnek:
+Bir array'in her elementinin bellekte kapladığı alanı byte cinsinden döndürür. Örnek:
 ```py
 import numpy as np
 
@@ -325,15 +325,35 @@ print(a2.itemsize) # Output: 4
 print(a3.itemsize) # Output: 2
 ```
 
-<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
+<h3 id="1.3.1"><code>flags</code> Attribute'u</h3>
 
-<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
+Bir array'in bellekte nasıl saklandığını gösteren bir özellik öbjesi (`<class 'numpy.core.multiarray.flagsobj'>`) döndürür. Örnek:
+```py
+import numpy as np
 
-<h3 id="1.3.1"><code>shape(a)</code> Attribute'u</h3>
+a = np.array([1,2,3,4,5,6,7,8,9,10])
+print(a.flags)
+```
+**Output:**
+```
+  C_CONTIGUOUS : True
+  F_CONTIGUOUS : True
+  OWNDATA : True
+  WRITEABLE : True
+  ALIGNED : True
+  WRITEBACKIFCOPY : False
+```
+Buradaki özelliklerin anlamları şu şekildedir:
+- `C_CONTIGUOUS` (C): True ise array'in bellekte C dilindeki gibi sıralandığı anlamına gelir (C-style contiguous segment).
+- `F_CONTIGUOUS` (F): True ise array'in bellekte Fortran dilindeki gibi sıralandığı anlamına gelir (Fortran-style contiguous segment).
+- `OWNDATA` (O): True ise array'in bellekteki verilerini kendi sakladığı (yani dizi, kullandığı belleğin sahibi) ya da başka bir objeden ödünç aldığı anlamına gelir.
+- `WRITEABLE` (W): True ise array'in bellekteki verilerini değiştirebilir (yani array'in immutable olmadığı) anlamına gelir. Bunu False olarak ayarlamak verileri kilitler ve salt okunur (read-only) yapar.
+- `ALIGNED` (A): True ise array'in verilerini ve tüm elementleri, donanım için uygun şekilde hizalanmış anlamına gelir.
+- `UPDATEIFCOPY` (U): True ise array'in bellekteki verilerini değiştirdiğinizde, değişikliklerin başka bir array'e yazılacağı (yani temel dizi bu dizinin içeriğiyle güncelleneceği) anlamına gelir. Bu özellik, array'in bellekteki verilerini kopyaladığından dolayı performansı düşürür.
 
-<h2 id="1.?">Array Oluşturmak</h2>
+<h2 id="1.4">Array Oluşturmak</h2>
 
-<h3 id="1.?.1"><code>array</code> Methodu</h3>
+<h3 id="1.4.1"><code>array</code> Methodu</h3>
 
 Bir array oluşturmak için en temel yöntem `array` methodunu kullanmaktır. Örnek:
 ```py
@@ -342,22 +362,163 @@ print(type(np.array([1,2,3]))) # Output: <class 'numpy.ndarray'>
 ```
 
 `array` methodu `numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)` parametrelerine sahiptir.
-- **`object:array_like`**: Bu parametreye argüman olarak sequence, nested sequence, scalar bir değer (integer, float vs.), array döndüren `__array__` methoduna sahip bir şey... kısaca array interface ortaya çıkarabilecek (exposing) herhangi bir obje verilebilir.
+- **`object:array_like`**: Bu parametreye argüman olarak sequence, nested sequence, scalar bir değer (integer, float vs.), array döndüren `__array__` methoduna sahip bir şey... kısaca array interface ortaya çıkarabilecek (exposing) herhangi bir obje verilebilir. Bu parametre zorunludur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
 - **`dtype:data-type` (optional)**: Bu parametreye argüman olarak C-like veri türleri girilebilir. Böylece array'in öğeleri belirttiğiniz veri türünde olacaktır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
-- **`copy:bool` (optional)**: Parametre olarak boolean değerleri kabul eder. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
-- **`order:{'K','A','C','F'}` (optional)**: Bu parametre argüman olarak K, A, C, F harflarinden birini kabul eder. Array'in memory layout'unu belirtmek için kullanılır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
-- **`subok:bool` (optional)**: Parametre olarak boolean değerleri kabul eder. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
-- **`ndmin:int` (optional)**: İlgili array'in sahip olması gereken minimum dimension sayısını belirtebildiğiniz parametredir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
-- **`like:array_like` (optional)**: NumPy array objesi olmayan array'ler oluşturmanız gerektiğinde `array` methodunun referans alacağı objesini belirttiğiniz parametredir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+- **`copy:bool` (optional)**: Bu parametreye argüman olarak `True` veya `False` girilebilir. `True` ise array'in bellekteki verilerini kopyalar, `False` ise kopyalamaz. Default değeri `True`'dur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+- **`order:{'C', 'F', 'A', 'K'}` (optional)**: Bu parametreye argüman olarak `C`, `F`, `A` veya `K` girilebilir. `C` ise array'in bellekte C dilindeki gibi (row-major) sıralandığı anlamına gelir (C-style contiguous segment), `F` ise array'in bellekte Fortran dilindeki gibi (column-major) sıralandığı anlamına gelir (Fortran-style contiguous segment), `A` ise array'in bellekteki verilerini kopyalamadan sıralamaya çalışır, `K` ise array'in bellekteki verilerini kopyalamadan sıralamaya çalışır. Default değeri `K`'dur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+- **`subok:bool` (optional)**: Bu parametreye argüman olarak `True` veya `False` girilebilir. `True` ise array'in alt sınıflarını (subclass) döndürür, `False` ise döndürmez. Default değeri `False`'dur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+- **`ndmin:int` (optional)**: Bu parametreye argüman olarak integer girilebilir. Array'in en az kaç boyutlu (dimension) olacağını belirtir. Default değeri `0`'dır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
+- **`like:array_like` (optional)**: Bu parametreye argüman olarak array verilebilir. NumPy array objesi olmayan array'ler oluşturmanız gerektiğinde bu parametreye argüman olarak girilen array'in özelliklerini (properties) kullanarak array oluşturur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.array.html?highlight=array#numpy.array).
 
-<h3 id="1.?.2"><code>zeros</code> Methodu</h3>
+<h3 id="1.4.2"><code>empty(shape, dtype = float, order = 'C')</code> Methodu</h3>
 
-<h3 id="1.?.3"><code>array</code> Methodu</h3>
+İstenilen boyutlarda ve veri türünde başlatılmamış (uninitialized) bir array oluşturmak için kullanılır. Örnek:
+```py
+import numpy as np
+print(np.empty((3,2), dtype = int))
+```
+**Output:**
+```
+[[1948283503  656434536]
+ [1629497131  656434286]
+ [1663051567 1634885992]]
+```
+- **`shape:int or sequence of ints`**: Array'in boyutlarını belirtir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.empty.html?highlight=empty#numpy.empty).
+- **`dtype:data-type` (optional)**: Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.empty.html?highlight=empty#numpy.empty).
+- **`order:{'C', 'F'}` (optional)**: Array'in bellekteki sıralamasını belirtir. `C` ise C dilindeki gibi (row-major), `F` ise Fortran dilindeki gibi (column-major). Default değeri `C`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.empty.html?highlight=empty#numpy.empty).
 
-<h3 id="1.?.4"><code>array</code> Methodu</h3>
+<h3 id="1.4.3"><code>zeros(shape, dtype = float, order = 'C')</code> Methodu</h3>
 
-<h3 id="1.?.5"><code>array</code> Methodu</h3>
+İstenilen boyutlarda ve veri türünde sıfırlardan oluşan bir array oluşturmak için kullanılır. Örnek:
+```py
+import numpy as np
+print(np.zeros((3,2), dtype = int))
+```
+**Output:**
+```
+[[0 0]
+ [0 0]
+ [0 0]]
+```
+- **`shape:int or sequence of ints`**: Array'in boyutlarını belirtir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.zeros.html?highlight=zeros#numpy.zeros).
+- **`dtype:data-type` (optional):** Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.zeros.html?highlight=zeros#numpy.zeros).
+- **`order:{'C', 'F'}` (optional)**: Array'in bellekteki sıralamasını belirtir. `C` ise C dilindeki gibi (row-major), `F` ise Fortran dilindeki gibi (column-major). Default değeri `C`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.zeros.html?highlight=zeros#numpy.zeros).
 
-<h3 id="1.?.6"><code>array</code> Methodu</h3>
+<h3 id="1.4.4"><code>ones(shape, dtype = None, order = 'C')</code> Methodu</h3>
 
-<h3 id="1.?.7"><code>array</code> Methodu</h3>
+İstenilen boyutlarda ve veri türünde birlerden oluşan bir array oluşturmak için kullanılır. Örnek:
+```py
+import numpy as np
+print(np.ones((3,2), dtype = int))
+```
+**Output:**
+```
+[[1 1]
+ [1 1]
+ [1 1]]
+```
+- **`shape:int or sequence of ints`**: Array'in boyutlarını belirtir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.ones.html?highlight=ones#numpy.ones).
+- **`dtype:data-type` (optional)**: Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.ones.html?highlight=ones#numpy.ones).
+- **`order:{'C', 'F'}` (optional)**: Array'in bellekteki sıralamasını belirtir. `C` ise C dilindeki gibi (row-major), `F` ise Fortran dilindeki gibi (column-major). Default değeri `C`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.ones.html?highlight=ones#numpy.ones).
+
+<h3 id="1.?.5"><code>asarray(a, dtype = None, order = None)</code> Methodu</h3>
+
+Verilen argümanı array objesine dönüştürür. `array` methodundan farkı, daha az parametre almasıdır. Örnek:
+```py
+import numpy as np
+print(np.asarray([1,2,3])) # Ourput: [1 2 3]
+```
+- **`a:array_like`**: Array objesine dönüştürülecek argüman. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.asarray.html?highlight=asarray#numpy.asarray).
+- **`dtype:data-type` (optional)**: Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.asarray.html?highlight=asarray#numpy.asarray).
+- **`order:{'C', 'F'}` (optional)**: Array'in bellekteki sıralamasını belirtir. `C` ise C dilindeki gibi (row-major), `F` ise Fortran dilindeki gibi (column-major). Default değeri `C`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.asarray.html?highlight=asarray#numpy.asarray).
+
+**Not:** `asarray` methodu, `array` methodundan farklı olarak, argüman olarak verilen array'i kopyalamaz. Yani argüman olarak verilen array'i değiştirdiğinizde, `asarray` methodu ile oluşturulan array de değişecektir. Örnek:
+```py
+import numpy as np
+
+a = np.array([1,2,3,4,5])
+array_exp = np.array(a)
+asarray_exp = np.asarray(a)
+print(a,array_exp,asarray_exp,sep='\n')
+a[0] = 10
+print(a,array_exp,asarray_exp,sep='\n')
+```
+**Output:**
+```
+[1 2 3 4 5]
+[1 2 3 4 5]
+[1 2 3 4 5]
+[10  2  3  4  5]
+[1 2 3 4 5]
+[10  2  3  4  5]
+```
+
+**Not:** `array` ve `asarray` methodları aynı uzunluktaki nested listeleri array'e dönüştürebilir ama farklı uzunluktaki nested listeleri array'e dönüştürürken farklı davranırlar. Örnek:
+```py
+import numpy as np
+
+a = np.array([[1,2,3],[4,5]])
+b = np.asarray([[1,2,3],[4,5]])
+print(a) # Output: [list([1, 2, 3]) list([4, 5])]
+print(b) # Output: [list([1, 2, 3]) list([4, 5])]
+```
+
+<h3 id="1.?.6"><code>frombuffer(buffer, dtype = float, count = -1, offset = 0)</code> Methodu</h3>
+
+Verilen buffer'ı array objesine dönüştürür. Örnek:
+```py
+import numpy as np
+
+s = b'Hello World'
+a = np.frombuffer(s, dtype = 'S1')
+print(a) # Output: [b'H' b'e' b'l' b'l' b'o' b' ' b'W' b'o' b'r' b'l' b'd']
+```
+- **`buffer:object`**: Array objesine dönüştürülecek buffer. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.frombuffer.html?highlight=frombuffer#numpy.frombuffer).
+- **`dtype:data-type` (optional)**: Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.frombuffer.html?highlight=frombuffer#numpy.frombuffer).
+- **`count:int` (optional)**: Dönüştürülecek buffer'daki byte sayısını belirtir. Default değeri `-1`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.frombuffer.html?highlight=frombuffer#numpy.frombuffer).
+- **`offset:int` (optional)**: Dönüştürülecek buffer'daki ilk byte'ın indexini belirtir. Default değeri `0`'dır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.frombuffer.html?highlight=frombuffer#numpy.frombuffer).
+
+<h3 id="1.?.7"><code>fromiter(iterable, dtype, count = -1)</code> Methodu</h3>
+
+Verilen iterable objeyi array objesine dönüştürür. Örnek:
+```py
+import numpy as np
+
+a = iter(range(5))
+b = np.fromiter(a, dtype = float)
+print(b) # Output: [0. 1. 2. 3. 4.]
+```
+- **`iterable:iterable`**: Array objesine dönüştürülecek iterable obje. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.fromiter.html?highlight=fromiter#numpy.fromiter).
+- **`dtype:data-type`**: Array'in veri türünü belirtir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.fromiter.html?highlight=fromiter#numpy.fromiter).
+- **`count:int` (optional)**: Dönüştürülecek iterable objedeki eleman sayısını belirtir. Default değeri `-1`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.fromiter.html?highlight=fromiter#numpy.fromiter).
+
+<h3 id="1.?.8"><code>arange(start, stop, step, dtype)</code> Methodu</h3>
+
+`start` ve `stop` (`stop` hariç) arasındaki sayıları `step` kadar arttırarak elde edilen sayı dizisini array objesine dönüştürür. Örnek:
+```py
+import numpy as np
+
+a = np.arange(10)
+b = np.arange(1,9,2)
+print(a) # Output: [0 1 2 3 4 5 6 7 8 9]
+print(b) # Output: [1 3 5 7]
+```
+- **`start:int` (optional)**: Array'in ilk elemanını belirtir. Default değeri `0`'dır. `range` fonksiyonundaki `start` parametresindeki kurallar geçerlidir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.arange.html?highlight=arange#numpy.arange).
+- **`stop:int`**: Array'in son elemanını belirtir. `stop` dahil değildir. `range` fonksiyonundaki `stop` parametresindeki kurallar geçerlidir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.arange.html?highlight=arange#numpy.arange).
+- **`step:int` (optional)**: Array'in elemanlarının arasındaki farkı belirtir. Default değeri `1`'dir. `range` fonksiyonundaki `step` parametresindeki kurallar geçerlidir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.arange.html?highlight=arange#numpy.arange).
+- **`dtype:data-type` (optional)**: Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.arange.html?highlight=arange#numpy.arange).
+
+<h3 id="1.?.9"><code>linspace(start, stop, num, endpoint, retstep, dtype)</code> Methodu</h3>
+
+`start` ve `stop` arasındaki `num` kadar birbirine eşit uzaklıkta olan sayıları içeren bir array objesi döndürür. Örnek:
+```py
+import numpy as np
+
+a = np.linspace(10,20,5)
+print(a) # Output: [10.  12.5 15.  17.5 20. ]
+```
+
+
+<h3 id="1.?.10"><code>array</code> Methodu</h3>
+
+<h3 id="1.?.11"><code>array</code> Methodu</h3>
