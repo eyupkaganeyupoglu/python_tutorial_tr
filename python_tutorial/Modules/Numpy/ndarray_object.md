@@ -647,12 +647,30 @@ Array'in elemanlarına aynı Python'ın build-in container objelerindeki gibi in
   print(a['c']) # Output: [3 6]
   ```
 
-- **Ellipsis Indexing**: Array'in birden fazla boyutlu olduğu durumlarda, array'in tüm boyutlarını tek seferde erişebilirsiniz. Örnek:
+- **Ellipsis Indexing**: Array'in birden fazla boyutlu olduğu durumlarda, array'in tüm boyutlarını tek seferde erişmek için kullanılır. Örnek:
   ```py
   import numpy as np
 
-  a = np.array([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
-  print(a[...]) # Output: [[[ 1  2  3] [ 4  5  6]] [[ 7  8  9] [10 11 12]]]
-  print(a[0,...]) # Output: [[1 2 3] [4 5 6]]
-  print(a[...,0]) # Output: [[1 4] [7 10]]
+  a = np.ones((2,2,2,2))
+  print(a[:,:,:,0], end='\n----------------\n')
+  print(a[...,0])
   ```
+  Output:
+  ```py
+  [[[1. 1.]
+    [1. 1.]]
+
+   [[1. 1.]
+    [1. 1.]]]
+  ----------------
+  [[[1. 1.]
+    [1. 1.]]
+
+   [[1. 1.]
+    [1. 1.]]]
+  ```
+Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/arrays.indexing.html#basic-slicing-and-indexing).
+
+<h2 id="1.6">Broadcasting</h2>
+
+Bir vector ve bir scalar veya uyumlu boyutlardaki array'ler arasında yapılan işlemlere **broadcasting** denir. NumPy bu işlemlerin/işlemin her hücrede olması gerektiğini anlar.
