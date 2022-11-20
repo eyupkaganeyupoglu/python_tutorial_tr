@@ -57,13 +57,13 @@ print(np.array([[1,2,3],[4,5,6],[7,8,9]]))
  [4 5 6]
  [7 8 9]]
 ```
-NumPy'da dimension'lar **axis** olarak isimlendirilir (birden fazla dimension'dan bahsediyorsak **axes**). 2D array'lerle uğraşırken column ve row kavramlarıyla karşılaşmışsınızdır. Column ve row kavramları sadece 2D array'lerde geçerli olduğu için genel olarak axis (eksen) terimi kullanılır. Çok dimention'lu array'lerde axis'ler soldan sağa doğru dıştan içe olarak sıralanır. Örnek:
+NumPy'da dimension'lar **axis** olarak isimlendirilir (birden fazla dimension'dan bahsediyorsak **axes**). 2D array'lerle uğraşırken column ve row kavramlarıyla karşılaşmışsınızdır. Column ve row kavramları sadece 2D array'lerde geçerli olduğu için genel olarak axis (eksen) terimi kullanılır. Çok dimention'lu array'lerde axis'ler dıştan içe anlamına gelecek şekilde soldan sağa doğru sıralanır. Örnek:
 ```
 [[[1 2 3]
   [4 5 6]
   [7 8 9]]
 
-  [[1 2 3]
+ [[1 2 3]
   [4 5 6]
   [7 8 9]]]
 
@@ -554,145 +554,104 @@ print(a) # Output: [   2.    4.    8.   16.   32.   64.  128.  256.  512. 1024.]
 
 <h2 id="1.5">Indexing ve Slicing</h2>
 
-Array'in elemanlarına aynı Python'ın build-in container objelerindeki gibi index numarası ile erişebilirsiniz. Örnek:
-```py
-import numpy as np
-
-a = np.array([1,2,3,4,5,6,7,8,9,10])
-print(a[0]) # Output: 1
-```
-Birden fazla indexleme yöntemi mevcuttur:
-- **Single Indexing**: Array'in tek bir elemanına erişmek için kullanılır. Örnek:
+Array'in elemanlarına aynı Python'ın build-in container objelerindeki gibi index numarası ile erişebilirsiniz. Birden fazla indexleme yöntemi mevcuttur:
+- **Integer Indexing**: Array'in elemanlarına tek tek index numarası ile erişebilirsiniz. Örnek:
   ```py
   import numpy as np
 
-  a = np.array([1,2,3,4,5,6,7,8,9,10])
+  a = np.array([1,2,3,4,5])
   print(a[0]) # Output: 1
+  print(a[2]) # Output: 3
   ```
-- **Range Indexing**: Array'in bir aralığındaki elemanlara erişmek için kullanılır. Örnek:
+  Çok boyutlu array'lerde axis'ler dıştan içe anlamına gelecek şekilde soldan sağa doğru sıraladığından integer indexlemeyi buna göre yapmalısınız. Örnek:
   ```py
   import numpy as np
 
-  a = np.array([1,2,3,4,5,6,7,8,9,10])
-  print(a[0:5]) # Output: [1 2 3 4 5]
-  ```
-- **Fancy Indexing**: Array'in birden fazla elemanına erişmek için kullanılır. Örnek:
-  ```py
-  import numpy as np
-  
-  a = np.array([1,2,3,4,5,6,7,8,9,10])
-  print(a[[0,2,4,6,8]]) # Output: [1 3 5 7 9]
-  ```
-- **Boolean Indexing**: Array'in elemanlarını filtrelemek için kullanılır. Örnek:
-  ```py
-  import numpy as np
-  
-  a = np.array([1,2,3,4,5,6,7,8,9,10])
-  print(a[a > 5]) # Output: [ 6  7  8  9 10]
-  ```
-- **Structured Indexing**: Array'in elemanlarının özelliklerine erişmek için kullanılır. Örnek:
-  ```py
-  import numpy as np
-
-  a = np.array([(1,2,3),(4,5,6),(7,8,9)], dtype=[('a','i4'),('b','i4'),('c','i4')])
-  print(a[0]) # Output: (1, 2, 3)
-  ```
-- **Ellipsis Indexing**: Array'in birden fazla boyutlu olduğu durumlarda, array'in tüm boyutlarını göstermek için kullanılır. Örnek:
-  ```py
-  import numpy as np
-
-  a = np.array([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
-  print(a, end="\n-------\n")
-  print(a[...], end="\n-------\n")
-  print(a[0,...], end="\n-------\n")
-  print(a[...,2])
-  ```
-  **Output:**
-  ```py
-  [[[ 1  2  3]
-    [ 4  5  6]]
-
-  [[ 7  8  9]
-    [10 11 12]]]
-  -------
-  [[[ 1  2  3]
-    [ 4  5  6]]
-
-  [[ 7  8  9]
-    [10 11 12]]]
-  -------
-  [[1 2 3]
-  [4 5 6]]
-  -------
-  [[ 3  6]
-  [ 9 12]]
-  ```
---------------------------------------------
-- **Newaxis Indexing**: Array'in boyutunu arttırmak için kullanılır. Örnek:
-  ```py
-  import numpy as np
-
-  a = np.array([1,2,3,4,5,6,7,8,9,10])
-  print(a.shape, end="\n-------\n")
-  print(a[np.newaxis, :], end="\n-------\n")
-  print(a[:, np.newaxis])
-  ```
-  **Output:**
-  ```py
-  (10,)
-  -------
-  [[ 1  2  3  4  5  6  7  8  9 10]]
-  -------
-  [[ 1]
-   [ 2]
-   [ 3]
-   [ 4]
-   [ 5]
-   [ 6]
-   [ 7]
-   [ 8]
-   [ 9]
-   [10]]
-  ```
-- **Integer Indexing**: Array'in boyutunu azaltmak için kullanılır. Örnek:
-  ```py
-  import numpy as np
-
-  a = np.array([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
-  print(a.shape, end="\n-------\n")
-  print(a[0], end="\n-------\n")
-  print(a[0,0], end="\n-------\n")
+  a = np.array([[[1,2,3],[4,5,6],[7,8,9]],
+              [[10,11,12],[13,14,15],[16,17,18]],
+              [[19,20,21],[22,23,24],[25,26,27]]])
+  print(a, end='\n--------\n')
+  print(a[0], end='\n--------\n')
+  print(a[0,], end='\n--------\n')
+  print(a[0][0], end='\n--------\n')
+  print(a[0,0], end='\n--------\n')
+  print(a[0][0][0], end='\n--------\n')
   print(a[0,0,0])
   ```
-  **Output:**
+  Output:
   ```py
-  (2, 2, 3)
-  -------
+  [[[ 1  2  3]
+    [ 4  5  6]
+    [ 7  8  9]]
+
+  [[10 11 12]
+    [13 14 15]
+    [16 17 18]]
+
+  [[19 20 21]
+    [22 23 24]
+    [25 26 27]]]
+  --------
   [[1 2 3]
-  [4 5 6]]
-  -------
+  [4 5 6]
+  [7 8 9]]
+  --------
+  [[1 2 3]
+  [4 5 6]
+  [7 8 9]]
+  --------
   [1 2 3]
-  -------
+  --------
+  [1 2 3]
+  --------
+  1
+  --------
   1
   ```
-- **Slice Indexing**: Array'in boyutunu azaltmak için kullanılır. Örnek:
+
+- **Boolean Indexing**: Array'in elemanlarına tek tek boolean değerler ile erişebilirsiniz. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+  print(a[[True,False,True,False,True]]) # Output: [1 3 5]
+
+  a = np.array([[1,2,3],[4,5,6]])
+  print(a[[[True,False,True],[False,True,True]]]) # Output: [1 3 5 6]
+  ```
+
+- **Filter Indexing**: Array'in elemanlarına filtreleme yaparak erişebilirsiniz. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+  print(a[a > 3]) # Output: [4 5]
+  ```
+
+- **Fancy Indexing**: Array'in elemanlarına tek tek index numarası ile erişebilirsiniz. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+  print(a[[0,2,4]]) # Output: [1 3 5]
+  ```
+
+- **Field Indexing**: Array'in elemanlarına tek tek field ismi ile erişebilirsiniz. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([(1,2,3),(4,5,6)],dtype=[('a','i4'),('b','i4'),('c','i4')])
+  print(a['a']) # Output: [1 4]
+  print(a['b']) # Output: [2 5]
+  print(a['c']) # Output: [3 6]
+  ```
+
+- **Ellipsis Indexing**: Array'in birden fazla boyutlu olduğu durumlarda, array'in tüm boyutlarını tek seferde erişebilirsiniz. Örnek:
   ```py
   import numpy as np
 
   a = np.array([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
-  print(a.shape, end="\n-------\n")
-  print(a[0:1], end="\n-------\n")
-  print(a[0:1,0:1], end="\n-------\n")
-  print(a[0:1,0:1,0:1])
-  ```
-  **Output:**
-  ```py
-  (2, 2, 3)
-  -------
-  [[[1 2 3]
-  [4 5 6]]]
-  -------
-  [[[1 2 3]]]
-  -------
-  [[[1]]]
+  print(a[...]) # Output: [[[ 1  2  3] [ 4  5  6]] [[ 7  8  9] [10 11 12]]]
+  print(a[0,...]) # Output: [[1 2 3] [4 5 6]]
+  print(a[...,0]) # Output: [[1 4] [7 10]]
   ```

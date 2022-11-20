@@ -394,3 +394,11 @@ Python’ın lisansına ilişkin epey ayrıntılı metinlere ulaşabilirsiniz.
 license()
 ```
 Bilgi için [tıklayınız](https://docs.python.org/3/library/constants.html#license "https://docs.python.org/3/library/constants.html#license").
+
+<h1 id="25"><code>slice(start, stop, step)</code> Fonksiyonu</h1>
+
+Bir dilimleme (slicing) objesi döndürür. `start`, `stop` ve `step` parametrelerinde belirtilen dilimlemeyi uygulandığı sequence üzerinde yapar. Örneğin:
+```py
+a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(a[slice(2, 7, 2)]) # Output: [3, 5, 7]
+```
