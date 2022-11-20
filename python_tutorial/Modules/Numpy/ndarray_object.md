@@ -626,6 +626,7 @@ Array'in elemanlarına aynı Python'ın build-in container objelerindeki gibi in
 
   a = np.array([1,2,3,4,5])
   print(a[a > 3]) # Output: [4 5]
+  print(a[(a > 3) & (a < 5)]) # Output: [4]
   ```
 
 - **Fancy Indexing**: Array'in elemanlarına tek tek index numarası ile erişebilirsiniz. Örnek:
