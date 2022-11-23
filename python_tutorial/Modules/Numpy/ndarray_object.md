@@ -241,60 +241,7 @@ Gördüğünüz gibi `np.shape(a)` ile `a.shape` arasında bir fark yoktur. İki
 
 **Not:** Bu işlemin yapılabilmesi için ilgili array'in eski ve yeni shape'i aynı sayıda elemente sahip olmalıdır aksi halde `ValueError: cannot reshape array of size 24 into shape (4,5)` örneğindeki gibi bir hata döndürür.
 
-<h3 id="1.3.2"><code>reshape(a, newshape, order='C')</code> Attribute'u</h3>
-
-`a` parametresine argüman olarak girilen array'i `newshape` parametresine girilen tuple'da belirtilene göre yeniden boyutlandırdığı bir array öbjesi döndürür (yani `a` parametresine argüman olarak girilen array'i etkilemez). Örnek:
-```py
-import numpy as np
-
-a = np.ones((4, 3, 2))
-
-print(a, np.shape(a), end="\n-------\n")
-b = a.reshape((4, 6))
-print(a, np.shape(a), end="\n-------\n")
-print(b, np.shape(b))
-```
-**Output:**
-```
-[[[1. 1.]
-  [1. 1.]
-  [1. 1.]]
-
- [[1. 1.]
-  [1. 1.]
-  [1. 1.]]
-
- [[1. 1.]
-  [1. 1.]
-  [1. 1.]]
-
- [[1. 1.]
-  [1. 1.]
-  [1. 1.]]] (4, 3, 2)
--------
-[[[1. 1.]
-  [1. 1.]
-  [1. 1.]]
-
- [[1. 1.]
-  [1. 1.]
-  [1. 1.]]
-
- [[1. 1.]
-  [1. 1.]
-  [1. 1.]]
-
- [[1. 1.]
-  [1. 1.]
-  [1. 1.]]] (4, 3, 2)
--------
-[[1. 1. 1. 1. 1. 1.]
- [1. 1. 1. 1. 1. 1.]
- [1. 1. 1. 1. 1. 1.]
- [1. 1. 1. 1. 1. 1.]] (4, 6)
-```
-
-<h3 id="1.3.3"><code>ndim(a)</code> Attribute'u</h3>
+<h3 id="1.3.2"><code>ndim(a)</code> Attribute'u</h3>
 
 `a` parametresine argüman olarak girilen array'in dimension sayısını döndürür. Örnek:
 ```py
@@ -308,7 +255,7 @@ print(np.ndim(a),a.ndim) # Output: 2 2
 ```
 gördüğünüz gibi np.ndim(a) ile a.ndim arasında bir fark yoktur. İkisi de aynı bilgiyi verir.
 
-<h3 id="1.3.4"><code>itemsize</code> Attribute'u</h3>
+<h3 id="1.3.3"><code>itemsize</code> Attribute'u</h3>
 
 Uygulandığı array'in her elementinin bellekte kapladığı alanı byte cinsinden döndürür. Örnek:
 ```py
@@ -323,7 +270,7 @@ print(a2.itemsize) # Output: 4
 print(a3.itemsize) # Output: 2
 ```
 
-<h3 id="1.3.1"><code>flags</code> Attribute'u</h3>
+<h3 id="1.3.4"><code>flags</code> Attribute'u</h3>
 
 Bir array'in bellekte nasıl saklandığını gösteren bir özellik öbjesi (`<class 'numpy.core.multiarray.flagsobj'>`) döndürür. Örnek:
 ```py
@@ -707,11 +654,11 @@ a = np.arange(0,60,5).reshape(3,4)
 print("Original array is:\n", a)
 b = a.T
 print("Transpose of array is:\n", b)
-print("Orjinal array'in yazdırılması:")
+print("Orjinal array'in sıralanması:")
 for i in np.nditer(a):
     print(i,end=", ") # Output: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
     
-print("\nOrjinal array'in Transpose'sinin yazdırılması:")
+print("\nOrjinal array'in Transpose'sinin sıralanması:")
 for i in np.nditer(b):
     print(i,end=", ") # Output: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
 ```
@@ -731,4 +678,375 @@ Orjinal array'in yazdırılması:
 Orjinal array'in Transpose'sinin yazdırılması:
 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
 ```
-Gördüğünüz gibi yineleme sırası, array'in elemanlarının array'deki konumlarına göre değil array'in bellekteki konumlarına göre yapılır. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.nditer.html).
+Gördüğünüz gibi yineleme sırası, array'in elemanlarının array'deki konumlarına göre değil array'in bellekteki konumlarına göre yapılır. Bu duruma Iteration Order (Yineleme Sırası) denir. Yineleme sırasını değiştirmek için `order` parametresini kullanabilirsiniz. Örnek:
+```py
+import numpy as np
+
+a = np.arange(0,60,5).reshape(3,4)
+print("Original array is:\n", a)
+print("Transpose of array is:\n", a.T)
+print("Sorted in C-style order:")
+for i in np.nditer(a, order='C'):
+    print(i,end=", ")
+print("\nSorted in F-style order:")
+for i in np.nditer(a, order='F'):
+    print(i,end=", ")
+```
+**Output:**
+```
+Original array is:
+ [[ 0  5 10 15]       
+ [20 25 30 35]        
+ [40 45 50 55]]       
+Transpose of array is:
+ [[ 0 20 40]
+ [ 5 25 45]
+ [10 30 50]
+ [15 35 55]]
+Sorted in C-style order:
+0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
+Sorted in F-style order:
+0, 20, 40, 5, 25, 45, 10, 30, 50, 15, 35, 55,
+```
+Aynı elementler F-style order kullanılarak sıralanırsa, iterator, bir array üzerinde iterating işleminin daha verimli yolunu seçer.
+
+`nditer` objesinin bir diğer optional parametresi `op_flags`'dır. Bu parametre, array üzerindeki her bir element için bir flag belirler. Bu flag'ler, array üzerindeki elementlerin üzerinde yapılacak işlemleri belirler. Default değeri `'readonly'`'dır. Bu flag, array üzerindeki elementlerin üzerinde sadece okuma yapılmasını sağlar. `'readwrite'` flag'ini kullanarak array üzerindeki elementlerin üzerinde okuma ve yazma yapılmasını sağlayabilirsiniz. `'writeonly'` flag'ini kullanarak array üzerindeki elementlerin üzerinde sadece yazma yapılmasını sağlayabilirsiniz. Örnek:
+```py
+import numpy as np
+
+a = np.arange(0,60,5).reshape(3,4)
+print("Original array is:\n", a)
+print("Transpose of array is:\n", a.T)
+print("Sorted in C-style order:")
+for i in np.nditer(a, order='C', op_flags=['readwrite']):
+    i[...] = 2*i
+print("Modified array is:\n", a)
+```
+**Output:**
+```
+Original array is:
+ [[ 0  5 10 15]
+ [20 25 30 35]
+ [40 45 50 55]]
+Modified array is:
+ [[  0  10  20  30]
+ [ 40  50  60  70]
+ [ 80  90 100 110]]
+```
+`nditer` objesinin bir diğer optional parametresi `flags`'dır. Bu parametre, array üzerindeki her bir element için bir flag belirler. Bu flag'ler, array üzerindeki elementlerin üzerinde yapılacak işlemleri belirler.
+- `'c_index'`: Causes a C-order index to be tracked.
+- `'f_index'`: Causes a Fortran-order index to be tracked.
+- `'multi-index'`: Causes a multi-index, or a tuple of indices with one per iteration dimension, to be tracked.
+- `'external_loop'`: Causes the values given to be one-dimensional arrays with multiple values instead of zero-dimensional arrays. Örnek:
+```py
+import numpy as np
+
+a = np.arange(0,60,5).reshape(3,4)
+
+print("Original array is:\n", a)
+
+print("\nSorting in C order with c_index flag:")
+for i in np.nditer(a, flags=['c_index'], order='C'):
+    print(i,end=", ")
+print("\nSorting in F order with c_index flag:")
+for i in np.nditer(a, flags=['c_index'], order='F'):
+    print(i,end=", ")
+
+print("\n\nSorting in C order with f_index flag:")
+for i in np.nditer(a, flags=['f_index'], order='C'):
+    print(i,end=", ")
+print("\nSorting in F order with f_index flag:")
+for i in np.nditer(a, flags=['f_index'], order='F'):
+    print(i,end=", ")
+    
+print("\n\nSorting in C order with multi_index flag:")
+for i in np.nditer(a, flags=['multi_index'], order='C'):
+    print(i,end=", ")
+print("\nSorting in F order with multi_index flag:")
+for i in np.nditer(a, flags=['multi_index'], order='F'):
+    print(i,end=", ")
+
+print("\n\nSorting in C order with external_loop flag:")
+for i in np.nditer(a, flags=['external_loop'], order='C'):
+    print(i,end=", ")
+print("\nSorting in F order with external_loop flag:")
+for i in np.nditer(a, flags=['external_loop'], order='F'):
+    print(i,end=", ")
+```
+**Output:**
+```
+Original array is:
+ [[ 0  5 10 15]
+ [20 25 30 35]
+ [40 45 50 55]]
+
+Sorting in C order with c_index flag:
+0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
+Sorting in F order with c_index flag:
+0, 20, 40, 5, 25, 45, 10, 30, 50, 15, 35, 55,
+
+Sorting in C order with f_index flag:
+0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
+Sorting in F order with f_index flag:
+0, 20, 40, 5, 25, 45, 10, 30, 50, 15, 35, 55,
+
+Sorting in C order with multi_index flag:
+0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
+Sorting in F order with multi_index flag:
+0, 20, 40, 5, 25, 45, 10, 30, 50, 15, 35, 55,
+
+Sorting in C order with external_loop flag:
+[ 0  5 10 15 20 25 30 35 40 45 50 55],
+Sorting in F order with external_loop flag:
+[ 0 20 40], [ 5 25 45], [10 30 50], [15 35 55],
+```
+
+Broadcastable iki array üzerinde aynı anda iterating yapmak için `nditer` objesini kullanabilirsiniz. Örnek:
+```py
+import numpy as np
+
+a = np.arange(0,60,5).reshape(3,4)
+b = np.array([1, 2, 3, 4], dtype=int)
+for i,j in np.nditer([a,b]):
+    print(f"{i}:{j}", end=", ") # Output: 0:1, 5:2, 10:3, 15:4, 20:1, 25:2, 30:3, 35:4, 40:1, 45:2, 50:3, 55:4, 
+```
+Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.nditer.html).
+
+<h2 id="1.8">Array Manipulation</h2>
+
+NumPy arraylerini manipüle etmek için birçok yöntem vardır. Bu yöntemlerin bazıları şunlardır:
+
+<h3 id="1.8.1">Changing Shape</h3>
+
+- `reshape(a, newshape, order='C')`: `a` parametresine argüman olarak girilen array'i `newshape` parametresine girilen tuple'da belirtilene göre yeniden boyutlandırdığı bir array öbjesi döndürür (yani `a` parametresine argüman olarak girilen array'i etkilemez). Örnek:
+  ```py
+  import numpy as np
+
+  a = np.ones((4, 3, 2))
+
+  print(a, np.shape(a), end="\n-------\n")
+  b = a.reshape((4, 6))
+  print(a, np.shape(a), end="\n-------\n")
+  print(b, np.shape(b))
+  ```
+  **Output:**
+  ```
+  [[[1. 1.]
+    [1. 1.]
+    [1. 1.]]
+
+  [[1. 1.]
+    [1. 1.]
+    [1. 1.]]
+
+  [[1. 1.]
+    [1. 1.]
+    [1. 1.]]
+
+  [[1. 1.]
+    [1. 1.]
+    [1. 1.]]] (4, 3, 2)
+  -------
+  [[[1. 1.]
+    [1. 1.]
+    [1. 1.]]
+
+  [[1. 1.]
+    [1. 1.]
+    [1. 1.]]
+
+  [[1. 1.]
+    [1. 1.]
+    [1. 1.]]
+
+  [[1. 1.]
+    [1. 1.]
+    [1. 1.]]] (4, 3, 2)
+  -------
+  [[1. 1. 1. 1. 1. 1.]
+  [1. 1. 1. 1. 1. 1.]
+  [1. 1. 1. 1. 1. 1.]
+  [1. 1. 1. 1. 1. 1.]] (4, 6)
+  ```
+- `ndarray.flat`: Uygulandığı `ndarray` objesinin içindeki elemetleri tek bir boyutta döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  for i in a.flat:
+      print(i, end=", ")
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+  [4 5 6 7]]
+  -------
+  0, 1, 2, 3, 4, 5, 6, 7,
+  ```
+- `ndarray.flantten(order='C')`: Uygulandığı `ndarray` objesini tek boyutlu bir array'e dönüştürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(a.flatten(), end="\n-------\n")
+  print(a.flatten(order='F'))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+  [4 5 6 7]]
+  -------
+  [0 1 2 3 4 5 6 7]
+  -------
+  [0 4 1 5 2 6 3 7]
+  ```
+- `ravel(a, order='C')`: `a` parametresine argüman olarak girilen array'i tek boyutlu bir array'e dönüştürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(np.ravel(a))
+  print(a.ravel(), end="\n-------\n")
+  print(np.ravel(a, order='F'))
+  print(a.ravel(order='F'))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+  [4 5 6 7]]
+  -------
+  [0 1 2 3 4 5 6 7]
+  [0 1 2 3 4 5 6 7]
+  -------
+  [0 4 1 5 2 6 3 7]
+  [0 4 1 5 2 6 3 7]
+  ```
+
+<h3 id="1.8.2">Transposing Arrays</h3>
+
+- `transpose(a, axes=None)`: `a` parametresine argüman olarak girilen array'in transpozesini döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(12).reshape(3,4)
+  print(a, end="\n-------\n")
+  print(np.transpose(a))
+  print(a.transpose())
+  ```
+  **Output:**
+  ```
+  [[ 0  1  2  3]
+  [ 4  5  6  7]
+  [ 8  9 10 11]]
+  -------
+  [[ 0  4  8]
+  [ 1  5  9]
+  [ 2  6 10]
+  [ 3  7 11]]
+  [[ 0  4  8]
+  [ 1  5  9]
+  [ 2  6 10]
+  [ 3  7 11]]
+  ```
+  Aynı şeyi `a.T` ile de yapabiliriz. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(12).reshape(3,4)
+  print(a, end="\n-------\n")
+  print(a.T)
+  ```
+  **Output:**
+  ```
+  [[ 0  1  2  3]
+  [ 4  5  6  7]
+  [ 8  9 10 11]]
+  -------
+  [[ 0  4  8]
+  [ 1  5  9]
+  [ 2  6 10]
+  [ 3  7 11]]
+  ```
+- `rollaxis(a, axis, start=0)`: `a` parametresine argüman olarak girilen array'in `axis` parametresine girilen ekseni `start` parametresine girilen konuma taşır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,2,2)
+  print(a, end="\n-------\n")
+  print(np.rollaxis(a, 2))
+  print(np.rollaxis(a, 2, 1))
+  ```
+  **Output:**
+  ```
+  [[[0 1]
+    [2 3]]
+
+  [[4 5]
+    [6 7]]]
+  -------
+  [[[0 2]
+    [4 6]]
+
+  [[1 3]
+    [5 7]]]
+  -------
+  [[[0 2]
+    [1 3]]
+
+  [[4 6]
+    [5 7]]]
+  ```
+- `swapaxes(a, axis1, axis2)`: `a` parametresine argüman olarak girilen array'in `axis1` ve `axis2` parametrelerine girilen eksenleri yer değiştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,2,2)
+  print(a, end="\n-------\n")
+  print(np.swapaxes(a, 2, 0), end="\n-------\n")
+  print(np.swapaxes(a, 1, 0))
+  ```
+  **Output:**
+  ```
+  [[[0 1]
+    [2 3]]
+
+  [[4 5]
+    [6 7]]]
+  -------
+  [[[0 4]
+    [2 6]]
+
+  [[1 5]
+    [3 7]]]
+  -------
+  [[[0 1]
+    [4 5]]
+
+  [[2 3]
+    [6 7]]]
+  ```
+
+<h3 id="1.8.3">Changing Dimensions</h3> # Burada kaldım
+
+- `broadcast(a, b)`: `a` ve `b` parametrelerine argüman olarak girilen array'lerin boyutlarını uygun hale getirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  b = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(b, end="\n-------\n")
+  print(np.broadcast(a, b))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]]
+  -------
+  [[0 1 2 3]
+  [4 5 6 7]]
+  -------
+  <numpy.broadcast object at 0x7f8b6c0b0e50>
+  ```
