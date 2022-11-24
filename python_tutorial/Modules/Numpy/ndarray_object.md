@@ -1509,3 +1509,6 @@ NumPy arraylerini manipüle etmek için birçok yöntem vardır. Bu yöntemlerin
   [2 5 6 7 8 9]
   [3 2 2 1 1 1]
   ```
+
+<h2 id="1.8">Binary Operators</h2>
+
