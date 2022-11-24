@@ -1031,15 +1031,16 @@ NumPy arraylerini manipüle etmek için birçok yöntem vardır. Bu yöntemlerin
 
 <h3 id="1.8.3">Changing Dimensions</h3> # Burada kaldım
 
-- `broadcast(a, b)`: `a` ve `b` parametrelerine argüman olarak girilen array'lerin boyutlarını uygun hale getirir. Örnek:
+- `broadcast`: Parametre olarak array_like objeler kabul eder. Verilen argümanları birbirine karşı yayınlar (broadcast) ve sonucu kapsayan bir broadcast objesi döndürür. Örnek:
   ```py
   import numpy as np
 
   a = np.arange(4).reshape(1,4)
   b = np.arange(8).reshape(2,4)
+  c = np.broadcast(a, b)
   print(a, end="\n-------\n")
   print(b, end="\n-------\n")
-  print(np.broadcast(a, b))
+  print(c, c.index, c.shape, c.size, c.ndim, c.iters, sep="\n")
   ```
   **Output:**
   ```
@@ -1048,5 +1049,463 @@ NumPy arraylerini manipüle etmek için birçok yöntem vardır. Bu yöntemlerin
   [[0 1 2 3]
   [4 5 6 7]]
   -------
-  <numpy.broadcast object at 0x7f8b6c0b0e50>
+  <numpy.broadcast object at 0x00000220CADF8710>
+  0
+  (2, 4)
+  8
+  2
+  (<numpy.flatiter object at 0x00000220CAC968C0>, <numpy.flatiter object at 0x00000220CAC97310>)
+  ```
+- `broadcast_to(array, shape, subok=False)`: `array` parametresine argüman olarak girilen array'i `shape` parametresine girilen şekle yayınlar (broadcast). Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  print(a, end="\n-------\n")
+  print(np.broadcast_to(a, (4,4)))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]]
+  -------
+  [[0 1 2 3]
+   [0 1 2 3]
+   [0 1 2 3]
+   [0 1 2 3]]
+  ```
+- `expand_dims(a, axis)`: `a` parametresine argüman olarak girilen array'in `axis` parametresine girilen eksenini genişletir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  print(a, a.shape, end="\n-------\n")
+  print(np.expand_dims(a, axis=0), np.expand_dims(a, axis=0).shape, end="\n-------\n")
+  print(np.expand_dims(a, axis=1), np.expand_dims(a, axis=1).shape, end="\n-------\n")
+  print(np.expand_dims(a, axis=2), np.expand_dims(a, axis=2).shape)
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]] (1, 4)
+  -------
+  [[[0 1 2 3]]] (1, 1, 4)
+  -------
+  [[[0 1 2 3]]] (1, 1, 4)
+  -------
+  [[[0]
+    [1]
+    [2]
+    [3]]] (1, 4, 1)
+  ```
+- `squeeze(a, axis=None)`: `a` parametresine argüman olarak girilen array'den `axis` parametresine girilen eksenleri kaldırır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,1,1,4)
+  print(a, a.shape, end="\n-------\n")
+  print(np.squeeze(a, axis=0), np.squeeze(a, axis=0).shape, end="\n-------\n")
+  print(np.squeeze(a, axis=1), np.squeeze(a, axis=1).shape, end="\n-------\n")
+  print(np.squeeze(a, axis=2), np.squeeze(a, axis=2).shape, end="\n-------\n")
+  print(np.squeeze(a, axis=3), np.squeeze(a, axis=3).shape)
+  ```
+  **Output:**
+  ```
+  [[[[0 1 2 3]]]] (1, 1, 1, 4)
+  -------
+  [[[0 1 2 3]]] (1, 1, 4)
+  -------
+  [[[0 1 2 3]]] (1, 1, 4)
+  -------
+  [[[0]
+    [1]
+    [2]
+    [3]]] (1, 4, 1)
+  -------
+  [[0 1 2 3]] (4,)
+  ```
+
+<h3 id="1.8.4">Joining Arrays</h3>
+
+- `concatenate((a1, a2, ...), axis=0, out=None)`: `a1`, `a2`, ... parametrelerine argüman olarak girilen array'leri `axis` parametresine girilen **mevcut** eksen üzerinde birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  b = np.arange(4,8).reshape(1,4)
+  print(a, end="\n-------\n")
+  print(b, end="\n-------\n")
+  print(np.concatenate((a,b), axis=0), end="\n-------\n")
+  print(np.concatenate((a,b), axis=1))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]]
+  -------
+  [[4 5 6 7]]
+  -------
+  [[0 1 2 3]
+   [4 5 6 7]]
+  -------
+  [[0 1 2 3 4 5 6 7]]
+  ```
+- `stack(arrays, axis=0, out=None)`: `arrays` parametresine argüman olarak girilen array'leri `axis` parametresine girilen **yeni** eksen üzerinde birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  b = np.arange(4,8).reshape(1,4)
+  print(a, end="\n-------\n")
+  print(b, end="\n-------\n")
+  print(np.stack((a,b), axis=0), end="\n-------\n")
+  print(np.stack((a,b), axis=1), end="\n-------\n")
+  print(np.stack((a,b), axis=2))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]]
+  -------
+  [[4 5 6 7]]
+  -------
+  [[[0 1 2 3]]
+   [[4 5 6 7]]]
+  -------
+  [[[0 1 2 3]
+    [4 5 6 7]]]
+  -------
+  [[[0 4]
+    [1 5]
+    [2 6]
+    [3 7]]]
+  ```
+- `hstack(tup)`: `tup` parametresine argüman olarak girilen tuple'ı yatay olarak birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  b = np.arange(4,8).reshape(1,4)
+  print(a, end="\n-------\n")
+  print(b, end="\n-------\n")
+  print(np.hstack((a,b)))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]]
+  -------
+  [[4 5 6 7]]
+  -------
+  [[0 1 2 3 4 5 6 7]]
+  ```
+- `vstack(tup)`: `tup` parametresine argüman olarak girilen tuple'ı dikey olarak birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,4)
+  b = np.arange(4,8).reshape(1,4)
+  print(a, end="\n-------\n")
+  print(b, end="\n-------\n")
+  print(np.vstack((a,b)))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]]
+  -------
+  [[4 5 6 7]]
+  -------
+  [[0 1 2 3]
+  [4 5 6 7]]
+  ```
+- `dstack(tup)`: `tup` parametresine argüman olarak girilen tuple'ı derinlik olarak birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(4).reshape(1,1,4)
+  b = np.arange(4,8).reshape(1,1,4)
+  print(a, end="\n-------\n")
+  print(b, end="\n-------\n")
+  print(np.dstack((a,b)))
+  ```
+  **Output:**
+  ```
+  [[[0 1 2 3]]]
+  -------
+  [[[4 5 6 7]]]
+  -------
+  [[[0 1 2 3 4 5 6 7]]]
+  ```
+
+<h3 id="1.8.5">Splitting Arrays</h3>
+
+- `split(ary, indices_or_sections, axis=0)`: `ary` parametresine argüman olarak girilen array'i `indices_or_sections` parametresine girilen değerlere göre bölerek tuple olarak döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(np.split(a, 2, axis=0), end="\n-------\n")
+  print(np.split(a, 2, axis=1), end="\n-------\n")
+  print(np.split(a, [1,3], axis=1))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+   [4 5 6 7]]
+  -------
+  [array([[0, 1, 2, 3]]), array([[4, 5, 6, 7]])]
+  -------
+  [array([[0, 1],
+          [4, 5]]), array([[2, 3],
+          [6, 7]])]
+  -------
+  [array([[0, 1]]), array([[2, 3],
+          [4, 5]]), array([[6, 7]])]
+  ```
+  - `hsplit(ary, indices_or_sections)`: `ary` parametresine argüman olarak girilen array'i `indices_or_sections` parametresine girilen değerlere göre yatay olarak bölerek tuple olarak döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(np.hsplit(a, 2), end="\n-------\n")
+  print(np.hsplit(a, [1,3]))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+   [4 5 6 7]]
+  -------
+  [array([[0, 1],
+          [4, 5]]), array([[2, 3],
+          [6, 7]])]
+  -------
+  [array([[0],
+          [4]]), array([[1, 2],
+          [5, 6]]), array([[3],
+          [7]])]
+  ```
+  - `vsplit(ary, indices_or_sections)`: `ary` parametresine argüman olarak girilen array'i `indices_or_sections` parametresine girilen değerlere göre dikey olarak bölerek tuple olarak döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(np.vsplit(a, 2), end="\n-------\n")
+  print(np.vsplit(a, [1,3]))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+   [4 5 6 7]]
+  -------
+  [array([[0, 1, 2, 3]]), array([[4, 5, 6, 7]])]
+  -------
+  [array([[0, 1, 2, 3]]), array([[4, 5, 6, 7]]), array([], shape=(0, 4), dtype=int32)]
+  ```
+  - `dsplit(ary, indices_or_sections)`: `ary` parametresine argüman olarak girilen array'i `indices_or_sections` parametresine girilen değerlere göre derinlik olarak bölerek tuple olarak döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,2,2)
+  print(a, end="\n-------\n")
+  print(np.dsplit(a, 2), end="\n-------\n")
+  print(np.dsplit(a, [1,3]))
+  ```
+  **Output:**
+  ```
+  [[[0 1]
+    [2 3]]
+
+   [[4 5]
+    [6 7]]]
+  -------
+  [array([[[0],
+          [2]],
+
+         [[4],
+          [6]]]), array([[[1],
+          [3]],
+
+         [[5],
+          [7]]])]
+  -------
+  [array([[[0]],
+
+         [[4]]]), array([[[1]],
+
+         [[5]]]), array([[[2]],
+
+         [[6]]]), array([[[3]],
+
+         [[7]]])]
+  ```
+  - `array_split(ary, indices_or_sections, axis=0)`: `ary` parametresine argüman olarak girilen array'i `indices_or_sections` parametresine girilen değerlere göre bölerek tuple olarak döndürür. `split()` fonksiyonu ile aynı işlevi görür, fakat `split()` fonksiyonunda bölme işlemi sabit bir şekilde yapılırken, `array_split()` fonksiyonunda bölme işlemi farklılık gösterebilir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(8).reshape(2,4)
+  print(a, end="\n-------\n")
+  print(np.array_split(a, 3, axis=1), end="\n-------\n")
+  print(np.array_split(a, 3, axis=0))
+  ```
+  **Output:**
+  ```
+  [[0 1 2 3]
+   [4 5 6 7]]
+  -------
+  [array([[0, 1],
+          [4, 5]]), array([[2, 3],
+          [6, 7]]), array([], shape=(2, 0), dtype=int32)]
+  -------
+  [array([[0, 1, 2, 3]]), array([[4, 5, 6, 7]]), array([], shape=(0, 4), dtype=int32)]
+  ```
+
+<h3 id="1.8.6">Adding/Removing Elements</h3>
+
+  - `resize(a, new_shape)`: `a` parametresine argüman olarak girilen array'in boyutunu `new_shape` parametresine girilen boyuta çevirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1,2,3],[4,5,6]])
+  print(a, end="\n-------\n")
+  print(np.resize(a, (3,2)), end="\n-------\n")
+  print(np.resize(a, (3,3)))
+  ```
+  **Output:**
+  ```
+  [[1 2 3]
+   [4 5 6]]
+  -------
+  [[1 2]
+   [3 4]
+   [5 6]]
+  -------
+  [[1 2 3]
+   [4 5 6]
+   [1 2 3]]
+  ```
+  - `append(arr, values, axis=None)`: `arr` parametresine argüman olarak girilen array'in sonuna `values` parametresine girilen değeri ekler. `axis` parametresi girilirse, `values` parametresine girilen değerler `axis` parametresine girilen değere göre eklenir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1,2,3],[4,5,6]])
+  print(a, end="\n-------\n")
+  print(np.append(a, [7,8,9]), end="\n-------\n")
+  print(np.append(a, [[7,8,9]], axis=0), end="\n-------\n")
+  print(np.append(a, [[5,5,5],[7,8,9]], axis=1))
+  ```
+  **Output:**
+  ```
+  [[1 2 3]
+   [4 5 6]]
+  -------
+  [1 2 3 4 5 6 7 8 9]
+  -------
+  [[1 2 3]
+   [4 5 6]
+   [7 8 9]]
+  -------
+  [[1 2 3 5 5 5]
+   [4 5 6 7 8 9]]
+  ```
+  - `insert(arr , obj, values, axis=None)`: `arr` parametresine argüman olarak girilen array'in `obj` parametresine girilen değerlerin yerine (yani bulunduğu index'e) `values` parametresine girilen değerleri ekler. `axis` parametresi girilirse, `values` parametresine girilen değerler `axis` parametresine girilen değere göre eklenir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1,2],[3,4],[5,6]])
+  print(a, end="\n-------\n")
+  print(np.insert(a, 3, [11,12]), end="\n-------\n")
+  print(np.insert(a, 1, [11], axis=0), end="\n-------\n")
+  print(np.insert(a, 1, 11, axis=1))
+  ```
+  **Output:**
+  ```
+  [[1 2]
+   [3 4]
+   [5 6]]
+  -------
+  [ 1  2  3 11 12  4  5  6]
+  -------
+  [[ 1  2]
+   [11 11]
+   [ 3  4]
+   [ 5  6]]
+  -------
+  [[ 1 11  2]
+   [ 3 11  4]
+   [ 5 11  6]]
+  ```
+  - `delete(arr, obj, axis=None)`: `arr` parametresine argüman olarak girilen array'in `obj` parametresine girilen değerlerin yerindeki (yani bulunduğu index'deki) değerleri siler. `axis` parametresi girilirse, `obj` parametresine girilen değerler `axis` parametresine girilen değere göre silinir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.arange(12).reshape(3,4)
+  print(a, end="\n-------\n")
+  print(np.delete(a, 5), end="\n-------\n")
+  print(np.delete(a, 1, axis=0), end="\n-------\n")
+  print(np.delete(a, [1,3], axis=1))
+  ```
+  **Output:**
+  ```
+  [[ 0  1  2  3]
+   [ 4  5  6  7]
+   [ 8  9 10 11]]
+  -------
+  [ 0  1  2  3  4  6  7  8  9 10 11]
+  -------
+  [[0 1 2 3]
+   [8 9 10 11]]
+  -------
+  [[ 0  2]
+   [ 4  6]
+   [ 8 10]]
+  ```
+  - `unique(ar, return_index=False, return_inverse=False, return_counts=False, axis=None)`: `ar` parametresine argüman olarak girilen array'deki tekrar eden değerleri siler. `return_index` parametresi `True` olarak girilirse, `ar` parametresine girilen array'deki tekrar eden değerlerin index'lerini de döndürür. `return_inverse` parametresi `True` olarak girilirse, `ar` parametresine girilen array'deki tekrar eden değerlerin index'lerini de döndürür. `return_counts` parametresi `True` olarak girilirse, `ar` parametresine girilen array'deki tekrar eden değerlerin kaç defa tekrar ettiğini de döndürür. `axis` parametresi girilirse, `ar` parametresine girilen array'deki tekrar eden değerler `axis` parametresine girilen değere göre silinir. Örnek:
+  ```py
+  import numpy as np
+  a = np.array([5,2,6,2,7,5,6,8,2,9])
+
+  print ('First array:', a, sep='\n', end="\n\n")
+
+  u = np.unique(a)
+  print ('Unique values of first array:', u, sep='\n', end="\n\n")
+
+  u,indices = np.unique(a, return_index = True)
+  print ('Unique array and Indices array:', indices, sep='\n', end="\n\n")
+
+  print ('We can see each number corresponds to index in original array:', a, sep='\n', end="\n\n")
+
+  u,indices = np.unique(a,return_inverse = True)
+  print ('Indices of unique array:', u, sep='\n', end="\n\n")
+
+  print ('Indices are:', indices, sep='\n', end="\n\n")
+
+  print ('Reconstruct the original array using indices:', u[indices], sep='\n', end="\n\n")
+
+  u,indices = np.unique(a,return_counts = True)
+  print ('Return the count of repetitions of unique elements:', u, indices, sep='\n')
+  ```
+  **Output:**
+  ```
+  First array:
+  [5 2 6 2 7 5 6 8 2 9]
+
+  Unique values of first array:
+  [2 5 6 7 8 9]
+
+  Unique array and Indices array:
+  [1 0 2 4 7 9]
+
+  We can see each number corresponds to index in original array:
+  [5 2 6 2 7 5 6 8 2 9]
+
+  Indices of unique array:
+  [2 5 6 7 8 9]
+
+  Indices are:
+  [1 0 2 0 3 1 2 4 0 5]
+
+  Reconstruct the original array using indices:
+  [5 2 6 2 7 5 6 8 2 9]
+
+  Return the count of repetitions of unique elements:
+  [2 5 6 7 8 9]
+  [3 2 2 1 1 1]
   ```
