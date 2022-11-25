@@ -1512,3 +1512,1140 @@ NumPy arraylerini manipüle etmek için birçok yöntem vardır. Bu yöntemlerin
 
 <h2 id="1.8">Binary Operators</h2>
 
+- `bitwise_and(x1, x2, /, out=None, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin bitleri arasında `and` işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+  b = np.array([5,4,3,2,1])
+
+  print(np.bitwise_and(a,b))
+  ```
+  **Output:**
+  ```
+  [1 0 3 0 1]
+  ```
+- `bitwise_or(x1, x2, /, out=None, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin bitleri arasında `or` işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+  b = np.array([5,4,3,2,1])
+
+  print(np.bitwise_or(a,b))
+  ```
+  **Output:**
+  ```
+  [5 6 3 6 5]
+  ```
+- `bitwise_xor(x1, x2, /, out=None, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin bitleri arasında `xor` işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+  b = np.array([5,4,3,2,1])
+
+  print(np.bitwise_xor(a,b))
+  ```
+  **Output:**
+  ```
+  [4 6 0 6 4]
+  ```
+- `invert(x, /, out=None, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x` parametresine girilen array'in bitleri arasında `not` işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+
+  print(np.invert(a))
+  ```
+  **Output:**
+  ```
+  [-2 -3 -4 -5 -6]
+  ```
+- `left_shift(x1, x2, /, out=None, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` parametresine girilen array'in bitleri arasında `x2` parametresine girilen değer kadar sola kaydırma işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+
+  print(np.left_shift(a,2))
+  ```
+  **Output:**
+  ```
+  [4 8 12 16 20]
+  ```
+- `right_shift(x1, x2, /, out=None, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` parametresine girilen array'in bitleri arasında `x2` parametresine girilen değer kadar sağa kaydırma işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1,2,3,4,5])
+
+  print(np.right_shift(a,2))
+  ```
+  **Output:**
+  ```
+  [0 0 0 1 1]
+  ```
+
+<h2 id="1.9">String Functions</h2>
+
+- `add(x1, x2, /[, out, casting, order, dtype, subok])`: `x1` ve `x2` parametrelerine girilen array'lerin string değerlerini birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+  b = np.array(['d','e','f'])
+
+  print(np.add(a,b))
+  ```
+  **Output:**
+  ```
+  ['ad' 'be' 'cf']
+  ```
+- `multiply(x1, x2, /[, out, casting, order, dtype, subok])`: `x1` parametresine girilen array'in string değerlerini `x2` parametresine girilen değer kadar tekrar eder. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.multiply(a,3))
+  ```
+  **Output:**
+  ```
+  ['aaa' 'bbb' 'ccc']
+  ```
+- `center(a, width, fillchar=' ', /)`: `a` parametresine girilen array'in string değerlerini `width` parametresine girilen değer kadar ortalar. `fillchar` parametresine girilen değer ile boşlukları doldurur. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.center(a,10,'-'))
+  ```
+  **Output:**
+  ```
+  ['---a----' '---b----' '---c----']
+  ```
+- `capitalize(a, /)`: `a` parametresine girilen array'in string değerlerinin ilk harflerini büyük yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.capitalize(a))
+  ```
+  **Output:**
+  ```
+  ['A' 'B' 'C']
+  ```
+- `title(a, /)`: `a` parametresine girilen array'in string değerlerinin tüm harflerini büyük yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.title(a))
+  ```
+  **Output:**
+  ```
+  ['A' 'B' 'C']
+  ```
+- `lower(a, /)`: `a` parametresine girilen array'in string değerlerinin tüm harflerini küçük yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['A','B','C'])
+
+  print(np.lower(a))
+  ```
+  **Output:**
+  ```
+  ['a' 'b' 'c']
+  ```
+- `upper(a, /)`: `a` parametresine girilen array'in string değerlerinin tüm harflerini büyük yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.upper(a))
+  ```
+  **Output:**
+  ```
+  ['A' 'B' 'C']
+  ```
+- `split(a, /[, sep, maxsplit])`: `a` parametresine girilen array'in string değerlerini `sep` parametresine girilen değer ile ayırır. `maxsplit` parametresine girilen değer kadar ayırma işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a b c','d e f','g h i'])
+
+  print(np.split(a,' '))
+  ```
+  **Output:**
+  ```
+  [array(['a', 'b', 'c'], dtype='<U1')
+   array(['d', 'e', 'f'], dtype='<U1')
+   array(['g', 'h', 'i'], dtype='<U1')]
+  ```
+- `splitlines(a, /[, keepends])`: `a` parametresine girilen array'in string değerlerini satır sonlarına göre ayırır. `keepends` parametresine `True` girilirse satır sonlarını da ayırır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a\nb\nc','d\ne\nf','g\nh\ni'])
+
+  print(np.splitlines(a))
+  ```
+  **Output:**
+  ```
+  [array(['a', 'b', 'c'], dtype='<U1')
+   array(['d', 'e', 'f'], dtype='<U1')
+   array(['g', 'h', 'i'], dtype='<U1')]
+  ```
+- `strip(a, chars=None, /)`: `a` parametresine girilen array'in string değerlerinin başındaki ve sonundaki boşlukları siler. `chars` parametresine girilen değerlerin başındaki ve sonundaki boşlukları siler. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([' a ',' b ',' c '])
+
+  print(np.strip(a))
+  ```
+  **Output:**
+  ```
+  ['a' 'b' 'c']
+  ```
+- `join(a, sep, /)`: `a` parametresine girilen array'in string değerlerini `sep` parametresine girilen değer ile birleştirir. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.join(a,'-'))
+  ```
+  **Output:**
+  ```
+  a-b-c
+  ```
+- `replace(a, old, new, /[, count])`: `a` parametresine girilen array'in string değerlerinde `old` parametresine girilen değeri `new` parametresine girilen değer ile değiştirir. `count` parametresine girilen değer kadar değiştirme işlemi yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.replace(a,'a','d'))
+  ```
+  **Output:**
+  ```
+  ['d' 'b' 'c']
+  ```
+- `decode(a, /[, encoding, errors])`: `a` parametresine girilen array'in string değerlerini `encoding` parametresine girilen değer ile kodlar. `errors` parametresine girilen değer ile hata ayıklaması yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array(['a','b','c'])
+
+  print(np.decode(a,'utf-8'))
+  ```
+  **Output:**
+  ```
+  [b'a' b'b' b'c']
+  ```
+- `encode(a, /[, encoding, errors])`: `a` parametresine girilen array'in string değerlerini `encoding` parametresine girilen değer ile kodlar. `errors` parametresine girilen değer ile hata ayıklaması yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([b'a',b'b',b'c'])
+
+  print(np.encode(a,'utf-8'))
+  ```
+  **Output:**
+  ```
+  ['a' 'b' 'c']
+  ```
+
+<h2 id="1.10">Mathematical Functions</h2>
+
+<h3 id="1.10.1">Trigonometric Functions</h3>
+
+- `sin(x, /)`: `x` parametresine girilen array'in tüm değerlerinin sinüsünü alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, np.pi/2, np.pi])
+
+  print(np.sin(x))
+  ```
+  **Output:**
+  ```
+  [0.0000000e+00 1.0000000e+00 1.2246468e-16]
+  ```
+- `cos(x, /)`: `x` parametresine girilen array'in tüm değerlerinin kosinüsünü alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, np.pi/2, np.pi])
+
+  print(np.cos(x))
+  ```
+  **Output:**
+  ```
+  [ 1.0000000e+00  6.1232340e-17 -1.0000000e+00]
+  ```
+- `tan(x, /)`: `x` parametresine girilen array'in tüm değerlerinin tanjantını alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, np.pi/2, np.pi])
+
+  print(np.tan(x))
+  ```
+  **Output:**
+  ```
+  [ 0.0000000e+00  1.6331239e+16 -1.2246468e-16]
+  ```
+- `arcsin(x, /)`: `x` parametresine girilen array'in tüm değerlerinin ters sinüsünü alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, 1, -1])
+
+  print(np.arcsin(x))
+  ```
+  **Output:**
+  ```
+  [0.         1.57079633 1.57079633]
+  ```
+- `arccos(x, /)`: `x` parametresine girilen array'in tüm değerlerinin ters kosinüsünü alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, 1, -1])
+
+  print(np.arccos(x))
+  ```
+  **Output:**
+  ```
+  [1.57079633 0.         3.14159265]
+  ```
+- `arctan(x, /)`: `x` parametresine girilen array'in tüm değerlerinin ters tanjantını alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, 1, -1])
+
+  print(np.arctan(x))
+  ```
+  **Output:**
+  ```
+  [0.         0.78539816 0.78539816]
+  ```
+- `degrees(x, /)`: `x` parametresine girilen array'in tüm değerlerinin derece cinsinden karşılığını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, np.pi/2, np.pi])
+
+  print(np.degrees(x))
+  ```
+  **Output:**
+  ```
+  [ 0. 90. 180.]
+  ```
+- `radians(x, /)`: `x` parametresine girilen array'in tüm değerlerinin radyan cinsinden karşılığını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, 90, 180])
+
+  print(np.radians(x))
+  ```
+  **Output:**
+  ```
+  [0.         1.57079633 3.14159265]
+  ```
+- `deg2rad(x, /)`: `x` parametresine girilen array'in tüm değerlerinin radyan cinsinden karşılığını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, 90, 180])
+
+  print(np.deg2rad(x))
+  ```
+  **Output:**
+  ```
+  [0.         1.57079633 3.14159265]
+  ```
+- `rad2deg(x, /)`: `x` parametresine girilen array'in tüm değerlerinin derece cinsinden karşılığını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, np.pi/2, np.pi])
+
+  print(np.rad2deg(x))
+  ```
+  **Output:**
+  ```
+  [ 0. 90. 180.]
+  ```
+- `unwrap(p, discont=3.141592653589793, axis=-1, /)`: `p` parametresine girilen array'in tüm değerlerinin ters sinüsünü alır ve radians cinsinden döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([0, 1, -1])
+
+  print(np.unwrap(x))
+  ```
+  **Output:**
+  ```
+  [0.         1.57079633 1.57079633]
+  ```
+
+<h3 id="1.10.2">Functions for Rounding</h3>
+
+- `around(a, decimals=0, out=None, /)`: `a` parametresine girilen array'in tüm değerlerinin belirtilen `decimals` parametresine göre yuvarlanmasını sağlar. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([1.0, 5.55, 123, 0.567, 25.532])
+
+  print(np.around(x))
+  print(np.around(x, decimals=1))
+  print(np.around(x, decimals=-1))
+  ```
+  **Output:**
+  ```
+  [  1.   6. 123.   1.  26.]
+  [  1.    5.6 123.    0.6  25.5]
+  [  0.  10. 120.   0.  30.]
+  ```
+- `floor(x, /)`: `x` parametresine girilen array'in tüm değerlerinin alt değerini alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([-1.7, 1.5, -0.2, 0.6, 10])
+
+  print(np.floor(x))
+  ```
+  **Output:**
+  ```
+  [-2.  1. -1.  0. 10.]
+  ```
+- `ceil(x, /)`: `x` parametresine girilen array'in tüm değerlerinin üst değerini alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([-1.7, 1.5, -0.2, 0.6, 10])
+
+  print(np.ceil(x))
+  ```
+  **Output:**
+  ```
+  [-1.  2. -0.  1. 10.]
+  ```
+
+<h3 id="1.10.3">Arithmetic Operations</h3>
+
+- `add(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin toplamını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+  x2 = np.array([1, 2, 3])
+
+  print(np.add(x1, x2))
+  ```
+  **Output:**
+  ```
+  [11 22 33]
+  ```
+- `subtract(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin farkını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+  x2 = np.array([1, 2, 3])
+
+  print(np.subtract(x1, x2))
+  ```
+  **Output:**
+  ```
+  [ 9 18 27]
+  ```
+- `multiply(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin çarpımını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+
+  print(np.multiply(x1, 2))
+  ```
+  **Output:**
+  ```
+  [20 40 60]
+  ```
+- `divide(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin bölümünü alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+
+  print(np.divide(x1, 2))
+  ```
+  **Output:**
+  ```
+  [ 5. 10. 15.]
+  ```
+- `power(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin üssünü alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+
+  print(np.power(x1, 2))
+  ```
+  **Output:**
+  ```
+  [ 100  400  900]
+  ```
+- `mod(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin modunu alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+
+  print(np.mod(x1, 2))
+  ```
+  **Output:**
+  ```
+  [0 0 0]
+  ```
+- `remainder(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin kalanını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+
+  print(np.remainder(x1, 2))
+  ```
+  **Output:**
+  ```
+  [0 0 0]
+  ```
+- `fmod(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x1` ve `x2` parametrelerine girilen array'lerin tüm değerlerinin kalanını alır. Örnek:
+  ```py
+  import numpy as np
+
+  x1 = np.array([10, 20, 30])
+
+  print(np.fmod(x1, 2))
+  ```
+  **Output:**
+  ```
+  [0 0 0]
+  ```
+- `absolute(x, /)`: `x` parametresine girilen array'in tüm değerlerinin mutlak değerini alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([-1, 2, -3, 4])
+
+  print(np.absolute(x))
+  ```
+  **Output:**
+  ```
+  [1 2 3 4]
+  ```
+- `negative(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x` parametresine girilen array'in tüm değerlerinin negatifini alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([-1, 2, -3, 4])
+
+  print(np.negative(x))
+  ```
+  **Output:**
+  ```
+  [ 1 -2  3 -4]
+  ```
+- `sign(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x` parametresine girilen array'in tüm değerlerinin işaretini alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([-1, 2, -3, 4])
+
+  print(np.sign(x))
+  ```
+  **Output:**
+  ```
+  [-1  1 -1  1]
+  ```
+- `reciprocal(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x` parametresine girilen array'in tüm değerlerinin tersini alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([1, 2, 3, 4])
+
+  print(np.reciprocal(x))
+  ```
+  **Output:**
+  ```
+  [1.         0.5        0.33333333 0.25      ]
+  ```
+- `real(val, /)`: `val` parametresine girilen array'in tüm değerlerinin reel kısmını alır. Örnek:
+  ```py
+  import numpy as np
+
+  val = np.array([1+2j, 3+4j, 5+6*1j])
+
+  print(np.real(val))
+  ```
+  **Output:**
+  ```
+  [1. 3. 5.]
+  ```
+- `imag(val, /)`: `val` parametresine girilen array'in tüm değerlerinin sanal kısmını alır. Örnek:
+  ```py
+  import numpy as np
+
+  val = np.array([1+2j, 3+4j, 5+6*1j])
+
+  print(np.imag(val))
+  ```
+  **Output:**
+  ```
+  [2. 4. 6.]
+  ```
+- `conj(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])`: `x` parametresine girilen array'in tüm değerlerinin kompleks kongüjünü alır. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([1+2j, 3+4j, 5+6j])
+
+  print(np.conj(x))
+  ```
+  **Output:**
+  ```
+  [1.-2.j 3.-4.j 5.-6.j]
+  ```
+- `angle(z, /, deg=False)`: `z` parametresine girilen array'in tüm değerlerinin açısını alır. Örnek:
+  ```py
+  import numpy as np
+
+  z = np.array([1+2j, 3+4j, 5+6j])
+
+  print(np.angle(z))
+  ```
+  **Output:**
+  ```
+  [1.10714872 0.92729522 0.87605805]
+  ```
+
+<h3 id="1.10.4">Statistical Functions</h3>
+
+- `amin(a, /, axis=None, out=None, keepdims=<no value>, initial=<no value>, where=True)`: `a` parametresine girilen array'in tüm değerlerinin en küçüğünü alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[3, 7, 5], [8, 4, 3], [2, 4, 9]])
+
+  print(np.amin(a))
+  ```
+  **Output:**
+  ```
+  2
+  ```
+- `amax(a, /, axis=None, out=None, keepdims=<no value>, initial=<no value>, where=True)`: `a` parametresine girilen array'in tüm değerlerinin en büyüğünü alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[3, 7, 5], [8, 4, 3], [2, 4, 9]])
+
+  print(np.amax(a))
+  ```
+  **Output:**
+  ```
+  9
+  ```
+- `ptp(a, /, axis=None, out=None, keepdims=<no value>)`: `a` parametresine girilen array'in tüm değerlerinin en büyük ve en küçük farkını alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[3, 7, 5], [8, 4, 3], [2, 4, 9]])
+
+  print(np.ptp(a))
+  ```
+  **Output:**
+  ```
+  7
+  ```
+- `percentile(a, q, /, axis=None, out=None, overwrite_input=False, interpolation='linear', keepdims=False)`: `a` parametresine girilen array'in tüm değerlerinin `q` parametresine girilen yüzdelik değerine göre değerini alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[10, 7, 4], [3, 2, 1]])
+
+  print(np.percentile(a, 50))
+  ```
+  **Output:**
+  ```
+  3.5
+  ```
+- `median(a, /, axis=None, out=None, overwrite_input=False, keepdims=False)`: `a` parametresine girilen array'in tüm değerlerinin ortanca değerini alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[30, 65, 70], [80, 95, 10], [50, 90, 60]])
+
+  print(np.median(a))
+  ```
+  **Output:**
+  ```
+  65.0
+  ```
+- `mean(a, /, axis=None, dtype=None, out=None, keepdims=<no value>)`: `a` parametresine girilen array'in tüm değerlerinin ortalamasını alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 2, 3], [3, 4, 5], [4, 5, 6]])
+
+  print(np.mean(a))
+  ```
+  **Output:**
+  ```
+  3.6666666666666665
+  ```
+- `average(a, /, axis=None, weights=None, returned=False)`: `a` parametresine girilen array'in tüm değerlerinin ağırlıklı ortalamasını alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1, 2, 3, 4])
+
+  print(np.average(a))
+  ```
+  **Output:**
+  ```
+  2.5
+  ```
+- `std(a, /, axis=None, dtype=None, out=None, ddof=0, keepdims=<no value>)`: `a` parametresine girilen array'in tüm değerlerinin standart sapmasını alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1, 2, 3, 4])
+
+  print(np.std(a))
+  ```
+  **Output:**
+  ```
+  1.118033988749895
+  ```
+- `var(a, /, axis=None, dtype=None, out=None, ddof=0, keepdims=<no value>)`: `a` parametresine girilen array'in tüm değerlerinin varyansını alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1, 2, 3, 4])
+
+  print(np.var(a))
+  ```
+  **Output:**
+  ```
+  1.25
+  ```
+
+<h2 id="1.11">Sort, Search & Counting Functions</h2>
+
+NumPy'da çeşitli sorting fonksiyonları bulunmaktadır. Bu fonksiyonlar speed of execution, worst case performance, workspace required, stability of algorithms ile karakterize edilen farklı sorting algoritmaları uygular. 4 sıralama algoritması bulunmaktadır:
+|   **kind**    | **speed** | **worst case** | **work space** | **stable** |
+| :-----------: | :-------: | :------------: | :------------: | :--------: |
+| `'quicksort'` |     1     |     O(n^2)     |       0        |     no     |
+| `'mergesort'` |     2     |  O(n*log(n))   |      ~n/2      |    yes     |
+|  `'timsort'`  |     2     |  O(n*log(n))   |      ~n/2      |    yes     |
+| `'heapsort'`  |     3     |  O(n*log(n))   |       0        |     no     |
+
+- `sort(a, /, axis=-1, kind='quicksort', order=None)`: `a` parametresine girilen array'i sıralar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[3, 7], [9, 1]])
+
+  print(np.sort(a))
+  ```
+  **Output:**
+  ```
+  [[3 7]
+   [1 9]]
+  ```
+- `argsort(a, /, axis=-1, kind='quicksort', order=None)`: `a` parametresine girilen array'in sıralanmış haliyle aynı boyutlu bir array döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[3, 7], [9, 1]])
+
+  print(np.argsort(a))
+  ```
+  **Output:**
+  ```
+  [[0 1]
+   [1 0]]
+  ```
+  - `lexsort(keys, /, axis=-1)`: `keys` parametresine girilen array'in sıralanmış haliyle aynı boyutlu bir array döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([3, 1, 2])
+  y = np.array([2, 3, 1])
+
+  print(np.lexsort((x, y)))
+  ```
+  **Output:**
+  ```
+  [1 2 0]
+  ```
+- `argmax(a, /, axis=None, out=None)`: `a` parametresine girilen array'in en büyük değerini döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1, 2, 3, 4])
+
+  print(np.argmax(a))
+  ```
+  **Output:**
+  ```
+  3
+  ```
+- `argmin(a, /, axis=None, out=None)`: `a` parametresine girilen array'in en küçük değerini döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1, 2, 3, 4])
+
+  print(np.argmin(a))
+  ```
+  **Output:**
+  ```
+  0
+  ```
+- `nonzero(a)`: `a` parametresine girilen array'de 0 olmayan değerlerin indexlerini döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 2, 3], [0, 0, 0], [4, 5, 6]])
+
+  print(np.nonzero(a))
+  ```
+  **Output:**
+  ```
+  (array([0, 0, 0, 2, 2, 2]), array([0, 1, 2, 0, 1, 2]))
+  ```
+- `where(condition, /, x=None, y=None)`: `condition` parametresine girilen array'de 0 olmayan değerlerin indexlerini döndürür. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 2, 3], [0, 0, 0], [4, 5, 6]])
+
+  print(np.where(a > 2))
+  ```
+  **Output:**
+  ```
+  (array([0, 2, 2, 2]), array([2, 0, 1, 2]))
+  ```
+- `extract(condition, arr)`: `condition` parametresine girilen array'de 0 olmayan değerlerin indexlerini `arr` parametresine girilen array'den alır. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 2, 3], [0, 0, 0], [4, 5, 6]])
+
+  print(np.extract(a > 2, a))
+  ```
+  **Output:**
+  ```
+  [3 4 5 6]
+  ```
+
+<h2 id="1.12">Byte Swapping</h2>
+
+- `ndarray.byteswap(inplace=False)`: `ndarray`'in byte'larını değiştirir. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([1, 256, 8755], dtype=np.int16)
+
+  print(x.byteswap(True))
+  ```
+  **Output:**
+  ```
+  [  256     1 22124]
+  ```
+
+<h2 id="1.13">Copy & View</h2>
+
+NumPy'da array'lerin kopyalanması ve görünümü (view) alınması iki farklı işlemdir. Kopyalam işlemi, array'i her şeyiyle birlikte kopyalar. Görünüm almak ise array'in sadece görünümünü alır. Bu işlemler aşağıdaki şekilde gerçekleştirilir: Örnek:
+```py
+# Viwe
+Array arr is:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+
+Create a view of arr: b = a.view()
+Array b is:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+
+b is arr: False
+
+Change the contents of b: b[0,0] = 100
+Modified array b:
+[[100  10]
+ [  2   3]
+ [  4   5]]
+arr remains unchanged:
+[[100  10]
+ [  2   3]
+ [  4   5]]
+```
+**Output:**
+```
+Array arr is:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+
+Create a view of arr: b = a.view()
+Array b is:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+
+b is arr: False
+
+Change the contents of b: b[0,0] = 100
+Modified array b:
+[[100  10]
+ [  2   3]
+ [  4   5]]
+arr remains unchanged:
+[[100  10]
+ [  2   3]
+ [  4   5]]
+```
+```py
+# Copy
+import numpy as np
+arr = np.array([[10,10], [2,3], [4,5]])
+
+print('Array arr is:', arr, sep="\n", end="\n\n")
+
+print('Create a deep copy of arr: b = a.copy()')
+b = arr.copy()
+print('Array b is:', b, sep="\n", end="\n\n")
+
+print('b is arr:', b is arr, end="\n\n")
+
+print ('Change the contents of b: b[0,0] = 100')
+b[0,0] = 100
+print('Modified array b:', b, sep="\n")
+print('arr remains unchanged:', arr, sep="\n")
+```
+**Output:**
+```
+Array a is:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+
+Create a deep copy of a: b = a.copy()
+Array b is:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+
+Can we write b is a False
+
+Change the contents of b: b[0,0] = 100
+Modified array b:
+[[100  10]
+ [  2   3]
+ [  4   5]]
+a remains unchanged:
+[[10 10]
+ [ 2  3]
+ [ 4  5]]
+```
+Gördüğünüz gibi `view` işlemi ile array'in sadece görünümünü alındığı için orjinal array'de yapılan değişiklikler görünüm alınan array'de de görünür. `copy` işlemi ise array'i tamamen kopyalayıp orjinal array'den tamamen bağımsız bir array oluşturur. Bu yüzden orjinal array'de yapılan değişiklikler kopyalanan array'de görünmez.
+
+<h2 id="1.14">Matrix Library</h2>
+
+NumPy paketi bir Matrix kitaplığı (`numpy.matlib`) içerir. Bu modül, ndarray nesneleri yerine matris döndüren fomksiyonlara sahiptir.
+
+- `matlib.empty(shape, dtype=float, order='C')`: `shape` parametresine girilen boyutta boş bir array oluşturur. Örnek:
+  ```py
+  import numpy.matlib
+
+  print(numpy.matlib.empty((2, 2)))
+  ```
+  **Output:**
+  ```
+  [[1.36162415e-311 1.36162415e-311]
+  [1.36162415e-311 1.36162415e-311]]
+  ```
+- `matlib.zeros(shape, dtype=float, order='C')`: `shape` parametresine girilen boyutta sıfırlardan oluşan bir array oluşturur. Örnek:
+  ```py
+  import numpy.matlib
+
+  print(numpy.matlib.zeros((2, 2)))
+  ```
+  **Output:**
+  ```
+  [[0. 0.]
+  [0. 0.]]
+  ```
+- `matlib.ones(shape, dtype=None, order='C')`: `shape` parametresine girilen boyutta birlerden oluşan bir array oluşturur. Örnek:
+  ```py
+  import numpy.matlib
+
+  print(numpy.matlib.ones((2, 2)))
+  ```
+  **Output:**
+  ```
+  [[1. 1.]
+  [1. 1.]]
+  ```
+- `matlib.eye(n, M=None, k=0, dtype=<class 'float'>, order='C')`: `n` parametresine girilen boyutta birim matris oluşturur. `M` parametresi girilmezse `n` parametresi ile aynı değer alır (yani kare matris olur). `k` parametresi ise birim matrisin ana köşegeninin sağa veya sola kaydırılmasını sağlar. Örnek:
+  ```py
+  import numpy.matlib
+
+  print(numpy.matlib.eye(n=3, M=4, k=0, dtype=float))
+  ```
+  **Output:**
+  ```
+  [[1. 0. 0. 0.]
+  [0. 1. 0. 0.]
+  [0. 0. 1. 0.]]
+  ```
+- `matlib.identity(n, dtype=None)`: `n` parametresine girilen boyutta birim matris oluşturur. Örnek:
+  ```py
+  import numpy.matlib
+
+  print(numpy.matlib.identity(5, dtype=float))
+  ```
+  **Output:**
+  ```
+  [[1. 0. 0. 0. 0.]
+  [0. 1. 0. 0. 0.]
+  [0. 0. 1. 0. 0.]
+  [0. 0. 0. 1. 0.]
+  [0. 0. 0. 0. 1.]]
+  ```
+- `matlib.rand(d0, d1, ..., dn)`: `d0`, `d1`, ..., `dn` parametrelerine girilen boyutta rastgele değerlerden oluşan bir array oluşturur. Örnek:
+  ```py
+  import numpy.matlib
+
+  print(numpy.matlib.rand(3, 3))
+  ```
+  **Output:**
+  ```
+  [[0.59066705 0.50517741 0.55721634]
+  [0.82512513 0.54510793 0.6141953 ]
+  [0.18272202 0.66594261 0.66823337]]
+  ```
+
+<h2 id="1.15">Linear Algebra</h2>
+
+NumPy paketi bir Lineer Cebir kitaplığı (`numpy.linalg`) içerir. Bu modül, matrisler üzerinde çeşitli matematiksel işlemler yapmamızı sağlar.
+
+- `linalg.dot(a, b, out=None)`: `a` ve `b` parametrelerine girilen matrisleri çarpar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 0], [0, 1]])
+  b = np.array([[4, 1], [2, 2]])
+
+  print(np.dot(a, b))
+  ```
+  **Output:**
+  ```
+  [[4 1]
+  [2 2]]
+  ```
+- `linalg.vdot(a, b)`: `a` ve `b` parametrelerine girilen vektörleri çarpar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([1, 4, 5])
+  b = np.array([7, 2, 12])
+
+  print(np.vdot(a, b))
+  ```
+  **Output:**
+  ```
+  61
+  ```
+- `linalg.inner(a, b)`: `a` ve `b` parametrelerine girilen matrisleri iç çarpımı yapar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 0], [0, 1]])
+  b = np.array([[4, 1], [2, 2]])
+
+  print(np.inner(a, b))
+  ```
+  **Output:**
+  ```
+  [[4 1]
+  [2 2]]
+  ```
+- `linalg.matmul(x1, x2, *args, **kwargs)`: `x1` ve `x2` parametrelerine girilen matrisleri çarpar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 0], [0, 1]])
+  b = np.array([[4, 1], [2, 2]])
+
+  print(np.matmul(a, b))
+  ```
+  **Output:**
+  ```
+  [[4 1]
+  [2 2]]
+  ```
+- `determinant(a)`: `a` parametresine girilen matrisin determinantını hesaplar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 2], [3, 4]])
+
+  print(np.linalg.det(a))
+  ```
+  **Output:**
+  ```
+  -2.0000000000000004
+  ```
+- `solve(a, b)`: `a` parametresine girilen matrisin `b` parametresine girilen vektörü çözmesini sağlar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 1, 1], [0, 2, 5], [2, 5, -1]])
+  b = np.array([6, -4, 27])
+
+  print(np.linalg.solve(a, b))
+  ```
+  **Output:**
+  ```
+  [ 5.  3. -2.]
+  ```
+- `inv(a)`: `a` parametresine girilen matrisin tersini hesaplar. Örnek:
+  ```py
+  import numpy as np
+
+  a = np.array([[1, 2], [3, 4]])
+
+  print(np.linalg.inv(a))
+  ```
+  **Output:**
+  ```
+  [[-2.   1. ]
+  [ 1.5 -0.5]]
+  ```
+  
