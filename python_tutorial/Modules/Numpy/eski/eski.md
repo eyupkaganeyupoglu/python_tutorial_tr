@@ -29,30 +29,6 @@ print(np.concatenate((c,d))) # Output: [2 1 5 3 7 4 6 8]
 ```
 Daha fazla bilgi için [tıklayın](https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html?highlight=concatenate#numpy.concatenate).
 
-<h2 id="1.6">Shape ve Size</h2>
-
-<h3 id="1.6.1"><code>ndim(a)</code></h3>
-
-Argüman olarak girilen array'in boyut (dimension) bilgisini döndürür. Örnek:
-```py
-import numpy as np
-a = np.array([[4,2,3,1],[8,5,7,6]])
-b = np.array([11,9,12,10])
-print(np.ndim(a)) # Output: 2
-print(np.ndim(b)) # Output: 1
-```
-
-<h3 id="1.6.2"><code>size(a, axis=None)</code></h3>
-
-Argüman olarak girilen array'in toplam element sayısının (size) bilgisini döndürür. Örnek:
-```py
-import numpy as np
-a = np.array([[4,2,3,1],[8,5,7,6]])
-b = np.array([11,9,12,10])
-print(np.size(a)) # Output: 8
-print(np.size(b)) # Output: 4
-```
-
 <h2 id="1.8">Array'e Yeni Boyut Eklemek</h2>
 
 <h3 id="1.8.1"><code>newaxis</code></h3>
