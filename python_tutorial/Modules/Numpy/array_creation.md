@@ -1,10 +1,21 @@
 # İçindekiler
 
-- []()
+- [Array Oluşturm](#1)
+  - [`array` Methodu](#1.1)
+  - [`empty` Methodu](#1.2)
+  - [`zeros` Methodu](#1.3)
+  - [`ones` Methodu](#1.4)
+  - [`asarray` Methodu](#1.5)
+  - [`frombuffer` Methodu](#1.6)
+  - [`fromiter` Methodu](#1.7)
+  - [`arange` Methodu](#1.8)
+  - [`linspace` Methodu](#1.9)
+  - [`logspace` Methodu](#1.10)
+  - [`full` Methodu](#1.11)
 
 <h1 id="1">Array Oluşturmak</h1>
 
-<h2 id="1.1"><code>object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None</code> Methodu</h2>
+<h2 id="1.1"><code>array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)</code> Methodu</h2>
 
 Bir array oluşturmak için en temel yöntem `array` methodunu kullanmaktır. Örnek:
 ```py
@@ -214,4 +225,3 @@ print(a)
 - **`dtype:data-type` (optional)**: Array'in veri türünü belirtir. Default değeri `float`'tur. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.full.html?highlight=full#numpy.full).
 - **`order:{'C', 'F', 'A'}` (optional)**: Array'in bellekte nasıl saklanacağını belirtir. Default değeri `'C'`'dir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.full.html?highlight=full#numpy.full).
 - **`like:array_like` (optional)**: Array'in boyutunu ve veri türünü belirtir. Daha fazla bilgi için [tıklayın](https://numpy.org/doc/1.23/reference/generated/numpy.full.html?highlight=full#numpy.full).
-
