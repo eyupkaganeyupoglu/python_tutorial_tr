@@ -581,3 +581,5 @@ print(b2) # Output: [1. 2. 3. 4. 5. 6. 7. 8.]
 ```
 
 **Not:** Metin dosyaları ile uğraşmak ve paylaşmak daha kolay olsa bile `.npy` ve `.npz` dosyaları daha küçük boyuttadır ve daha hızlı okunur.
+
+<h2 id="3.4"><code>flatten(a, order='C')</code> Methodu</h2>
