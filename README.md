@@ -81,19 +81,11 @@ Konular ve hangi sırayla çalışman gerektiği aşağıda listelenmiştir.
         - [NumPy'da Array Oluşturma](./python_tutorial/Modules/Numpy/array_creation.md)
         - [Indexing ve Slicing](./python_tutorial/Modules/Numpy/indexing_slicing.md)
         - [Broadcasting](./python_tutorial/Modules/Numpy/broadcasting.md)
-        - [Array Üzerinde Iterating İşlemi](./python_tutorial/Modules/Numpy/iterating_over_array.md)
-        - [Array Üzerinde Iterating İşlemi(Iterating Over Array)](./python_tutorial/Modules/Numpy/iterating_over_array.md)
+        - [Array Üzerinde Iterating İşlemi (Iterating Over Array)](./python_tutorial/Modules/Numpy/iterating_over_array.md)
         - [Array Manipülasyonu](./python_tutorial/Modules/Numpy/array_manipulation.md)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
-        - [](./python_tutorial/Modules/Numpy)
+        - [Trigonometrik Fonksiyonlar](./python_tutorial/Modules/Numpy/trigonometric_functions.md)
+        - [String Fonksiyonları](./python_tutorial/Modules/Numpy/string_functions.md)
+        - [Binary Fonksiyonları](./python_tutorial/Modules/Numpy/binary_functions.md)
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=+3.9&style=flat-square&labelColor=green&color=green"/></p>
