@@ -85,6 +85,10 @@ Konular ve hangi sırayla çalışman gerektiği aşağıda listelenmiştir.
         - [Array Manipülasyonu](./python_tutorial/Modules/Numpy/array_manipulation.md)
         - [Trigonometrik Fonksiyonlar](./python_tutorial/Modules/Numpy/trigonometric_functions.md)
         - [String Fonksiyonları](./python_tutorial/Modules/Numpy/string_functions.md)
+        - [Yuvarlama (Rounding) Fonksiyonları](./python_tutorial/Modules/Numpy/functions_for_rounding.md)
+        - [Aritmetik Fonksiyonlar](./python_tutorial/Modules/Numpy/arithmetic_functions.md)
+        - [Statistical Functions](./python_tutorial/Modules/Numpy/statistical_functions.md)
+        - [Sort, Search & Counting Functions](./python_tutorial/Modules/Numpy/sort_search_counting_functions.md)
         - [Binary Fonksiyonları](./python_tutorial/Modules/Numpy/binary_functions.md)
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
