@@ -1,6 +1,6 @@
 # İçindekiler
 
--[Binary Functions](#1)
+- [Binary Functions](#1)
     -[`bitwise_and` Methodu](#1.1)
     -[`bitwise_or` Methodu](#1.2)
     -[`bitwise_xor` Methodu](#1.3)

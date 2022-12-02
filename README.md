@@ -73,7 +73,7 @@ Konular ve hangi sırayla çalışman gerektiği aşağıda listelenmiştir.
     - [Modüller (Modules)](./python_tutorial/import_system/modules.md)
     - [Paketler (Packets)](./python_tutorial/import_system/packets.md)
 - Modüller (Modules)
-    - Numpy (Yapım Aşamasında)
+    - Numpy
         - [NumPy Nedir?](./python_tutorial/Modules/Numpy/what_is_numpy.md)
         - [`ndarray` Objesi](./python_tutorial/Modules/Numpy/ndarray_object.md)
         - [NumPy Veri Türleri (`dtype`)](./python_tutorial/Modules/Numpy/numpy_data_types.md)

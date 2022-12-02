@@ -1,17 +1,17 @@
 # İçindekiler
 
--[Trigonometric Functions](#1)
-    -[`sin` Methodu](#1.1)
-    -[`cos` Methodu](#1.2)
-    -[`tan` Methodu](#1.3)
-    -[`arcsin` Methodu](#1.4)
-    -[`arccos` Methodu](#1.5)
-    -[`arctan` Methodu](#1.6)
-    -[`degrees` Methodu](#1.7)
-    -[`radians` Methodu](#1.8)
-    -[`deg2rad` Methodu](#1.9)
-    -[`rad2deg` Methodu](#1.10)
-    -[`unwrap` Methodu](#1.11)
+- [Trigonometric Functions](#1)
+    - [`sin` Methodu](#1.1)
+    - [`cos` Methodu](#1.2)
+    - [`tan` Methodu](#1.3)
+    - [`arcsin` Methodu](#1.4)
+    - [`arccos` Methodu](#1.5)
+    - [`arctan` Methodu](#1.6)
+    - [`degrees` Methodu](#1.7)
+    - [`radians` Methodu](#1.8)
+    - [`deg2rad` Methodu](#1.9)
+    - [`rad2deg` Methodu](#1.10)
+    - [`unwrap` Methodu](#1.11)
 
 <h1 id="1">Trigonometric Functions</h1>
 
