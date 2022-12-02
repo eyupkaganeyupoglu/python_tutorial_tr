@@ -1,12 +1,14 @@
 # İçindekiler
 
 -[Binary Functions](#1)
--[`bitwise_and` Methodu](#1.1)
--[`bitwise_or` Methodu](#1.2)
--[`bitwise_xor` Methodu](#1.3)
--[`invert` Methodu](#1.4)
--[`left_shift` Methodu](#1.5)
--[`right_shift` Methodu](#1.6)
+    -[`bitwise_and` Methodu](#1.1)
+    -[`bitwise_or` Methodu](#1.2)
+    -[`bitwise_xor` Methodu](#1.3)
+    -[`invert` Methodu](#1.4)
+    -[`left_shift` Methodu](#1.5)
+    -[`right_shift` Methodu](#1.6)
+- [Byte Swapping](#2)
+    - [`ndarray.byteswap` Attribute'u](#2.1)
 
 <h1 id="1">Binary Functions</h1>
 
@@ -102,3 +104,20 @@ print(np.right_shift(a,2))
 ```
 [0 0 0 1 1]
 ```
+
+<h1 id="2">Byte Swapping</h1>
+
+<h2 id="2.1"><code>ndarray.byteswap(inplace=False)</code> Methodu</h2>
+
+`ndarray`'in byte'larını değiştirir. Örnek:
+  ```py
+  import numpy as np
+
+  x = np.array([1, 256, 8755], dtype=np.int16)
+
+  print(x.byteswap(True))
+  ```
+  **Output:**
+  ```
+  [  256     1 22124]
+  ```

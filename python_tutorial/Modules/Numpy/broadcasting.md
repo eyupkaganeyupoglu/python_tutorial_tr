@@ -1,6 +1,6 @@
 # İçindekiler
 
-- [İçindekiler](#i̇çindekiler)
+- [Broadcasting](#1)
 
 <h1 id="1">Broadcasting</h1>
 

@@ -18,6 +18,7 @@
    - [imag](#1.15)
    - [conj](#1.16)
    - [angle](#1.17)
+   - [sum](#1.18)
 
 <h1 id="1">Arithmetic Functions</h1>
 
@@ -276,4 +277,40 @@ print(np.angle(z))
 **Output:**
 ```
 [1.10714872 0.92729522 0.87605805]
+```
+
+<h2 id="1.18"><code>sum(a, axis=None, dtype=None, ...)</code> Methodu</h2>
+
+Uygulandığı array'in elementlerinin toplamını döndürür. Örnek:
+
+```py
+import numpy as np
+a = np.array([[1,2],[3,4]])
+print(a.sum()) # Output: 10
+```
+`axis` parametresinde belirttiğiniz axis'e göre farklı axisler arasında toplama işlemi yapar. Örnek:
+```py
+import numpy as np
+a = np.array([[[1,1,1],[2,2,2]],[[3,3,3],[4,4,4]]])
+print(a,end="\n-----------\n")
+print(a.sum(axis=0),end="\n-----------\n")
+print(a.sum(axis=1),end="\n-----------\n")
+print(a.sum(axis=2))
+```
+**Output:**
+```
+[[[1 1 1]
+  [2 2 2]]
+
+ [[3 3 3]
+  [4 4 4]]]
+-----------
+[[4 4 4]
+ [6 6 6]]
+-----------
+[[3 3 3]
+ [7 7 7]]
+-----------
+[[ 3  6]
+ [ 9 12]]
 ```

@@ -1,37 +1,39 @@
 # İçindekiler
 
--[Changing Shape](#1)
--[`reshape(a, newshape, order='C')` Methodu](#1.1)
--[`ndarray.flat` Methodu](#1.2)
--[`ndarray.flatten(order='C')` Methodu](#1.3)
--[`ndarray.ravel(order='C')` Methodu](#1.4)
--[Transposing Arrays](#2)
--[`transpose` Methodu](#2.1)
--[`rollaxis(a, axis, start=0)` Methodu](#2.2)
--[`swapaxes(a, axis1, axis2)` Methodu](#2.3)
--[Changing Dimensions](#3)
--[`broadcast(a, b)` Methodu](#3.1)
--[`broadcast_to(array, shape, subok=False)` Methodu](#3.2)
--[`expand_dims(a, axis)` Methodu](#3.3)
--[`squeeze(a, axis=None)` Methodu](#3.4)
--[Joining Arrays](#4)
--[`concatenate((a1, a2, ...), axis=0, out=None)` Methodu](#4.1)
--[`stack(arrays, axis=0, out=None)` Methodu](#4.2)
--[`hstack(tup)` Methodu](#4.3)
--[`vstack(tup)` Methodu](#4.4)
--[`dstack(tup)` Methodu](#4.5)
--[Splitting Arrays](#5)
--[`split(ary, indices_or_sections, axis=0)` Methodu](#5.1)
--[`hsplit(ary, indices_or_sections)` Methodu](#5.2)
--[`vsplit(ary, indices_or_sections)` Methodu](#5.3)
--[`dsplit(ary, indices_or_sections)` Methodu](#5.4)
--[`array_split(ary, indices_or_sections, axis=0)` Methodu](#5.5)
--[Adding/Removing Elements](#6)
--[`resize(a, new_shape)` Methodu](#6.1)
--[`append(arr, values, axis=None)` Methodu](#6.2)
--[`insert(arr, obj, values, axis=None)` Methodu](#6.3)
--[`delete(arr, obj, axis=None)` Methodu](#6.4)
--[`unique(arr, return_index=False, return_inverse=False, return_counts=False, axis=None)` Methodu](#6.5)
+- [Changing Shape](#1)
+  - [`reshape(a, newshape, order='C')` Methodu](#1.1)
+  - [`ndarray.flat` Methodu](#1.2)
+  - [`ndarray.flatten(order='C')` Methodu](#1.3)
+  - [`ndarray.ravel(order='C')` Methodu](#1.4)
+  - [`newaxis` Attribute'u](#1.5)
+- [Transposing Arrays](#2)
+  - [`transpose` Methodu](#2.1)
+  - [`rollaxis(a, axis, start=0)` Methodu](#2.2)
+  - [`swapaxes(a, axis1, axis2)` Methodu](#2.3)
+  - [`flip(m, axis=None)` Methodu](#2.4)
+- [Changing Dimensions](#3)
+  - [`broadcast(a, b)` Methodu](#3.1)
+  - [`broadcast_to(array, shape, subok=False)` Methodu](#3.2)
+  - [`expand_dims(a, axis)` Methodu](#3.3)
+  - [`squeeze(a, axis=None)` Methodu](#3.4)
+- [Joining Arrays](#4)
+  - [`concatenate((a1, a2, ...), axis=0, out=None)` Methodu](#4.1)
+  - [`stack(arrays, axis=0, out=None)` Methodu](#4.2)
+  - [`hstack(tup)` Methodu](#4.3)
+  - [`vstack(tup)` Methodu](#4.4)
+  - [`dstack(tup)` Methodu](#4.5)
+- [Splitting Arrays](#5)
+  - [`split(ary, indices_or_sections, axis=0)` Methodu](#5.1)
+  - [`hsplit(ary, indices_or_sections)` Methodu](#5.2)
+  - [`vsplit(ary, indices_or_sections)` Methodu](#5.3)
+  - [`dsplit(ary, indices_or_sections)` Methodu](#5.4)
+  - [`array_split(ary, indices_or_sections, axis=0)` Methodu](#5.5)
+- [Adding/Removing Elements](#6)
+  - [`resize(a, new_shape)` Methodu](#6.1)
+  - [`append(arr, values, axis=None)` Methodu](#6.2)
+  - [`insert(arr, obj, values, axis=None)` Methodu](#6.3)
+  - [`delete(arr, obj, axis=None)` Methodu](#6.4)
+  - [`unique(arr, return_index=False, return_inverse=False, return_counts=False, axis=None)` Methodu](#6.5)
 
 <h1 id="1">Changing Shape</h1>
 
@@ -153,6 +155,30 @@ print(a.ravel(order='F'))
 [0 4 1 5 2 6 3 7]
 ```
 
+<h2 id="1.5"><code>newaxis</code> Attribute'u</h2>
+
+`newaxis` attribute'u, `ndarray` objesinin boyutunu arttırmak için kullanılır. Örnek:
+```py
+import numpy as np
+
+a = np.arange(3)
+print(a, np.shape(a), end="\n-------\n")
+b = a[:, np.newaxis]
+print(b, np.shape(b), end="\n-------\n")
+c = a[np.newaxis, :]
+print(c, np.shape(c))
+```
+**Output:**
+```
+[0 1 2] (3,)
+-------
+[[0]
+[1]
+[2]] (3, 1)
+-------
+[[0 1 2]] (1, 3)
+```
+
 <h1 id="2">Transposing Arrays</h1>
 
 <h2 id="2.1"><code>transpose</code> Methodu</h2>
@@ -249,6 +275,43 @@ print(np.swapaxes(a, 1, 0))
 
 [[2 3]
   [6 7]]]
+```
+
+<h2 id="2.4"><code>flip(m, axis=None)</code> Methodu</h2>
+
+`m` parametresine argüman olarak girilen array üzerinde reverse işlemi uygular. Örnek:
+```py
+import numpy as np
+a = np.array(range(1,11))
+print(a) # Output: [ 1  2  3  4  5  6  7  8  9 10]
+print(np.flip(a)) # Output: [10  9  8  7  6  5  4  3  2  1]
+```
+`axis` parametresinde belirtilen axis düzeyinde reverse işlemi yapmasını istiyorsanız:
+```py
+import numpy as np
+a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+print(a,end="\n-----------------\n")
+print(np.flip(a),end="\n-----------------\n")
+print(np.flip(a,axis=0),end="\n-----------------\n")
+print(np.flip(a,axis=1))
+```
+**Output:**
+```
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+-----------------
+[[12 11 10  9]
+ [ 8  7  6  5]
+ [ 4  3  2  1]]
+-----------------
+[[ 9 10 11 12]
+ [ 5  6  7  8]
+ [ 1  2  3  4]]
+-----------------
+[[ 4  3  2  1]
+ [ 8  7  6  5]
+ [12 11 10  9]]
 ```
 
 <h1 id="3">Changing Dimensions</h1>

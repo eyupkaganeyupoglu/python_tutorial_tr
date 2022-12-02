@@ -85,11 +85,16 @@ Konular ve hangi sırayla çalışman gerektiği aşağıda listelenmiştir.
         - [Array Manipülasyonu](./python_tutorial/Modules/Numpy/array_manipulation.md)
         - [Trigonometrik Fonksiyonlar](./python_tutorial/Modules/Numpy/trigonometric_functions.md)
         - [String Fonksiyonları](./python_tutorial/Modules/Numpy/string_functions.md)
+        - [Binary Fonksiyonları](./python_tutorial/Modules/Numpy/binary_functions.md)
         - [Yuvarlama (Rounding) Fonksiyonları](./python_tutorial/Modules/Numpy/functions_for_rounding.md)
         - [Aritmetik Fonksiyonlar](./python_tutorial/Modules/Numpy/arithmetic_functions.md)
         - [Statistical Functions](./python_tutorial/Modules/Numpy/statistical_functions.md)
         - [Sort, Search & Counting Functions](./python_tutorial/Modules/Numpy/sort_search_counting_functions.md)
-        - [Binary Fonksiyonları](./python_tutorial/Modules/Numpy/binary_functions.md)
+        - [Copy & View](./python_tutorial/Modules/Numpy/copy_view.md)
+        - [Matrix Library](./python_tutorial/Modules/Numpy/matrix_library.md)
+        - [Linear Algebra](./python_tutorial/Modules/Numpy/linear_algebra.md)
+        - [Matplotlib](./python_tutorial/Modules/Numpy/matplotlib.md)
+        - [NumPy'da I/O İşlemleri](./python_tutorial/Modules/Numpy/i_o_operations.md)
 
 <h2 align='center'> Lisans ve Diğer Bilgiler Hakkında </h2>
 <p align=center><img src="https://img.shields.io/static/v1?label=&message=Python&style=flat-square&logo=python&labelColor=346b9a&color=346b9a&logoColor=ffffff"/><img src="https://img.shields.io/static/v1?label=Version&message=+3.9&style=flat-square&labelColor=green&color=green"/></p>

@@ -1,9 +1,9 @@
 # İçindekiler
 
 - [Functions for Rounding`](#1)
-- [`around` Methodu](#1.1)
-- [`floor` Methodu](#1.2)
-- [`ceil` Methodu](#1.3)
+  - [`around` Methodu](#1.1)
+  - [`floor` Methodu](#1.2)
+  - [`ceil` Methodu](#1.3)
 
 
 <h1 id="1">Functions for Rounding</h1>
