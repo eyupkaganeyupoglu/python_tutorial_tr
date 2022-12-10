@@ -95,13 +95,11 @@ Kullanıcıdan yetki almak için kullanılır.
 # SQL İşlemleri
 
 ## Database Oluşturma
-
 ```sql
 CREATE DATABASE database_name;
 ```
 
 ## Tablo Oluşturma
-
 ```sql
 CREATE TABLE table_name (
     column_name1 data_type Kısaltma,
@@ -121,7 +119,6 @@ CREATE TABLE kisiler (
 ```
 
 ## Tablo Kopyalama
-
 ```sql
 CREATE TABLE new_table_name AS
     SELECT column_name1, column_name2, ...
@@ -137,7 +134,6 @@ CREATE TABLE kisi_adi_soyadi AS
 ## Veri tekrarını önleme
 
 Bunu gerçekleştirmek için `UNIQUE` veya `PRIMARY KEY` anahtar kelimesi kullanılır. Örnek:
-
 ```sql
 CREATE TABLE kisiler (
   kisi_sira INT PRIMARY KEY,
@@ -150,7 +146,6 @@ CREATE TABLE kisiler (
 ## İki tabloyu ilişkilendirme
 
 Foreign key ile iki tabloyu ilişkilendirebiliriz. Örnek:
-
 ```sql
 CREATE TABLE table_name (
     column_name1 data_type Kısaltma,
@@ -174,4 +169,23 @@ CREATE TABLE table_name (
 ```sql
 CREATE INDEX index_name
     ON table_name (column_name);
+```
+
+## Değişken Tanımlama ve kullanımı
+
+MySQL VTY sisteminde değişken tanımlamak için `SET` veya `SELECT` anahtar kelimesi kullanılır.
+```sql
+SET @variable_name = value;
+SELECT @variable_name = value;
+SET @variable_name := value;
+SELECT @variable_name := value;
+```
+Variable'lar küçük-büyük harfe duyarlı değildir.
+
+MySQL, integer, float, string, NULL data type'ları destekler ve bu veriler sadece geçerli kullanıcı ve oturumda kulanılır. Bu variable'ları çeşitli fonksiyonlarla kullanabilirsiniz. Örnek:
+```sql
+SET @adi:="Yusuf SEFA SEZER";
+SELECT LENGTH(@adi);
+SELECT @enyuksek:=MAX(urun_fiyat) FROM urunler;
+SELECT * FROM urunler WHERE urun_fiyat=@enyuksek;
 ```
