@@ -89,3 +89,30 @@ with open("data.json", "r") as f:
 ```
 {'name': 'John', 'age': 30, 'city': 'New York'} <class 'dict'>
 ```
+
+<h1 id="5">Python write JSON file</h1>
+
+Python dict yapısını JSON dosyasına yazmak için `json.dump()` fonksiyonunu kullanırız. Syntax:
+```py
+import json
+
+json.dump(obj, fp, *, skipkeys=False, ensure_ascii=True, check_circular=True, allow_nan=True, cls=None, indent=None, separators=None, default=None, sort_keys=False, **kw)
+```
+- `obj` parametresi, dict yapısı olmalıdır.
+- `fp` parametresi, JSON dosyasının bulunduğu dosya objesidir.
+- `skipkeys` parametresi, dict yapısındaki key'lerin JSON stringine çevrilip çevrilmediğini belirler.
+- `ensure_ascii` parametresi, JSON stringindeki karakterlerin ASCII karakterlerine çevrilip çevrilmediğini belirler.
+- `check_circular` parametresi, dict yapısındaki circular referansları kontrol edip edilmeyeceğini belirler.
+- `allow_nan` parametresi, JSON stringindeki `NaN` ve `Infinity` değerlerinin çevrilip çevrilmediğini belirler.
+- `cls` parametresi, JSON stringini dict yapısına çevirmek için kullanılacak class'ı temsil eder.
+- `indent` parametresi, JSON stringindeki boşluk sayısını belirler.
+- `separators` parametresi, JSON stringindeki key-value ve eleman arasındaki ayırıcıyı belirler.
+- `default` parametresi, JSON stringini dict yapısına çevirmek için kullanılacak fonksiyonu temsil eder.
+- `sort_keys` parametresi, JSON stringindeki key'lerin sıralanıp sıralanmayacağını belirler.
+```py
+import json
+
+python_dict = {"name": "John", "age": 30, "city": "New York"}
+with open("data.json", "w") as f:
+    json.dump(python_dict, f)
+```
