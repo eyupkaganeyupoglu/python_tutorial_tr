@@ -1,4 +1,4 @@
-.\python_tutorial\modules\django
-.\python_tutorial\modules\mysql
-.\python_tutorial\modules\pyqt6
-.\python_tutorial\modules\sqlite
+./python_tutorial/modules/django
+./python_tutorial/modules/mysql
+./python_tutorial/modules/pyqt6
+./python_tutorial/modules/sqlite
